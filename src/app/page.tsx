@@ -1,7 +1,7 @@
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#0B0F19] pt-20 text-white">
-      <section className="mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center px-6 text-center">
+    <main className="min-h-screen bg-[#0B0F19] bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.12),_transparent_35%)] pt-20 text-white">
+      <section className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-6xl flex-col items-center justify-center px-6 text-center">
         <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
           Elaris
         </p>
