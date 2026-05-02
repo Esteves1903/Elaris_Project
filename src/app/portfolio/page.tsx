@@ -2,174 +2,213 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function PortfolioPage() {
-  const [selectedProject, setSelectedProject] = useState<null | number>(null);
+// --- COMPONENTES DE APOIO INTERNO ---
 
-  const projects = [
-    { 
-      id: 1,
-      title: "Nova Horizon", 
-      category: "E-commerce System", 
-      description: "A high-end retail experience focused on conversion and speed.",
-      longDescription: "This project involved creating a custom headless commerce solution. We focused on sub-second page loads and a seamless checkout experience.",
-      stack: ["Next.js 14", "Tailwind CSS", "Stripe", "Framer Motion"],
-      color: "from-blue-600 to-cyan-500"
-    },
-    { 
-      id: 2,
-      title: "Zenith SaaS", 
-      category: "Analytics Dashboard", 
-      description: "Real-time data visualization for enterprise-level teams.",
-      longDescription: "A complex dashboard designed to handle large datasets with real-time updates via WebSockets.",
-      stack: ["React", "TypeScript", "D3.js", "Supabase"],
-      color: "from-purple-600 to-indigo-500"
-    }
-  ];
+const NavInternal = ({ active, set, items, color }: any) => (
+  <div className="flex gap-3 mb-6 border-b border-white/5 pb-2">
+    {items.map((item: string) => (
+      <button 
+        key={item}
+        onClick={(e) => { e.stopPropagation(); set(item); }}
+        className={`text-[9px] uppercase tracking-widest transition-colors ${active === item ? color : 'text-zinc-500'}`}
+      >
+        {item}
+      </button>
+    ))}
+  </div>
+);
 
+// --- 1. RESTAURANTE (L'ESSENCE) ---
+const RestaurantLayout = () => {
+  const [tab, setTab] = useState('Home');
   return (
-    <main className="min-h-screen bg-[#0B0F19] px-6 pb-24 pt-32 text-white overflow-hidden">
-      {/* Header */}
-      <section className="mx-auto max-w-6xl mb-20">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-        >
-          <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">Portfolio</p>
-          <h1 className="text-5xl font-bold mb-6">Crafting digital <br/>masterpieces.</h1>
-          <p className="text-zinc-400 max-w-xl text-lg">
-            Focused on internal excellence. No external redirects, just pure interactive craftsmanship.
-          </p>
-        </motion.div>
-      </section>
-
-      {/* Grid de Projetos */}
-      <section className="mx-auto max-w-6xl grid gap-32">
-        {projects.map((project) => (
-          <motion.div 
-            key={project.id}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="group grid lg:grid-cols-2 gap-16 items-center"
-          >
-            {/* Visual Preview Interativo */}
-            <div className="relative aspect-video rounded-3xl bg-zinc-900 border border-white/10 overflow-hidden shadow-2xl">
-              <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-20 group-hover:opacity-40 transition-opacity`} />
-              
-              {/* Simulação de Interface */}
-              <div className="absolute inset-8 border border-white/10 rounded-xl bg-black/40 backdrop-blur-sm p-6">
-                <div className="w-full h-2 bg-white/10 rounded-full mb-4" />
-                <div className="w-2/3 h-2 bg-white/10 rounded-full mb-8" />
-                <div className="grid grid-cols-3 gap-4">
-                  {[1, 2, 3].map(i => (
-                    <motion.div 
-                      key={i}
-                      whileHover={{ y: -5 }}
-                      className="aspect-square bg-white/5 rounded-lg border border-white/5" 
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Conteúdo e Botões */}
-            <div>
-              <span className="text-cyan-400 font-mono text-sm tracking-tighter mb-4 block">// Selected Project</span>
-              <h2 className="text-4xl font-bold mb-4">{project.title}</h2>
-              <p className="text-zinc-400 text-lg mb-8 leading-relaxed">
-                {project.description}
-              </p>
-
-              <div className="flex flex-wrap gap-4">
-                {/* BOTÃO 1: Detalhes Internos (Abre Modal) */}
-                <button 
-                  onClick={() => setSelectedProject(project.id)}
-                  className="px-8 py-3 bg-white text-black rounded-full font-bold hover:bg-cyan-400 transition-all active:scale-95"
-                >
-                  Project Details
-                </button>
-
-                {/* BOTÃO 2: Contacto Direto */}
-                <a 
-                  href="/contact"
-                  className="px-8 py-3 border border-white/20 rounded-full font-bold hover:bg-white/10 transition-all text-sm"
-                >
-                  Inquire Now
-                </a>
-              </div>
-
-              {/* Tech Stack Horizontal */}
-              <div className="mt-10 flex gap-6 border-t border-white/5 pt-8">
-                {project.stack.slice(0, 3).map((tech, i) => (
-                  <span key={i} className="text-xs font-mono text-zinc-500 uppercase tracking-widest">
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
+    <div className="h-full bg-[#0D0D0D] p-6 font-serif overflow-y-auto custom-scrollbar">
+      <NavInternal active={tab} set={setTab} items={['Home', 'About', 'Menu']} color="text-amber-200" />
+      <AnimatePresence mode="wait">
+        {tab === 'Home' && (
+          <motion.div key="h" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <h3 className="text-2xl text-white mb-2">L'Essence</h3>
+            <p className="text-[10px] text-zinc-400 leading-relaxed mb-4">Experience the art of fine dining in the heart of the city.</p>
+            <div className="h-24 bg-zinc-900 rounded-lg border border-white/5" />
           </motion.div>
-        ))}
-      </section>
-
-      {/* Overlay de Detalhes (Modal/Slide-over) */}
-      <AnimatePresence>
-        {selectedProject && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xl flex justify-end"
-            onClick={() => setSelectedProject(null)}
-          >
-            <motion.div 
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="w-full max-w-2xl bg-[#0F141F] h-full p-12 overflow-y-auto border-l border-white/10"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button 
-                onClick={() => setSelectedProject(null)}
-                className="mb-12 text-zinc-500 hover:text-white transition-colors"
-              >
-                ← Back to Portfolio
-              </button>
-
-              {projects.find(p => p.id === selectedProject) && (
-                <>
-                  <h2 className="text-5xl font-bold mb-6">
-                    {projects.find(p => p.id === selectedProject)?.title}
-                  </h2>
-                  <p className="text-cyan-400 mb-8 uppercase tracking-widest text-sm font-bold">
-                    Full Case Study
-                  </p>
-                  <p className="text-zinc-400 text-xl leading-relaxed mb-12">
-                    {projects.find(p => p.id === selectedProject)?.longDescription}
-                  </p>
-
-                  <h3 className="text-xl font-bold mb-4">Core Technology Stack</h3>
-                  <div className="flex flex-wrap gap-3 mb-12">
-                    {projects.find(p => p.id === selectedProject)?.stack.map((tech, i) => (
-                      <span key={i} className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg font-mono text-cyan-300">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="p-8 rounded-2xl bg-cyan-400/10 border border-cyan-400/20">
-                    <h4 className="font-bold mb-2 text-cyan-400">Interested in these features?</h4>
-                    <p className="text-sm text-zinc-300 mb-6">We can implement a similar solution for your business.</p>
-                    <a href="/contact" className="inline-block px-6 py-2 bg-cyan-400 text-black font-bold rounded-lg text-sm">
-                      Start Discussion
-                    </a>
-                  </div>
-                </>
-              )}
-            </motion.div>
+        )}
+        {tab === 'About' && (
+          <motion.div key="a" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <h4 className="text-amber-200 text-xs mb-2 italic">Our Story</h4>
+            <p className="text-[10px] text-zinc-300 leading-relaxed">Founded in 2026, we believe that food is a bridge between cultures. Our chef Curates every dish with passion.</p>
+          </motion.div>
+        )}
+        {tab === 'Menu' && (
+          <motion.div key="m" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-2">
+            <div className="flex justify-between text-[10px] text-white"><span>Truffle Risotto</span><span>€32</span></div>
+            <div className="flex justify-between text-[10px] text-white"><span>Wagyu Steak</span><span>€45</span></div>
           </motion.div>
         )}
       </AnimatePresence>
+    </div>
+  );
+};
+
+// --- 2. BARBEARIA (IRON & STEEL) ---
+const BarberLayout = () => {
+  const [tab, setTab] = useState('Home');
+  return (
+    <div className="h-full bg-[#141414] p-6 font-sans border-l-4 border-red-600 overflow-y-auto">
+      <NavInternal active={tab} set={setTab} items={['Home', 'About', 'Book']} color="text-red-500" />
+      <AnimatePresence mode="wait">
+        {tab === 'Home' && (
+          <motion.div key="h" initial={{ x: 10, opacity: 0 }} animate={{ x: 0, opacity: 1 }}>
+            <h3 className="text-xl font-black italic text-white mb-4 tracking-tighter text-red-500">IRON & STEEL</h3>
+            <div className="bg-zinc-900 p-3 rounded border border-white/5 text-[10px] text-zinc-400">Next available slot: Today, 17:30</div>
+          </motion.div>
+        )}
+        {tab === 'About' && (
+          <motion.div key="a" initial={{ x: 10, opacity: 0 }} animate={{ x: 0, opacity: 1 }}>
+            <p className="text-[10px] text-zinc-300 leading-relaxed uppercase font-bold tracking-tight">Classic techniques. Modern style. No bullshit. Just great hair.</p>
+          </motion.div>
+        )}
+        {tab === 'Book' && (
+          <motion.button whileTap={{ scale: 0.95 }} className="w-full bg-red-600 py-3 text-[10px] font-black uppercase mt-4">Confirm Booking</motion.button>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+// --- 3. WELLNESS (ZEN SPACE) ---
+const WellnessLayout = () => {
+  const [tab, setTab] = useState('Home');
+  return (
+    <div className="h-full bg-[#FBF8F5] p-6 text-[#4A4A4A] overflow-y-auto">
+      <NavInternal active={tab} set={setTab} items={['Home', 'About', 'Services']} color="text-teal-600" />
+      <AnimatePresence mode="wait">
+        {tab === 'Home' && (
+          <motion.div key="h" initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-center">
+            <div className="text-2xl mb-2 text-teal-600">🌿</div>
+            <h3 className="text-sm font-light tracking-widest mb-4">ZEN SPACE</h3>
+            <p className="text-[9px] opacity-70">Find your inner balance.</p>
+          </motion.div>
+        )}
+        {tab === 'About' && (
+          <motion.div key="a" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-[10px] leading-loose text-center italic">
+            "A sanctuary designed to reconnect your body and mind."
+          </motion.div>
+        )}
+        {tab === 'Services' && (
+          <motion.div key="s" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="grid grid-cols-1 gap-2">
+            <div className="bg-white p-2 rounded text-[9px] border border-teal-100">Deep Tissue Massage</div>
+            <div className="bg-white p-2 rounded text-[9px] border border-teal-100">Acupuncture</div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+// --- 4. CAFÉ (BREW & CO) ---
+const CoffeeLayout = () => {
+  const [tab, setTab] = useState('Home');
+  return (
+    <div className="h-full bg-[#EADBC8] p-6 text-[#3E2723] overflow-y-auto">
+      <NavInternal active={tab} set={setTab} items={['Home', 'Story', 'Order']} color="text-[#3E2723] font-bold" />
+      <AnimatePresence mode="wait">
+        {tab === 'Home' && (
+          <motion.div key="h" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <div className="flex items-center gap-2 mb-4">
+               <span className="text-xl">☕</span>
+               <h3 className="font-black text-sm tracking-tighter">BREW & CO.</h3>
+            </div>
+            <div className="h-20 bg-[#3E2723]/5 rounded-2xl border-2 border-dashed border-[#3E2723]/10 flex items-center justify-center text-[10px] opacity-40 italic">Photo Placeholder</div>
+          </motion.div>
+        )}
+        {tab === 'Story' && (
+          <motion.div key="a" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <p className="text-[10px] font-medium leading-relaxed italic">"From bean to cup, we ensure every sip tells a story of quality and community."</p>
+          </motion.div>
+        )}
+        {tab === 'Order' && (
+          <motion.div key="o" initial={{ y: 20 }} animate={{ y: 0 }} className="space-y-3">
+             <div className="bg-white p-2 rounded-lg text-[10px] flex justify-between font-bold"><span>Cappuccino</span><span>€3.50</span></div>
+             <button className="w-full bg-[#3E2723] text-white py-2 rounded-lg text-[10px]">Add to cart</button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+// --- PÁGINA PRINCIPAL ---
+
+export default function PortfolioPage() {
+  const projects = [
+    { id: 1, title: "L'Essence Restaurant", category: "High-End Gastronomy", layout: <RestaurantLayout />, tech: ["Framer", "Serif UI"] },
+    { id: 2, title: "Iron & Steel Barber", category: "Local Business", layout: <BarberLayout />, tech: ["Industrial UI", "React"] },
+    { id: 3, title: "Zen Space Studio", category: "Wellness App", layout: <WellnessLayout />, tech: ["Minimalism", "UX"] },
+    { id: 4, title: "Brew & Co.", category: "Modern Retail", layout: <CoffeeLayout />, tech: ["Next.js", "Interaction"] },
+  ];
+
+  return (
+    <main className="min-h-screen bg-[#0B0F19] text-white pt-32 pb-24 px-6 font-sans">
+      <div className="max-w-6xl mx-auto">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-24">
+          <p className="text-cyan-400 font-mono text-sm tracking-[0.3em] uppercase mb-4">// Interactive Showcase</p>
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 italic">Portfolio.</h1>
+          <p className="text-zinc-400 text-lg max-w-xl">
+            Each project below is a fully functional mini-interface. Click the navigation inside the mockups to explore.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+          {projects.map((p) => (
+            <motion.div 
+              key={p.id}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="group"
+            >
+              {/* Browser Window Mockup */}
+              <div className="relative rounded-2xl bg-zinc-900 border border-white/10 overflow-hidden shadow-2xl transition-all group-hover:border-cyan-400/30">
+                <div className="flex items-center justify-between px-4 py-3 bg-zinc-800/50 border-b border-white/5">
+                  <div className="flex gap-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-zinc-700" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-zinc-700" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-zinc-700" />
+                  </div>
+                  <div className="text-[9px] text-zinc-500 font-mono tracking-widest uppercase">Elaris Preview System</div>
+                </div>
+                
+                <div className="aspect-[4/3] w-full">
+                  {p.layout}
+                </div>
+              </div>
+
+              {/* Info Below Mockup */}
+              <div className="mt-8">
+                <div className="flex justify-between items-end mb-4">
+                  <div>
+                    <h3 className="text-2xl font-bold">{p.title}</h3>
+                    <p className="text-zinc-500 text-sm">{p.category}</p>
+                  </div>
+                  <div className="flex gap-2">
+                    {p.tech.map(t => (
+                      <span key={t} className="text-[10px] font-mono text-cyan-400 bg-cyan-400/5 px-2 py-1 rounded border border-cyan-400/10">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <a 
+                  href="/contact" 
+                  className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white group-hover:text-cyan-400 transition-colors"
+                >
+                  Start a project like this <span>→</span>
+                </a>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
     </main>
   );
 }
