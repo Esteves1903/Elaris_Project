@@ -49,9 +49,8 @@ const processSteps = [
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#0B0F19] bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.12),_transparent_35%)] pt-20">
-      
       {/* Hero Section */}
-      <section className="mx-auto max-w-6xl px-6 py-24">
+      <section className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-6xl flex-col items-center justify-center px-6 text-center">
         <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
           Elaris
         </p>
@@ -68,14 +67,14 @@ export default function Home() {
         <div className="mt-10 flex flex-col gap-4 sm:flex-row">
           <Link
             href="/contact"
-            className="rounded-full bg-white px-7 py-3 text-center text-sm font-semibold text-black transition hover:bg-zinc-200"
+            className="rounded-full bg-white px-7 py-3 text-sm font-semibold text-black transition hover:bg-zinc-200"
           >
             Request a quote
           </Link>
 
           <Link
             href="/services"
-            className="rounded-full border border-white/20 px-7 py-3 text-center text-sm font-semibold text-white transition hover:bg-white/10"
+            className="rounded-full border border-white/20 px-7 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
           >
             View services
           </Link>
@@ -159,8 +158,9 @@ export default function Home() {
         </div>
 
         <p className="mb-8 max-w-2xl text-base leading-7 text-zinc-300">
-          Custom websites for cafes, restaurants, and barbershops with advanced features like online booking, 
-          ordering systems, and customer management tools.
+          Custom websites for cafes, restaurants, and barbershops with advanced
+          features like online booking, ordering systems, and customer
+          management tools.
         </p>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -172,17 +172,21 @@ export default function Home() {
             >
               <div className="relative h-48 w-full overflow-hidden bg-black">
                 <img
-                  src={project.images?.[0] || "/api/placeholder/400/320"} 
+                  src={project.images?.[0] || "/api/placeholder/400/320"}
                   alt={project.title}
                   className="h-full w-full object-cover opacity-80 transition group-hover:opacity-100"
                 />
                 <div className="absolute left-4 top-4 rounded-full bg-black/60 px-3 py-1 text-xs font-semibold uppercase text-cyan-400 backdrop-blur-sm">
-                  {project.category.replace('-', ' ')}
+                  {project.category.replace("-", " ")}
                 </div>
               </div>
               <div className="p-6">
-                <h3 className="text-lg font-semibold text-white">{project.title}</h3>
-                <p className="mt-2 text-sm text-zinc-400">{project.description}</p>
+                <h3 className="text-lg font-semibold text-white">
+                  {project.title}
+                </h3>
+                <p className="mt-2 text-sm text-zinc-400">
+                  {project.description}
+                </p>
                 <div className="mt-4 flex flex-wrap gap-1">
                   {project.features.slice(0, 2).map((feature) => (
                     <span
