@@ -122,7 +122,7 @@ export default function Home() {
           {services.map((service) => (
             <div
               key={service.title}
-              className="rounded-2xl border border-white/10 bg-white/5 p-6 transition hover:border-cyan-400/40 hover:bg-white/[0.07]"
+              className="cursor-default rounded-2xl border border-white/10 bg-white/5 p-6 transition hover:border-cyan-400/40 hover:bg-white/[0.07]"
             >
               <h3 className="text-xl font-semibold">{service.title}</h3>
               <p className="mt-3 text-sm leading-6 text-zinc-400">
@@ -157,7 +157,7 @@ export default function Home() {
           {processSteps.map((item) => (
             <div
               key={item.step}
-              className="rounded-2xl border border-white/10 bg-[#111827] p-6"
+              className="cursor-default rounded-2xl border border-white/10 bg-white/5 p-6 transition hover:border-cyan-400/40 hover:bg-white/[0.07]"
             >
               <span className="text-sm font-semibold text-cyan-400">
                 {item.step}
