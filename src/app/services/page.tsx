@@ -1,4 +1,4 @@
-import React from 'react';
+import Link from "next/link";
 
 export default function ServicesPage() {
   return (
@@ -7,80 +7,100 @@ export default function ServicesPage() {
       <section className="mx-auto max-w-6xl">
         <div className="max-w-3xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
-            Serviços
+            Services
           </p>
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-8">
-            Soluções digitais focadas em necessidades reais.
+
+          <h1 className="mb-8 text-4xl font-bold tracking-tight sm:text-5xl">
+            Digital solutions focused on real business needs.
           </h1>
+
           <p className="text-base leading-7 text-zinc-300">
-            Na Elaris, transformamos ideias em produtos digitais de alta performance, unindo estratégia, design e tecnologia.
+            At Elaris, we turn ideas into high-performance digital products by
+            combining strategy, design and technology.
           </p>
         </div>
       </section>
 
-      {/* Section: Estratégia */}
-      <section className="mx-auto max-w-6xl py-24 border-t border-white/10 mt-16">
+      {/* Section: Strategy */}
+      <section className="mx-auto mt-16 max-w-6xl border-t border-white/10 py-24">
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div>
             <p className="mb-3 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
-              01. Estratégia
+              01. Strategy
             </p>
           </div>
+
           <div>
-            <h2 className="text-3xl font-bold tracking-tight mb-6">Discovery & Branding</h2>
+            <h2 className="mb-6 text-3xl font-bold tracking-tight">
+              Discovery & Branding
+            </h2>
+
             <p className="text-base leading-7 text-zinc-400">
-              Análise profunda do seu negócio para definir o caminho digital mais eficiente. Criamos identidades que comunicam os seus valores de forma clara e impactante.
+              We analyse your business to define the most effective digital
+              direction. We create identities that communicate your values with
+              clarity and impact.
             </p>
           </div>
         </div>
       </section>
 
       {/* Section: Design */}
-      <section className="mx-auto max-w-6xl py-24 border-t border-white/10">
+      <section className="mx-auto max-w-6xl border-t border-white/10 py-24">
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div>
             <p className="mb-3 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
               02. Design
             </p>
           </div>
+
           <div>
-            <h2 className="text-3xl font-bold tracking-tight mb-6">UI/UX Design</h2>
+            <h2 className="mb-6 text-3xl font-bold tracking-tight">
+              UI/UX Design
+            </h2>
+
             <p className="text-base leading-7 text-zinc-400">
-              Interfaces focadas na conversão e na experiência intuitiva. Desenhamos cada detalhe para garantir que os seus utilizadores tenham uma jornada memorável.
+              Interfaces focused on conversion and intuitive user experiences.
+              We design every detail to make each user journey clear, smooth and
+              memorable.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Section: Tecnologia */}
-      <section className="mx-auto max-w-6xl py-24 border-t border-white/10">
+      {/* Section: Technology */}
+      <section className="mx-auto max-w-6xl border-t border-white/10 py-24">
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div>
             <p className="mb-3 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
-              03. Tecnologia
+              03. Technology
             </p>
           </div>
+
           <div>
-            <h2 className="text-3xl font-bold tracking-tight mb-6">Web Development</h2>
+            <h2 className="mb-6 text-3xl font-bold tracking-tight">
+              Web Development
+            </h2>
+
             <p className="text-base leading-7 text-zinc-400">
-              Desenvolvimento robusto com tecnologias modernas como Next.js. Focamos em performance, segurança e otimização para motores de busca (SEO).
+              Robust development with modern technologies like Next.js. We focus
+              on performance, security and search engine optimisation.
             </p>
           </div>
         </div>
       </section>
 
-      
-      <section className="mx-auto max-w-6xl py-32 border-t border-white/10 text-center">
-        <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-10 text-white">
-          Pronto para começar?
+      <section className="mx-auto max-w-6xl border-t border-white/10 py-32 text-center">
+        <h2 className="mb-10 text-4xl font-bold tracking-tight text-white md:text-5xl">
+          Ready to start?
         </h2>
+
         <div className="flex justify-center">
-          <a 
-            href="/contact" 
+          <Link
+            href="/contact"
             className="inline-block rounded-full bg-white px-7 py-2.5 text-sm font-semibold text-black transition-all hover:bg-zinc-200"
           >
-            Iniciar Projeto
-          </a>
+            Start your project
+          </Link>
         </div>
       </section>
     </main>
