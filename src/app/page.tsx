@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { portfolioProjects } from "@/lib/portfolio-projects";
 
 const services = [
   {
@@ -47,13 +48,15 @@ const processSteps = [
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#0B0F19] bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.12),_transparent_35%)] pt-20 text-white">
-      <section className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-6xl flex-col items-center justify-center px-6 text-center">
+    <main className="min-h-screen bg-[#0B0F19] bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.12),_transparent_35%)] pt-20">
+      
+      {/* Hero Section */}
+      <section className="mx-auto max-w-6xl px-6 py-24">
         <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
           Elaris
         </p>
 
-        <h1 className="max-w-4xl text-4xl font-bold tracking-tight sm:text-6xl">
+        <h1 className="max-w-4xl text-4xl font-bold tracking-tight text-white sm:text-6xl">
           Digital solutions for growing businesses.
         </h1>
 
@@ -65,27 +68,28 @@ export default function Home() {
         <div className="mt-10 flex flex-col gap-4 sm:flex-row">
           <Link
             href="/contact"
-            className="rounded-full bg-white px-7 py-3 text-sm font-semibold text-black transition hover:bg-zinc-200"
+            className="rounded-full bg-white px-7 py-3 text-center text-sm font-semibold text-black transition hover:bg-zinc-200"
           >
             Request a quote
           </Link>
 
           <Link
             href="/services"
-            className="rounded-full border border-white/20 px-7 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+            className="rounded-full border border-white/20 px-7 py-3 text-center text-sm font-semibold text-white transition hover:bg-white/10"
           >
             View services
           </Link>
         </div>
       </section>
 
+      {/* About Section */}
       <section className="mx-auto max-w-6xl px-6 py-24">
         <div className="grid gap-10 md:grid-cols-[0.8fr_1.2fr] md:items-center">
           <div>
             <p className="mb-3 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
               About Elaris
             </p>
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
               Simple, modern and focused on real business needs.
             </h2>
           </div>
@@ -99,13 +103,14 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Services Section */}
       <section className="mx-auto max-w-6xl px-6 py-24">
         <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
             <p className="mb-3 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
               Services
             </p>
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
               What we can help with.
             </h2>
           </div>
@@ -122,7 +127,7 @@ export default function Home() {
           {services.map((service) => (
             <div
               key={service.title}
-              className="cursor-default rounded-2xl border border-white/10 bg-white/5 p-6 transition hover:border-cyan-400/40 hover:bg-white/[0.07]"
+              className="cursor-default rounded-2xl border border-white/10 bg-white/5 p-6 text-white transition hover:border-cyan-400/40 hover:bg-white/[0.07]"
             >
               <h3 className="text-xl font-semibold">{service.title}</h3>
               <p className="mt-3 text-sm leading-6 text-zinc-400">
@@ -133,6 +138,73 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Portfolio Section */}
+      <section className="mx-auto max-w-6xl px-6 py-24">
+        <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+          <div>
+            <p className="mb-3 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
+              Portfolio
+            </p>
+            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              Recent projects we&apos;re proud of.
+            </h2>
+          </div>
+
+          <Link
+            href="/portfolio"
+            className="text-sm font-semibold text-cyan-400 transition hover:text-cyan-300"
+          >
+            View all projects →
+          </Link>
+        </div>
+
+        <p className="mb-8 max-w-2xl text-base leading-7 text-zinc-300">
+          Custom websites for cafes, restaurants, and barbershops with advanced features like online booking, 
+          ordering systems, and customer management tools.
+        </p>
+
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {portfolioProjects.slice(0, 3).map((project) => (
+            <Link
+              key={project.id}
+              href="/portfolio"
+              className="group rounded-2xl border border-white/10 bg-white/5 overflow-hidden transition hover:border-cyan-400/40 hover:bg-white/[0.07]"
+            >
+              <div className="relative h-48 w-full overflow-hidden bg-black">
+                <img
+                  src={project.images?.[0] || "/api/placeholder/400/320"} 
+                  alt={project.title}
+                  className="h-full w-full object-cover opacity-80 transition group-hover:opacity-100"
+                />
+                <div className="absolute left-4 top-4 rounded-full bg-black/60 px-3 py-1 text-xs font-semibold uppercase text-cyan-400 backdrop-blur-sm">
+                  {project.category.replace('-', ' ')}
+                </div>
+              </div>
+              <div className="p-6">
+                <h3 className="text-lg font-semibold text-white">{project.title}</h3>
+                <p className="mt-2 text-sm text-zinc-400">{project.description}</p>
+                <div className="mt-4 flex flex-wrap gap-1">
+                  {project.features.slice(0, 2).map((feature) => (
+                    <span
+                      key={feature}
+                      className="rounded-full bg-cyan-400/20 px-2 py-1 text-xs text-cyan-300"
+                    >
+                      {feature}
+                    </span>
+                  ))}
+                  {project.features.length > 2 && (
+                    <span className="rounded-full bg-white/10 px-2 py-1 text-xs text-zinc-300">
+                      +{project.features.length - 2}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* Process Section */}
       <section className="mx-auto max-w-6xl px-6 py-24">
         <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
@@ -140,7 +212,7 @@ export default function Home() {
               Process
             </p>
 
-            <h2 className="max-w-2xl text-3xl font-bold tracking-tight sm:text-4xl">
+            <h2 className="max-w-2xl text-3xl font-bold tracking-tight text-white sm:text-4xl">
               A clear process from first contact to final delivery.
             </h2>
           </div>
@@ -157,7 +229,7 @@ export default function Home() {
           {processSteps.map((item) => (
             <div
               key={item.step}
-              className="cursor-default rounded-2xl border border-white/10 bg-white/5 p-6 transition hover:border-cyan-400/40 hover:bg-white/[0.07]"
+              className="cursor-default rounded-2xl border border-white/10 bg-white/5 p-6 text-white transition hover:border-cyan-400/40 hover:bg-white/[0.07]"
             >
               <span className="text-sm font-semibold text-cyan-400">
                 {item.step}
@@ -171,13 +243,14 @@ export default function Home() {
         </div>
       </section>
 
+      {/* CTA Section */}
       <section className="mx-auto max-w-6xl px-6 py-24">
         <div className="rounded-3xl border border-white/10 bg-white/5 px-6 py-12 text-center sm:px-12">
           <p className="mb-3 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
             Start your project
           </p>
 
-          <h2 className="mx-auto max-w-3xl text-3xl font-bold tracking-tight sm:text-4xl">
+          <h2 className="mx-auto max-w-3xl text-3xl font-bold tracking-tight text-white sm:text-4xl">
             Have an idea for your website? Let&apos;s turn it into a clear plan.
           </h2>
 
