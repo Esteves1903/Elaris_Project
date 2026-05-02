@@ -34,7 +34,7 @@ export default function ProcessPage() {
       <section className="mx-auto max-w-6xl mb-24">
         <div className="max-w-3xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
-            Our Method
+            Process
           </p>
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-8">
             How we turn your ideas into digital reality.
