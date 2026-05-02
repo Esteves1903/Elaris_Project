@@ -134,13 +134,23 @@ export default function Home() {
       </section>
 
       <section className="mx-auto max-w-6xl px-6 py-24">
-        <div className="mb-10">
-          <p className="mb-3 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
-            Process
-          </p>
-          <h2 className="max-w-2xl text-3xl font-bold tracking-tight sm:text-4xl">
-            A clear process from first contact to final delivery.
-          </h2>
+        <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+          <div>
+            <p className="mb-3 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
+              Process
+            </p>
+
+            <h2 className="max-w-2xl text-3xl font-bold tracking-tight sm:text-4xl">
+              A clear process from first contact to final delivery.
+            </h2>
+          </div>
+
+          <Link
+            href="/process"
+            className="text-sm font-semibold text-cyan-400 transition hover:text-cyan-300"
+          >
+            View full process →
+          </Link>
         </div>
 
         <div className="grid gap-6 md:grid-cols-4">
