@@ -3,103 +3,173 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function PortfolioPage() {
-  // Estado para simular interação dentro de um projeto específico
-  const [activeTab, setActiveTab] = useState("desktop");
+  const [selectedProject, setSelectedProject] = useState<null | number>(null);
 
   const projects = [
     { 
       id: 1,
       title: "Nova Horizon", 
       category: "E-commerce System", 
-      description: "A high-end retail experience built with Next.js 14.",
-      color: "bg-blue-600"
+      description: "A high-end retail experience focused on conversion and speed.",
+      longDescription: "This project involved creating a custom headless commerce solution. We focused on sub-second page loads and a seamless checkout experience.",
+      stack: ["Next.js 14", "Tailwind CSS", "Stripe", "Framer Motion"],
+      color: "from-blue-600 to-cyan-500"
     },
     { 
       id: 2,
       title: "Zenith SaaS", 
-      category: "Dashboard Design", 
-      description: "Real-time data analytics with interactive charts.",
-      color: "bg-purple-600"
+      category: "Analytics Dashboard", 
+      description: "Real-time data visualization for enterprise-level teams.",
+      longDescription: "A complex dashboard designed to handle large datasets with real-time updates via WebSockets.",
+      stack: ["React", "TypeScript", "D3.js", "Supabase"],
+      color: "from-purple-600 to-indigo-500"
     }
   ];
 
   return (
-    <main className="min-h-screen bg-[#0B0F19] px-6 pb-24 pt-32 text-white">
-      <section className="mx-auto max-w-6xl mb-20 text-center md:text-left">
-        <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">Interactive Labs</p>
-        <h1 className="text-4xl font-bold sm:text-6xl mb-6">Experience the code.</h1>
-        <p className="text-zinc-400 max-w-2xl text-lg">Don't just look. Click, toggle, and explore these live interface prototypes.</p>
+    <main className="min-h-screen bg-[#0B0F19] px-6 pb-24 pt-32 text-white overflow-hidden">
+      {/* Header */}
+      <section className="mx-auto max-w-6xl mb-20">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+        >
+          <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">Portfolio</p>
+          <h1 className="text-5xl font-bold mb-6">Crafting digital <br/>masterpieces.</h1>
+          <p className="text-zinc-400 max-w-xl text-lg">
+            Focused on internal excellence. No external redirects, just pure interactive craftsmanship.
+          </p>
+        </motion.div>
       </section>
 
-      <section className="mx-auto max-w-6xl grid gap-20">
+      {/* Grid de Projetos */}
+      <section className="mx-auto max-w-6xl grid gap-32">
         {projects.map((project) => (
           <motion.div 
             key={project.id}
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="group grid lg:grid-cols-2 gap-12 items-center"
+            viewport={{ once: true }}
+            className="group grid lg:grid-cols-2 gap-16 items-center"
           >
-            {/* Esquerda: Info do Projeto */}
-            <div>
-              <p className="text-cyan-400 font-mono mb-2">// 0{project.id}</p>
-              <h2 className="text-3xl font-bold mb-4">{project.title}</h2>
-              <p className="text-zinc-400 mb-8 text-lg">{project.description}</p>
+            {/* Visual Preview Interativo */}
+            <div className="relative aspect-video rounded-3xl bg-zinc-900 border border-white/10 overflow-hidden shadow-2xl">
+              <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-20 group-hover:opacity-40 transition-opacity`} />
               
-              {/* Botões Reais dentro do layout */}
-              <div className="flex gap-4">
-                <button className="px-6 py-2 bg-white text-black rounded-full font-bold hover:bg-cyan-400 transition-colors">
-                  Live Demo
-                </button>
-                <button className="px-6 py-2 border border-white/20 rounded-full font-bold hover:bg-white/10">
-                  View Code
-                </button>
+              {/* Simulação de Interface */}
+              <div className="absolute inset-8 border border-white/10 rounded-xl bg-black/40 backdrop-blur-sm p-6">
+                <div className="w-full h-2 bg-white/10 rounded-full mb-4" />
+                <div className="w-2/3 h-2 bg-white/10 rounded-full mb-8" />
+                <div className="grid grid-cols-3 gap-4">
+                  {[1, 2, 3].map(i => (
+                    <motion.div 
+                      key={i}
+                      whileHover={{ y: -5 }}
+                      className="aspect-square bg-white/5 rounded-lg border border-white/5" 
+                    />
+                  ))}
+                </div>
               </div>
             </div>
 
-            {/* Direita: O "Layout Interativo" (Mockup Vivo) */}
-            <div className="relative rounded-2xl bg-zinc-900 border border-white/10 p-4 shadow-2xl overflow-hidden">
-              {/* Barra de Janela Estilo Mac */}
-              <div className="flex gap-2 mb-4 border-b border-white/5 pb-4">
-                <div className="w-3 h-3 rounded-full bg-red-500/50" />
-                <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
-                <div className="w-3 h-3 rounded-full bg-green-500/50" />
+            {/* Conteúdo e Botões */}
+            <div>
+              <span className="text-cyan-400 font-mono text-sm tracking-tighter mb-4 block">// Selected Project</span>
+              <h2 className="text-4xl font-bold mb-4">{project.title}</h2>
+              <p className="text-zinc-400 text-lg mb-8 leading-relaxed">
+                {project.description}
+              </p>
+
+              <div className="flex flex-wrap gap-4">
+                {/* BOTÃO 1: Detalhes Internos (Abre Modal) */}
+                <button 
+                  onClick={() => setSelectedProject(project.id)}
+                  className="px-8 py-3 bg-white text-black rounded-full font-bold hover:bg-cyan-400 transition-all active:scale-95"
+                >
+                  Project Details
+                </button>
+
+                {/* BOTÃO 2: Contacto Direto */}
+                <a 
+                  href="/contact"
+                  className="px-8 py-3 border border-white/20 rounded-full font-bold hover:bg-white/10 transition-all text-sm"
+                >
+                  Inquire Now
+                </a>
               </div>
 
-              {/* Interface Simulada Reativa */}
-              <div className={`aspect-video rounded-lg ${project.color} flex flex-col items-center justify-center p-6 text-center`}>
-                <motion.div 
-                  whileHover={{ scale: 1.05 }}
-                  className="bg-black/20 backdrop-blur-md p-8 rounded-xl border border-white/10"
-                >
-                  <p className="text-sm uppercase tracking-widest mb-4">Interactive Component</p>
-                  <h3 className="text-xl font-bold mb-6">Test the UI behavior</h3>
-                  
-                  {/* Botões de Teste DENTRO do Mockup */}
-                  <div className="flex justify-center gap-3">
-                    <button 
-                      onClick={() => alert(`Project ${project.id} Interaction Success!`)}
-                      className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center hover:bg-white text-black transition-all"
-                    >
-                      ★
-                    </button>
-                    <div className="w-24 h-10 rounded-lg bg-black/40 flex items-center justify-center text-xs">
-                      Active
-                    </div>
-                  </div>
-                </motion.div>
+              {/* Tech Stack Horizontal */}
+              <div className="mt-10 flex gap-6 border-t border-white/5 pt-8">
+                {project.stack.slice(0, 3).map((tech, i) => (
+                  <span key={i} className="text-xs font-mono text-zinc-500 uppercase tracking-widest">
+                    {tech}
+                  </span>
+                ))}
               </div>
             </div>
           </motion.div>
         ))}
       </section>
 
-      {/* Botão Final padrão */}
-      <section className="text-center py-32 mt-20 border-t border-white/10">
-        <h2 className="text-4xl font-bold mb-10">Want a custom interactive UI?</h2>
-        <a href="/contact" className="inline-block rounded-full bg-white px-8 py-3 text-sm font-semibold text-black hover:bg-zinc-200 transition-all">
-          Let's talk
-        </a>
-      </section>
+      {/* Overlay de Detalhes (Modal/Slide-over) */}
+      <AnimatePresence>
+        {selectedProject && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xl flex justify-end"
+            onClick={() => setSelectedProject(null)}
+          >
+            <motion.div 
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="w-full max-w-2xl bg-[#0F141F] h-full p-12 overflow-y-auto border-l border-white/10"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button 
+                onClick={() => setSelectedProject(null)}
+                className="mb-12 text-zinc-500 hover:text-white transition-colors"
+              >
+                ← Back to Portfolio
+              </button>
+
+              {projects.find(p => p.id === selectedProject) && (
+                <>
+                  <h2 className="text-5xl font-bold mb-6">
+                    {projects.find(p => p.id === selectedProject)?.title}
+                  </h2>
+                  <p className="text-cyan-400 mb-8 uppercase tracking-widest text-sm font-bold">
+                    Full Case Study
+                  </p>
+                  <p className="text-zinc-400 text-xl leading-relaxed mb-12">
+                    {projects.find(p => p.id === selectedProject)?.longDescription}
+                  </p>
+
+                  <h3 className="text-xl font-bold mb-4">Core Technology Stack</h3>
+                  <div className="flex flex-wrap gap-3 mb-12">
+                    {projects.find(p => p.id === selectedProject)?.stack.map((tech, i) => (
+                      <span key={i} className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg font-mono text-cyan-300">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="p-8 rounded-2xl bg-cyan-400/10 border border-cyan-400/20">
+                    <h4 className="font-bold mb-2 text-cyan-400">Interested in these features?</h4>
+                    <p className="text-sm text-zinc-300 mb-6">We can implement a similar solution for your business.</p>
+                    <a href="/contact" className="inline-block px-6 py-2 bg-cyan-400 text-black font-bold rounded-lg text-sm">
+                      Start Discussion
+                    </a>
+                  </div>
+                </>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }
