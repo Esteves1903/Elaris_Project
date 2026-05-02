@@ -16,7 +16,7 @@ export function Header() {
           <img
             src="/brand/logo-horizontal-transparent.svg"
             alt="Elaris"
-            className="h-12 w-auto"
+            className="h-10 w-auto object-contain shrink-0"
           />
         </Link>
 
