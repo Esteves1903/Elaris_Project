@@ -28,12 +28,8 @@ export const portfolioProjects: PortfolioProject[] = [
       'Photo Gallery',
       'Review System',
     ],
-    images: [
-      'https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=1200&h=800&fit=crop',
-      'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=1200&h=800&fit=crop',
-      'https://images.unsplash.com/photo-1511920170033-f8396924c348?w=1200&h=800&fit=crop',
-      'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1200&h=800&fit=crop',
-    ],
+    // USAR O TEU FICHEIRO DE CAFÉ
+    images: ['/fundocafe.jfif'], 
     liveUrl: 'https://example.com/brewhaus',
   },
   {
@@ -52,12 +48,8 @@ export const portfolioProjects: PortfolioProject[] = [
       'Event Calendar',
       'Staff Directory',
     ],
-    images: [
-      'https://images.unsplash.com/photo-1521017711867-fbc4887f3340?w=1200&h=800&fit=crop',
-      'https://images.unsplash.com/photo-1447933601403-0c6688e6eab8?w=1200&h=800&fit=crop',
-      'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1200&h=800&fit=crop',
-      'https://images.unsplash.com/photo-1559056199-641a0ac8b3f7?w=1200&h=800&fit=crop',
-    ],
+    // USAR O TEU FICHEIRO DE CAFÉ
+    images: ['/fundocafe.jfif'], 
     liveUrl: 'https://example.com/daily-blend',
   },
   {
@@ -76,12 +68,8 @@ export const portfolioProjects: PortfolioProject[] = [
       'Pricing System',
       'Customer Reviews',
     ],
-    images: [
-      'https://images.unsplash.com/photo-1599458438107-6fad2dd5c1ea?w=1200&h=800&fit=crop',
-      'https://images.unsplash.com/photo-1599458438110-d22f5eef8f0d?w=1200&h=800&fit=crop',
-      'https://images.unsplash.com/photo-1585747860715-cd4628902d4a?w=1200&h=800&fit=crop',
-      'https://images.unsplash.com/photo-1599458438113-b63e1eb8abc4?w=1200&h=800&fit=crop',
-    ],
+    // USAR O TEU FICHEIRO DE BARBEARIA (.avif)
+    images: ['/fundobarber.avif'], 
     liveUrl: 'https://example.com/prime-cuts',
   },
   {
@@ -100,12 +88,8 @@ export const portfolioProjects: PortfolioProject[] = [
       'Analytics Dashboard',
       'Promotional Offers',
     ],
-    images: [
-      'https://images.unsplash.com/photo-1599458438127-62f45f8de856?w=1200&h=800&fit=crop',
-      'https://images.unsplash.com/photo-1599458438130-cac3b8e6b6b5?w=1200&h=800&fit=crop',
-      'https://images.unsplash.com/photo-1585747860715-cd4628902d4a?w=1200&h=800&fit=crop',
-      'https://images.unsplash.com/photo-1599458438135-60d1d648ff0f?w=1200&h=800&fit=crop',
-    ],
+    // USAR AS FOTOS DOS BARBEIROS QUE BAIXASTE
+    images: ['/Barbeiro1.jfif', '/barbeiro2.jfif'], 
     liveUrl: 'https://example.com/stylemasters',
   },
   {
@@ -124,12 +108,7 @@ export const portfolioProjects: PortfolioProject[] = [
       'Reservation System',
       'Blog Section',
     ],
-    images: [
-      'https://images.unsplash.com/photo-1552566567-daf8550e01e5?w=1200&h=800&fit=crop',
-      'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&h=800&fit=crop',
-      'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=1200&h=800&fit=crop',
-      'https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=1200&h=800&fit=crop',
-    ],
+    images: ['/fundocafe.jfif'],
     liveUrl: 'https://example.com/urban-grill',
   },
   {
@@ -148,12 +127,7 @@ export const portfolioProjects: PortfolioProject[] = [
       'Team Scheduling',
       'Push Notifications',
     ],
-    images: [
-      'https://images.unsplash.com/photo-1585747860715-cd4628902d4a?w=1200&h=800&fit=crop',
-      'https://images.unsplash.com/photo-1599458438127-62f45f8de856?w=1200&h=800&fit=crop',
-      'https://images.unsplash.com/photo-1599458438110-d22f5eef8f0d?w=1200&h=800&fit=crop',
-      'https://images.unsplash.com/photo-1599458438113-b63e1eb8abc4?w=1200&h=800&fit=crop',
-    ],
+    images: ['/fundobarber.avif', '/barbeiro3.jfif'],
     liveUrl: 'https://example.com/barber-elite',
   },
 ];
