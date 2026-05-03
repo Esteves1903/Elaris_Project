@@ -2,7 +2,7 @@ export interface PortfolioProject {
   id: string;
   title: string;
   description: string;
-  category: 'cafe-restaurant' | 'barbershop';
+  category: 'cafe-restaurant' | 'barbershop' | 'sports-store';
   client: string;
   year: number;
   technologies: string[];
@@ -130,10 +130,33 @@ export const portfolioProjects: PortfolioProject[] = [
     images: ['/fundobarber.avif', '/barbeiro3.jfif'],
     liveUrl: 'https://example.com/barber-elite',
   },
+
+  {
+    id: '7',
+    title: 'SportVibe Central',
+    description: 'E-commerce completo para artigos desportivos com gestão de stock e filtros por modalidade.',
+    category: 'sports-store',
+    client: 'SportVibe Ltd',
+    year: 2024,
+    technologies: ['Next.js', 'React', 'Tailwind CSS', 'Prisma', 'Stripe'],
+    features: [
+      'Sistema de Carrinho',
+      'Filtros por Desporto (Futebol, Padel, Ginásio)',
+      'Gestão de Tamanhos e Cores',
+      'Pagamentos Seguros',
+      'Painel de Administração de Stock',
+      'Tracking de Encomendas',
+    ],
+    // Lembra-te de meter uma foto com este nome na pasta public!
+    images: ['/loja-desporto.jfif'], 
+    liveUrl: 'https://example.com/sportvibe',
+  },
 ];
 
 export const categories = [
   { id: 'all', label: 'All Projects' },
   { id: 'cafe-restaurant', label: 'Cafe & Restaurant' },
   { id: 'barbershop', label: 'Barbershop' },
+  { id: 'sports-store', label: 'Sports Store' }, // Adicionado aqui para o filtro
 ];
+
