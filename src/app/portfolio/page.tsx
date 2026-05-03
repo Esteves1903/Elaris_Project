@@ -273,8 +273,12 @@ export default function Portfolio() {
   return (
     <main className="min-h-screen bg-[#06080e] text-white">
       <section className="px-6 pt-24 pb-12 md:pt-32 md:pb-24 max-w-6xl mx-auto">
-        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-cyan-400 font-mono text-[10px] uppercase tracking-[0.4em] mb-4">Case Studies</motion.p>
-        <motion.h1 initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="text-4xl md:text-7xl font-black mb-8 leading-[0.9]">CRAFTING<br/>EXPERIENCES</motion.h1>
+        <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
+            Portfolio
+          </p>
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-8">
+            Interactive layouts previews.
+          </h1>
       </section>
 
       <section className="px-4 md:px-6 space-y-32 pb-32 max-w-6xl mx-auto">
