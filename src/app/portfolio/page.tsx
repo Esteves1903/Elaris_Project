@@ -131,9 +131,9 @@ const PrimeCutsBarberLayout = () => {
   ];
 
   const barbers = [
-    { name: 'Marco', specialty: 'Classic Cuts', rating: 4.9, img: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=400&h=400&fit=crop' },
-    { name: 'David', specialty: 'Fades & Designs', rating: 4.8, img: 'https://images.unsplash.com/photo-1517832606299-7ae9b720a186?w=400&h=400&fit=crop' },
-    { name: 'João', specialty: 'Beard Specialist', rating: 4.9, img: 'https://images.unsplash.com/photo-1621605815841-2c662f23d294?w=400&h=400&fit=crop' },
+    { name: 'Marco', specialty: 'Classic Cuts', rating: 4.9, img:'/Barbeiro1.jfif'},
+    { name: 'David', specialty: 'Fades & Designs', rating: 4.8, img: '/Barbeiro2.jfif' },
+    { name: 'João', specialty: 'Beard Specialist', rating: 4.9, img: '/Barbeiro3.jfif' },
   ];
 
   return (
