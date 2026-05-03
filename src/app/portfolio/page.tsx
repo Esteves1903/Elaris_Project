@@ -120,74 +120,84 @@ const BrewhausCafeLayout = () => {
 
 // --- 2. FOOTBALL STORE PRO (NEW) ---
 const FootballStoreLayout = () => {
-    const [cartCount, setCartCount] = useState(0);
-    const [filter, setFilter] = useState('All');
-  
-    const products = [
-      { id: 1, name: 'Home Kit 24/25', price: '89.99€', category: 'Kits', img: '/api/placeholder/300/400' },
-      { id: 2, name: 'Training Jersey', price: '45.00€', category: 'Training', img: '/api/placeholder/300/400' },
-      { id: 3, name: 'Pro Boots V2', price: '120.00€', category: 'Boots', img: '/api/placeholder/300/400' },
-      { id: 4, name: 'Away Kit 24/25', price: '89.99€', category: 'Kits', img: '/api/placeholder/300/400' },
-    ];
-  
-    const filteredProducts = filter === 'All' ? products : products.filter(p => p.category === filter);
-  
-    return (
-      <div className="h-full bg-zinc-50 text-black font-sans overflow-y-auto custom-scrollbar">
-        {/* Nav */}
-        <nav className="bg-blue-700 text-white p-4 flex justify-between items-center sticky top-0 z-20">
-          <div className="font-black text-xl tracking-tighter italic">FOOTBALL PRO</div>
-          <div className="relative">
-            <ShoppingCart size={24} />
-            <span className="absolute -top-2 -right-2 bg-red-500 text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">{cartCount}</span>
-          </div>
-        </nav>
-  
-        {/* Filters */}
-        <div className="p-4 flex gap-2 overflow-x-auto no-scrollbar bg-white border-b">
-          {['All', 'Kits', 'Training', 'Boots'].map(cat => (
-            <button 
-              key={cat} 
-              onClick={() => setFilter(cat)}
-              className={`px-4 py-2 rounded-full text-xs font-bold transition ${filter === cat ? 'bg-blue-700 text-white' : 'bg-zinc-100 text-zinc-600'}`}
-            >
-              {cat}
-            </button>
-          ))}
+  const [cartCount, setCartCount] = useState(0);
+  const [filter, setFilter] = useState('All');
+
+  const products = [
+    { id: 1, name: 'Home Kit 24/25', price: '89.99€', category: 'Kits', img:'/homekit.jpg' },
+    { id: 2, name: 'Training Jersey', price: '45.00€', category: 'Training', img: 'https://images.unsplash.com/photo-1517466787929-bc90951d0974?q=80&w=500&auto=format&fit=crop' },
+    { id: 3, name: 'Pro Boots V2', price: '120.00€', category: 'Boots', img:'/chuteira.avif' },
+    { id: 4, name: 'Away Kit 24/25', price: '89.99€', category: 'Kits', img:'/awaykit.avif' },
+  ];
+
+  const filteredProducts = filter === 'All' ? products : products.filter(p => p.category === filter);
+
+  return (
+    <div className="h-full bg-zinc-50 text-black font-sans overflow-y-auto custom-scrollbar">
+      {/* Nav */}
+      <nav className="bg-blue-700 text-white p-4 flex justify-between items-center sticky top-0 z-20">
+        <div className="font-black text-xl tracking-tighter italic">FOOTBALL PRO</div>
+        <div className="relative">
+          <ShoppingCart size={24} />
+          <span className="absolute -top-2 -right-2 bg-red-500 text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">{cartCount}</span>
         </div>
-  
-        {/* Hero */}
-        <div className="p-4">
-            <div className="bg-zinc-900 rounded-2xl h-40 flex items-center p-6 text-white relative overflow-hidden">
-                <div className="z-10">
-                    <h2 className="text-2xl font-black italic">NEW SEASON<br/>ARRIVALS</h2>
-                    <button className="mt-2 text-blue-400 text-[10px] font-bold flex items-center gap-1 uppercase tracking-widest">Shop Now <ArrowRight size={12}/></button>
-                </div>
-                <div className="absolute right-[-20px] bottom-[-20px] rotate-12 opacity-20">
-                    <ShoppingCart size={120} />
-                </div>
-            </div>
-        </div>
-  
-        {/* Grid */}
-        <div className="p-4 grid grid-cols-2 gap-4">
-          {filteredProducts.map(p => (
-            <motion.div layout key={p.id} className="bg-white rounded-xl overflow-hidden shadow-sm border border-zinc-100">
-              <div className="h-40 bg-zinc-200" />
-              <div className="p-3">
-                <p className="text-[10px] font-bold text-blue-600 uppercase tracking-tighter">{p.category}</p>
-                <h3 className="text-sm font-bold truncate">{p.name}</h3>
-                <div className="mt-2 flex justify-between items-center">
-                  <span className="text-sm font-black">{p.price}</span>
-                  <button onClick={() => setCartCount(c => c+1)} className="bg-zinc-950 text-white p-2 rounded-lg">+</button>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+      </nav>
+
+      {/* Filters */}
+      <div className="p-4 flex gap-2 overflow-x-auto no-scrollbar bg-white border-b">
+        {['All', 'Kits', 'Training', 'Boots'].map(cat => (
+          <button 
+            key={cat} 
+            onClick={() => setFilter(cat)}
+            className={`px-4 py-2 rounded-full text-xs font-bold transition ${filter === cat ? 'bg-blue-700 text-white' : 'bg-zinc-100 text-zinc-600'}`}
+          >
+            {cat}
+          </button>
+        ))}
       </div>
-    );
-  };
+
+      {/* Hero */}
+      <div className="p-4">
+          <div className="bg-zinc-900 rounded-2xl h-40 flex items-center p-6 text-white relative overflow-hidden">
+              <div className="z-10">
+                  <h2 className="text-2xl font-black italic">NEW SEASON<br/>ARRIVALS</h2>
+                  <button className="mt-2 text-blue-400 text-[10px] font-bold flex items-center gap-1 uppercase tracking-widest">Shop Now <ArrowRight size={12}/></button>
+              </div>
+              <div className="absolute right-[-20px] bottom-[-20px] rotate-12 opacity-20">
+                  <ShoppingCart size={120} />
+              </div>
+          </div>
+      </div>
+
+      {/* Grid Corrigido */}
+      <div className="p-4 grid grid-cols-2 gap-4">
+        {filteredProducts.map(p => (
+          <motion.div layout key={p.id} className="bg-white rounded-xl overflow-hidden shadow-sm border border-zinc-100 flex flex-col">
+            {/* Div da Imagem com a tag img real */}
+            <div className="h-130 bg-zinc-50 overflow-hidden flex items-center justify-center p-2">
+              <img 
+                src={p.img} 
+                alt={p.name} 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            
+            <div className="p-3">
+              <p className="text-[10px] font-bold text-blue-600 uppercase tracking-tighter">{p.category}</p>
+              <h3 className="text-sm font-bold truncate">{p.name}</h3>
+              <div className="mt-2 flex justify-between items-center">
+                <span className="text-sm font-black">{p.price}</span>
+                <button onClick={() => setCartCount(c => c+1)} className="bg-zinc-950 text-white p-2 rounded-lg hover:bg-blue-700 transition-colors">
+                   <ShoppingCart size={14} />
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 // --- 3. PRIME CUTS BARBER SHOP ---
 const PrimeCutsBarberLayout = () => {
