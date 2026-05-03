@@ -49,7 +49,7 @@ const BrewhausCafeLayout = () => {
         {step === 'home' && (
           <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <div className="relative h-64 md:h-96 overflow-hidden bg-amber-100">
-              <img src="https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=1200&h=600&fit=crop" alt="Cafe" className="w-full h-full object-cover" />
+              <img src="/fundocafe.jfif" alt="Cafe" className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-black/40 flex items-center justify-center p-4">
                 <div className="text-center text-white">
                   <h1 className="text-3xl md:text-5xl font-serif font-bold mb-2 md:mb-4">Welcome to Brewhaus</h1>
@@ -132,8 +132,8 @@ const PrimeCutsBarberLayout = () => {
 
   const barbers = [
     { name: 'Marco', specialty: 'Classic Cuts', rating: 4.9, img:'/Barbeiro1.jfif'},
-    { name: 'David', specialty: 'Fades & Designs', rating: 4.8, img: '/Barbeiro2.jfif' },
-    { name: 'João', specialty: 'Beard Specialist', rating: 4.9, img: '/Barbeiro3.jfif' },
+    { name: 'David', specialty: 'Fades & Designs', rating: 4.8, img: '/barbeiro2.jfif' },
+    { name: 'João', specialty: 'Beard Specialist', rating: 4.9, img: '/barbeiro3.jfif' },
   ];
 
   return (
@@ -165,7 +165,7 @@ const PrimeCutsBarberLayout = () => {
         {view === 'home' && (
           <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <div className="relative h-80 md:h-[450px] overflow-hidden bg-zinc-900">
-              <img src="/fundos/Barbershop.jfif" />
+              <img src="/fundobarber.avif" />
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center px-4">
                   <h1 className="text-4xl md:text-7xl font-black mb-2 italic tracking-tighter">SHARP LINES</h1>
