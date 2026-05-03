@@ -128,10 +128,12 @@ export default function Home() {
             <RevealCard
               key={service.title}
               delay={index * 0.30}
-              className="cursor-default rounded-2xl border border-white/10 bg-white/5 p-6 text-white transition-colors hover:border-cyan-400/40 hover:bg-white/[0.07]"
+              // h-full para esticar o card
+              className="flex flex-col h-full cursor-default rounded-2xl border border-white/10 bg-white/5 p-6 text-white transition-colors hover:border-cyan-400/40 hover:bg-white/[0.07]"
             >
               <h3 className="text-xl font-semibold">{service.title}</h3>
-              <p className="mt-3 text-sm leading-6 text-zinc-400">
+              {/* flex-1 para o texto ocupar o espaço e alinhar os cards */}
+              <p className="mt-3 text-sm leading-6 text-zinc-400 flex-1">
                 {service.description}
               </p>
             </RevealCard>
@@ -167,12 +169,13 @@ export default function Home() {
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {portfolioProjects.slice(0, 3).map((project, index) => (
-            <RevealCard key={project.id} delay={index * 0.30}>
+            <RevealCard key={project.id} delay={index * 0.30} className="h-full">
               <Link
                 href="/portfolio"
-                className="group block overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition-colors hover:border-cyan-400/40 hover:bg-white/[0.07]"
+                // flex flex-col h-full para alinhar tudo
+                className="group flex flex-col h-full overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition-colors hover:border-cyan-400/40 hover:bg-white/[0.07]"
               >
-                <div className="relative h-48 w-full overflow-hidden bg-black">
+                <div className="relative h-48 w-full overflow-hidden bg-black shrink-0">
                   <img
                     src={project.images?.[0] || "/api/placeholder/400/320"}
                     alt={project.title}
@@ -183,16 +186,17 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="p-6">
+                <div className="p-6 flex flex-1 flex-col">
                   <h3 className="text-lg font-semibold text-white">
                     {project.title}
                   </h3>
 
-                  <p className="mt-2 text-sm text-zinc-400">
+                  {/* flex-1 aqui empurra as tags para o fundo e iguala os tamanhos */}
+                  <p className="mt-2 text-sm text-zinc-400 flex-1">
                     {project.description}
                   </p>
 
-                  <div className="mt-4 flex flex-wrap gap-1">
+                  <div className="mt-4 flex flex-wrap gap-1 shrink-0">
                     {project.features.slice(0, 2).map((feature) => (
                       <span
                         key={feature}
@@ -241,7 +245,8 @@ export default function Home() {
             <RevealCard
               key={item.step}
               delay={index * 0.30}
-              className="cursor-default rounded-2xl border border-white/10 bg-white/5 p-6 text-white transition-colors hover:border-cyan-400/40 hover:bg-white/[0.07]"
+              // h-full e flex-col aqui também
+              className="flex flex-col h-full cursor-default rounded-2xl border border-white/10 bg-white/5 p-6 text-white transition-colors hover:border-cyan-400/40 hover:bg-white/[0.07]"
             >
               <span className="text-sm font-semibold text-cyan-400">
                 {item.step}
@@ -249,7 +254,7 @@ export default function Home() {
 
               <h3 className="mt-5 text-xl font-semibold">{item.title}</h3>
 
-              <p className="mt-3 text-sm leading-6 text-zinc-400">
+              <p className="mt-3 text-sm leading-6 text-zinc-400 flex-1">
                 {item.description}
               </p>
             </RevealCard>
