@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { portfolioProjects } from "@/lib/portfolio-projects";
+import RevealCard from "@/components/ui/RevealCard";
 
 const services = [
   {
@@ -123,16 +124,17 @@ export default function Home() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-3">
-          {services.map((service) => (
-            <div
+          {services.map((service, index) => (
+            <RevealCard
               key={service.title}
-              className="cursor-default rounded-2xl border border-white/10 bg-white/5 p-6 text-white transition hover:border-cyan-400/40 hover:bg-white/[0.07]"
+              delay={index * 0.30}
+              className="cursor-default rounded-2xl border border-white/10 bg-white/5 p-6 text-white transition-colors hover:border-cyan-400/40 hover:bg-white/[0.07]"
             >
               <h3 className="text-xl font-semibold">{service.title}</h3>
               <p className="mt-3 text-sm leading-6 text-zinc-400">
                 {service.description}
               </p>
-            </div>
+            </RevealCard>
           ))}
         </div>
       </section>
@@ -164,46 +166,51 @@ export default function Home() {
         </p>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {portfolioProjects.slice(0, 3).map((project) => (
-            <Link
-              key={project.id}
-              href="/portfolio"
-              className="group rounded-2xl border border-white/10 bg-white/5 overflow-hidden transition hover:border-cyan-400/40 hover:bg-white/[0.07]"
-            >
-              <div className="relative h-48 w-full overflow-hidden bg-black">
-                <img
-                  src={project.images?.[0] || "/api/placeholder/400/320"}
-                  alt={project.title}
-                  className="h-full w-full object-cover opacity-80 transition group-hover:opacity-100"
-                />
-                <div className="absolute left-4 top-4 rounded-full bg-black/60 px-3 py-1 text-xs font-semibold uppercase text-cyan-400 backdrop-blur-sm">
-                  {project.category.replace("-", " ")}
+          {portfolioProjects.slice(0, 3).map((project, index) => (
+            <RevealCard key={project.id} delay={index * 0.30}>
+              <Link
+                href="/portfolio"
+                className="group block overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition-colors hover:border-cyan-400/40 hover:bg-white/[0.07]"
+              >
+                <div className="relative h-48 w-full overflow-hidden bg-black">
+                  <img
+                    src={project.images?.[0] || "/api/placeholder/400/320"}
+                    alt={project.title}
+                    className="h-full w-full object-cover opacity-80 transition group-hover:opacity-100"
+                  />
+                  <div className="absolute left-4 top-4 rounded-full bg-black/60 px-3 py-1 text-xs font-semibold uppercase text-cyan-400 backdrop-blur-sm">
+                    {project.category.replace("-", " ")}
+                  </div>
                 </div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-lg font-semibold text-white">
-                  {project.title}
-                </h3>
-                <p className="mt-2 text-sm text-zinc-400">
-                  {project.description}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-1">
-                  {project.features.slice(0, 2).map((feature) => (
-                    <span
-                      key={feature}
-                      className="rounded-full bg-cyan-400/20 px-2 py-1 text-xs text-cyan-300"
-                    >
-                      {feature}
-                    </span>
-                  ))}
-                  {project.features.length > 2 && (
-                    <span className="rounded-full bg-white/10 px-2 py-1 text-xs text-zinc-300">
-                      +{project.features.length - 2}
-                    </span>
-                  )}
+
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold text-white">
+                    {project.title}
+                  </h3>
+
+                  <p className="mt-2 text-sm text-zinc-400">
+                    {project.description}
+                  </p>
+
+                  <div className="mt-4 flex flex-wrap gap-1">
+                    {project.features.slice(0, 2).map((feature) => (
+                      <span
+                        key={feature}
+                        className="rounded-full bg-cyan-400/20 px-2 py-1 text-xs text-cyan-300"
+                      >
+                        {feature}
+                      </span>
+                    ))}
+
+                    {project.features.length > 2 && (
+                      <span className="rounded-full bg-white/10 px-2 py-1 text-xs text-zinc-300">
+                        +{project.features.length - 2}
+                      </span>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </RevealCard>
           ))}
         </div>
       </section>
@@ -230,19 +237,22 @@ export default function Home() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-4">
-          {processSteps.map((item) => (
-            <div
+          {processSteps.map((item, index) => (
+            <RevealCard
               key={item.step}
-              className="cursor-default rounded-2xl border border-white/10 bg-white/5 p-6 text-white transition hover:border-cyan-400/40 hover:bg-white/[0.07]"
+              delay={index * 0.30}
+              className="cursor-default rounded-2xl border border-white/10 bg-white/5 p-6 text-white transition-colors hover:border-cyan-400/40 hover:bg-white/[0.07]"
             >
               <span className="text-sm font-semibold text-cyan-400">
                 {item.step}
               </span>
+
               <h3 className="mt-5 text-xl font-semibold">{item.title}</h3>
+
               <p className="mt-3 text-sm leading-6 text-zinc-400">
                 {item.description}
               </p>
-            </div>
+            </RevealCard>
           ))}
         </div>
       </section>
