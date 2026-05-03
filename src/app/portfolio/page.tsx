@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, MapPin, Clock, Users, Star, Calendar, Phone, Menu, X } from 'lucide-react';
+import { ChevronDown, MapPin, Clock, Users, Star, Calendar, Phone, Menu, X, ShoppingCart, Search, Filter, ArrowRight } from 'lucide-react';
 
 // --- 1. BREWHAUS COFFEE & RESTAURANT ---
 const BrewhausCafeLayout = () => {
@@ -118,7 +118,78 @@ const BrewhausCafeLayout = () => {
   );
 };
 
-// --- 2. PRIME CUTS BARBER SHOP ---
+// --- 2. FOOTBALL STORE PRO (NEW) ---
+const FootballStoreLayout = () => {
+    const [cartCount, setCartCount] = useState(0);
+    const [filter, setFilter] = useState('All');
+  
+    const products = [
+      { id: 1, name: 'Home Kit 24/25', price: '89.99€', category: 'Kits', img: '/api/placeholder/300/400' },
+      { id: 2, name: 'Training Jersey', price: '45.00€', category: 'Training', img: '/api/placeholder/300/400' },
+      { id: 3, name: 'Pro Boots V2', price: '120.00€', category: 'Boots', img: '/api/placeholder/300/400' },
+      { id: 4, name: 'Away Kit 24/25', price: '89.99€', category: 'Kits', img: '/api/placeholder/300/400' },
+    ];
+  
+    const filteredProducts = filter === 'All' ? products : products.filter(p => p.category === filter);
+  
+    return (
+      <div className="h-full bg-zinc-50 text-black font-sans overflow-y-auto custom-scrollbar">
+        {/* Nav */}
+        <nav className="bg-blue-700 text-white p-4 flex justify-between items-center sticky top-0 z-20">
+          <div className="font-black text-xl tracking-tighter italic">FOOTBALL PRO</div>
+          <div className="relative">
+            <ShoppingCart size={24} />
+            <span className="absolute -top-2 -right-2 bg-red-500 text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">{cartCount}</span>
+          </div>
+        </nav>
+  
+        {/* Filters */}
+        <div className="p-4 flex gap-2 overflow-x-auto no-scrollbar bg-white border-b">
+          {['All', 'Kits', 'Training', 'Boots'].map(cat => (
+            <button 
+              key={cat} 
+              onClick={() => setFilter(cat)}
+              className={`px-4 py-2 rounded-full text-xs font-bold transition ${filter === cat ? 'bg-blue-700 text-white' : 'bg-zinc-100 text-zinc-600'}`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+  
+        {/* Hero */}
+        <div className="p-4">
+            <div className="bg-zinc-900 rounded-2xl h-40 flex items-center p-6 text-white relative overflow-hidden">
+                <div className="z-10">
+                    <h2 className="text-2xl font-black italic">NEW SEASON<br/>ARRIVALS</h2>
+                    <button className="mt-2 text-blue-400 text-[10px] font-bold flex items-center gap-1 uppercase tracking-widest">Shop Now <ArrowRight size={12}/></button>
+                </div>
+                <div className="absolute right-[-20px] bottom-[-20px] rotate-12 opacity-20">
+                    <ShoppingCart size={120} />
+                </div>
+            </div>
+        </div>
+  
+        {/* Grid */}
+        <div className="p-4 grid grid-cols-2 gap-4">
+          {filteredProducts.map(p => (
+            <motion.div layout key={p.id} className="bg-white rounded-xl overflow-hidden shadow-sm border border-zinc-100">
+              <div className="h-40 bg-zinc-200" />
+              <div className="p-3">
+                <p className="text-[10px] font-bold text-blue-600 uppercase tracking-tighter">{p.category}</p>
+                <h3 className="text-sm font-bold truncate">{p.name}</h3>
+                <div className="mt-2 flex justify-between items-center">
+                  <span className="text-sm font-black">{p.price}</span>
+                  <button onClick={() => setCartCount(c => c+1)} className="bg-zinc-950 text-white p-2 rounded-lg">+</button>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+// --- 3. PRIME CUTS BARBER SHOP ---
 const PrimeCutsBarberLayout = () => {
   const [view, setView] = useState('home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -165,7 +236,7 @@ const PrimeCutsBarberLayout = () => {
         {view === 'home' && (
           <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <div className="relative h-80 md:h-[450px] overflow-hidden bg-zinc-900">
-              <img src="/fundobarber.avif" />
+              <img src="/fundobarber.avif" className="w-full h-full object-cover" />
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center px-4">
                   <h1 className="text-4xl md:text-7xl font-black mb-2 italic tracking-tighter">SHARP LINES</h1>
@@ -260,7 +331,16 @@ export default function Portfolio() {
       features: ["Online Menu", "Table Booking", "Responsive UI"]
     },
     {
-      id: 2,
+        id: 2,
+        title: "Football Store Pro",
+        url: "footballpro-shop.com",
+        layout: <FootballStoreLayout />,
+        tech: ["Next.js", "Tailwind CSS", "Framer Motion"],
+        description: "Professional online store for football gear with real-time stock and filters.",
+        features: ["Product Filtering", "Shopping Cart", "Inventory Management"]
+    },
+    {
+      id: 3,
       title: "Prime Cuts Barber",
       url: "primecuts-barber.com",
       layout: <PrimeCutsBarberLayout />,
@@ -307,8 +387,8 @@ export default function Portfolio() {
             </div>
 
             <div className="mt-8 flex flex-col md:flex-row gap-6 justify-between items-start">
-               <p className="text-zinc-500 text-sm max-w-lg leading-relaxed">{p.description}</p>
-               <button onClick={() => setActiveProject(p)} className="text-[10px] font-black uppercase tracking-widest bg-white text-black px-10 py-4 rounded-full hover:bg-cyan-400 transition whitespace-nowrap">Explore Specs</button>
+                <p className="text-zinc-500 text-sm max-w-lg leading-relaxed">{p.description}</p>
+                <button onClick={() => setActiveProject(p)} className="text-[10px] font-black uppercase tracking-widest bg-white text-black px-10 py-4 rounded-full hover:bg-cyan-400 transition whitespace-nowrap">Explore Specs</button>
             </div>
           </div>
         ))}
@@ -339,6 +419,7 @@ export default function Portfolio() {
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.05); border-radius: 10px; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
       `}</style>
     </main>
   );
