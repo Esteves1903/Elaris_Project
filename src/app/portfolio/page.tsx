@@ -152,7 +152,7 @@ const PrimeCutsBarberLayout = () => {
 
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} className="fixed inset-0 bg-black z-40 p-8 flex flex-col gap-6 text-center justify-center">
+          <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} className="absolute inset-0 bg-black z-50 p-8 flex flex-col gap-6 text-center justify-center">
             <button className="absolute top-6 right-6" onClick={() => setIsMobileMenuOpen(false)}><X size={28}/></button>
             <button onClick={() => {setView('home'); setIsMobileMenuOpen(false)}} className="text-2xl font-black italic">HOME</button>
             <button onClick={() => {setView('services'); setIsMobileMenuOpen(false)}} className="text-2xl font-black italic">SERVICES</button>
