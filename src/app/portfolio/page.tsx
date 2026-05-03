@@ -165,7 +165,7 @@ const PrimeCutsBarberLayout = () => {
         {view === 'home' && (
           <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <div className="relative h-80 md:h-[450px] overflow-hidden bg-zinc-900">
-              <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=1200&auto=format&fit=crop" alt="Barbershop" className="w-full h-full object-cover opacity-40" />
+              <img src="/fundos/Barbershop.jfif" />
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center px-4">
                   <h1 className="text-4xl md:text-7xl font-black mb-2 italic tracking-tighter">SHARP LINES</h1>
