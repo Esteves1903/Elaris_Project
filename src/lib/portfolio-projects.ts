@@ -34,23 +34,23 @@ export const portfolioProjects: PortfolioProject[] = [
   },
   {
     id: '2',
-    title: 'The Daily Blend Cafe',
-    description: 'Specialty coffee shop website with loyalty program and mobile app integration',
-    category: 'cafe-restaurant',
-    client: 'The Daily Blend',
+    title: 'Football Store Pro', // Novo título
+    description: 'Premium online store for football gear, kits and equipment with real-time stock management.',
+    category: 'sports-store', // Nova categoria (podes mudar para 'cafe-restaurant' se não quiseres mexer nos tipos)
+    client: 'Strikers Co.',
     year: 2024,
-    technologies: ['Next.js', 'React', 'Firebase', 'Tailwind CSS', 'Mobile App'],
+    technologies: ['Next.js', 'Tailwind CSS', 'Stripe', 'Framer Motion'],
     features: [
-      'Loyalty Program',
-      'Menu Customization',
-      'Mobile Ordering',
-      'Location Finder',
-      'Event Calendar',
-      'Staff Directory',
+      'Product Filtering',
+      'Shopping Cart',
+      'Size Guide',
+      'Safe Checkout',
+      'Member Discounts',
+      'Order Tracking',
     ],
-    // USAR O TEU FICHEIRO DE CAFÉ
-    images: ['/fundocafe.jfif'], 
-    liveUrl: 'https://example.com/daily-blend',
+    // AQUI: Coloca o nome do teu ficheiro de imagem de futebol que está na pasta public
+    images: ['/loja-futebol.jfif'], 
+    liveUrl: 'https://example.com/football-store',
   },
   {
     id: '3',
@@ -131,26 +131,7 @@ export const portfolioProjects: PortfolioProject[] = [
     liveUrl: 'https://example.com/barber-elite',
   },
 
-  {
-    id: '7',
-    title: 'SportVibe Central',
-    description: 'E-commerce completo para artigos desportivos com gestão de stock e filtros por modalidade.',
-    category: 'sports-store',
-    client: 'SportVibe Ltd',
-    year: 2024,
-    technologies: ['Next.js', 'React', 'Tailwind CSS', 'Prisma', 'Stripe'],
-    features: [
-      'Sistema de Carrinho',
-      'Filtros por Desporto (Futebol, Padel, Ginásio)',
-      'Gestão de Tamanhos e Cores',
-      'Pagamentos Seguros',
-      'Painel de Administração de Stock',
-      'Tracking de Encomendas',
-    ],
-    // Lembra-te de meter uma foto com este nome na pasta public!
-    images: ['/loja-desporto.jfif'], 
-    liveUrl: 'https://example.com/sportvibe',
-  },
+
 ];
 
 export const categories = [
