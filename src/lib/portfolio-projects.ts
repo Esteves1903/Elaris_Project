@@ -49,7 +49,7 @@ export const portfolioProjects: PortfolioProject[] = [
       'Order Tracking',
     ],
     // AQUI: Coloca o nome do teu ficheiro de imagem de futebol que está na pasta public
-    images: ['/loja-futebol.jfif'], 
+    images: ['/fundobola.avif'], 
     liveUrl: 'https://example.com/football-store',
   },
   {
