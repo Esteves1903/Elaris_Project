@@ -141,313 +141,556 @@ function ElarisFinalDubai() {
 
   // --- CONTENT DATA ---
   const slides = [
-    { url: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?q=80&w=2000", title: "The Golden Era", sub: "Experience Jumeirah's Finest" },
-    { url: "https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=2000", title: "Culinary Alchemy", sub: "Portuguese Soul, Global Vision" },
-    { url: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2000", title: "Prestige Lounge", sub: "Liquid Assets & Rare Vintages" }
+    {
+      url: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?q=80&w=2000",
+      title: "The Golden Era",
+    },
+    {
+      url: "https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=2000",
+      title: "Culinary Alchemy",
+    },
+    {
+      url: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2000",
+      title: "Prestige Lounge",
+    }
   ];
 
   const menuCategories = [
     {
       name: "The Beginning",
       items: [
-        { n: "A5 Wagyu Tartare", p: "AED 245", d: "Truffle pearls, 24k gold, quail egg." },
-        { n: "Blue Lobster Salad", p: "AED 190", d: "Citrus emulsion, caviar, sea herbs." }
+        {
+          n: "A5 Wagyu Tartare",
+          p: "AED 245",
+          d: "Truffle pearls, 24k gold, quail egg."
+        },
+        {
+          n: "Blue Lobster Salad",
+          p: "AED 190",
+          d: "Citrus emulsion, caviar, sea herbs."
+        }
       ]
     },
     {
       name: "Heritage Mains",
       items: [
-        { n: "The Elaris Francesinha", p: "AED 320", d: "Wagyu beef, Pata Negra, champagne sauce." },
-        { n: "Sea Bass in Salt", p: "AED 450", d: "Mediterranean herbs, flamed tableside." }
+        {
+          n: "The Elaris Francesinha",
+          p: "AED 320",
+          d: "Wagyu beef, Pata Negra, champagne sauce."
+        },
+        {
+          n: "Sea Bass in Salt",
+          p: "AED 450",
+          d: "Mediterranean herbs, flamed tableside."
+        }
       ]
     }
   ];
 
   // --- LOGIC ---
   useEffect(() => {
-    const timer = setInterval(() => setCurrentSlide((prev) => (prev + 1) % slides.length), 6000);
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 6000);
+
     return () => clearInterval(timer);
   }, []);
 
   const navigateTo = (screen: typeof view) => {
     setView(screen);
     setIsMobileMenuOpen(false);
-    const mainArea = document.getElementById('main-content');
-    if (mainArea) mainArea.scrollTo(0, 0);
+    setShowPrivacy(false);
   };
 
   return (
-    <div className="h-screen w-full flex flex-col bg-[#faf9f6] text-[#1a1a1a] font-sans overflow-hidden antialiased">
-      
-      {/* --- 1. NAVIGATION (ALWAYS VISIBLE) --- */}
-      <nav className="flex-shrink-0 h-20 md:h-24 bg-white/95 backdrop-blur-md border-b border-zinc-100 flex justify-between items-center px-6 md:px-16 z-[60]">
-        <div onClick={() => navigateTo('home')} className="cursor-pointer group flex flex-col items-center">
-          <span className="text-xl md:text-2xl font-light tracking-[0.5em] uppercase group-hover:text-[#c5a059] transition-colors duration-500">Elaris</span>
-          <span className="text-[7px] tracking-[0.3em] text-zinc-400 font-bold">DUBAI • JUMEIRAH</span>
+    <div className="h-screen w-full bg-[#faf9f6] text-[#1a1a1a] font-sans overflow-hidden relative">
+
+      {/* NAVBAR */}
+      <nav className="h-20 md:h-24 bg-white/95 backdrop-blur-md border-b border-zinc-100 flex justify-between items-center px-6 md:px-16 relative z-50">
+        <div
+          onClick={() => navigateTo('home')}
+          className="cursor-pointer flex flex-col items-center"
+        >
+          <span className="text-xl md:text-2xl font-light tracking-[0.5em] uppercase">
+            Elaris
+          </span>
+
+          <span className="text-[7px] tracking-[0.3em] text-zinc-400 font-bold">
+            DUBAI • JUMEIRAH
+          </span>
         </div>
 
         <div className="hidden md:flex gap-12 text-[10px] font-black uppercase tracking-[0.3em] items-center text-zinc-800">
-          <button onClick={() => navigateTo('story')} className="hover:text-[#c5a059] transition-all">The Story</button>
-          <button onClick={() => navigateTo('menu')} className="hover:text-[#c5a059] transition-all">The Menu</button>
-          <button onClick={() => navigateTo('booking')} className="px-10 py-4 bg-[#1a1a1a] text-white hover:bg-[#c5a059] transition-all shadow-xl">Book Now</button>
+          <button
+            onClick={() => navigateTo('story')}
+            className="hover:text-[#c5a059] transition-all"
+          >
+            The Story
+          </button>
+
+          <button
+            onClick={() => navigateTo('menu')}
+            className="hover:text-[#c5a059] transition-all"
+          >
+            The Menu
+          </button>
+
+          <button
+            onClick={() => navigateTo('booking')}
+            className="px-10 py-4 bg-[#1a1a1a] text-white hover:bg-[#c5a059] transition-all"
+          >
+            Book Now
+          </button>
         </div>
 
-        <button className="md:hidden text-black p-2" onClick={() => setIsMobileMenuOpen(true)}>
+        <button
+          className="md:hidden p-2"
+          onClick={() => setIsMobileMenuOpen(true)}
+        >
           <Menu size={24} strokeWidth={1.5} />
         </button>
       </nav>
 
-      {/* --- 2. MAIN SCROLLABLE CONTENT --- */}
-      <main
-  id="main-content"
-  className={`flex-1 overflow-y-auto overflow-x-hidden relative flex flex-col ${
-    showPrivacy || isMobileMenuOpen ? 'overflow-hidden' : ''
-  }`}
->
+      {/* MAIN */}
+      <main className="h-[calc(100vh-80px)] md:h-[calc(100vh-96px)] overflow-hidden relative">
+
         <AnimatePresence mode="wait">
-          
-          {/* HOME VIEW */}
+
+          {/* HOME */}
           {view === 'home' && (
-            <motion.div key="h" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="w-full">
-              {/* IMMERSIVE SLIDESHOW */}
-              <div className="relative h-[80vh] w-full overflow-hidden">
-                <AnimatePresence initial={false}>
-                  <motion.div key={currentSlide} initial={{ scale: 1.1, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 1.05, opacity: 0 }} transition={{ duration: 2 }} className="absolute inset-0">
-                    <img src={slides[currentSlide].url} className="w-full h-full object-cover" alt="Elaris" />
-                    <div className="absolute inset-0 bg-black/30" />
+            <motion.div
+              key="home"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="h-full overflow-y-auto"
+            >
+              <div className="relative h-[75vh] overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentSlide}
+                    initial={{ opacity: 0, scale: 1.08 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 1.4 }}
+                    className="absolute inset-0"
+                  >
+                    <img
+                      src={slides[currentSlide].url}
+                      className="w-full h-full object-cover"
+                      alt=""
+                    />
+
+                    <div className="absolute inset-0 bg-black/40" />
                   </motion.div>
                 </AnimatePresence>
-                
-                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center text-white px-6">
-                  <motion.span initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="text-[10px] tracking-[0.6em] uppercase mb-4 font-bold">A Legacy of Excellence</motion.span>
-                  <motion.h2 initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }} className="text-5xl md:text-8xl font-light tracking-tighter italic mb-10">
+
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6 z-10">
+                  <span className="text-[10px] tracking-[0.6em] uppercase mb-4 font-bold">
+                    A Legacy of Excellence
+                  </span>
+
+                  <h2 className="text-5xl md:text-8xl font-light italic mb-10">
                     {slides[currentSlide].title}
-                  </motion.h2>
-                  <button onClick={() => navigateTo('menu')} className="px-12 py-5 border border-white hover:bg-white hover:text-black transition-all uppercase text-[10px] tracking-widest font-black">Discover the Collection</button>
+                  </h2>
+
+                  <button
+                    onClick={() => navigateTo('menu')}
+                    className="px-12 py-5 border border-white hover:bg-white hover:text-black transition-all uppercase text-[10px] tracking-widest font-black"
+                  >
+                    Discover the Collection
+                  </button>
                 </div>
               </div>
 
-              {/* BRAND PHILOSOPHY */}
-              <section className="py-24 px-8 max-w-4xl mx-auto text-center">
-                <Sparkles className="text-[#c5a059] mx-auto mb-8" size={32} strokeWidth={1} />
-                <h3 className="text-3xl md:text-5xl font-light mb-10 tracking-tight">The Art of Honest Luxury</h3>
-                <p className="text-zinc-500 font-serif text-lg md:text-xl leading-relaxed italic">
-                  "At Elaris, we don't just serve dishes; we curate moments. From the rustic roots of Portugal to the golden skyline of Dubai, our journey is a celebration of the extraordinary."
+              <section className="py-20 px-8 max-w-4xl mx-auto text-center">
+                <Sparkles
+                  className="text-[#c5a059] mx-auto mb-8"
+                  size={32}
+                  strokeWidth={1}
+                />
+
+                <h3 className="text-3xl md:text-5xl font-light mb-10">
+                  The Art of Honest Luxury
+                </h3>
+
+                <p className="text-zinc-500 font-serif text-lg italic leading-relaxed">
+                  "At Elaris, we don't just serve dishes; we curate moments.
+                  From the rustic roots of Portugal to the golden skyline of Dubai."
                 </p>
-                <div className="mt-12 h-[1px] w-24 bg-[#c5a059] mx-auto" />
               </section>
+
+              {/* FOOTER PEQUENO */}
+              <footer className="bg-[#0a0a0a] text-white px-8 py-10">
+                <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between gap-10">
+
+                  <div>
+                    <h4 className="text-xl tracking-[0.4em] uppercase mb-3">
+                      Elaris
+                    </h4>
+
+                    <p className="text-zinc-500 text-xs leading-relaxed">
+                      Jumeirah Beach Road <br />
+                      Dubai, UAE
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col gap-3 text-[10px] uppercase tracking-[0.3em]">
+                    <button
+                      onClick={() => navigateTo('menu')}
+                      className="hover:text-[#c5a059] text-left"
+                    >
+                      Menu
+                    </button>
+
+                    <button
+                      onClick={() => navigateTo('story')}
+                      className="hover:text-[#c5a059] text-left"
+                    >
+                      Heritage
+                    </button>
+
+                    <button
+                      onClick={() => setShowPrivacy(true)}
+                      className="hover:text-[#c5a059] text-left"
+                    >
+                      Privacy
+                    </button>
+                  </div>
+                </div>
+
+                <div className="mt-10 border-t border-white/10 pt-5 text-center text-[8px] tracking-[0.3em] text-zinc-700 uppercase">
+                  © 2026 Elaris Global Hospitality
+                </div>
+              </footer>
             </motion.div>
           )}
 
-          {/* MENU VIEW */}
+          {/* MENU */}
           {view === 'menu' && (
-            <motion.div key="m" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="p-8 md:p-32 max-w-7xl mx-auto w-full">
-              <header className="text-center mb-24">
-                <h2 className="text-5xl md:text-7xl font-light uppercase tracking-[0.2em] mb-4">The Menu</h2>
-                <div className="h-0.5 w-20 bg-[#c5a059] mx-auto" />
-              </header>
-              <div className="grid md:grid-cols-2 gap-24">
-                {menuCategories.map(cat => (
-                  <div key={cat.name} className="space-y-16">
-                    <h4 className="text-[#c5a059] text-[11px] font-black uppercase tracking-[0.5em] border-b border-zinc-100 pb-4">{cat.name}</h4>
-                    {cat.items.map(item => (
-                      <div key={item.n} className="group">
-                        <div className="flex justify-between items-end mb-2">
-                          <h5 className="text-xl font-light group-hover:text-[#c5a059] transition-colors">{item.n}</h5>
-                          <span className="text-sm font-medium tracking-widest">{item.p}</span>
+            <motion.div
+              key="menu"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="h-full overflow-y-auto p-8 md:p-20"
+            >
+              <div className="max-w-6xl mx-auto">
+                <header className="text-center mb-20">
+                  <h2 className="text-5xl md:text-7xl font-light uppercase tracking-[0.2em] mb-4">
+                    The Menu
+                  </h2>
+
+                  <div className="h-0.5 w-20 bg-[#c5a059] mx-auto" />
+                </header>
+
+                <div className="grid md:grid-cols-2 gap-20">
+                  {menuCategories.map((cat) => (
+                    <div key={cat.name} className="space-y-14">
+                      <h4 className="text-[#c5a059] text-[11px] font-black uppercase tracking-[0.5em] border-b border-zinc-100 pb-4">
+                        {cat.name}
+                      </h4>
+
+                      {cat.items.map((item) => (
+                        <div key={item.n}>
+                          <div className="flex justify-between items-end mb-2">
+                            <h5 className="text-xl font-light">
+                              {item.n}
+                            </h5>
+
+                            <span className="text-sm tracking-widest">
+                              {item.p}
+                            </span>
+                          </div>
+
+                          <p className="text-zinc-400 text-sm italic">
+                            {item.d}
+                          </p>
                         </div>
-                        <p className="text-zinc-400 text-sm font-serif italic">{item.d}</p>
-                      </div>
-                    ))}
-                  </div>
-                ))}
+                      ))}
+                    </div>
+                  ))}
+                </div>
               </div>
             </motion.div>
           )}
 
-          {/* STORY VIEW */}
+          {/* STORY */}
           {view === 'story' && (
-            <motion.div key="s" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col">
-               <div className="grid md:grid-cols-2 min-h-[80vh]">
-                  <div className="bg-[#111] text-white p-12 md:p-32 flex flex-col justify-center">
-                    <h2 className="text-4xl md:text-6xl font-light mb-10 uppercase tracking-tighter leading-none">A Journey Across <span className="text-[#c5a059]">Continents</span></h2>
-                    <p className="text-zinc-400 text-lg font-serif italic leading-relaxed mb-8">Elaris was born in 1984 as a small family project in Felgueiras, Portugal. Today, it stands as a global beacon of culinary innovation.</p>
-                    <p className="text-zinc-500 text-sm tracking-widest leading-loose uppercase">Authenticity • Innovation • Prestige</p>
-                  </div>
-                  <div className="relative h-[50vh] md:h-auto">
-                    <img src="https://images.unsplash.com/photo-1481833761820-0509d3217039?q=80&w=2000" className="w-full h-full object-cover" alt="Interior" />
-                  </div>
-               </div>
+            <motion.div
+              key="story"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="h-full overflow-y-auto"
+            >
+              <div className="grid md:grid-cols-2 min-h-full">
+                <div className="bg-[#111] text-white p-10 md:p-24 flex flex-col justify-center">
+                  <h2 className="text-4xl md:text-6xl font-light mb-10 leading-none">
+                    A Journey Across{" "}
+                    <span className="text-[#c5a059]">
+                      Continents
+                    </span>
+                  </h2>
+
+                  <p className="text-zinc-400 text-lg italic leading-relaxed mb-8">
+                    Elaris was born in 1984 as a small family project in
+                    Portugal. Today, it stands as a global beacon of
+                    culinary innovation.
+                  </p>
+
+                  <button
+                    onClick={() => navigateTo('booking')}
+                    className="mt-6 w-fit px-10 py-4 bg-[#c5a059] text-black text-[10px] font-black uppercase tracking-[0.3em] hover:bg-white transition-all"
+                  >
+                    Reserve Experience
+                  </button>
+                </div>
+
+                <div className="relative min-h-[400px]">
+                  <img
+                    src="https://images.unsplash.com/photo-1481833761820-0509d3217039?q=80&w=2000"
+                    className="w-full h-full object-cover"
+                    alt=""
+                  />
+                </div>
+              </div>
             </motion.div>
           )}
 
-          {/* BOOKING VIEW */}
+          {/* BOOKING */}
           {view === 'booking' && (
-            <motion.div key="b" initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="flex-1 flex items-center justify-center p-6 md:p-24">
+            <motion.div
+              key="booking"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="h-full overflow-y-auto flex items-center justify-center p-6 md:p-20"
+            >
               <div className="bg-white p-10 md:p-20 shadow-2xl w-full max-w-4xl border border-zinc-100 relative">
-                <div className="absolute top-0 right-0 p-6 opacity-10"><Sparkles size={80} /></div>
-                <h3 className="text-4xl font-light text-center mb-16 uppercase tracking-widest">Reservations</h3>
-                <div className="grid md:grid-cols-2 gap-12 font-sans">
+                <h3 className="text-4xl font-light text-center mb-16 uppercase tracking-widest">
+                  Reservations
+                </h3>
+
+                <div className="grid md:grid-cols-2 gap-12">
                   <div className="space-y-4">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">Full Name</label>
-                    <input className="w-full border-b border-zinc-200 p-4 outline-none focus:border-[#c5a059] transition-all bg-transparent" placeholder="Johnathan Doe" />
+                    <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">
+                      Full Name
+                    </label>
+
+                    <input
+                      className="w-full border-b border-zinc-200 p-4 outline-none bg-transparent"
+                      placeholder="Johnathan Doe"
+                    />
                   </div>
+
                   <div className="space-y-4">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">Guests</label>
-                    <select className="w-full border-b border-zinc-200 p-4 outline-none bg-transparent">
-                      <option>2 Persons</option><option>4 Persons</option><option>6+ Persons</option>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">
+                      Guests
+                    </label>
+
+                    <select className="w-full border-b border-zinc-200 p-4 bg-transparent outline-none">
+                      <option>2 Persons</option>
+                      <option>4 Persons</option>
+                      <option>6+ Persons</option>
                     </select>
                   </div>
+
                   <div className="space-y-4">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">Date</label>
-                    <input type="date" className="w-full border-b border-zinc-200 p-4 outline-none" />
+                    <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">
+                      Date
+                    </label>
+
+                    <input
+                      type="date"
+                      className="w-full border-b border-zinc-200 p-4 outline-none"
+                    />
                   </div>
+
                   <div className="space-y-4">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">Time</label>
-                    <select className="w-full border-b border-zinc-200 p-4 outline-none bg-transparent">
-                      <option>19:00</option><option>20:30</option><option>22:00</option>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">
+                      Time
+                    </label>
+
+                    <select className="w-full border-b border-zinc-200 p-4 bg-transparent outline-none">
+                      <option>19:00</option>
+                      <option>20:30</option>
+                      <option>22:00</option>
                     </select>
                   </div>
                 </div>
-                <button onClick={() => navigateTo('success')} className="w-full mt-20 py-6 bg-[#1a1a1a] text-white font-black uppercase text-[10px] tracking-[0.4em] hover:bg-[#c5a059] transition-all">Secure Invitation</button>
+
+                <button
+                  onClick={() => navigateTo('success')}
+                  className="w-full mt-20 py-6 bg-[#1a1a1a] text-white font-black uppercase text-[10px] tracking-[0.4em] hover:bg-[#c5a059] hover:text-black transition-all"
+                >
+                  Secure Invitation
+                </button>
               </div>
             </motion.div>
           )}
 
-          {/* SUCCESS VIEW */}
+          {/* SUCCESS */}
           {view === 'success' && (
-            <motion.div key="su" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-col items-center justify-center text-center p-10">
-              <CheckCircle2 size={80} className="text-[#c5a059] mb-10 stroke-[1px]" />
-              <h2 className="text-5xl font-light uppercase tracking-widest mb-6">Confirmed</h2>
-              <p className="text-zinc-500 font-serif italic text-xl max-w-md mx-auto">Your experience at Elaris Dubai is being meticulously prepared. We look forward to welcoming you.</p>
-              <button onClick={() => navigateTo('home')} className="mt-12 px-12 py-5 border border-black hover:bg-black hover:text-white transition-all text-[10px] font-black uppercase tracking-widest">Back to Sanctuary</button>
+            <motion.div
+              key="success"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="h-full flex flex-col items-center justify-center text-center p-10"
+            >
+              <CheckCircle2
+                size={80}
+                className="text-[#c5a059] mb-10"
+                strokeWidth={1}
+              />
+
+              <h2 className="text-5xl font-light uppercase tracking-widest mb-6">
+                Confirmed
+              </h2>
+
+              <p className="text-zinc-500 italic text-xl max-w-md">
+                Your experience at Elaris Dubai is being meticulously prepared.
+              </p>
+
+              <button
+                onClick={() => navigateTo('home')}
+                className="mt-12 px-12 py-5 border border-black hover:bg-black hover:text-white transition-all text-[10px] font-black uppercase tracking-widest"
+              >
+                Back to Sanctuary
+              </button>
             </motion.div>
           )}
 
         </AnimatePresence>
 
-        {/* --- 3. FOOTER (INTEGRATED IN SCROLL) --- */}
-        <footer className="flex-shrink-0 bg-[#0a0a0a] text-white p-12 md:p-24 mt-auto">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-16">
-            <div className="space-y-6">
-              <h4 className="text-2xl font-light tracking-[0.4em] uppercase">Elaris</h4>
-              <p className="text-zinc-500 text-xs font-sans tracking-widest leading-loose">
-                Mandarin Oriental Residences, <br/>Jumeirah Beach Road, Dubai, UAE.
-              </p>
-            </div>
-            <div className="grid grid-cols-2 gap-20 text-[10px] font-black uppercase tracking-[0.3em]">
-              <div className="flex flex-col gap-4 text-zinc-400">
-                <button onClick={() => navigateTo('menu')} className="hover:text-[#c5a059] text-left">Menu</button>
-                <button onClick={() => navigateTo('story')} className="hover:text-[#c5a059] text-left">Heritage</button>
-                <button onClick={() => setShowPrivacy(true)} className="hover:text-[#c5a059] text-left">Privacy</button>
+        {/* PRIVACY MODAL */}
+        <AnimatePresence>
+          {showPrivacy && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 z-[200] flex items-center justify-center p-6"
+            >
+              <div
+                className="absolute inset-0 bg-black/80 backdrop-blur-md"
+                onClick={() => setShowPrivacy(false)}
+              />
+
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                className="relative bg-white p-10 md:p-14 max-w-lg w-full shadow-2xl border-t-4 border-[#c5a059] z-10"
+              >
+                <button
+                  onClick={() => setShowPrivacy(false)}
+                  className="absolute top-6 right-6 text-zinc-400 hover:text-black"
+                >
+                  <X size={24} />
+                </button>
+
+                <ShieldCheck
+                  className="text-[#c5a059] mb-6"
+                  size={42}
+                  strokeWidth={1}
+                />
+
+                <h3 className="text-2xl font-light mb-6 uppercase tracking-[0.2em]">
+                  Privacy Protocol
+                </h3>
+
+                <div className="text-sm text-zinc-500 leading-relaxed space-y-4 mb-10">
+                  <p>
+                    At Elaris Dubai, discretion is our ultimate luxury.
+                  </p>
+
+                  <p>
+                    Your personal data is used exclusively for reservation management.
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => setShowPrivacy(false)}
+                  className="w-full py-5 bg-[#1a1a1a] text-[#c5a059] font-black uppercase text-[10px] tracking-[0.4em] hover:bg-[#c5a059] hover:text-black transition-all"
+                >
+                  Acknowledge
+                </button>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* MOBILE MENU */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="absolute inset-0 z-[300] bg-white flex flex-col p-12"
+            >
+              <div className="flex justify-between items-center mb-20">
+                <span className="text-[10px] tracking-[0.5em] font-bold text-zinc-400 uppercase">
+                  Menu
+                </span>
+
+                <button
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2"
+                >
+                  <X size={30} strokeWidth={1} />
+                </button>
               </div>
-              <div className="flex flex-col gap-4 items-end">
-                
-                <Globe size={18} className="hover:text-[#c5a059] cursor-pointer" />
+
+              <div className="flex flex-col gap-10 text-4xl font-light uppercase tracking-[0.2em]">
+                <button
+                  onClick={() => navigateTo('home')}
+                  className="text-left hover:text-[#c5a059]"
+                >
+                  Home
+                </button>
+
+                <button
+                  onClick={() => navigateTo('story')}
+                  className="text-left hover:text-[#c5a059]"
+                >
+                  Heritage
+                </button>
+
+                <button
+                  onClick={() => navigateTo('menu')}
+                  className="text-left hover:text-[#c5a059]"
+                >
+                  Collection
+                </button>
+
+                <button
+                  onClick={() => navigateTo('booking')}
+                  className="text-left text-[#c5a059]"
+                >
+                  Reservations
+                </button>
               </div>
-            </div>
-          </div>
-          <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 text-[8px] text-zinc-700 tracking-[0.5em] uppercase text-center">
-            © 2026 Elaris Global Hospitality Group. All rights reserved.
-          </div>
-        </footer>
+
+              <div className="mt-auto border-t border-zinc-100 pt-10">
+                <p className="text-[9px] tracking-widest text-zinc-400 uppercase leading-loose">
+                  Jumeirah Beach Road • Dubai
+                </p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
       </main>
-
-      {/* --- 4. OVERLAYS (MOBILE MENU & PRIVACY) --- */}
-      {/* --- MODAL DE PRIVACIDADE CORRIGIDO --- */}
-<AnimatePresence>
-  {showPrivacy && (
-    <motion.div 
-      initial={{ opacity: 0 }} 
-      animate={{ opacity: 1 }} 
-      exit={{ opacity: 0 }} 
-      /* O segredo está no fixed + z-[1000] fora de qualquer container de scroll */
-      className="absolute inset-0 z-[200] flex items-center justify-center p-6"
-    >
-      {/* Backdrop escuro e desfocado */}
-      <div 
-        className="absolute inset-0 bg-black/80 backdrop-blur-md" 
-        onClick={() => setShowPrivacy(false)} 
-      />
-      
-      {/* Caixa do Modal */}
-      <motion.div 
-        initial={{ scale: 0.9, opacity: 0, y: 20 }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        exit={{ scale: 0.9, opacity: 0, y: 20 }}
-        className="relative bg-white p-10 md:p-14 max-w-lg w-full shadow-[0_0_50px_rgba(0,0,0,0.5)] border-t-4 border-[#c5a059] z-[1001]"
-      >
-        <button 
-          onClick={() => setShowPrivacy(false)} 
-          className="absolute top-6 right-6 text-zinc-400 hover:text-black transition-colors"
-        >
-          <X size={24} />
-        </button>
-        
-        <ShieldCheck className="text-[#c5a059] mb-6" size={42} strokeWidth={1} />
-        
-        <h3 className="text-2xl font-light mb-6 uppercase tracking-[0.2em] text-zinc-900">
-          Privacy Protocol
-        </h3>
-        
-        <div className="text-sm text-zinc-500 font-serif leading-relaxed space-y-4 mb-10">
-          <p>
-            At <strong>Elaris Dubai</strong>, discretion is our ultimate luxury. Your personal data is treated with the same precision as our culinary masterpieces.
-          </p>
-          <p>
-            We collect your details exclusively for bespoke reservation management. No data is shared with third parties.
-          </p>
-        </div>
-        
-        <button 
-          onClick={() => setShowPrivacy(false)} 
-          className="w-full py-5 bg-[#1a1a1a] text-[#c5a059] font-black uppercase text-[10px] tracking-[0.4em] hover:bg-[#c5a059] hover:text-black transition-all"
-        >
-          Acknowledge
-        </button>
-      </motion.div>
-    </motion.div>
-  )}
-</AnimatePresence>
-
-{/* --- MENU MOBILE CORRIGIDO --- */}
-<AnimatePresence>
-  {isMobileMenuOpen && (
-    <motion.div 
-      initial={{ x: '100%' }} 
-      animate={{ x: 0 }} 
-      exit={{ x: '100%' }} 
-      transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-      className="absolute inset-0 z-[200] bg-white flex flex-col p-12 overflow-hidden"
-    >
-      <div className="flex justify-between items-center mb-20">
-        <span className="text-[10px] tracking-[0.5em] font-bold text-zinc-400 uppercase">Menu</span>
-        <button onClick={() => setIsMobileMenuOpen(false)} className="p-2">
-          <X size={30} strokeWidth={1} />
-        </button>
-      </div>
-      
-      <div className="flex flex-col gap-10 text-4xl font-light uppercase tracking-[0.2em]">
-        <button onClick={() => navigateTo('home')} className="text-left hover:text-[#c5a059]">Home</button>
-        <button onClick={() => navigateTo('story')} className="text-left hover:text-[#c5a059]">Heritage</button>
-        <button onClick={() => navigateTo('menu')} className="text-left hover:text-[#c5a059]">Collection</button>
-        <button onClick={() => navigateTo('booking')} className="text-left text-[#c5a059] font-medium italic">Reservations</button>
-      </div>
-      
-      <div className="mt-auto border-t border-zinc-100 pt-10">
-        <p className="text-[9px] tracking-widest text-zinc-400 uppercase leading-loose">
-          Jumeirah Beach Road • Dubai<br/>
-          +971 4 000 0000
-        </p>
-      </div>
-    </motion.div>
-  )}
-</AnimatePresence>
     </div>
   );
 }
 
- ElarisFinalDubai;
+ElarisFinalDubai;
 
  ;
 /* -------------------------------------------------------------------------- */
