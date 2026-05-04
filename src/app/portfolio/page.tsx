@@ -697,203 +697,550 @@ ElarisFinalDubai;
 /* --- 2. SPORTZONE FOOTBALL --- */
 /* -------------------------------------------------------------------------- */
 // Interface para o Produto
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  brand: string;
-  image: string;
-}
-
-// Interface para o Item no Carrinho
-interface CartItem extends Product {
-  quantity: number;
-}
-
 function ElarisSportApp() {
+  interface Product {
+    id: number;
+    name: string;
+    price: number;
+    brand: string;
+    image: string;
+    category: string;
+  }
+
+  interface CartItem extends Product {
+    quantity: number;
+  }
+
   const [view, setView] = useState<'shop' | 'cart' | 'success'>('shop');
   const [cart, setCart] = useState<CartItem[]>([]);
   const [showPrivacy, setShowPrivacy] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('Todos');
+  const [search, setSearch] = useState('');
 
   const gear: Product[] = [
-    { id: 1, name: "Bota Predator Elite FG", price: 250, brand: "Adidas", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1000" },
-    { id: 2, name: "Camisola Portugal 24 Authentic", price: 140, brand: "Nike", image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=1000" },
-    { id: 3, name: "Bola Champions League Pro", price: 150, brand: "Adidas", image: "https://images.unsplash.com/photo-1614632537190-23e414dcb33d?q=80&w=1000" },
-    { id: 4, name: "Luvas Reusch Gold Grip", price: 85, brand: "Reusch", image: "https://images.unsplash.com/photo-1510566337590-2fc1f21d0faa?q=80&w=1000" }
+    {
+      id: 1,
+      name: "Predator Elite FG",
+      price: 250,
+      brand: "Adidas",
+      category: "Futebol",
+      image:
+        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1000",
+    },
+    {
+      id: 2,
+      name: "Portugal 24 Authentic",
+      price: 140,
+      brand: "Nike",
+      category: "Equipamento",
+      image:
+        "https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=1000",
+    },
+    {
+      id: 3,
+      name: "Champions League Pro",
+      price: 150,
+      brand: "Adidas",
+      category: "Bolas",
+      image:
+        "https://images.unsplash.com/photo-1614632537190-23e414dcb33d?q=80&w=1000",
+    },
+    {
+      id: 4,
+      name: "Reusch Gold Grip",
+      price: 85,
+      brand: "Reusch",
+      category: "Guarda-Redes",
+      image:
+        "https://images.unsplash.com/photo-1510566337590-2fc1f21d0faa?q=80&w=1000",
+    },
+    {
+      id: 5,
+      name: "Mercurial Vapor Elite",
+      price: 270,
+      brand: "Nike",
+      category: "Futebol",
+      image:
+        "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?q=80&w=1000",
+    },
+    {
+      id: 6,
+      name: "Fitness Pro Mat",
+      price: 60,
+      brand: "Domyos",
+      category: "Fitness",
+      image:
+        "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1000",
+    },
   ];
 
-  // --- Lógica do Carrinho ---
+  const categories = [
+    "Todos",
+    "Futebol",
+    "Equipamento",
+    "Bolas",
+    "Fitness",
+    "Guarda-Redes",
+  ];
+
   const addToCart = (product: Product) => {
-    setCart(prev => {
-      const existing = prev.find(item => item.id === product.id);
+    setCart((prev) => {
+      const existing = prev.find((item) => item.id === product.id);
+
       if (existing) {
-        return prev.map(item => item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item);
+        return prev.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
       }
+
       return [...prev, { ...product, quantity: 1 }];
     });
   };
 
   const removeFromCart = (id: number) => {
-    setCart(prev => prev.filter(item => item.id !== id));
+    setCart((prev) => prev.filter((item) => item.id !== id));
   };
 
   const updateQuantity = (id: number, delta: number) => {
-    setCart(prev => prev.map(item => {
-      if (item.id === id) {
-        const newQty = Math.max(1, item.quantity + delta);
-        return { ...item, quantity: newQty };
-      }
-      return item;
-    }));
+    setCart((prev) =>
+      prev.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            quantity: Math.max(1, item.quantity + delta),
+          };
+        }
+
+        return item;
+      })
+    );
   };
 
-  const total = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+  const total = cart.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
+
   const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
+  const filteredGear = gear.filter((item) => {
+    const matchesCategory =
+      selectedCategory === "Todos" ||
+      item.category === selectedCategory;
+
+    const matchesSearch =
+      item.name.toLowerCase().includes(search.toLowerCase()) ||
+      item.brand.toLowerCase().includes(search.toLowerCase());
+
+    return matchesCategory && matchesSearch;
+  });
+
   return (
-    <div className="h-full flex flex-col text-[#1a1a1a] bg-[#f8f8f8] font-sans overflow-hidden relative">
-      
-      {/* MODAL DE PRIVACIDADE (Igual ao Restaurante) */}
+    <div className="h-full flex flex-col bg-[#f4f6f8] text-[#111] overflow-hidden relative">
+
+      {/* PRIVACY */}
       <AnimatePresence>
         {showPrivacy && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-[100] bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
-            <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} className="bg-white max-w-lg w-full p-8 shadow-2xl border-t-8 border-orange-500">
-              <ShieldCheck className="text-orange-500 mb-4" size={40} />
-              <h3 className="text-2xl font-black italic mb-4 uppercase tracking-tighter">Segurança Elaris</h3>
-              <p className="text-sm text-zinc-600 mb-8 leading-relaxed">Os seus dados de pagamento e envio são processados através de protocolos encriptados de alta segurança. O Elaris Sport garante a proteção total da sua privacidade.</p>
-              <button onClick={() => setShowPrivacy(false)} className="w-full py-4 bg-[#1a1512] text-white font-bold uppercase tracking-widest text-xs">Fechar</button>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 z-[100] bg-black/70 backdrop-blur-md flex items-center justify-center p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              className="bg-white max-w-lg w-full p-8 rounded-2xl shadow-2xl border-t-8 border-[#0082c3]"
+            >
+              <ShieldCheck
+                className="text-[#0082c3] mb-4"
+                size={40}
+              />
+
+              <h3 className="text-2xl font-black mb-4 uppercase">
+                Segurança Elaris
+              </h3>
+
+              <p className="text-sm text-zinc-600 mb-8 leading-relaxed">
+                Todos os pagamentos e dados pessoais são protegidos
+                através de protocolos encriptados de última geração.
+              </p>
+
+              <button
+                onClick={() => setShowPrivacy(false)}
+                className="w-full py-4 bg-[#0082c3] text-white font-black uppercase tracking-widest text-xs rounded-xl"
+              >
+                Fechar
+              </button>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Header Premium */}
-      <nav className="p-6 bg-[#0a0a0a] text-white flex justify-between items-center sticky top-0 z-30 border-b border-orange-500/30">
-        <div onClick={() => setView('shop')} className="cursor-pointer group flex items-center gap-3">
-          <div className="bg-orange-500 p-1.5 rotate-3 group-hover:rotate-0 transition-transform">
-             <Trophy size={22} className="text-black" />
+      {/* HEADER */}
+      <nav className="bg-white border-b border-zinc-200 px-4 md:px-8 py-4 flex items-center justify-between sticky top-0 z-40">
+
+        <div
+          onClick={() => setView('shop')}
+          className="flex items-center gap-3 cursor-pointer"
+        >
+          <div className="bg-[#0082c3] p-2 rounded-lg">
+            <Trophy size={20} className="text-white" />
           </div>
-          <h1 className="font-black text-2xl italic tracking-tighter uppercase">Elaris<span className="text-orange-500">Sport</span></h1>
+
+          <div>
+            <h1 className="font-black text-xl tracking-tight">
+              ELARIS<span className="text-[#0082c3]">SPORT</span>
+            </h1>
+
+            <p className="text-[9px] uppercase tracking-[0.3em] text-zinc-400 font-black">
+              Performance Store
+            </p>
+          </div>
         </div>
-        
-        <button onClick={() => setView('cart')} className="relative flex items-center gap-4 bg-white/5 hover:bg-white/10 px-5 py-2.5 rounded-full transition-all border border-white/10">
-          <span className="text-[10px] font-black uppercase tracking-widest hidden sm:block">Equipamento</span>
-          <div className="relative">
-            <ShoppingBag size={20} className="text-orange-500" />
-            {cartCount > 0 && (
-              <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute -top-2 -right-2 bg-white text-black text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-black">
-                {cartCount}
-              </motion.span>
-            )}
-          </div>
+
+        {/* SEARCH */}
+        <div className="hidden md:flex items-center bg-zinc-100 rounded-full px-4 py-2 w-[420px]">
+          <Search size={18} className="text-zinc-400" />
+
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Pesquisar equipamentos..."
+            className="bg-transparent outline-none px-3 text-sm w-full"
+          />
+        </div>
+
+        {/* CART */}
+        <button
+          onClick={() => setView('cart')}
+          className="relative flex items-center gap-3 bg-[#0082c3] hover:bg-[#006fa7] text-white px-5 py-3 rounded-full transition-all"
+        >
+          <ShoppingBag size={18} />
+
+          <span className="hidden sm:block text-xs font-black uppercase tracking-widest">
+            Carrinho
+          </span>
+
+          {cartCount > 0 && (
+            <span className="absolute -top-2 -right-2 bg-black text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center">
+              {cartCount}
+            </span>
+          )}
         </button>
       </nav>
 
+      {/* MOBILE SEARCH */}
+      <div className="md:hidden bg-white px-4 pb-4 border-b border-zinc-200">
+        <div className="flex items-center bg-zinc-100 rounded-full px-4 py-3">
+          <Search size={18} className="text-zinc-400" />
+
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Pesquisar..."
+            className="bg-transparent outline-none px-3 text-sm w-full"
+          />
+        </div>
+      </div>
+
+      {/* CONTENT */}
       <div className="flex-1 overflow-y-auto">
+
         <AnimatePresence mode="wait">
-          
-          {/* VIEW: SHOP */}
+
+          {/* SHOP */}
           {view === 'shop' && (
-            <motion.div key="s" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              {/* Banner Hero Imagem Grande */}
-              <div className="relative h-[450px] bg-black overflow-hidden flex items-center justify-center">
-                <img src="https://images.unsplash.com/photo-1511886929837-354d827aae26?q=80&w=2000" className="absolute inset-0 w-full h-full object-cover opacity-60 scale-105" alt="Hero" />
-                <div className="relative text-center z-10 p-6">
-                  <span className="text-orange-500 font-black text-xs tracking-[0.5em] uppercase mb-4 block">Alta Performance</span>
-                  <h2 className="text-6xl md:text-8xl font-black italic text-white tracking-tighter leading-none mb-8">LEVEL UP<br/>YOUR GAME</h2>
-                  <button onClick={() => {document.getElementById('catalog')?.scrollIntoView({behavior:'smooth'})}} className="px-10 py-4 bg-orange-500 text-black font-black uppercase text-xs tracking-widest hover:bg-white transition-all">Ver Coleção</button>
+            <motion.div
+              key="shop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+
+              {/* HERO */}
+              <div className="relative h-[380px] overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1511886929837-354d827aae26?q=80&w=2000"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+
+                <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/20" />
+
+                <div className="relative z-10 h-full flex flex-col justify-center px-8 md:px-20 text-white">
+                  <span className="text-[#4fc3ff] font-black text-xs tracking-[0.4em] uppercase mb-4">
+                    Nova Coleção
+                  </span>
+
+                  <h2 className="text-5xl md:text-7xl font-black leading-none max-w-3xl">
+                    EQUIPAMENTO
+                    <br />
+                    DE ELITE
+                  </h2>
+
+                  <p className="mt-6 text-zinc-300 max-w-xl">
+                    Descobre produtos premium para futebol, fitness
+                    e alta performance.
+                  </p>
                 </div>
               </div>
 
-              {/* Catálogo */}
-              <div id="catalog" className="p-8 md:p-16 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                {gear.map(item => (
-                  <motion.div key={item.id} whileHover={{ y: -10 }} className="group bg-white border border-zinc-100 p-4 shadow-sm hover:shadow-2xl transition-all">
-                    <div className="h-64 bg-[#f3f3f3] mb-6 overflow-hidden relative">
-                      <img src={item.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={item.name} />
-                      <div className="absolute top-3 left-3 bg-black text-white text-[9px] font-black px-3 py-1 uppercase tracking-tighter italic">New Season</div>
+              {/* CATEGORIES */}
+              <div className="bg-white border-b border-zinc-200 px-4 md:px-8 py-4 sticky top-0 z-20">
+                <div className="flex gap-3 overflow-x-auto no-scrollbar">
+                  {categories.map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => setSelectedCategory(cat)}
+                      className={`px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest whitespace-nowrap transition-all ${
+                        selectedCategory === cat
+                          ? "bg-[#0082c3] text-white"
+                          : "bg-zinc-100 hover:bg-zinc-200"
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* PRODUCTS */}
+              <div className="p-4 md:p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+                {filteredGear.map((item) => (
+                  <motion.div
+                    key={item.id}
+                    whileHover={{ y: -6 }}
+                    className="bg-white rounded-2xl overflow-hidden border border-zinc-200 hover:shadow-2xl transition-all group"
+                  >
+                    <div className="h-64 bg-zinc-100 overflow-hidden relative">
+                      <img
+                        src={item.image}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      />
+
+                      <div className="absolute top-3 left-3 bg-[#0082c3] text-white text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-widest">
+                        {item.category}
+                      </div>
                     </div>
-                    <span className="text-[10px] font-black text-orange-500 uppercase tracking-widest">{item.brand}</span>
-                    <h4 className="text-lg font-black italic tracking-tighter mb-4 h-12 leading-tight uppercase">{item.name}</h4>
-                    <div className="flex items-center justify-between pt-4 border-t border-zinc-50">
-                      <span className="text-xl font-black">€{item.price}</span>
-                      <button 
-                        onClick={() => addToCart(item)}
-                        className="p-3 bg-black text-white hover:bg-orange-500 transition-colors"
-                      >
-                        <Plus size={18} />
-                      </button>
+
+                    <div className="p-5">
+                      <span className="text-[10px] font-black uppercase tracking-widest text-[#0082c3]">
+                        {item.brand}
+                      </span>
+
+                      <h4 className="font-black text-lg mt-2 leading-tight min-h-[56px]">
+                        {item.name}
+                      </h4>
+
+                      <div className="flex items-center justify-between mt-6">
+                        <span className="text-2xl font-black">
+                          €{item.price}
+                        </span>
+
+                        <button
+                          onClick={() => addToCart(item)}
+                          className="bg-[#0082c3] hover:bg-black text-white p-3 rounded-xl transition-all"
+                        >
+                          <Plus size={18} />
+                        </button>
+                      </div>
                     </div>
                   </motion.div>
                 ))}
+
               </div>
             </motion.div>
           )}
 
-          {/* VIEW: CART (Totalmente Funcional) */}
+          {/* CART */}
           {view === 'cart' && (
-            <motion.div key="c" initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} className="p-6 md:p-16 max-w-4xl mx-auto">
-              <h2 className="text-5xl font-black italic tracking-tighter mb-12 uppercase">O Teu Arsenal <span className="text-zinc-300">({cartCount})</span></h2>
-              
+            <motion.div
+              key="cart"
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="p-4 md:p-10 max-w-6xl mx-auto"
+            >
+              <div className="flex items-center justify-between mb-10">
+                <h2 className="text-4xl md:text-6xl font-black tracking-tight">
+                  Carrinho
+                </h2>
+
+                <button
+                  onClick={() => setView('shop')}
+                  className="text-xs font-black uppercase tracking-widest text-[#0082c3]"
+                >
+                  Continuar Compras
+                </button>
+              </div>
+
               {cart.length === 0 ? (
-                <div className="text-center py-20 bg-white border-2 border-dashed border-zinc-200">
-                  <ShoppingBasket size={48} className="mx-auto text-zinc-300 mb-4" />
-                  <p className="text-zinc-500 italic">O teu carrinho está vazio. Volta ao campo!</p>
-                  <button onClick={() => setView('shop')} className="mt-8 px-8 py-3 bg-black text-white font-bold uppercase text-xs">Ir para a Loja</button>
+                <div className="bg-white rounded-3xl p-20 text-center border border-zinc-200">
+                  <ShoppingBasket
+                    size={52}
+                    className="mx-auto text-zinc-300 mb-5"
+                  />
+
+                  <h3 className="text-2xl font-black mb-2">
+                    Carrinho vazio
+                  </h3>
+
+                  <p className="text-zinc-500">
+                    Adiciona equipamento para começar.
+                  </p>
                 </div>
               ) : (
-                <div className="space-y-6">
-                  {cart.map(item => (
-                    <div key={item.id} className="bg-white p-6 flex items-center gap-6 shadow-sm border border-zinc-100">
-                      <img src={item.image} className="w-24 h-24 object-cover bg-zinc-100" />
-                      <div className="flex-1">
-                        <span className="text-[9px] font-black text-orange-500 uppercase">{item.brand}</span>
-                        <h4 className="font-black italic text-lg uppercase tracking-tighter">{item.name}</h4>
-                        <div className="flex items-center gap-4 mt-3">
-                          <div className="flex items-center border">
-                            <button onClick={() => updateQuantity(item.id, -1)} className="p-2 hover:bg-zinc-100"><Minus size={14}/></button>
-                            <span className="px-4 font-bold text-sm">{item.quantity}</span>
-                            <button onClick={() => updateQuantity(item.id, 1)} className="p-2 hover:bg-zinc-100"><Plus size={14}/></button>
+                <div className="grid lg:grid-cols-[1fr_350px] gap-8">
+
+                  {/* ITEMS */}
+                  <div className="space-y-5">
+                    {cart.map((item) => (
+                      <div
+                        key={item.id}
+                        className="bg-white rounded-2xl p-5 flex gap-5 border border-zinc-200"
+                      >
+                        <img
+                          src={item.image}
+                          className="w-28 h-28 rounded-xl object-cover"
+                        />
+
+                        <div className="flex-1">
+                          <span className="text-[10px] uppercase font-black tracking-widest text-[#0082c3]">
+                            {item.brand}
+                          </span>
+
+                          <h4 className="font-black text-lg mt-1">
+                            {item.name}
+                          </h4>
+
+                          <div className="flex items-center gap-4 mt-5">
+
+                            <div className="flex items-center border rounded-full overflow-hidden">
+                              <button
+                                onClick={() =>
+                                  updateQuantity(item.id, -1)
+                                }
+                                className="px-4 py-2 hover:bg-zinc-100"
+                              >
+                                <Minus size={14} />
+                              </button>
+
+                              <span className="px-4 font-black">
+                                {item.quantity}
+                              </span>
+
+                              <button
+                                onClick={() =>
+                                  updateQuantity(item.id, 1)
+                                }
+                                className="px-4 py-2 hover:bg-zinc-100"
+                              >
+                                <Plus size={14} />
+                              </button>
+                            </div>
+
+                            <button
+                              onClick={() => removeFromCart(item.id)}
+                              className="text-zinc-400 hover:text-red-500"
+                            >
+                              <Trash2 size={18} />
+                            </button>
                           </div>
-                          <button onClick={() => removeFromCart(item.id)} className="text-zinc-400 hover:text-red-500 transition-colors"><Trash2 size={18}/></button>
+                        </div>
+
+                        <div className="text-right">
+                          <span className="text-2xl font-black">
+                            €{item.price * item.quantity}
+                          </span>
+
+                          <p className="text-xs text-zinc-400">
+                            €{item.price} unidade
+                          </p>
                         </div>
                       </div>
-                      <div className="text-right">
-                        <span className="block font-black text-xl">€{item.price * item.quantity}</span>
-                        <span className="text-[10px] text-zinc-400 font-bold">€{item.price} unid.</span>
+                    ))}
+                  </div>
+
+                  {/* SUMMARY */}
+                  <div className="bg-white rounded-3xl border border-zinc-200 p-8 h-fit sticky top-6">
+                    <h3 className="font-black text-2xl mb-8">
+                      Resumo
+                    </h3>
+
+                    <div className="space-y-4 mb-8">
+                      <div className="flex justify-between">
+                        <span className="text-zinc-500">
+                          Subtotal
+                        </span>
+
+                        <span className="font-bold">
+                          €{total}
+                        </span>
+                      </div>
+
+                      <div className="flex justify-between">
+                        <span className="text-zinc-500">
+                          Entrega
+                        </span>
+
+                        <span className="font-bold text-green-600">
+                          Grátis
+                        </span>
                       </div>
                     </div>
-                  ))}
 
-                  <div className="mt-12 bg-[#0a0a0a] text-white p-8">
-                    <div className="flex justify-between items-center mb-8">
-                      <span className="text-zinc-400 uppercase font-black tracking-[0.3em] text-xs">Total do Pedido</span>
-                      <span className="text-4xl font-black italic tracking-tighter">€{total}</span>
+                    <div className="border-t pt-5 flex justify-between items-center mb-8">
+                      <span className="font-black text-lg">
+                        Total
+                      </span>
+
+                      <span className="text-3xl font-black">
+                        €{total}
+                      </span>
                     </div>
-                    <button 
+
+                    <button
                       onClick={() => setView('success')}
-                      className="w-full py-5 bg-orange-500 text-black font-black uppercase tracking-[0.2em] text-sm hover:bg-white transition-all shadow-xl"
+                      className="w-full py-5 bg-[#0082c3] hover:bg-black text-white font-black uppercase tracking-widest rounded-2xl transition-all"
                     >
-                      Finalizar e Pagar
+                      Finalizar Compra
                     </button>
-                    <button onClick={() => setView('shop')} className="w-full mt-4 text-[10px] font-black uppercase tracking-widest text-zinc-500 hover:text-white transition-colors">Continuar a Comprar</button>
                   </div>
                 </div>
               )}
             </motion.div>
           )}
 
-          {/* VIEW: SUCCESS */}
+          {/* SUCCESS */}
           {view === 'success' && (
-            <motion.div key="ok" initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="h-full flex flex-col items-center justify-center p-10 text-center bg-white">
-              <div className="w-24 h-24 bg-orange-500 rounded-full flex items-center justify-center mb-8 shadow-2xl">
-                <CheckCircle2 size={48} className="text-black" />
+            <motion.div
+              key="success"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="h-full flex flex-col items-center justify-center text-center p-10"
+            >
+              <div className="w-28 h-28 rounded-full bg-[#0082c3] flex items-center justify-center mb-8 shadow-2xl">
+                <CheckCircle2 size={50} className="text-white" />
               </div>
-              <h2 className="text-6xl font-black italic uppercase tracking-tighter">Encomenda<br/>Confirmada</h2>
-              <p className="text-zinc-500 italic text-xl mt-6 max-w-md mx-auto">O teu equipamento Elaris já está a caminho do balneário. Prepara-te para vencer.</p>
-              <button 
-                onClick={() => {setCart([]); setView('shop');}} 
-                className="mt-12 px-16 py-4 bg-black text-white font-black tracking-widest uppercase text-xs hover:bg-orange-500 transition-all"
+
+              <h2 className="text-5xl md:text-7xl font-black leading-none">
+                Compra
+                <br />
+                Confirmada
+              </h2>
+
+              <p className="text-zinc-500 mt-6 max-w-lg text-lg">
+                O teu equipamento premium está a ser preparado para envio.
+              </p>
+
+              <button
+                onClick={() => {
+                  setCart([]);
+                  setView('shop');
+                }}
+                className="mt-12 px-12 py-5 bg-black hover:bg-[#0082c3] text-white font-black uppercase tracking-widest rounded-2xl transition-all"
               >
                 Voltar à Loja
               </button>
@@ -902,19 +1249,27 @@ function ElarisSportApp() {
 
         </AnimatePresence>
       </div>
-      
-      {/* Footer Profissional */}
-      <footer className="p-10 bg-white border-t border-zinc-100 flex flex-col md:flex-row justify-between items-center gap-8">
-        <div className="flex gap-12">
-          <div className="flex flex-col gap-1">
-            <span className="text-[9px] uppercase text-zinc-400 font-black tracking-widest">Suporte Elaris</span>
-            <div className="flex items-center gap-2 text-zinc-800 font-bold text-xs"><Award size={14} className="text-orange-500" /> Garantia Vitalícia</div>
-          </div>
+
+      {/* FOOTER */}
+      <footer className="bg-white border-t border-zinc-200 px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-5">
+        <div className="flex items-center gap-3 text-xs font-black uppercase tracking-widest text-zinc-500">
+          <Award size={15} className="text-[#0082c3]" />
+          Garantia Premium Elaris
         </div>
-        <div className="flex items-center gap-6">
-          <button onClick={() => setShowPrivacy(true)} className="text-[10px] font-black uppercase tracking-widest text-zinc-400 hover:text-orange-500 transition-colors">Privacidade</button>
-          <span className="text-zinc-200">|</span>
-          <p className="text-[10px] font-black uppercase tracking-widest text-zinc-300 italic">Elaris Sport Global Group © 2026</p>
+
+        <div className="flex items-center gap-5">
+          <button
+            onClick={() => setShowPrivacy(true)}
+            className="text-xs font-black uppercase tracking-widest text-zinc-400 hover:text-[#0082c3]"
+          >
+            Privacidade
+          </button>
+
+          <span className="text-zinc-300">|</span>
+
+          <p className="text-[10px] uppercase tracking-[0.2em] text-zinc-400 font-black">
+            Elaris Sport © 2026
+          </p>
         </div>
       </footer>
     </div>
