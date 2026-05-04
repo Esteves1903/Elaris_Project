@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Menu, X, Search, ShoppingBag, Heart, Code2, Cpu, Layers, 
   User, Scissors, ArrowLeft, CheckCircle2, Coffee, 
   ShoppingBasket, Calendar, Star, UtensilsCrossed, Trophy,
-  Phone, Mail
+  Phone, Mail, Users, ChevronRight, Award, Lock, Clock, ShieldCheck
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { History as HistoryIcon } from "lucide-react";
 
 // --- DADOS DA SIDEBAR TÉCNICA (Traduzido para Inglês) ---
 type ProjectDetails = {
@@ -38,7 +39,7 @@ const technicalDetails: Record<string, ProjectDetails> = {
   },
 };
 
-export default function PortfolioProfissional() {
+export default function() {
   const [sidebarData, setSidebarData] = useState<ProjectDetails | null>(null);
 
   return (
@@ -128,153 +129,298 @@ export default function PortfolioProfissional() {
   );
 }
 
-/* -------------------------------------------------------------------------- */
-/* --- 1. RESTAURANTE APP --- */
-/* -------------------------------------------------------------------------- */
 function CafeCafeApp() {
-  const [view, setView] = useState<'home' | 'menu' | 'booking' | 'success'>('home');
-  const [user, setUser] = useState<string | null>(null);
+  const [view, setView] = useState<'home' | 'menu' | 'story' | 'booking' | 'success'>('home');
+  const [showPrivacy, setShowPrivacy] = useState(false);
+  
+  // Estado do Formulário
+  const [bookingDetails, setBookingDetails] = useState({ 
+    name: "", 
+    phone: "", 
+    guests: 2, 
+    date: "", 
+    time: "20:00" 
+  });
+
+  // --- Slideshow de Imagens (Fundo) ---
+  const images = [
+    "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2000",
+    "https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=2000",
+    "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=2000",
+    "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2000"
+  ];
+  const [currentImg, setCurrentImg] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImg((prev) => (prev + 1) % images.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
 
   const menuCategorias = [
     { 
-      cat: "Especiais", 
+      cat: "Assinatura Elaris", 
       items: [
-        { name: "Francesinha à Legado", price: "13.50€", desc: "Molho secreto artesanal e carnes selecionadas." },
-        { name: "Cachorro Especial", price: "9.00€", desc: "Salsicha fresca, queijo derretido e batata palha." }
+        { name: "Francesinha Elaris", price: "18.50€", desc: "Bife de lombo maturado, enchidos artesanais, molho secreto Elaris macerado por 48h." },
+        { name: "Cachorro em Brioche de Ouro", price: "14.00€", desc: "Salsicha fresca, queijo da Serra derretido e cebola caramelizada em vinho do Porto." }
       ]
     },
     { 
-      cat: "Petiscos", 
+      cat: "Herança Regional", 
       items: [
-        { name: "Moelas Picantes", price: "6.50€", desc: "Tradicionais, cozinhadas lentamente." },
-        { name: "Pica-Pau de Vitela", price: "11.00€", desc: "Cubos de vitela tenra com pickles." }
+        { name: "Moelas Confitadas", price: "9.50€", desc: "Cozinhadas em baixa temperatura com redução de tomate cereja e ervas aromáticas." },
+        { name: "Pica-Pau de Vitela Premium", price: "16.00€", desc: "Cubos de vitela local salteados em manteiga de alho e pickles artesanais." }
       ]
     }
   ];
 
   return (
-    <div className="h-full flex flex-col text-[#2d241e] bg-[#fdfaf5] font-serif">
-      <nav className="p-6 bg-[#2d241e] text-[#d4af37] flex justify-between items-center sticky top-0 z-20 shadow-xl">
-        <div onClick={() => setView('home')} className="cursor-pointer group">
-          <h1 className="font-black text-xl tracking-[0.2em] uppercase">O LEGADO</h1>
-          <div className="h-0.5 bg-[#d4af37] w-0 group-hover:w-full transition-all duration-300" />
-        </div>
-        <div className="flex gap-6 text-[10px] font-bold uppercase tracking-widest items-center">
-          <button onClick={() => setView('menu')} className="hover:text-white transition">Carta</button>
-          <button 
-            onClick={() => user ? setUser(null) : setView('booking')} 
-            className="px-5 py-2 border border-[#d4af37] hover:bg-[#d4af37] hover:text-[#2d241e] transition-all rounded-sm"
+    <div className="h-full flex flex-col text-[#2d241e] bg-[#fdfaf5] font-serif overflow-hidden relative">
+      
+      {/* MODAL DE PRIVACIDADE PROFISSIONAL */}
+      <AnimatePresence>
+        {showPrivacy && (
+          <motion.div 
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="absolute inset-0 z-[100] bg-black/70 backdrop-blur-md flex items-center justify-center p-4"
           >
-            {user ? `Olá, ${user.split(' ')[0]}` : 'RESERVAR'}
-          </button>
+            <motion.div 
+              initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }}
+              className="bg-white max-w-lg w-full p-8 shadow-2xl border-t-8 border-[#d4af37] relative"
+            >
+              <button onClick={() => setShowPrivacy(false)} className="absolute top-4 right-4 text-zinc-400 hover:text-black">
+                <X size={24} />
+              </button>
+              <ShieldCheck className="text-[#d4af37] mb-4" size={40} />
+              <h3 className="text-2xl font-black italic mb-4">Política de Confidencialidade</h3>
+              <div className="text-sm text-zinc-600 space-y-4 font-sans leading-relaxed">
+                <p>No <strong>Elaris Restaurante</strong>, os seus dados são tratados com o mesmo rigor que a nossa cozinha.</p>
+                <p>Recolhemos o seu nome e contacto exclusivamente para processar a reserva e enviar a confirmação. Não utilizamos os seus dados para marketing sem consentimento explícito.</p>
+              </div>
+              <button onClick={() => setShowPrivacy(false)} className="w-full mt-8 py-4 bg-[#1a1512] text-[#d4af37] font-bold uppercase tracking-widest text-xs transition-all hover:bg-zinc-800">Fechar</button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Navigation */}
+      <nav className="p-6 bg-[#1a1512] text-[#d4af37] flex justify-between items-center sticky top-0 z-30 border-b border-[#d4af37]/20 shadow-2xl">
+        <div onClick={() => setView('home')} className="cursor-pointer group flex items-center gap-3">
+          <div className="border-2 border-[#d4af37] p-1.5 transition-all group-hover:bg-[#d4af37]">
+             <h1 className="font-black text-xl tracking-[0.3em] uppercase group-hover:text-[#1a1512]">E</h1>
+          </div>
+          <span className="font-light text-sm tracking-[0.4em] uppercase hidden sm:block">Elaris Restaurante</span>
+        </div>
+        
+        <div className="flex gap-8 text-[10px] font-bold uppercase tracking-[0.2em] items-center">
+          <button onClick={() => setView('story')} className="hover:text-white transition-colors">História</button>
+          <button onClick={() => setView('menu')} className="hover:text-white transition-colors">Carta</button>
+          <button onClick={() => setView('booking')} className="px-8 py-2.5 bg-[#d4af37] text-[#1a1512] hover:bg-white transition-all font-black rounded-full">RESERVAR</button>
         </div>
       </nav>
 
       <div className="flex-1 overflow-y-auto">
         <AnimatePresence mode="wait">
+          
+          {/* VIEW: HOME */}
           {view === 'home' && (
-            <motion.div key="h" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col h-full">
-              <div className="relative h-64 bg-zinc-800">
-                <img 
-                  src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1000" 
-                  className="w-full h-full object-cover opacity-50"
-                  alt="Restaurante Interior"
-                />
+            <motion.div key="h" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col min-h-full">
+              <div className="relative h-[75vh] min-h-[500px] bg-zinc-900 overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.img 
+                    key={currentImg}
+                    initial={{ opacity: 0, scale: 1.1 }} animate={{ opacity: 0.6, scale: 1 }} exit={{ opacity: 0 }}
+                    transition={{ duration: 2 }}
+                    src={images[currentImg]} 
+                    className="absolute inset-0 w-full h-full object-cover object-center"
+                  />
+                </AnimatePresence>
                 <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-6">
-                  <span className="text-[#d4af37] text-xs tracking-[0.4em] uppercase mb-2">Felgueiras</span>
-                  <h2 className="text-3xl font-black italic">Tradição à Mesa</h2>
+                  <motion.span initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="text-[#d4af37] text-xs tracking-[1em] uppercase mb-6">Felgueiras • Portugal</motion.span>
+                  <motion.h2 initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }} className="text-6xl md:text-8xl font-black italic text-center leading-[1.1]">A Arte do <br/> Paladar Honesto</motion.h2>
+                  <button onClick={() => setView('booking')} className="mt-12 px-14 py-5 bg-white text-[#1a1512] font-black text-xs tracking-[0.3em] uppercase hover:bg-[#d4af37] transition-all">Garantir Mesa</button>
                 </div>
               </div>
               
-              <div className="p-8 text-center bg-white border-b border-[#eaddca]">
-                <p className="italic text-lg text-zinc-600 mb-6">"Onde o café se cruza com a melhor gastronomia regional."</p>
-                <div className="flex justify-center gap-2 mb-8">
-                  {[1,2,3,4,5].map(s => <Star key={s} size={14} className="fill-[#d4af37] text-[#d4af37]" />)}
+              <div className="p-24 text-center bg-white">
+                <div className="max-w-2xl mx-auto space-y-10">
+                  <Award size={40} className="mx-auto text-[#d4af37] opacity-60" />
+                  <p className="italic text-4xl text-zinc-800 leading-tight font-serif">"Uma experiência que transcende o prato."</p>
+                  <div className="flex justify-center gap-2">
+                    {[1,2,3,4,5].map(s => <Star key={s} size={20} className="fill-[#d4af37] text-[#d4af37]" />)}
+                  </div>
                 </div>
-                <button onClick={() => setView('menu')} className="w-full py-4 bg-[#2d241e] text-white font-bold tracking-widest uppercase text-xs hover:bg-[#d4af37] hover:text-[#2d241e] transition-all">
-                  Explorar a Carta
+              </div>
+            </motion.div>
+          )}
+
+          {/* VIEW: STORY */}
+          {view === 'story' && (
+            <motion.div key="story" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="min-h-full">
+              <div className="h-[50vh] relative overflow-hidden">
+                 <img src={images[2]} className="w-full h-full object-cover brightness-50" alt="History Background" />
+                 <div className="absolute inset-0 flex items-center justify-center">
+                    <h2 className="text-7xl font-black italic text-white tracking-tighter">O Legado Elaris</h2>
+                 </div>
+              </div>
+              <div className="max-w-3xl mx-auto p-20 space-y-12 text-center text-zinc-700 italic text-2xl font-sans leading-relaxed">
+                <p>Desde 1984, o <strong>Elaris</strong> é sinónimo de excelência em Felgueiras. Elevamos a gastronomia regional ao patamar da alta cozinha.</p>
+                <p>Cada ingrediente é escolhido a dedo, cada molho é apurado durante horas, garantindo que a tradição se mantém viva em cada garfada.</p>
+                <button onClick={() => setView('home')} className="mt-10 text-[#d4af37] font-black tracking-widest text-xs uppercase flex items-center gap-3 mx-auto">
+                  <ArrowLeft size={18}/> Regressar ao Início
                 </button>
               </div>
             </motion.div>
           )}
 
-          {view === 'menu' && (
-            <motion.div key="m" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="p-6">
-              <h3 className="text-3xl font-black italic text-center mb-10 text-[#2d241e]">A Nossa Carta</h3>
-              {menuCategorias.map(categoria => (
-                <div key={categoria.cat} className="mb-10">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="h-[1px] bg-[#d4af37] flex-1" />
-                    <span className="text-xs font-black uppercase tracking-[0.3em] text-[#d4af37]">{categoria.cat}</span>
-                    <div className="h-[1px] bg-[#d4af37] flex-1" />
-                  </div>
-                  <div className="space-y-8">
-                    {categoria.items.map(item => (
-                      <div key={item.name} className="flex flex-col">
-                        <div className="flex justify-between items-baseline mb-1">
-                          <h4 className="font-bold text-lg">{item.name}</h4>
-                          <span className="font-black text-[#d4af37]">{item.price}</span>
-                        </div>
-                        <p className="text-sm text-zinc-500 font-sans italic">{item.desc}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </motion.div>
-          )}
-
+          {/* VIEW: BOOKING (Com Horas, Datas e Max 12 pessoas) */}
           {view === 'booking' && (
-            <motion.div key="b" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="p-8 h-full flex flex-col justify-center">
-              <div className="bg-white p-8 border border-[#eaddca] shadow-2xl relative">
-                <div className="absolute top-[-10px] left-1/2 -translate-x-1/2 bg-[#fdfaf5] px-4">
-                  <UtensilsCrossed size={20} className="text-[#d4af37]" />
+            <motion.div key="b" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="p-12 min-h-full flex flex-col items-center justify-center bg-[#fdfaf5]">
+              <div className="bg-white p-14 shadow-2xl w-full max-w-2xl border-t-[12px] border-[#d4af37]">
+                <div className="text-center mb-12">
+                  <h3 className="text-4xl font-black italic text-[#1a1512]">Reserva Exclusiva</h3>
+                  <p className="text-zinc-400 text-[10px] uppercase tracking-[0.5em] mt-4">Máximo 12 Convidados por Mesa</p>
                 </div>
-                <h3 className="text-2xl font-black italic mb-6 text-center">Marcar Mesa</h3>
-                <div className="space-y-4 font-sans">
-                  <input id="name-legado" className="w-full p-4 border-b border-[#eaddca] bg-transparent outline-none focus:border-[#d4af37] transition text-black" placeholder="Nome Completo" />
-                  <div className="grid grid-cols-2 gap-4">
-                    <input type="date" className="w-full p-4 border-b border-[#eaddca] bg-transparent text-xs text-black" />
-                    <input type="time" className="w-full p-4 border-b border-[#eaddca] bg-transparent text-xs text-black" />
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 font-sans">
+                  <div>
+                    <label className="text-[10px] font-black uppercase text-zinc-500 mb-3 block tracking-widest">Anfitrião</label>
+                    <input 
+                      onChange={(e) => setBookingDetails({...bookingDetails, name: e.target.value})}
+                      className="w-full p-4 bg-zinc-50 border border-zinc-200 outline-none focus:border-[#d4af37] text-black" 
+                      placeholder="Nome completo" 
+                    />
                   </div>
+                  <div>
+                    <label className="text-[10px] font-black uppercase text-zinc-500 mb-3 block tracking-widest">Telemóvel</label>
+                    <input 
+                      type="tel"
+                      onChange={(e) => setBookingDetails({...bookingDetails, phone: e.target.value})}
+                      className="w-full p-4 bg-zinc-50 border border-zinc-200 outline-none focus:border-[#d4af37] text-black" 
+                      placeholder="+351 9xx xxx xxx" 
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-black uppercase text-zinc-500 mb-3 block tracking-widest">Convidados (Máx 12)</label>
+                    <div className="relative">
+                      <Users className="absolute left-4 top-4 text-zinc-400" size={18} />
+                      <select 
+                        value={bookingDetails.guests}
+                        onChange={(e) => setBookingDetails({...bookingDetails, guests: parseInt(e.target.value)})}
+                        className="w-full p-4 pl-12 bg-zinc-50 border border-zinc-200 text-black appearance-none"
+                      >
+                        {[...Array(12)].map((_, i) => (
+                          <option key={i+1} value={i+1}>{i+1} {i === 0 ? 'Pessoa' : 'Pessoas'}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-[10px] font-black uppercase text-zinc-500 mb-3 block tracking-widest">Dia</label>
+                      <input 
+                        type="date" 
+                        onChange={(e) => setBookingDetails({...bookingDetails, date: e.target.value})}
+                        className="w-full p-4 bg-zinc-50 border border-zinc-200 text-black text-xs" 
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[10px] font-black uppercase text-zinc-500 mb-3 block tracking-widest">Hora</label>
+                      <select 
+                        onChange={(e) => setBookingDetails({...bookingDetails, time: e.target.value})}
+                        className="w-full p-4 bg-zinc-50 border border-zinc-200 text-black text-xs"
+                      >
+                        <option>12:00</option><option>13:00</option><option>14:00</option>
+                        <option>19:00</option><option>20:00</option><option>21:00</option><option>22:00</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-10 pt-8 border-t border-zinc-100 text-center">
+                  <label className="flex items-center justify-center gap-3 mb-8 cursor-pointer group">
+                     <input type="checkbox" className="w-5 h-5 accent-[#d4af37]" required />
+                     <span className="text-[10px] text-zinc-500 font-sans">Li e aceito a <button onClick={(e) => {e.preventDefault(); setShowPrivacy(true);}} className="text-[#d4af37] font-bold hover:underline">Política de Privacidade</button></span>
+                  </label>
                   <button 
-                    onClick={() => {
-                      const name = (document.getElementById('name-legado') as HTMLInputElement).value;
-                      setUser(name || "Estimado Cliente");
-                      setView('success');
-                    }} 
-                    className="w-full py-5 bg-[#2d241e] text-white font-bold tracking-widest uppercase text-xs mt-4"
+                    onClick={() => setView('success')} 
+                    className="w-full py-5 bg-[#1a1512] text-[#d4af37] font-black tracking-[0.5em] uppercase text-xs hover:bg-[#d4af37] hover:text-white transition-all shadow-xl"
                   >
-                    Confirmar Pedido
+                    Confirmar Mesa no Elaris
                   </button>
                 </div>
               </div>
             </motion.div>
           )}
 
+          {/* VIEW: SUCCESS */}
           {view === 'success' && (
-            <motion.div key="s" initial={{ scale: 0.9 }} animate={{ scale: 1 }} className="h-full flex flex-col items-center justify-center p-10 text-center">
-              <div className="p-6 rounded-full border border-[#d4af37] mb-6">
-                <CheckCircle2 size={40} className="text-[#d4af37]" />
+            <motion.div key="s" initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="h-full flex flex-col items-center justify-center p-10 text-center">
+              <div className="w-32 h-32 rounded-full border-4 border-[#d4af37] flex items-center justify-center mb-10 bg-white shadow-2xl">
+                <CheckCircle2 size={60} className="text-[#d4af37]" />
               </div>
-              <h2 className="text-3xl font-black italic text-[#2d241e]">Reserva Efetuada</h2>
-              <p className="text-zinc-500 mt-4 font-sans italic">"Aguardamos a sua visita em breve, {user}."</p>
-              <button onClick={() => setView('home')} className="mt-10 px-8 py-3 bg-[#2d241e] text-white text-[10px] font-bold tracking-[0.3em] uppercase">Voltar ao Início</button>
+              <h2 className="text-6xl font-black italic text-[#1a1512]">Reserva Confirmada!</h2>
+              <div className="mt-8 p-8 bg-white shadow-lg border border-zinc-100 max-w-lg">
+                <p className="text-zinc-600 italic text-2xl mb-4">"Estimado(a) {bookingDetails.name || 'Cliente'}, aguardamos por si."</p>
+                <div className="grid grid-cols-2 gap-4 text-sm font-bold text-[#d4af37] uppercase tracking-widest">
+                  <div className="flex items-center gap-2"><Calendar size={16}/> {bookingDetails.date || 'Hoje'}</div>
+                  <div className="flex items-center gap-2"><Clock size={16}/> {bookingDetails.time}</div>
+                </div>
+              </div>
+              <button onClick={() => setView('home')} className="mt-12 px-20 py-5 bg-[#1a1512] text-[#d4af37] font-black tracking-widest uppercase text-xs">Regressar ao Menu Principal</button>
             </motion.div>
           )}
+
+          {/* VIEW: MENU */}
+          {view === 'menu' && (
+            <motion.div key="m" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="p-20">
+               <div className="max-w-5xl mx-auto">
+                 <h3 className="text-6xl font-black italic text-center mb-24">A Nossa Carta</h3>
+                 <div className="grid md:grid-cols-2 gap-24">
+                    {menuCategorias.map(cat => (
+                      <div key={cat.cat}>
+                        <h4 className="text-[#d4af37] text-xs font-black uppercase tracking-[0.5em] mb-12 flex items-center gap-5">
+                          <div className="h-0.5 w-10 bg-[#d4af37]" /> {cat.cat}
+                        </h4>
+                        <div className="space-y-14">
+                          {cat.items.map(item => (
+                            <div key={item.name} className="group">
+                              <div className="flex justify-between items-baseline mb-3">
+                                <h5 className="font-bold text-2xl group-hover:text-[#d4af37] transition-colors">{item.name}</h5>
+                                <div className="flex-1 mx-4 border-b border-dotted border-zinc-300" />
+                                <span className="text-[#d4af37] font-bold text-xl">{item.price}</span>
+                              </div>
+                              <p className="text-zinc-500 text-base italic font-sans leading-relaxed">{item.desc}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                 </div>
+               </div>
+            </motion.div>
+          )}
+
         </AnimatePresence>
       </div>
       
-      <footer className="p-4 bg-white border-t border-[#eaddca] text-center">
-        <div className="flex justify-center gap-4 text-zinc-400 mb-2">
-          <Phone size={14} /> <Mail size={14} />
+      {/* Footer */}
+      <footer className="p-10 bg-white border-t border-zinc-200 flex flex-col md:flex-row justify-between items-center">
+        <div className="flex gap-16 text-zinc-600 font-sans font-bold">
+          <div className="flex items-center gap-3"><Phone size={18} className="text-[#d4af37]" /> 255 000 000</div>
+          <div className="flex items-center gap-3"><Mail size={18} className="text-[#d4af37]" /> reservas@elaris.pt</div>
         </div>
-        <p className="text-[9px] uppercase tracking-widest text-zinc-400">Felgueiras, Portugal • Aberto todos os dias</p>
+        <div className="flex items-center gap-8 mt-8 md:mt-0">
+          <button onClick={() => setShowPrivacy(true)} className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400 hover:text-[#d4af37] transition-colors">Privacidade</button>
+          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-300">Felgueiras • Portugal</p>
+        </div>
       </footer>
     </div>
   );
 }
 
+ CafeCafeApp;
 /* -------------------------------------------------------------------------- */
 /* --- 2. SPORTZONE FOOTBALL --- */
 /* -------------------------------------------------------------------------- */
