@@ -96,7 +96,7 @@ export default function() {
           </div>
           <div className="flex justify-end">
             <button onClick={() => setSidebarData(technicalDetails.cafe)} className="px-6 py-3 bg-white/5 border border-white/10 text-white rounded-xl font-bold hover:bg-cyan-400 hover:text-black transition-all flex items-center gap-2 text-xs tracking-widest uppercase">
-              View Case Details <Code2 size={18} />
+              Study case
             </button>
           </div>
         </div>
@@ -109,7 +109,7 @@ export default function() {
           </div>
           <div className="flex justify-end">
             <button onClick={() => setSidebarData(technicalDetails.sport)} className="px-6 py-3 bg-white/5 border border-white/10 text-white rounded-xl font-bold hover:bg-blue-600 transition-all flex items-center gap-2 text-xs tracking-widest uppercase">
-              View Case Details <Code2 size={18} />
+              Study case
             </button>
           </div>
         </div>
@@ -122,7 +122,7 @@ export default function() {
           </div>
           <div className="flex justify-end">
             <button onClick={() => setSidebarData(technicalDetails.asgard)} className="px-6 py-3 bg-white/5 border border-white/10 text-white rounded-xl font-bold hover:bg-red-600 transition-all flex items-center gap-2 text-xs tracking-widest uppercase">
-              View Case Details <Code2 size={18} />
+              Study case
             </button>
           </div>
         </div>
