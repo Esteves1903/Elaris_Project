@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import {
   Menu, Search, Heart, Code2, Cpu, Layers, 
-  User, Scissors, Coffee, 
+  User, Scissors, Coffee, Crown,
   Calendar, UtensilsCrossed,Globe, 
   Phone, Mail, Users, ChevronRight, Lock, Clock,
   ShoppingBag, Trophy, X, ArrowLeft, CheckCircle2, 
@@ -1280,71 +1280,365 @@ function ElarisSportApp() {
 /* --- 3. BARBEARIA ASGARD --- */
 /* -------------------------------------------------------------------------- */
 function AsgardBarberApp() {
-  const [view, setView] = useState<'intro' | 'book' | 'done'>('intro');
+  const [view, setView] = useState<'intro' | 'services' | 'book' | 'done'>('intro');
   const [user, setUser] = useState("");
 
+  const services = [
+    {
+      name: "Signature Cut",
+      price: "€45",
+      desc: "Precisão internacional com acabamento premium."
+    },
+    {
+      name: "Royal Beard Ritual",
+      price: "€35",
+      desc: "Contorno perfeito com toalha quente e óleos exclusivos."
+    },
+    {
+      name: "Executive Package",
+      price: "€90",
+      desc: "Corte, barba, skincare e styling de luxo."
+    }
+  ];
+
   return (
-    <div className="h-full flex flex-col bg-[#0a0a0a] text-white font-serif relative overflow-hidden">
-      <div className="absolute top-[-10%] right-[-10%] w-64 h-64 bg-red-900/10 blur-[100px]" />
-      <nav className="p-6 flex justify-between items-center border-b border-white/5 relative z-10">
-        <h1 className="text-xl font-black tracking-tighter text-red-600 italic">Elaris</h1>
-        <button onClick={() => setView('book')} className="text-[10px] font-bold tracking-[0.2em] uppercase border-b border-red-600">Marcas</button>
+    <div className="h-full flex flex-col bg-[#050505] text-white overflow-hidden relative font-sans">
+
+      {/* BACKGROUND FX */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-red-700/10 blur-[140px]" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-amber-500/10 blur-[140px]" />
+      </div>
+
+      {/* NAVBAR */}
+      <nav className="relative z-20 px-8 md:px-16 py-6 flex items-center justify-between border-b border-white/5 backdrop-blur-xl bg-black/40">
+        <div
+          onClick={() => setView('intro')}
+          className="cursor-pointer flex items-center gap-4 group"
+        >
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-red-600 to-red-900 flex items-center justify-center shadow-[0_0_25px_rgba(220,38,38,0.4)]">
+            <Scissors size={18} />
+          </div>
+
+          <div>
+            <h1 className="text-2xl font-black italic tracking-tight">
+              ELARIS
+            </h1>
+            <span className="text-[9px] uppercase tracking-[0.4em] text-zinc-500">
+              International Barber House
+            </span>
+          </div>
+        </div>
+
+        <div className="hidden md:flex items-center gap-10 text-[11px] uppercase tracking-[0.3em] font-bold">
+          <button
+            onClick={() => setView('services')}
+            className="hover:text-red-500 transition-colors"
+          >
+            Services
+          </button>
+
+          <button
+            onClick={() => setView('book')}
+            className="hover:text-red-500 transition-colors"
+          >
+            Booking
+          </button>
+
+          <button
+            onClick={() => setView('book')}
+            className="px-8 py-3 bg-red-600 hover:bg-white hover:text-black transition-all"
+          >
+            Reserve
+          </button>
+        </div>
       </nav>
 
+      {/* CONTENT */}
       <div className="flex-1 overflow-y-auto relative z-10">
+
         <AnimatePresence mode="wait">
+
+          {/* INTRO */}
           {view === 'intro' && (
-            <motion.div key="i" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="h-full flex flex-col items-center justify-center p-8 text-center">
-              <Scissors size={48} className="text-red-600 mb-6" />
-              <h2 className="text-5xl font-black italic mb-4 leading-none">CORTES DE<br/>GUERREIRO.</h2>
-              <p className="text-zinc-500 font-sans text-sm mb-10">Estilo nórdico e precisão moderna no coração da cidade.</p>
-              <button onClick={() => setView('book')} className="px-12 py-4 bg-red-600 text-white font-bold tracking-widest hover:bg-white hover:text-black transition-colors">ENTRAR EM ELARIS</button>
-            </motion.div>
-          )}
+            <motion.div
+              key="intro"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="min-h-full"
+            >
 
-          {view === 'book' && (
-            <motion.div key="b" initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="p-8">
-              <div className="bg-zinc-900/50 border border-white/10 p-8 rounded-3xl">
-                <h3 className="text-2xl italic font-black mb-6">Agendar Batalha</h3>
-                <div className="space-y-4 font-sans">
-                  <input id="name-asgard" className="w-full p-4 bg-black border border-white/10 rounded-xl outline-none focus:border-red-600 transition text-white" placeholder="Nome do Guerreiro" />
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="p-4 bg-black border border-white/10 rounded-xl flex flex-col gap-2 cursor-pointer hover:border-red-600 transition">
-                      <Calendar size={14} className="text-red-600" />
-                      <span className="text-[10px] font-bold">HOJE</span>
-                    </div>
-                    <div className="p-4 bg-black border border-white/10 rounded-xl flex flex-col gap-2 cursor-pointer hover:border-red-600 transition">
-                      <Star size={14} className="text-red-600" />
-                      <span className="text-[10px] font-bold">VIP</span>
-                    </div>
+              {/* HERO */}
+              <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
+
+                <img
+                  src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?q=80&w=2000"
+                  className="absolute inset-0 w-full h-full object-cover opacity-40 scale-105"
+                  alt="Barber"
+                />
+
+                <div className="absolute inset-0 bg-black/60" />
+
+                <div className="relative z-10 text-center px-6 max-w-5xl">
+                  <span className="text-red-500 font-black uppercase tracking-[0.5em] text-xs block mb-6">
+                    Dubai • London • Porto
+                  </span>
+
+                  <h2 className="text-6xl md:text-8xl font-black italic leading-none tracking-tight mb-8">
+                    WORLD CLASS
+                    <br />
+                    GROOMING.
+                  </h2>
+
+                  <p className="text-zinc-400 max-w-2xl mx-auto text-lg leading-relaxed mb-12">
+                    Uma experiência de elite inspirada nas barbearias mais luxuosas
+                    do mundo. Precisão absoluta, ambiente premium e detalhe obsessivo.
+                  </p>
+
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+                    <button
+                      onClick={() => setView('book')}
+                      className="px-12 py-5 bg-red-600 hover:bg-white hover:text-black transition-all font-black uppercase tracking-[0.2em] text-sm shadow-2xl"
+                    >
+                      Reservar Agora
+                    </button>
+
+                    <button
+                      onClick={() => setView('services')}
+                      className="px-12 py-5 border border-white/20 hover:border-red-600 hover:bg-red-600 transition-all font-black uppercase tracking-[0.2em] text-sm"
+                    >
+                      Explorar Serviços
+                    </button>
                   </div>
-                  <button 
-                    onClick={() => {
-                      const name = (document.getElementById('name-asgard') as HTMLInputElement).value;
-                      setUser(name || "Guerreiro");
-                      setView('done');
-                    }}
-                    className="w-full py-5 bg-white text-black font-black uppercase tracking-tighter hover:bg-red-600 hover:text-white transition"
-                  >
-                    Confirmar Corte
-                  </button>
                 </div>
+              </section>
+
+              {/* PREMIUM SECTION */}
+              <section className="py-24 px-8 md:px-16 max-w-7xl mx-auto grid md:grid-cols-3 gap-10">
+
+                <div className="bg-white/5 border border-white/10 p-10 backdrop-blur-xl">
+                  <Award size={38} className="text-red-500 mb-6" />
+                  <h3 className="text-2xl font-black italic mb-4">
+                    Master Barbers
+                  </h3>
+                  <p className="text-zinc-500 leading-relaxed">
+                    Especialistas treinados nas maiores academias internacionais
+                    de grooming e estética masculina.
+                  </p>
+                </div>
+
+                <div className="bg-white/5 border border-white/10 p-10 backdrop-blur-xl">
+                  <Crown size={38} className="text-red-500 mb-6" />
+                  <h3 className="text-2xl font-black italic mb-4">
+                    VIP Experience
+                  </h3>
+                  <p className="text-zinc-500 leading-relaxed">
+                    Whiskey lounge, toalhas quentes, aromas premium e atendimento
+                    exclusivo.
+                  </p>
+                </div>
+
+                <div className="bg-white/5 border border-white/10 p-10 backdrop-blur-xl">
+                  <Sparkles size={38} className="text-red-500 mb-6" />
+                  <h3 className="text-2xl font-black italic mb-4">
+                    Luxury Products
+                  </h3>
+                  <p className="text-zinc-500 leading-relaxed">
+                    Produtos importados e tratamentos profissionais usados pelos
+                    melhores barbeiros do mundo.
+                  </p>
+                </div>
+
+              </section>
+            </motion.div>
+          )}
+
+          {/* SERVICES */}
+          {view === 'services' && (
+            <motion.div
+              key="services"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="p-8 md:p-20 max-w-7xl mx-auto"
+            >
+
+              <div className="mb-20 text-center">
+                <span className="text-red-500 uppercase tracking-[0.5em] text-xs font-black">
+                  Elite Services
+                </span>
+
+                <h2 className="text-6xl font-black italic mt-6 tracking-tight">
+                  THE EXPERIENCE
+                </h2>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-8">
+
+                {services.map((service, index) => (
+                  <motion.div
+                    key={index}
+                    whileHover={{ y: -10 }}
+                    className="bg-white/5 border border-white/10 p-10 group hover:border-red-600 transition-all"
+                  >
+
+                    <div className="flex justify-between items-start mb-10">
+                      <span className="text-zinc-500 text-[10px] uppercase tracking-[0.3em] font-bold">
+                        Premium
+                      </span>
+
+                      <span className="text-red-500 text-2xl font-black italic">
+                        {service.price}
+                      </span>
+                    </div>
+
+                    <h3 className="text-3xl font-black italic mb-6 group-hover:text-red-500 transition-colors">
+                      {service.name}
+                    </h3>
+
+                    <p className="text-zinc-500 leading-relaxed mb-10">
+                      {service.desc}
+                    </p>
+
+                    <button
+                      onClick={() => setView('book')}
+                      className="w-full py-4 bg-white text-black font-black uppercase tracking-widest text-xs hover:bg-red-600 hover:text-white transition-all"
+                    >
+                      Reservar
+                    </button>
+                  </motion.div>
+                ))}
+
               </div>
             </motion.div>
           )}
 
-          {view === 'done' && (
-            <motion.div key="d" initial={{ scale: 0.8 }} animate={{ scale: 1 }} className="h-full flex flex-col items-center justify-center p-10 text-center">
-              <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mb-6 shadow-[0_0_50px_rgba(220,38,38,0.3)]">
-                <CheckCircle2 size={40} />
+          {/* BOOK */}
+          {view === 'book' && (
+            <motion.div
+              key="book"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="p-8 md:p-20 flex items-center justify-center"
+            >
+
+              <div className="w-full max-w-4xl bg-white/5 border border-white/10 backdrop-blur-2xl p-10 md:p-16 shadow-[0_0_80px_rgba(0,0,0,0.5)]">
+
+                <div className="text-center mb-14">
+                  <span className="text-red-500 uppercase tracking-[0.5em] text-xs font-black">
+                    Reservation
+                  </span>
+
+                  <h2 className="text-5xl font-black italic mt-6">
+                    BOOK YOUR SESSION
+                  </h2>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-8">
+
+                  <input
+                    id="name-asgard"
+                    className="bg-black/60 border border-white/10 p-5 outline-none focus:border-red-600 transition-all"
+                    placeholder="Nome Completo"
+                  />
+
+                  <input
+                    className="bg-black/60 border border-white/10 p-5 outline-none focus:border-red-600 transition-all"
+                    placeholder="Telefone"
+                  />
+
+                  <input
+                    type="date"
+                    className="bg-black/60 border border-white/10 p-5 outline-none focus:border-red-600 transition-all"
+                  />
+
+                  <select className="bg-black/60 border border-white/10 p-5 outline-none focus:border-red-600 transition-all">
+                    <option>Signature Cut</option>
+                    <option>Royal Beard Ritual</option>
+                    <option>Executive Package</option>
+                  </select>
+
+                </div>
+
+                <button
+                  onClick={() => {
+                    const name =
+                      (document.getElementById(
+                        'name-asgard'
+                      ) as HTMLInputElement).value;
+
+                    setUser(name || "Cliente");
+                    setView('done');
+                  }}
+                  className="w-full mt-12 py-5 bg-red-600 hover:bg-white hover:text-black transition-all font-black uppercase tracking-[0.3em] text-sm"
+                >
+                  Confirmar Reserva
+                </button>
+
               </div>
-              <h2 className="text-4xl font-black italic">ESTÁ MARCADO!</h2>
-              <p className="text-zinc-500 mt-4 font-sans">Vemo-nos em breve, {user}.</p>
-              <button onClick={() => setView('intro')} className="mt-12 text-xs font-bold tracking-widest uppercase border-b border-white/20">Sair de Elaris</button>
             </motion.div>
           )}
+
+          {/* DONE */}
+          {view === 'done' && (
+            <motion.div
+              key="done"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="h-full flex flex-col items-center justify-center text-center p-10"
+            >
+
+              <div className="w-28 h-28 rounded-full bg-red-600 flex items-center justify-center shadow-[0_0_60px_rgba(220,38,38,0.5)] mb-10">
+                <CheckCircle2 size={52} />
+              </div>
+
+              <span className="text-red-500 uppercase tracking-[0.5em] text-xs font-black mb-6">
+                Reservation Confirmed
+              </span>
+
+              <h2 className="text-6xl font-black italic leading-none tracking-tight mb-8">
+                SEE YOU
+                <br />
+                SOON.
+              </h2>
+
+              <p className="text-zinc-500 text-xl max-w-xl leading-relaxed">
+                A tua sessão premium está marcada, {user}. 
+                Bem-vindo ao nível mais alto da barbearia internacional.
+              </p>
+
+              <button
+                onClick={() => setView('intro')}
+                className="mt-14 px-14 py-5 border border-white/20 hover:border-red-600 hover:bg-red-600 transition-all uppercase tracking-[0.3em] text-xs font-black"
+              >
+                Voltar
+              </button>
+            </motion.div>
+          )}
+
         </AnimatePresence>
       </div>
+
+      {/* FOOTER */}
+      <footer className="relative z-20 border-t border-white/5 bg-black/40 backdrop-blur-xl px-8 md:px-16 py-6 flex flex-col md:flex-row items-center justify-between gap-6">
+
+        <div>
+          <h3 className="font-black italic text-xl">
+            ELARIS<span className="text-red-600">.</span>
+          </h3>
+
+          <p className="text-zinc-600 text-[10px] uppercase tracking-[0.3em] mt-2">
+            Luxury Grooming House
+          </p>
+        </div>
+
+        <div className="flex items-center gap-8 text-[10px] uppercase tracking-[0.3em] font-bold text-zinc-500">
+          <span>Dubai</span>
+          <span>London</span>
+          <span>Porto</span>
+        </div>
+
+      </footer>
     </div>
   );
-}
+};
