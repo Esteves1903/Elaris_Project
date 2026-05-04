@@ -1,436 +1,410 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, MapPin, Clock, Users, Star, Calendar, Phone, Menu, X, ShoppingCart, Search, Filter, ArrowRight } from 'lucide-react';
 
-// --- 1. BREWHAUS COFFEE & RESTAURANT ---
-const BrewhausCafeLayout = () => {
-  const [step, setStep] = useState('home');
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+import React, { useState } from "react";
+import {
+  Menu, X, Search, ShoppingBag, Heart, Code2, Cpu, Layers, 
+  User, Scissors, ArrowLeft, CheckCircle2, Coffee, 
+  ShoppingBasket, Calendar, Star, UtensilsCrossed, Trophy,
+  Phone, Mail
+} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
-  const menuItems = [
-    { category: 'Specialty Coffees', items: [
-      { name: 'Espresso', price: '€3.50', desc: 'Classic Italian espresso' },
-      { name: 'Cappuccino', price: '€4.50', desc: 'Smooth milk foam blend' },
-      { name: 'Cold Brew', price: '€5.00', desc: 'Bold and smooth' },
-    ]},
-    { category: 'Pastries', items: [
-      { name: 'Croissant', price: '€3.20', desc: 'Buttery and flaky' },
-      { name: 'Almond Tart', price: '€4.00', desc: 'Premium almond filling' },
-      { name: 'Soufflé Pancake', price: '€6.50', desc: 'Light and fluffy' },
-    ]}
-  ];
-
-  return (
-    <div className="h-full bg-gradient-to-b from-amber-50 to-white text-zinc-900 font-sans overflow-y-auto custom-scrollbar">
-      <nav className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-amber-100 px-4 md:px-8 py-4 flex justify-between items-center shadow-sm">
-        <div className="font-serif text-xl md:text-2xl font-bold text-amber-900">Brewhaus</div>
-        <div className="hidden md:flex gap-6 text-sm font-medium">
-          <button onClick={() => setStep('home')} className={`transition ${step === 'home' ? 'text-amber-900 border-b-2 border-amber-900' : 'text-zinc-600 hover:text-amber-900'}`}>Home</button>
-          <button onClick={() => setStep('menu')} className={`transition ${step === 'menu' ? 'text-amber-900 border-b-2 border-amber-900' : 'text-zinc-600 hover:text-amber-900'}`}>Menu</button>
-          <button onClick={() => setStep('reserve')} className="bg-amber-900 text-white px-6 py-2 rounded-full hover:bg-amber-800 transition text-xs">Reserve</button>
-        </div>
-        <button className="md:hidden text-amber-900" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-          {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
-      </nav>
-
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="absolute top-14 left-0 w-full bg-white z-20 border-b border-amber-100 p-4 flex flex-col gap-3 md:hidden shadow-xl text-sm">
-             <button onClick={() => {setStep('home'); setIsMobileMenuOpen(false)}} className="text-left py-2 font-medium">Home</button>
-             <button onClick={() => {setStep('menu'); setIsMobileMenuOpen(false)}} className="text-left py-2 font-medium">Menu</button>
-             <button onClick={() => {setStep('reserve'); setIsMobileMenuOpen(false)}} className="bg-amber-900 text-white p-3 rounded-full font-bold text-center">Reserve Table</button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence mode="wait">
-        {step === 'home' && (
-          <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <div className="relative h-64 md:h-96 overflow-hidden bg-amber-100">
-              <img src="/fundocafe.jfif" alt="Cafe" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-black/40 flex items-center justify-center p-4">
-                <div className="text-center text-white">
-                  <h1 className="text-3xl md:text-5xl font-serif font-bold mb-2 md:mb-4">Welcome to Brewhaus</h1>
-                  <p className="text-sm md:text-lg">Specialty Coffee & Fine Dining</p>
-                </div>
-              </div>
-            </div>
-            <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-16">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-                <div className="text-center p-6 bg-amber-50 rounded-lg">
-                  <Clock className="w-6 h-6 mx-auto mb-3 text-amber-900" />
-                  <h3 className="font-semibold text-sm mb-1">Hours</h3>
-                  <p className="text-xs text-zinc-600">Mon-Fri: 7am-10pm</p>
-                </div>
-                <div className="text-center p-6 bg-amber-50 rounded-lg">
-                  <MapPin className="w-6 h-6 mx-auto mb-3 text-amber-900" />
-                  <h3 className="font-semibold text-sm mb-1">Location</h3>
-                  <p className="text-xs text-zinc-600">123 Coffee Street, Porto</p>
-                </div>
-                <div className="text-center p-6 bg-amber-50 rounded-lg">
-                  <Phone className="w-6 h-6 mx-auto mb-3 text-amber-900" />
-                  <h3 className="font-semibold text-sm mb-1">Contact</h3>
-                  <p className="text-xs text-zinc-600">+351 22 1234 5678</p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-
-        {step === 'menu' && (
-          <motion.div key="menu" className="px-4 md:px-8 py-8 md:py-16 max-w-2xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-serif font-bold mb-8 text-amber-900">Our Menu</h2>
-            {menuItems.map((section, idx) => (
-              <div key={idx} className="mb-8">
-                <h3 className="text-lg font-semibold mb-4 pb-2 border-b-2 border-amber-200 text-amber-900">{section.category}</h3>
-                <div className="space-y-4">
-                  {section.items.map((item, i) => (
-                    <div key={i} className="flex justify-between items-start gap-4">
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-sm text-zinc-900">{item.name}</h4>
-                        <p className="text-xs text-zinc-500">{item.desc}</p>
-                      </div>
-                      <span className="font-bold text-amber-900 text-sm">{item.price}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </motion.div>
-        )}
-
-        {step === 'reserve' && (
-          <motion.div key="reserve" className="px-4 py-8 md:py-16 max-w-md mx-auto">
-            <div className="bg-white border-2 border-amber-200 p-6 rounded-lg shadow-lg">
-              <h3 className="text-xl font-serif font-bold mb-6 text-center text-amber-900">Book a Table</h3>
-              <div className="space-y-4">
-                <input type="text" placeholder="Name" className="w-full border border-amber-200 p-3 rounded-lg text-sm outline-none focus:border-amber-900" />
-                <input type="date" className="w-full border border-amber-200 p-3 rounded-lg text-sm outline-none focus:border-amber-900" />
-                <button onClick={() => setStep('home')} className="w-full py-3 bg-amber-900 text-white font-semibold rounded-lg text-sm">Confirm</button>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
+// --- DADOS DA SIDEBAR TÉCNICA (Traduzido para Inglês) ---
+type ProjectDetails = {
+  title: string;
+  stack: string[];
+  description: string;
+  logic: string[];
 };
 
-// --- 2. FOOTBALL STORE PRO (NEW) ---
-const FootballStoreLayout = () => {
-  const [cartCount, setCartCount] = useState(0);
-  const [filter, setFilter] = useState('All');
-
-  const products = [
-    { id: 1, name: 'Home Kit 24/25', price: '89.99€', category: 'Kits', img:'/homekit.jpg' },
-    { id: 2, name: 'Training Jersey', price: '45.00€', category: 'Training', img: 'https://images.unsplash.com/photo-1517466787929-bc90951d0974?q=80&w=500&auto=format&fit=crop' },
-    { id: 3, name: 'Pro Boots V2', price: '120.00€', category: 'Boots', img:'/chuteira.avif' },
-    { id: 4, name: 'Away Kit 24/25', price: '89.99€', category: 'Kits', img:'/awaykit.avif' },
-  ];
-
-  const filteredProducts = filter === 'All' ? products : products.filter(p => p.category === filter);
-
-  return (
-    <div className="h-full bg-zinc-50 text-black font-sans overflow-y-auto custom-scrollbar">
-      {/* Nav */}
-      <nav className="bg-blue-700 text-white p-4 flex justify-between items-center sticky top-0 z-20">
-        <div className="font-black text-xl tracking-tighter italic">FOOTBALL PRO</div>
-        <div className="relative">
-          <ShoppingCart size={24} />
-          <span className="absolute -top-2 -right-2 bg-red-500 text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">{cartCount}</span>
-        </div>
-      </nav>
-
-      {/* Filters */}
-      <div className="p-4 flex gap-2 overflow-x-auto no-scrollbar bg-white border-b">
-        {['All', 'Kits', 'Training', 'Boots'].map(cat => (
-          <button 
-            key={cat} 
-            onClick={() => setFilter(cat)}
-            className={`px-4 py-2 rounded-full text-xs font-bold transition ${filter === cat ? 'bg-blue-700 text-white' : 'bg-zinc-100 text-zinc-600'}`}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
-
-      {/* Hero */}
-      <div className="p-4">
-          <div className="bg-zinc-900 rounded-2xl h-40 flex items-center p-6 text-white relative overflow-hidden">
-              <div className="z-10">
-                  <h2 className="text-2xl font-black italic">NEW SEASON<br/>ARRIVALS</h2>
-                  <button className="mt-2 text-blue-400 text-[10px] font-bold flex items-center gap-1 uppercase tracking-widest">Shop Now <ArrowRight size={12}/></button>
-              </div>
-              <div className="absolute right-[-20px] bottom-[-20px] rotate-12 opacity-20">
-                  <ShoppingCart size={120} />
-              </div>
-          </div>
-      </div>
-
-      {/* Grid Corrigido */}
-      <div className="p-4 grid grid-cols-2 gap-4">
-        {filteredProducts.map(p => (
-          <motion.div layout key={p.id} className="bg-white rounded-xl overflow-hidden shadow-sm border border-zinc-100 flex flex-col">
-            {/* Div da Imagem com a tag img real */}
-            <div className="h-130 bg-zinc-50 overflow-hidden flex items-center justify-center p-2">
-              <img 
-                src={p.img} 
-                alt={p.name} 
-                className="w-full h-full object-cover"
-              />
-            </div>
-            
-            <div className="p-3">
-              <p className="text-[10px] font-bold text-blue-600 uppercase tracking-tighter">{p.category}</p>
-              <h3 className="text-sm font-bold truncate">{p.name}</h3>
-              <div className="mt-2 flex justify-between items-center">
-                <span className="text-sm font-black">{p.price}</span>
-                <button onClick={() => setCartCount(c => c+1)} className="bg-zinc-950 text-white p-2 rounded-lg hover:bg-blue-700 transition-colors">
-                   <ShoppingCart size={14} />
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-    </div>
-  );
+const technicalDetails: Record<string, ProjectDetails> = {
+  cafe: {
+    title: "Elaris Restaurant",
+    stack: ["React State", "Framer Motion", "Tailwind CSS"],
+    description: "Restaurant application with table booking and digital menu visualization.",
+    logic: ["Booking state management", "Menu category navigation", "Customer bill simulation"],
+  },
+  sport: {
+    title: "Elaris Football Store",
+    stack: ["Dynamic Filtering", "Cart Logic", "Lucide Icons"],
+    description: "Football e-commerce featuring a simplified checkout flow.",
+    logic: ["Global cart counter", "Real-time search filtering", "Dynamic product pages"],
+  },
+  asgard: {
+    title: "Elaris Barber Shop",
+    stack: ["Dark UI Design", "Step-by-step Booking", "Animations"],
+    description: "Premium barber shop interface with Viking theme and quick scheduling.",
+    logic: ["Intuitive booking workflow", "Visual success feedback", "Mock auth system"],
+  },
 };
 
-// --- 3. PRIME CUTS BARBER SHOP ---
-const PrimeCutsBarberLayout = () => {
-  const [view, setView] = useState('home');
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const services = [
-    { name: 'Haircut', price: '€35', duration: '45 min', desc: 'Professional cut with precision' },
-    { name: 'Beard Trim', price: '€20', duration: '20 min', desc: 'Shaping and detail work' },
-    { name: 'Hot Shave', price: '€30', duration: '30 min', desc: 'Straight razor shave' },
-    { name: 'Full Treatment', price: '€60', duration: '90 min', desc: 'Haircut + Beard + Massage' },
-  ];
-
-  const barbers = [
-    { name: 'Marco', specialty: 'Classic Cuts', rating: 4.9, img:'/Barbeiro1.jfif'},
-    { name: 'David', specialty: 'Fades & Designs', rating: 4.8, img: '/barbeiro2.jfif' },
-    { name: 'João', specialty: 'Beard Specialist', rating: 4.9, img: '/barbeiro3.jfif' },
-  ];
+export default function PortfolioProfissional() {
+  const [sidebarData, setSidebarData] = useState<ProjectDetails | null>(null);
 
   return (
-    <div className="h-full bg-slate-950 text-white font-sans overflow-y-auto custom-scrollbar">
-      <header className="sticky top-0 z-30 bg-black/90 backdrop-blur-md border-b border-red-900/50 px-4 md:px-8 py-4 flex justify-between items-center">
-        <h1 className="text-xl md:text-2xl font-black text-red-600 italic tracking-tighter">PRIME CUTS</h1>
-        <nav className="hidden md:flex gap-8 text-[10px] font-bold uppercase tracking-widest">
-          <button onClick={() => setView('home')} className={`transition ${view === 'home' ? 'text-red-600' : 'text-zinc-400'}`}>Home</button>
-          <button onClick={() => setView('services')} className={`transition ${view === 'services' ? 'text-red-600' : 'text-zinc-400'}`}>Services</button>
-          <button onClick={() => setView('book')} className="bg-red-600 text-white px-4 py-2 rounded">Book</button>
-        </nav>
-        <button className="md:hidden text-red-600" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-          {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
-      </header>
-
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} className="absolute inset-0 bg-black z-50 p-8 flex flex-col gap-6 text-center justify-center">
-            <button className="absolute top-6 right-6" onClick={() => setIsMobileMenuOpen(false)}><X size={28}/></button>
-            <button onClick={() => {setView('home'); setIsMobileMenuOpen(false)}} className="text-2xl font-black italic">HOME</button>
-            <button onClick={() => {setView('services'); setIsMobileMenuOpen(false)}} className="text-2xl font-black italic">SERVICES</button>
-            <button onClick={() => {setView('book'); setIsMobileMenuOpen(false)}} className="bg-red-600 py-4 text-lg font-black italic">BOOK NOW</button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence mode="wait">
-        {view === 'home' && (
-          <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <div className="relative h-80 md:h-[450px] overflow-hidden bg-zinc-900">
-              <img src="/fundobarber.avif" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center px-4">
-                  <h1 className="text-4xl md:text-7xl font-black mb-2 italic tracking-tighter">SHARP LINES</h1>
-                  <p className="text-red-600 font-bold tracking-[0.3em] text-[10px] md:text-xs">ESTABLISHED 2020 • PORTO</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="max-w-4xl mx-auto px-4 md:px-8 py-12 pb-24">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-                <div className="border-l-4 border-red-600 pl-4">
-                  <h3 className="text-red-600 font-black text-[10px] uppercase mb-1">Location</h3>
-                  <p className="text-zinc-400 text-xs">Rua dos Barbeiros 42, Porto</p>
-                </div>
-                <div className="border-l-4 border-red-600 pl-4">
-                  <h3 className="text-red-600 font-black text-[10px] uppercase mb-1">Contact</h3>
-                  <p className="text-zinc-400 text-xs">+351 22 567 890</p>
-                </div>
-              </div>
-
-              <h2 className="text-xl font-black italic mb-8 border-b border-zinc-800 pb-2">THE TEAM</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
-                {barbers.map((b, i) => (
-                  <div key={i} className="group relative overflow-hidden rounded-lg bg-zinc-900 border border-zinc-800">
-                    <img src={b.img} className="w-full h-72 object-cover group-hover:scale-110 transition duration-500 opacity-80" alt={b.name} />
-                    <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black to-transparent">
-                      <h4 className="font-black italic text-sm">{b.name}</h4>
-                      <p className="text-[10px] text-red-500 font-bold uppercase">{b.specialty}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        )}
-
-        {view === 'services' && (
-          <motion.div key="services" className="max-w-2xl mx-auto px-4 py-12">
-            <h2 className="text-2xl font-black italic mb-8 text-red-600">SERVICES</h2>
-            <div className="space-y-4">
-              {services.map((s, i) => (
-                <div key={i} className="p-5 bg-zinc-900/50 border border-zinc-800 rounded flex justify-between items-center group hover:border-red-600 transition">
-                  <div className="pr-4">
-                    <h4 className="font-black text-sm md:text-base group-hover:text-red-500 transition uppercase tracking-wider">{s.name}</h4>
-                    <p className="text-[10px] text-zinc-500 italic">{s.desc}</p>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-lg font-black text-red-600">{s.price}</div>
-                    <div className="text-[8px] text-zinc-600 uppercase font-bold">{s.duration}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        )}
-
-        {view === 'book' && (
-          <motion.div key="book" className="max-w-md mx-auto px-4 py-12">
-            <div className="bg-zinc-900 p-6 md:p-8 border-t-4 border-red-600">
-              <h3 className="text-xl font-black italic mb-8 text-center uppercase tracking-widest">BOOK NOW</h3>
-              <div className="space-y-4">
-                <input type="text" placeholder="NAME" className="w-full bg-black border border-zinc-800 p-4 text-[10px] font-bold outline-none focus:border-red-600" />
-                <button onClick={() => setView('success')} className="w-full py-4 bg-red-600 font-black italic text-sm">CONFIRM</button>
-              </div>
-            </div>
-          </motion.div>
-        )}
-
-        {view === 'success' && (
-          <motion.div key="success" className="h-96 flex flex-col items-center justify-center text-center px-4">
-            <h3 className="text-3xl font-black italic mb-2">YOU'RE SET!</h3>
-            <button onClick={() => setView('home')} className="mt-8 px-10 py-3 border-2 border-white font-black italic text-xs">BACK</button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-};
-
-// --- MAIN PORTFOLIO PAGE ---
-export default function Portfolio() {
-  const [activeProject, setActiveProject] = useState<any>(null);
-
-  const projects = [
-    {
-      id: 1,
-      title: "Brewhaus Coffee",
-      url: "brewhaus-cafe.com",
-      layout: <BrewhausCafeLayout />,
-      tech: ["Next.js", "Framer Motion"],
-      description: "Elegant hospitality platform with real-time booking and menu management.",
-      features: ["Online Menu", "Table Booking", "Responsive UI"]
-    },
-    {
-        id: 2,
-        title: "Football Store Pro",
-        url: "footballpro-shop.com",
-        layout: <FootballStoreLayout />,
-        tech: ["Next.js", "Tailwind CSS", "Framer Motion"],
-        description: "Professional online store for football gear with real-time stock and filters.",
-        features: ["Product Filtering", "Shopping Cart", "Inventory Management"]
-    },
-    {
-      id: 3,
-      title: "Prime Cuts Barber",
-      url: "primecuts-barber.com",
-      layout: <PrimeCutsBarberLayout />,
-      tech: ["React", "TypeScript"],
-      description: "High-contrast service layout for modern barbershops with team showcases.",
-      features: ["Appointment UI", "Team Profiles", "Service Gallery"]
-    }
-  ];
-
-  return (
-    <main className="min-h-screen bg-[#06080e] text-white">
-      <section className="px-6 pt-24 pb-12 md:pt-32 md:pb-24 max-w-6xl mx-auto">
-        <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
+    <main className="min-h-screen bg-[#0B0F19] px-6 pb-24 pt-32 text-white font-sans">
+      {/* Hero Section */}
+      <section className="mx-auto max-w-6xl">
+        <div className="max-w-3xl">
+          <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
             Portfolio
           </p>
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-8">
-            Interactive layouts previews.
+          <h1 className="mb-8 text-4xl font-bold tracking-tight sm:text-5xl">
+            Interactive Layouts Previews.
           </h1>
+        </div>
       </section>
 
-      <section className="px-4 md:px-6 space-y-32 pb-32 max-w-6xl mx-auto">
-        {projects.map((p) => (
-          <div key={p.id} className="relative">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-              <div className="flex items-center gap-4">
-                <span className="text-3xl md:text-5xl font-black text-zinc-900">0{p.id}</span>
-                <h3 className="text-2xl md:text-3xl font-bold tracking-tight">{p.title}</h3>
-              </div>
-            </div>
-
-            <div className="rounded-xl md:rounded-[2.5rem] overflow-hidden border border-white/10 bg-zinc-900 shadow-2xl">
-              <div className="bg-zinc-800/50 px-4 md:px-8 py-3 md:py-4 flex items-center justify-between border-b border-white/5">
-                <div className="flex gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/30" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/30" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-green-500/30" />
-                </div>
-                <div className="text-[8px] font-mono text-zinc-500 tracking-[0.2em] uppercase">{p.url}</div>
-                <div className="w-8 md:w-16 h-1 bg-zinc-700/50 rounded-full" />
-              </div>
-              <div className="h-[500px] md:h-[600px] relative">
-                {p.layout}
-              </div>
-            </div>
-
-            <div className="mt-8 flex flex-col md:flex-row gap-6 justify-between items-start">
-                <p className="text-zinc-500 text-sm max-w-lg leading-relaxed">{p.description}</p>
-                <button onClick={() => setActiveProject(p)} className="text-[10px] font-black uppercase tracking-widest bg-white text-black px-10 py-4 rounded-full hover:bg-cyan-400 transition whitespace-nowrap">Explore Specs</button>
-            </div>
-          </div>
-        ))}
-      </section>
-
+      {/* SIDEBAR TÉCNICA (Traduzida) */}
       <AnimatePresence>
-        {activeProject && (
+        {sidebarData && (
           <>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setActiveProject(null)} className="fixed inset-0 bg-black/95 z-50 backdrop-blur-xl" />
-            <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} className="fixed inset-y-0 right-0 w-full max-w-xl bg-zinc-950 z-[60] p-8 md:p-16 overflow-y-auto border-l border-white/10">
-              <button onClick={() => setActiveProject(null)} className="text-cyan-400 font-mono text-[10px] mb-12 tracking-[0.3em]">← CLOSE</button>
-              <h2 className="text-4xl md:text-5xl font-black italic mb-6 leading-none uppercase">{activeProject.title}</h2>
-              <div className="space-y-12">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSidebarData(null)} className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100]" />
+            <motion.div initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} className="fixed right-0 top-0 h-full w-full max-w-md bg-[#0d1117] border-l border-white/10 z-[101] p-8 overflow-y-auto">
+              <button onClick={() => setSidebarData(null)} className="mb-8 p-2 hover:bg-white/10 rounded-full transition"><X size={24} /></button>
+              <div className="space-y-8">
                 <div>
-                  <h4 className="text-[10px] font-bold text-cyan-400 uppercase tracking-widest mb-6">Key Features</h4>
-                  <ul className="grid grid-cols-1 gap-3">
-                    {activeProject.features.map((f:any) => <li key={f} className="text-zinc-400 text-sm border-l border-zinc-800 pl-4">{f}</li>)}
-                  </ul>
+                  <h3 className="text-cyan-400 text-xs font-black uppercase tracking-widest mb-2 flex items-center gap-2"><Code2 size={14} /> Dev Case</h3>
+                  <h2 className="text-4xl font-black">{sidebarData.title}</h2>
+                  <p className="text-zinc-400 mt-4 leading-relaxed">{sidebarData.description}</p>
                 </div>
-                <button className="w-full py-5 bg-white text-black font-black uppercase tracking-widest rounded-xl text-[10px]">Start your project</button>
+                <div className="space-y-4">
+                  <h4 className="font-bold flex items-center gap-2 text-sm uppercase tracking-wider text-zinc-300"><Cpu size={18}/> Stack</h4>
+                  <div className="flex flex-wrap gap-2">{sidebarData.stack.map(s => <span key={s} className="px-3 py-1 bg-cyan-500/10 border border-cyan-500/20 rounded text-xs text-cyan-400">{s}</span>)}</div>
+                </div>
+                <div className="space-y-4">
+                  <h4 className="font-bold flex items-center gap-2 text-sm uppercase tracking-wider text-zinc-300"><Layers size={18}/> Technical Logic</h4>
+                  <ul className="space-y-3">{sidebarData.logic.map(l => <li key={l} className="text-sm text-zinc-400 flex items-start gap-3"><div className="mt-1.5 w-1.5 h-1.5 bg-cyan-400 rounded-full shrink-0" /> {l}</li>)}</ul>
+                </div>
               </div>
             </motion.div>
           </>
         )}
       </AnimatePresence>
 
-      <style jsx global>{`
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.05); border-radius: 10px; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-      `}</style>
+      <section className="max-w-6xl mx-auto py-24 space-y-48">
+        
+        {/* 1. RESTAURANTE */}
+        <div className="space-y-6">
+          <h2 className="text-3xl font-black tracking-tight">1. Elaris Restaurant</h2>
+          <div className="rounded-[2.5rem] overflow-hidden border border-white/10 h-[700px] relative bg-orange-50 shadow-2xl">
+            <CafeCafeApp />
+          </div>
+          <div className="flex justify-end">
+            <button onClick={() => setSidebarData(technicalDetails.cafe)} className="px-6 py-3 bg-white/5 border border-white/10 text-white rounded-xl font-bold hover:bg-cyan-400 hover:text-black transition-all flex items-center gap-2 text-xs tracking-widest uppercase">
+              View Case Details <Code2 size={18} />
+            </button>
+          </div>
+        </div>
+
+        {/* 2. SPORT STORE */}
+        <div className="space-y-6">
+          <h2 className="text-3xl font-black tracking-tight">2. Elaris Football Store</h2>
+          <div className="rounded-[2.5rem] overflow-hidden border border-white/10 h-[700px] relative bg-white shadow-2xl">
+            <SportZoneApp />
+          </div>
+          <div className="flex justify-end">
+            <button onClick={() => setSidebarData(technicalDetails.sport)} className="px-6 py-3 bg-white/5 border border-white/10 text-white rounded-xl font-bold hover:bg-blue-600 transition-all flex items-center gap-2 text-xs tracking-widest uppercase">
+              View Case Details <Code2 size={18} />
+            </button>
+          </div>
+        </div>
+
+        {/* 3. BARBER SHOP */}
+        <div className="space-y-6">
+          <h2 className="text-3xl font-black tracking-tight">3. Elaris Barber Shop</h2>
+          <div className="rounded-[2.5rem] overflow-hidden border border-white/10 h-[700px] relative bg-[#0a0a0a] shadow-2xl">
+            <AsgardBarberApp />
+          </div>
+          <div className="flex justify-end">
+            <button onClick={() => setSidebarData(technicalDetails.asgard)} className="px-6 py-3 bg-white/5 border border-white/10 text-white rounded-xl font-bold hover:bg-red-600 transition-all flex items-center gap-2 text-xs tracking-widest uppercase">
+              View Case Details <Code2 size={18} />
+            </button>
+          </div>
+        </div>
+
+      </section>
     </main>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* --- 1. RESTAURANTE APP --- */
+/* -------------------------------------------------------------------------- */
+function CafeCafeApp() {
+  const [view, setView] = useState<'home' | 'menu' | 'booking' | 'success'>('home');
+  const [user, setUser] = useState<string | null>(null);
+
+  const menuCategorias = [
+    { 
+      cat: "Especiais", 
+      items: [
+        { name: "Francesinha à Legado", price: "13.50€", desc: "Molho secreto artesanal e carnes selecionadas." },
+        { name: "Cachorro Especial", price: "9.00€", desc: "Salsicha fresca, queijo derretido e batata palha." }
+      ]
+    },
+    { 
+      cat: "Petiscos", 
+      items: [
+        { name: "Moelas Picantes", price: "6.50€", desc: "Tradicionais, cozinhadas lentamente." },
+        { name: "Pica-Pau de Vitela", price: "11.00€", desc: "Cubos de vitela tenra com pickles." }
+      ]
+    }
+  ];
+
+  return (
+    <div className="h-full flex flex-col text-[#2d241e] bg-[#fdfaf5] font-serif">
+      <nav className="p-6 bg-[#2d241e] text-[#d4af37] flex justify-between items-center sticky top-0 z-20 shadow-xl">
+        <div onClick={() => setView('home')} className="cursor-pointer group">
+          <h1 className="font-black text-xl tracking-[0.2em] uppercase">O LEGADO</h1>
+          <div className="h-0.5 bg-[#d4af37] w-0 group-hover:w-full transition-all duration-300" />
+        </div>
+        <div className="flex gap-6 text-[10px] font-bold uppercase tracking-widest items-center">
+          <button onClick={() => setView('menu')} className="hover:text-white transition">Carta</button>
+          <button 
+            onClick={() => user ? setUser(null) : setView('booking')} 
+            className="px-5 py-2 border border-[#d4af37] hover:bg-[#d4af37] hover:text-[#2d241e] transition-all rounded-sm"
+          >
+            {user ? `Olá, ${user.split(' ')[0]}` : 'RESERVAR'}
+          </button>
+        </div>
+      </nav>
+
+      <div className="flex-1 overflow-y-auto">
+        <AnimatePresence mode="wait">
+          {view === 'home' && (
+            <motion.div key="h" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col h-full">
+              <div className="relative h-64 bg-zinc-800">
+                <img 
+                  src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1000" 
+                  className="w-full h-full object-cover opacity-50"
+                  alt="Restaurante Interior"
+                />
+                <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-6">
+                  <span className="text-[#d4af37] text-xs tracking-[0.4em] uppercase mb-2">Felgueiras</span>
+                  <h2 className="text-3xl font-black italic">Tradição à Mesa</h2>
+                </div>
+              </div>
+              
+              <div className="p-8 text-center bg-white border-b border-[#eaddca]">
+                <p className="italic text-lg text-zinc-600 mb-6">"Onde o café se cruza com a melhor gastronomia regional."</p>
+                <div className="flex justify-center gap-2 mb-8">
+                  {[1,2,3,4,5].map(s => <Star key={s} size={14} className="fill-[#d4af37] text-[#d4af37]" />)}
+                </div>
+                <button onClick={() => setView('menu')} className="w-full py-4 bg-[#2d241e] text-white font-bold tracking-widest uppercase text-xs hover:bg-[#d4af37] hover:text-[#2d241e] transition-all">
+                  Explorar a Carta
+                </button>
+              </div>
+            </motion.div>
+          )}
+
+          {view === 'menu' && (
+            <motion.div key="m" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="p-6">
+              <h3 className="text-3xl font-black italic text-center mb-10 text-[#2d241e]">A Nossa Carta</h3>
+              {menuCategorias.map(categoria => (
+                <div key={categoria.cat} className="mb-10">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="h-[1px] bg-[#d4af37] flex-1" />
+                    <span className="text-xs font-black uppercase tracking-[0.3em] text-[#d4af37]">{categoria.cat}</span>
+                    <div className="h-[1px] bg-[#d4af37] flex-1" />
+                  </div>
+                  <div className="space-y-8">
+                    {categoria.items.map(item => (
+                      <div key={item.name} className="flex flex-col">
+                        <div className="flex justify-between items-baseline mb-1">
+                          <h4 className="font-bold text-lg">{item.name}</h4>
+                          <span className="font-black text-[#d4af37]">{item.price}</span>
+                        </div>
+                        <p className="text-sm text-zinc-500 font-sans italic">{item.desc}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+          )}
+
+          {view === 'booking' && (
+            <motion.div key="b" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="p-8 h-full flex flex-col justify-center">
+              <div className="bg-white p-8 border border-[#eaddca] shadow-2xl relative">
+                <div className="absolute top-[-10px] left-1/2 -translate-x-1/2 bg-[#fdfaf5] px-4">
+                  <UtensilsCrossed size={20} className="text-[#d4af37]" />
+                </div>
+                <h3 className="text-2xl font-black italic mb-6 text-center">Marcar Mesa</h3>
+                <div className="space-y-4 font-sans">
+                  <input id="name-legado" className="w-full p-4 border-b border-[#eaddca] bg-transparent outline-none focus:border-[#d4af37] transition text-black" placeholder="Nome Completo" />
+                  <div className="grid grid-cols-2 gap-4">
+                    <input type="date" className="w-full p-4 border-b border-[#eaddca] bg-transparent text-xs text-black" />
+                    <input type="time" className="w-full p-4 border-b border-[#eaddca] bg-transparent text-xs text-black" />
+                  </div>
+                  <button 
+                    onClick={() => {
+                      const name = (document.getElementById('name-legado') as HTMLInputElement).value;
+                      setUser(name || "Estimado Cliente");
+                      setView('success');
+                    }} 
+                    className="w-full py-5 bg-[#2d241e] text-white font-bold tracking-widest uppercase text-xs mt-4"
+                  >
+                    Confirmar Pedido
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {view === 'success' && (
+            <motion.div key="s" initial={{ scale: 0.9 }} animate={{ scale: 1 }} className="h-full flex flex-col items-center justify-center p-10 text-center">
+              <div className="p-6 rounded-full border border-[#d4af37] mb-6">
+                <CheckCircle2 size={40} className="text-[#d4af37]" />
+              </div>
+              <h2 className="text-3xl font-black italic text-[#2d241e]">Reserva Efetuada</h2>
+              <p className="text-zinc-500 mt-4 font-sans italic">"Aguardamos a sua visita em breve, {user}."</p>
+              <button onClick={() => setView('home')} className="mt-10 px-8 py-3 bg-[#2d241e] text-white text-[10px] font-bold tracking-[0.3em] uppercase">Voltar ao Início</button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+      
+      <footer className="p-4 bg-white border-t border-[#eaddca] text-center">
+        <div className="flex justify-center gap-4 text-zinc-400 mb-2">
+          <Phone size={14} /> <Mail size={14} />
+        </div>
+        <p className="text-[9px] uppercase tracking-widest text-zinc-400">Felgueiras, Portugal • Aberto todos os dias</p>
+      </footer>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* --- 2. SPORTZONE FOOTBALL --- */
+/* -------------------------------------------------------------------------- */
+function SportZoneApp() {
+  const [cart, setCart] = useState(0);
+  const [view, setView] = useState<'shop' | 'cart'>('shop');
+
+  const gear = [
+    { id: 1, name: "Bota Predator Elite", price: 250, brand: "Adidas" },
+    { id: 2, name: "Camisola Portugal 24", price: 95, brand: "Nike" },
+    { id: 3, name: "Bola Champions League", price: 140, brand: "Adidas" },
+    { id: 4, name: "Luvas Guarda-Redes", price: 60, brand: "Reusch" }
+  ];
+
+  return (
+    <div className="h-full flex flex-col text-black bg-white font-sans">
+      <header className="p-5 border-b-4 border-orange-500 flex justify-between items-center bg-[#003399] text-white">
+        <div onClick={() => setView('shop')} className="flex items-center gap-2 cursor-pointer">
+          <Trophy size={20} className="text-orange-500" />
+          <h1 className="font-black italic text-xl tracking-tighter">Elaris<span className="text-orange-500">Sport</span></h1>
+        </div>
+        <button onClick={() => setView('cart')} className="relative p-2 bg-white/10 rounded-full">
+          <ShoppingBag size={20} />
+          {cart > 0 && <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">{cart}</span>}
+        </button>
+      </header>
+
+      <div className="flex-1 overflow-y-auto">
+        <AnimatePresence mode="wait">
+          {view === 'shop' && (
+            <motion.div key="s" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="p-6 grid grid-cols-2 gap-4">
+              {gear.map(item => (
+                <div key={item.id} className="bg-zinc-50 border rounded-xl p-4 flex flex-col">
+                  <div className="h-28 bg-zinc-200 rounded-lg mb-3 flex items-center justify-center text-zinc-400"><ShoppingBasket size={30}/></div>
+                  <span className="text-[10px] font-bold text-orange-600 uppercase">{item.brand}</span>
+                  <h4 className="text-xs font-bold mb-3 h-8 leading-tight">{item.name}</h4>
+                  <button 
+                    onClick={() => setCart(c => c + 1)}
+                    className="mt-auto py-2 bg-[#003399] text-white text-[10px] font-black rounded uppercase"
+                  >
+                    €{item.price} - Adicionar
+                  </button>
+                </div>
+              ))}
+            </motion.div>
+          )}
+
+          {view === 'cart' && (
+            <motion.div key="c" initial={{ x: 100 }} animate={{ x: 0 }} className="p-8 text-center">
+              <CheckCircle2 size={50} className="text-green-500 mx-auto mb-4" />
+              <h2 className="text-2xl font-black">Carrinho</h2>
+              <p className="text-zinc-500 text-sm mt-2">Tem {cart} itens prontos para entrar em campo.</p>
+              <button onClick={() => {setCart(0); setView('shop');}} className="mt-8 w-full py-4 bg-orange-500 text-white font-bold rounded-xl shadow-lg">Finalizar Compra</button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* --- 3. BARBEARIA ASGARD --- */
+/* -------------------------------------------------------------------------- */
+function AsgardBarberApp() {
+  const [view, setView] = useState<'intro' | 'book' | 'done'>('intro');
+  const [user, setUser] = useState("");
+
+  return (
+    <div className="h-full flex flex-col bg-[#0a0a0a] text-white font-serif relative overflow-hidden">
+      <div className="absolute top-[-10%] right-[-10%] w-64 h-64 bg-red-900/10 blur-[100px]" />
+      <nav className="p-6 flex justify-between items-center border-b border-white/5 relative z-10">
+        <h1 className="text-xl font-black tracking-tighter text-red-600 italic">Elaris</h1>
+        <button onClick={() => setView('book')} className="text-[10px] font-bold tracking-[0.2em] uppercase border-b border-red-600">Marcas</button>
+      </nav>
+
+      <div className="flex-1 overflow-y-auto relative z-10">
+        <AnimatePresence mode="wait">
+          {view === 'intro' && (
+            <motion.div key="i" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="h-full flex flex-col items-center justify-center p-8 text-center">
+              <Scissors size={48} className="text-red-600 mb-6" />
+              <h2 className="text-5xl font-black italic mb-4 leading-none">CORTES DE<br/>GUERREIRO.</h2>
+              <p className="text-zinc-500 font-sans text-sm mb-10">Estilo nórdico e precisão moderna no coração da cidade.</p>
+              <button onClick={() => setView('book')} className="px-12 py-4 bg-red-600 text-white font-bold tracking-widest hover:bg-white hover:text-black transition-colors">ENTRAR EM ELARIS</button>
+            </motion.div>
+          )}
+
+          {view === 'book' && (
+            <motion.div key="b" initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="p-8">
+              <div className="bg-zinc-900/50 border border-white/10 p-8 rounded-3xl">
+                <h3 className="text-2xl italic font-black mb-6">Agendar Batalha</h3>
+                <div className="space-y-4 font-sans">
+                  <input id="name-asgard" className="w-full p-4 bg-black border border-white/10 rounded-xl outline-none focus:border-red-600 transition text-white" placeholder="Nome do Guerreiro" />
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-4 bg-black border border-white/10 rounded-xl flex flex-col gap-2 cursor-pointer hover:border-red-600 transition">
+                      <Calendar size={14} className="text-red-600" />
+                      <span className="text-[10px] font-bold">HOJE</span>
+                    </div>
+                    <div className="p-4 bg-black border border-white/10 rounded-xl flex flex-col gap-2 cursor-pointer hover:border-red-600 transition">
+                      <Star size={14} className="text-red-600" />
+                      <span className="text-[10px] font-bold">VIP</span>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => {
+                      const name = (document.getElementById('name-asgard') as HTMLInputElement).value;
+                      setUser(name || "Guerreiro");
+                      setView('done');
+                    }}
+                    className="w-full py-5 bg-white text-black font-black uppercase tracking-tighter hover:bg-red-600 hover:text-white transition"
+                  >
+                    Confirmar Corte
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {view === 'done' && (
+            <motion.div key="d" initial={{ scale: 0.8 }} animate={{ scale: 1 }} className="h-full flex flex-col items-center justify-center p-10 text-center">
+              <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mb-6 shadow-[0_0_50px_rgba(220,38,38,0.3)]">
+                <CheckCircle2 size={40} />
+              </div>
+              <h2 className="text-4xl font-black italic">ESTÁ MARCADO!</h2>
+              <p className="text-zinc-500 mt-4 font-sans">Vemo-nos em breve, {user}.</p>
+              <button onClick={() => setView('intro')} className="mt-12 text-xs font-bold tracking-widest uppercase border-b border-white/20">Sair de Elaris</button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </div>
   );
 }
