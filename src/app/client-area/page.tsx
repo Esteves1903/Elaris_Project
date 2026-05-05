@@ -4,6 +4,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { clearMockClientSession, hasMockClientSession } from "@/lib/mock-auth";
+import {
+  client,
+  clientNeeds,
+  latestUpdates,
+  progressSteps,
+} from "@/lib/mock-client-data";
 
 export default function ClientAreaPage() {
   const router = useRouter();
@@ -38,87 +44,6 @@ export default function ClientAreaPage() {
       </main>
     );
   }
-  const client = {
-    name: "João Silva",
-    company: "Silva Café",
-    projectType: "Website Creation",
-    plan: "Standard website",
-    websiteName: "Silva Café Website",
-    websiteUrl: "https://silvacafe.com",
-    websiteStatus: "In production",
-    currentStage: "Design & Development",
-    estimatedDelivery: "12 June 2026",
-    nextStep: "We are preparing the first version of the homepage for review.",
-  };
-
-  const progressSteps = [
-    {
-      title: "Discovery",
-      description: "Business goals, audience and website needs collected.",
-      status: "completed",
-    },
-    {
-      title: "Planning",
-      description: "Website structure, pages and user journey defined.",
-      status: "completed",
-    },
-    {
-      title: "Design & Development",
-      description: "The website is currently being designed and built.",
-      status: "active",
-    },
-    {
-      title: "Review",
-      description: "Final version will be reviewed with the client.",
-      status: "pending",
-    },
-    {
-      title: "Launch",
-      description: "Website will be prepared and published online.",
-      status: "pending",
-    },
-  ];
-
-  const clientNeeds = [
-    {
-      item: "Company logo",
-      status: "received",
-    },
-    {
-      item: "Business opening hours",
-      status: "received",
-    },
-    {
-      item: "Final service descriptions",
-      status: "missing",
-    },
-    {
-      item: "Final images for the website",
-      status: "missing",
-    },
-  ];
-
-  const latestUpdates = [
-    {
-      date: "05 May 2026",
-      title: "Homepage design started",
-      description:
-        "We started working on the first visual version of the homepage.",
-    },
-    {
-      date: "03 May 2026",
-      title: "Website structure approved",
-      description:
-        "The main pages and content direction were reviewed and confirmed.",
-    },
-    {
-      date: "01 May 2026",
-      title: "Project information received",
-      description:
-        "Initial business details, goals and project requirements were collected.",
-    },
-  ];
-
   return (
     <main className="min-h-screen bg-[#0B0F19] px-6 pb-24 pt-32 text-white">
       {/* Hero */}
@@ -287,8 +212,8 @@ export default function ClientAreaPage() {
         </div>
       </section>
 
-      {/* Client needs + contact */}
-      <section className="mx-auto mt-6 grid max-w-6xl gap-6 lg:grid-cols-2">
+      {/* Client needs + contact + account */}
+      <section className="mx-auto mt-6 grid max-w-6xl gap-6 lg:grid-cols-3">
         <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-8">
           <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
             Needed from you
@@ -354,6 +279,26 @@ export default function ClientAreaPage() {
               Call us
             </a>
           </div>
+        </div>
+        <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-8">
+          <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
+            Account access
+          </p>
+
+          <h2 className="mb-4 text-2xl font-bold tracking-tight">
+            Manage your login
+          </h2>
+
+          <p className="mb-8 text-sm leading-6 text-zinc-400">
+            Update the password used to access your private project dashboard.
+          </p>
+
+          <Link
+            href="/client-area/account"
+            className="inline-flex rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]"
+          >
+            Change password
+          </Link>
         </div>
       </section>
 
