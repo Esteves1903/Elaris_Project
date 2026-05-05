@@ -162,12 +162,26 @@ function ElarisFinalDubai() {
         {
           n: "A5 Wagyu Tartare",
           p: "AED 245",
-          d: "Truffle pearls, 24k gold, quail egg."
+          d: "Truffle pearls, 24k gold, quail egg.",
+          img: "https://images.unsplash.com/photo-1546241072-48010ad28c2c?q=80&w=400"
         },
         {
           n: "Blue Lobster Salad",
           p: "AED 190",
-          d: "Citrus emulsion, caviar, sea herbs."
+          d: "Citrus emulsion, caviar, sea herbs.",
+          img: "https://images.unsplash.com/photo-1551326844-4df70f78d0e9?q=80&w=400"
+        },
+        {
+          n: "Imperial Beluga Caviar",
+          p: "AED 850",
+          d: "30g selection, traditional garnishes, gold leaf blinis.",
+          img: "https://images.unsplash.com/photo-1534604973900-c41ab4c5e636?q=80&w=400"
+        },
+        {
+          n: "Seared Foie Gras",
+          p: "AED 210",
+          d: "Port wine reduction, caramelized figs, toasted brioche.",
+          img: "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?q=80&w=400"
         }
       ]
     },
@@ -177,12 +191,49 @@ function ElarisFinalDubai() {
         {
           n: "The Elaris Francesinha",
           p: "AED 320",
-          d: "Wagyu beef, Pata Negra, champagne sauce."
+          d: "Wagyu beef, Pata Negra, champagne sauce.",
+          img: "https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=400"
         },
         {
           n: "Sea Bass in Salt",
           p: "AED 450",
-          d: "Mediterranean herbs, flamed tableside."
+          d: "Mediterranean herbs, flamed tableside.",
+          img: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=400"
+        },
+        {
+          n: "Octopus 'Lagareiro'",
+          p: "AED 280",
+          d: "Roasted potatoes, garlic confit, premium olive oil.",
+          img: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?q=80&w=400"
+        },
+        {
+          n: "Golden Lamb Chops",
+          p: "AED 390",
+          d: "Pistachio crust, saffron risotto, mint jus.",
+          img: "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=400"
+        },
+        {
+          n: "Black Truffle Risotto",
+          p: "AED 310",
+          d: "Acquerello rice, fresh winter truffles, 36-month Parmesan.",
+          img: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?q=80&w=400"
+        }
+      ]
+    },
+    {
+      name: "Grand Finale",
+      items: [
+        {
+          n: "24k Gold Abade de Priscos",
+          p: "AED 110",
+          d: "Traditional bacon pudding, citrus sorbet, gold leaf.",
+          img: "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400"
+        },
+        {
+          n: "Chocolate Decadence",
+          p: "AED 135",
+          d: "70% Valrhona chocolate, hazelnut praline, sea salt.",
+          img: "https://images.unsplash.com/photo-1541783245831-57d6fb0926d3?q=80&w=400"
         }
       ]
     }
@@ -322,48 +373,68 @@ function ElarisFinalDubai() {
               </section>
 
               {/* FOOTER PEQUENO */}
-              <footer className="bg-[#0a0a0a] text-white px-8 py-10">
-                <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between gap-10">
+              <footer className="bg-[#0a0a0a] text-white px-8 md:px-16 py-10 mt-0 border-t border-white/5">
+  <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
 
-                  <div>
-                    <h4 className="text-xl tracking-[0.4em] uppercase mb-3">
-                      Elaris
-                    </h4>
+    {/* LEFT */}
+    <div className="space-y-4">
+      <h4 className="text-2xl font-light tracking-[0.4em] uppercase">
+        Elaris
+      </h4>
 
-                    <p className="text-zinc-500 text-xs leading-relaxed">
-                      Jumeirah Beach Road <br />
-                      Dubai, UAE
-                    </p>
-                  </div>
+      <p className="text-zinc-500 text-xs leading-loose tracking-widest uppercase">
+        Jumeirah Beach Road <br />
+        Dubai, UAE
+      </p>
+    </div>
 
-                  <div className="flex flex-col gap-3 text-[10px] uppercase tracking-[0.3em]">
-                    <button
-                      onClick={() => navigateTo('menu')}
-                      className="hover:text-[#c5a059] text-left"
-                    >
-                      Menu
-                    </button>
+    {/* RIGHT */}
+    <div className="grid grid-cols-2 gap-16 text-[10px] font-black uppercase tracking-[0.3em]">
 
-                    <button
-                      onClick={() => navigateTo('story')}
-                      className="hover:text-[#c5a059] text-left"
-                    >
-                      Heritage
-                    </button>
+      <div className="flex flex-col gap-4 text-zinc-400">
+        <button
+          onClick={() => navigateTo('menu')}
+          className="hover:text-[#c5a059] transition-colors text-left"
+        >
+          Menu
+        </button>
 
-                    <button
-                      onClick={() => setShowPrivacy(true)}
-                      className="hover:text-[#c5a059] text-left"
-                    >
-                      Privacy
-                    </button>
-                  </div>
-                </div>
+        <button
+          onClick={() => navigateTo('story')}
+          className="hover:text-[#c5a059] transition-colors text-left"
+        >
+          Heritage
+        </button>
 
-                <div className="mt-10 border-t border-white/10 pt-5 text-center text-[8px] tracking-[0.3em] text-zinc-700 uppercase">
-                  © 2026 Elaris Global Hospitality
-                </div>
-              </footer>
+        <button
+          onClick={() => setShowPrivacy(true)}
+          className="hover:text-[#c5a059] transition-colors text-left"
+        >
+          Privacy
+        </button>
+      </div>
+
+      <div className="flex flex-col items-end gap-4 text-zinc-500">
+        <Globe
+          size={18}
+          className="hover:text-[#c5a059] cursor-pointer transition-colors"
+        />
+
+        <span className="text-[9px] tracking-[0.4em] uppercase">
+          Luxury Dining
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  {/* BOTTOM */}
+  <div className="max-w-7xl mx-auto mt-10 pt-6 border-t border-white/5 text-center">
+    <p className="text-[8px] tracking-[0.5em] uppercase text-zinc-700">
+      © 2026 Elaris Global Hospitality Group. All rights reserved.
+    </p>
+  </div>
+</footer>
             </motion.div>
           )}
 
