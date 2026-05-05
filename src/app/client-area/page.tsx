@@ -1,6 +1,43 @@
+"use client";
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { clearMockClientSession, hasMockClientSession } from "@/lib/mock-auth";
 
 export default function ClientAreaPage() {
+  const router = useRouter();
+  const [isCheckingSession, setIsCheckingSession] = useState(true);
+
+  useEffect(() => {
+    const isLoggedIn = hasMockClientSession();
+
+    if (!isLoggedIn) {
+      router.push("/client-login");
+      return;
+    }
+
+    setIsCheckingSession(false);
+  }, [router]);
+
+  function handleLogout() {
+    clearMockClientSession();
+    router.push("/client-login");
+  }
+
+  if (isCheckingSession) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-[#0B0F19] px-6 text-white">
+        <div className="text-center">
+          <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
+            Client area
+          </p>
+
+          <p className="text-zinc-400">Checking access...</p>
+        </div>
+      </main>
+    );
+  }
   const client = {
     name: "João Silva",
     company: "Silva Café",
@@ -102,8 +139,18 @@ export default function ClientAreaPage() {
             </p>
           </div>
 
-          <div className="rounded-full border border-cyan-400/30 bg-cyan-400/10 px-5 py-2 text-sm font-semibold text-cyan-300">
-            {client.websiteStatus}
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="rounded-full border border-cyan-400/30 bg-cyan-400/10 px-5 py-2 text-sm font-semibold text-cyan-300">
+              {client.websiteStatus}
+            </div>
+
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="rounded-full border border-white/10 px-5 py-2 text-sm font-semibold text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]"
+            >
+              Log out
+            </button>
           </div>
         </div>
       </section>
@@ -203,13 +250,12 @@ export default function ClientAreaPage() {
                 className="grid gap-5 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:grid-cols-[auto_1fr_auto] sm:items-center"
               >
                 <div
-                  className={`flex h-11 w-11 items-center justify-center rounded-full text-sm font-bold ${
-                    isCompleted
-                      ? "bg-cyan-400 text-black"
-                      : isActive
-                        ? "border border-cyan-400 text-cyan-300"
-                        : "border border-white/10 text-zinc-500"
-                  }`}
+                  className={`flex h-11 w-11 items-center justify-center rounded-full text-sm font-bold ${isCompleted
+                    ? "bg-cyan-400 text-black"
+                    : isActive
+                      ? "border border-cyan-400 text-cyan-300"
+                      : "border border-white/10 text-zinc-500"
+                    }`}
                 >
                   {String(index + 1).padStart(2, "0")}
                 </div>
@@ -222,13 +268,12 @@ export default function ClientAreaPage() {
                 </div>
 
                 <span
-                  className={`w-fit rounded-full px-4 py-2 text-xs font-semibold ${
-                    isCompleted
-                      ? "bg-cyan-400/10 text-cyan-300"
-                      : isActive
-                        ? "bg-white/10 text-white"
-                        : "bg-white/[0.03] text-zinc-500"
-                  }`}
+                  className={`w-fit rounded-full px-4 py-2 text-xs font-semibold ${isCompleted
+                    ? "bg-cyan-400/10 text-cyan-300"
+                    : isActive
+                      ? "bg-white/10 text-white"
+                      : "bg-white/[0.03] text-zinc-500"
+                    }`}
                 >
                   {isCompleted
                     ? "Completed"
@@ -267,11 +312,10 @@ export default function ClientAreaPage() {
                   </span>
 
                   <span
-                    className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                      isReceived
-                        ? "bg-cyan-400/10 text-cyan-300"
-                        : "bg-yellow-400/10 text-yellow-300"
-                    }`}
+                    className={`rounded-full px-3 py-1 text-xs font-semibold ${isReceived
+                      ? "bg-cyan-400/10 text-cyan-300"
+                      : "bg-yellow-400/10 text-yellow-300"
+                      }`}
                   >
                     {isReceived ? "Received" : "Missing"}
                   </span>
