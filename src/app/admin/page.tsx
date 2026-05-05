@@ -1,7 +1,48 @@
+"use client";
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { adminClients } from "@/lib/mock-admin-data";
+import {
+    clearMockAdminSession,
+    hasMockAdminSession,
+} from "@/lib/mock-admin-auth";
 
 export default function AdminPage() {
+
+    const router = useRouter();
+    const [isCheckingSession, setIsCheckingSession] = useState(true);
+
+    useEffect(() => {
+        const isLoggedIn = hasMockAdminSession();
+
+        if (!isLoggedIn) {
+            router.push("/client-login");
+            return;
+        }
+
+        setIsCheckingSession(false);
+    }, [router]);
+
+    function handleLogout() {
+        clearMockAdminSession();
+        router.push("/client-login");
+    }
+
+    if (isCheckingSession) {
+        return (
+            <main className="flex min-h-screen items-center justify-center bg-[#0B0F19] px-6 text-white">
+                <div className="text-center">
+                    <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
+                        Admin dashboard
+                    </p>
+
+                    <p className="text-zinc-400">Checking admin access...</p>
+                </div>
+            </main>
+        );
+    }
 
     return (
         <main className="min-h-screen bg-[#0B0F19] px-6 pb-24 pt-32 text-white">
@@ -22,12 +63,22 @@ export default function AdminPage() {
                         </p>
                     </div>
 
-                    <Link
-                        href="/client-area"
-                        className="w-fit rounded-full border border-white/10 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]"
-                    >
-                        View client dashboard
-                    </Link>
+                    <div className="flex flex-col gap-3 sm:flex-row">
+                        <Link
+                            href="/client-area"
+                            className="w-fit rounded-full border border-white/10 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]"
+                        >
+                            View client dashboard
+                        </Link>
+
+                        <button
+                            type="button"
+                            onClick={handleLogout}
+                            className="w-fit rounded-full border border-white/10 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]"
+                        >
+                            Log out
+                        </button>
+                    </div>
                 </div>
             </section>
 

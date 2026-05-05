@@ -1,7 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+import { FormEvent, useEffect, useState } from "react";
+import {
+    clearMockAdminSession,
+    hasMockAdminSession,
+} from "@/lib/mock-admin-auth";
 
 type ClientNeed = {
     item: string;
@@ -39,6 +44,24 @@ type AdminClientDetailsClientProps = {
 export default function AdminClientDetailsClient({
     client,
 }: AdminClientDetailsClientProps) {
+    const router = useRouter();
+    const [isCheckingSession, setIsCheckingSession] = useState(true);
+
+    useEffect(() => {
+        const isLoggedIn = hasMockAdminSession();
+
+        if (!isLoggedIn) {
+            router.push("/client-login");
+            return;
+        }
+
+        setIsCheckingSession(false);
+    }, [router]);
+
+    function handleLogout() {
+        clearMockAdminSession();
+        router.push("/client-login");
+    }
     const [websiteName, setWebsiteName] = useState(client.websiteName);
     const [websiteUrl, setWebsiteUrl] = useState(client.websiteUrl);
     const [websiteStatus, setWebsiteStatus] = useState(client.websiteStatus);
@@ -93,7 +116,19 @@ export default function AdminClientDetailsClient({
         setIsAddingUpdate(false);
         setSuccessMessage("Update added locally for this session.");
     }
+    if (isCheckingSession) {
+        return (
+            <main className="flex min-h-screen items-center justify-center bg-[#0B0F19] px-6 text-white">
+                <div className="text-center">
+                    <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
+                        Admin dashboard
+                    </p>
 
+                    <p className="text-zinc-400">Checking admin access...</p>
+                </div>
+            </main>
+        );
+    }
     return (
         <main className="min-h-screen bg-[#0B0F19] px-6 pb-24 pt-32 text-white">
             <section className="mx-auto max-w-6xl">
@@ -120,8 +155,18 @@ export default function AdminClientDetailsClient({
                         </p>
                     </div>
 
-                    <div className="rounded-full border border-cyan-400/30 bg-cyan-400/10 px-5 py-2 text-sm font-semibold text-cyan-300">
-                        {websiteStatus}
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                        <div className="rounded-full border border-cyan-400/30 bg-cyan-400/10 px-5 py-2 text-sm font-semibold text-cyan-300">
+                            {websiteStatus}
+                        </div>
+
+                        <button
+                            type="button"
+                            onClick={handleLogout}
+                            className="rounded-full border border-white/10 px-5 py-2 text-sm font-semibold text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]"
+                        >
+                            Log out
+                        </button>
                     </div>
                 </div>
 
