@@ -35,7 +35,7 @@ export function Header() {
 
         <div className="hidden items-center justify-self-end gap-3 md:flex">
           <Link
-            href="/client-area"
+            href="/client-login"
             className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2.5 text-sm font-semibold text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]"
           >
             <UserCircle className="h-4 w-4 text-cyan-400" />
