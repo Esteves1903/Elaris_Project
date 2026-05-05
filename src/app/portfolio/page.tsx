@@ -255,10 +255,10 @@ function ElarisFinalDubai() {
   };
 
   return (
-    <div className="h-screen w-full bg-[#faf9f6] text-[#1a1a1a] font-sans overflow-hidden relative">
+    <div className="h-screen w-full bg-[#faf9f6] text-[#1a1a1a] font-sans overflow-hidden relative p-4 pb-0">
 
       {/* NAVBAR */}
-      <nav className="h-20 md:h-24 bg-white/95 backdrop-blur-md border-b border-zinc-100 flex justify-between items-center px-6 md:px-16 relative z-50">
+      <nav className="h-20 md:h-24 bg-white border-b border-zinc-100 flex justify-between items-center px-6 md:px-16 z-50">
         <div
           onClick={() => navigateTo('home')}
           className="cursor-pointer flex flex-col items-center"
@@ -373,7 +373,7 @@ function ElarisFinalDubai() {
               </section>
 
               {/* FOOTER PEQUENO */}
-              <footer className="bg-[#0a0a0a] text-white px-8 md:px-16 py-10 mt-0 border-t border-white/5">
+              <footer className="bg-[#0a0a0a] text-white px-8 md:px-16 py-10 mt-auto border-t border-white/5 w-full rounded-b-[2rem]">
   <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
 
     {/* LEFT */}
@@ -435,6 +435,7 @@ function ElarisFinalDubai() {
     </p>
   </div>
 </footer>
+ 
             </motion.div>
           )}
 
@@ -951,7 +952,7 @@ function ElarisSportApp() {
       </AnimatePresence>
 
       {/* HEADER */}
-      <nav className="bg-white border-b border-zinc-200 px-4 md:px-8 py-4 flex items-center justify-between sticky top-0 z-40">
+      <nav className="bg-white border-b border-zinc-200 px-4 md:px-8 py-4 flex items-center justify-between  top-0 z-40">
 
         <div
           onClick={() => setView('shop')}
@@ -1322,27 +1323,7 @@ function ElarisSportApp() {
       </div>
 
       {/* FOOTER */}
-      <footer className="bg-white border-t border-zinc-200 px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-5">
-        <div className="flex items-center gap-3 text-xs font-black uppercase tracking-widest text-zinc-500">
-          <Award size={15} className="text-[#0082c3]" />
-          Garantia Premium Elaris
-        </div>
-
-        <div className="flex items-center gap-5">
-          <button
-            onClick={() => setShowPrivacy(true)}
-            className="text-xs font-black uppercase tracking-widest text-zinc-400 hover:text-[#0082c3]"
-          >
-            Privacidade
-          </button>
-
-          <span className="text-zinc-300">|</span>
-
-          <p className="text-[10px] uppercase tracking-[0.2em] text-zinc-400 font-black">
-            Elaris Sport © 2026
-          </p>
-        </div>
-      </footer>
+      
     </div>
   );
 }
