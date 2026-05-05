@@ -13,6 +13,37 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { History as HistoryIcon } from "lucide-react";
 
+// --- ANIMATED COUNTER COMPONENT ---
+function AnimatedCounter({ target, duration = 2000, suffix = "" }: { target: number; duration?: number; suffix?: string }) {
+  const [count, setCount] = React.useState(0);
+  const [started, setStarted] = React.useState(false);
+  const ref = React.useRef<HTMLSpanElement>(null);
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting && !started) setStarted(true); },
+      { threshold: 0.5 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [started]);
+
+  React.useEffect(() => {
+    if (!started) return;
+    const start = performance.now();
+    const step = (now: number) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 4);
+      setCount(Math.floor(eased * target));
+      if (progress < 1) requestAnimationFrame(step);
+      else setCount(target);
+    };
+    requestAnimationFrame(step);
+  }, [started, target, duration]);
+
+  return <span ref={ref}>{count}{suffix}</span>;
+}
+
 // --- DADOS DA SIDEBAR TÉCNICA (Traduzido para Inglês) ---
 type ProjectDetails = {
   title: string;
@@ -382,44 +413,29 @@ function ElarisFinalDubai() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="h-full overflow-y-auto p-8 md:p-20"
+              className="h-full overflow-y-auto p-8 md:p-16"
             >
-              <div className="max-w-6xl mx-auto">
-                <header className="text-center mb-20">
+              <div className="max-w-7xl mx-auto">
+                <header className="text-center mb-16">
                   <h2 className="text-5xl md:text-7xl font-light uppercase tracking-[0.2em] mb-4">
                     The Menu
                   </h2>
-
-                  <div className="h-0.5 w-20 bg-[#c5a059] mx-auto" />
+                  <div className="h-0.5 w-20 bg-[#c5a059] mx-auto mb-4" />
+                  <p className="text-zinc-400 text-xs tracking-[0.3em] uppercase">Arrasta os pratos para os explorar</p>
                 </header>
 
-                <div className="grid md:grid-cols-2 gap-20">
-                  {menuCategories.map((cat) => (
-                    <div key={cat.name} className="space-y-14">
-                      <h4 className="text-[#c5a059] text-[11px] font-black uppercase tracking-[0.5em] border-b border-zinc-100 pb-4">
-                        {cat.name}
-                      </h4>
-
+                {menuCategories.map((cat) => (
+                  <div key={cat.name} className="mb-20">
+                    <h4 className="text-[#c5a059] text-[11px] font-black uppercase tracking-[0.5em] border-b border-zinc-100 pb-4 mb-10">
+                      {cat.name}
+                    </h4>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                       {cat.items.map((item) => (
-                        <div key={item.n}>
-                          <div className="flex justify-between items-end mb-2">
-                            <h5 className="text-xl font-light">
-                              {item.n}
-                            </h5>
-
-                            <span className="text-sm tracking-widest">
-                              {item.p}
-                            </span>
-                          </div>
-
-                          <p className="text-zinc-400 text-sm italic">
-                            {item.d}
-                          </p>
-                        </div>
+                        <DishCard3D key={item.n} item={item} />
                       ))}
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
             </motion.div>
           )}
@@ -464,79 +480,42 @@ function ElarisFinalDubai() {
                   />
                 </div>
               </div>
+
+              {/* STATS STRIP — "20 anos de experiência" com contador animado */}
+              <div className="bg-[#c5a059] py-12 px-10 md:px-24">
+                <div className="max-w-5xl mx-auto grid grid-cols-3 gap-8 text-center">
+                  <div className="flex flex-col items-center gap-1">
+                    <span className="text-[#111] text-5xl md:text-6xl font-black leading-none tabular-nums">
+                      <AnimatedCounter target={20} duration={2200} suffix="+" />
+                    </span>
+                    <span className="text-[#111]/70 text-[9px] uppercase tracking-[0.4em] font-black mt-2">
+                      Anos de Experiência
+                    </span>
+                  </div>
+                  <div className="flex flex-col items-center gap-1 border-x border-[#111]/20">
+                    <span className="text-[#111] text-5xl md:text-6xl font-black leading-none tabular-nums">
+                      <AnimatedCounter target={47} duration={2000} />
+                    </span>
+                    <span className="text-[#111]/70 text-[9px] uppercase tracking-[0.4em] font-black mt-2">
+                      Prémios Internacionais
+                    </span>
+                  </div>
+                  <div className="flex flex-col items-center gap-1">
+                    <span className="text-[#111] text-5xl md:text-6xl font-black leading-none tabular-nums">
+                      <AnimatedCounter target={3} duration={1500} />
+                    </span>
+                    <span className="text-[#111]/70 text-[9px] uppercase tracking-[0.4em] font-black mt-2">
+                      Capitais Mundiais
+                    </span>
+                  </div>
+                </div>
+              </div>
             </motion.div>
           )}
 
           {/* BOOKING */}
           {view === 'booking' && (
-            <motion.div
-              key="booking"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="h-full overflow-y-auto flex items-center justify-center p-6 md:p-20"
-            >
-              <div className="bg-white p-10 md:p-20 shadow-2xl w-full max-w-4xl border border-zinc-100 relative">
-                <h3 className="text-4xl font-light text-center mb-16 uppercase tracking-widest">
-                  Reservations
-                </h3>
-
-                <div className="grid md:grid-cols-2 gap-12">
-                  <div className="space-y-4">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">
-                      Full Name
-                    </label>
-
-                    <input
-                      className="w-full border-b border-zinc-200 p-4 outline-none bg-transparent"
-                      placeholder="Johnathan Doe"
-                    />
-                  </div>
-
-                  <div className="space-y-4">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">
-                      Guests
-                    </label>
-
-                    <select className="w-full border-b border-zinc-200 p-4 bg-transparent outline-none">
-                      <option>2 Persons</option>
-                      <option>4 Persons</option>
-                      <option>6+ Persons</option>
-                    </select>
-                  </div>
-
-                  <div className="space-y-4">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">
-                      Date
-                    </label>
-
-                    <input
-                      type="date"
-                      className="w-full border-b border-zinc-200 p-4 outline-none"
-                    />
-                  </div>
-
-                  <div className="space-y-4">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">
-                      Time
-                    </label>
-
-                    <select className="w-full border-b border-zinc-200 p-4 bg-transparent outline-none">
-                      <option>19:00</option>
-                      <option>20:30</option>
-                      <option>22:00</option>
-                    </select>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => navigateTo('success')}
-                  className="w-full mt-20 py-6 bg-[#1a1a1a] text-white font-black uppercase text-[10px] tracking-[0.4em] hover:bg-[#c5a059] hover:text-black transition-all"
-                >
-                  Secure Invitation
-                </button>
-              </div>
-            </motion.div>
+            <BookingForm navigateTo={navigateTo} />
           )}
 
           {/* SUCCESS */}
@@ -738,518 +717,719 @@ ElarisFinalDubai;
 
  ;
 /* -------------------------------------------------------------------------- */
+/* --- BOOKING FORM --- */
+/* -------------------------------------------------------------------------- */
+const COUNTRY_CODES = [
+  { code: "+351", flag: "🇵🇹", name: "Portugal" },
+  { code: "+1", flag: "🇺🇸", name: "USA / Canada" },
+  { code: "+44", flag: "🇬🇧", name: "United Kingdom" },
+  { code: "+971", flag: "🇦🇪", name: "UAE" },
+  { code: "+33", flag: "🇫🇷", name: "France" },
+  { code: "+49", flag: "🇩🇪", name: "Germany" },
+  { code: "+34", flag: "🇪🇸", name: "Spain" },
+  { code: "+39", flag: "🇮🇹", name: "Italy" },
+  { code: "+55", flag: "🇧🇷", name: "Brazil" },
+  { code: "+81", flag: "🇯🇵", name: "Japan" },
+  { code: "+86", flag: "🇨🇳", name: "China" },
+  { code: "+91", flag: "🇮🇳", name: "India" },
+  { code: "+7", flag: "🇷🇺", name: "Russia" },
+  { code: "+61", flag: "🇦🇺", name: "Australia" },
+  { code: "+52", flag: "🇲🇽", name: "Mexico" },
+  { code: "+27", flag: "🇿🇦", name: "South Africa" },
+  { code: "+82", flag: "🇰🇷", name: "South Korea" },
+  { code: "+31", flag: "🇳🇱", name: "Netherlands" },
+  { code: "+41", flag: "🇨🇭", name: "Switzerland" },
+  { code: "+46", flag: "🇸🇪", name: "Sweden" },
+  { code: "+47", flag: "🇳🇴", name: "Norway" },
+  { code: "+45", flag: "🇩🇰", name: "Denmark" },
+  { code: "+32", flag: "🇧🇪", name: "Belgium" },
+  { code: "+43", flag: "🇦🇹", name: "Austria" },
+  { code: "+48", flag: "🇵🇱", name: "Poland" },
+  { code: "+90", flag: "🇹🇷", name: "Turkey" },
+  { code: "+20", flag: "🇪🇬", name: "Egypt" },
+  { code: "+966", flag: "🇸🇦", name: "Saudi Arabia" },
+  { code: "+65", flag: "🇸🇬", name: "Singapore" },
+  { code: "+60", flag: "🇲🇾", name: "Malaysia" },
+];
+
+function BookingForm({ navigateTo }: { navigateTo: (v: any) => void }) {
+  const [form, setForm] = React.useState({
+    name: "", guests: "", date: "", time: "", countryCode: "+351", phone: "",
+  });
+  const [errors, setErrors] = React.useState<Record<string, string>>({});
+  const [touched, setTouched] = React.useState<Record<string, boolean>>({});
+
+  const validate = (data: typeof form) => {
+    const e: Record<string, string> = {};
+    if (!data.name.trim()) e.name = "Full name is required";
+    else if (data.name.trim().split(" ").length < 2) e.name = "Please enter your full name";
+    if (!data.guests) e.guests = "Please select number of guests";
+    if (!data.date) e.date = "Please select a date";
+    else if (new Date(data.date) < new Date(new Date().toDateString())) e.date = "Date must be in the future";
+    if (!data.time) e.time = "Please select a time";
+    if (!data.phone.trim()) e.phone = "Phone number is required";
+    else if (!/^\d{6,15}$/.test(data.phone.replace(/\s/g, ""))) e.phone = "Enter a valid phone number";
+    return e;
+  };
+
+  const handleChange = (field: string, value: string) => {
+    const next = { ...form, [field]: value };
+    setForm(next);
+    if (touched[field]) {
+      setErrors(validate(next));
+    }
+  };
+
+  const handleBlur = (field: string) => {
+    const next = { ...touched, [field]: true };
+    setTouched(next);
+    setErrors(validate(form));
+  };
+
+  const handleSubmit = () => {
+    const allTouched = Object.fromEntries(Object.keys(form).map(k => [k, true]));
+    setTouched(allTouched);
+    const errs = validate(form);
+    setErrors(errs);
+    if (Object.keys(errs).length === 0) navigateTo('success');
+  };
+
+  const fieldClass = (field: string) =>
+    `w-full border-b p-4 outline-none bg-transparent transition-colors ${
+      errors[field] && touched[field]
+        ? "border-red-400 text-red-600 placeholder-red-300"
+        : "border-zinc-200 focus:border-[#c5a059]"
+    }`;
+
+  return (
+    <motion.div
+      key="booking"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="h-full overflow-y-auto p-6 md:p-16"
+    >
+      <div className="bg-white p-10 md:p-16 shadow-2xl w-full max-w-4xl border border-zinc-100 relative mx-auto">
+        <h3 className="text-4xl font-light text-center mb-16 uppercase tracking-widest">
+          Reservations
+        </h3>
+
+        <div className="grid md:grid-cols-2 gap-x-12 gap-y-10">
+
+          {/* Full Name */}
+          <div className="space-y-2">
+            <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">Full Name *</label>
+            <input
+              className={fieldClass("name")}
+              placeholder="Johnathan Doe"
+              value={form.name}
+              onChange={e => handleChange("name", e.target.value)}
+              onBlur={() => handleBlur("name")}
+            />
+            {errors.name && touched.name && <p className="text-red-500 text-[10px] mt-1">{errors.name}</p>}
+          </div>
+
+          {/* Guests */}
+          <div className="space-y-2">
+            <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">Guests *</label>
+            <select
+              className={fieldClass("guests")}
+              value={form.guests}
+              onChange={e => handleChange("guests", e.target.value)}
+              onBlur={() => handleBlur("guests")}
+            >
+              <option value="">Select guests</option>
+              <option value="1">1 Person</option>
+              <option value="2">2 Persons</option>
+              <option value="3">3 Persons</option>
+              <option value="4">4 Persons</option>
+              <option value="5">5 Persons</option>
+              <option value="6+">6+ Persons</option>
+            </select>
+            {errors.guests && touched.guests && <p className="text-red-500 text-[10px] mt-1">{errors.guests}</p>}
+          </div>
+
+          {/* Date */}
+          <div className="space-y-2">
+            <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">Date *</label>
+            <input
+              type="date"
+              className={fieldClass("date")}
+              value={form.date}
+              onChange={e => handleChange("date", e.target.value)}
+              onBlur={() => handleBlur("date")}
+            />
+            {errors.date && touched.date && <p className="text-red-500 text-[10px] mt-1">{errors.date}</p>}
+          </div>
+
+          {/* Time */}
+          <div className="space-y-2">
+            <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">Time *</label>
+            <select
+              className={fieldClass("time")}
+              value={form.time}
+              onChange={e => handleChange("time", e.target.value)}
+              onBlur={() => handleBlur("time")}
+            >
+              <option value="">Select time</option>
+              <option value="19:00">19:00</option>
+              <option value="20:30">20:30</option>
+              <option value="22:00">22:00</option>
+            </select>
+            {errors.time && touched.time && <p className="text-red-500 text-[10px] mt-1">{errors.time}</p>}
+          </div>
+
+          {/* Phone — full width */}
+          <div className="space-y-2 md:col-span-2">
+            <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">Phone Number *</label>
+            <div className={`flex border-b transition-colors ${errors.phone && touched.phone ? "border-red-400" : "border-zinc-200 focus-within:border-[#c5a059]"}`}>
+              <select
+                className="bg-transparent outline-none py-4 pr-3 text-sm font-medium text-zinc-600 shrink-0"
+                value={form.countryCode}
+                onChange={e => handleChange("countryCode", e.target.value)}
+              >
+                {COUNTRY_CODES.map(c => (
+                  <option key={c.code + c.name} value={c.code}>
+                    {c.flag} {c.code} {c.name}
+                  </option>
+                ))}
+              </select>
+              <input
+                className="flex-1 bg-transparent outline-none p-4 text-sm"
+                placeholder="912 345 678"
+                value={form.phone}
+                onChange={e => handleChange("phone", e.target.value.replace(/[^0-9\s]/g, ""))}
+                onBlur={() => handleBlur("phone")}
+                inputMode="tel"
+              />
+            </div>
+            {errors.phone && touched.phone && <p className="text-red-500 text-[10px] mt-1">{errors.phone}</p>}
+          </div>
+
+        </div>
+
+        <button
+          onClick={handleSubmit}
+          className="w-full mt-16 py-6 bg-[#1a1a1a] text-white font-black uppercase text-[10px] tracking-[0.4em] hover:bg-[#c5a059] hover:text-black transition-all"
+        >
+          Secure Invitation
+        </button>
+      </div>
+    </motion.div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* --- DISH CARD 3D --- */
+/* -------------------------------------------------------------------------- */
+function DishCard3D({ item }: { item: { n: string; p: string; d: string; img: string } }) {
+  const cardRef = React.useRef<HTMLDivElement>(null);
+  const [transform, setTransform] = React.useState("rotateX(0deg) rotateY(0deg) scale(1)");
+  const [shine, setShine] = React.useState({ x: 50, y: 50, opacity: 0 });
+  const [isHovered, setIsHovered] = React.useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = cardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateY = ((x - centerX) / centerX) * 18;
+    const rotateX = -((y - centerY) / centerY) * 18;
+    setTransform(`rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.04)`);
+    setShine({ x: (x / rect.width) * 100, y: (y / rect.height) * 100, opacity: 0.25 });
+  };
+
+  const handleMouseLeave = () => {
+    setTransform("rotateX(0deg) rotateY(0deg) scale(1)");
+    setShine({ x: 50, y: 50, opacity: 0 });
+    setIsHovered(false);
+  };
+
+  return (
+    <div
+      style={{ perspective: "900px" }}
+      className="cursor-pointer"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div
+        ref={cardRef}
+        onMouseMove={handleMouseMove}
+        style={{
+          transform,
+          transition: isHovered ? "transform 0.08s ease-out" : "transform 0.5s ease",
+          transformStyle: "preserve-3d",
+        }}
+        className="relative rounded-2xl overflow-hidden shadow-xl border border-zinc-200 bg-white"
+      >
+        {/* Shine overlay */}
+        <div
+          style={{
+            background: `radial-gradient(circle at ${shine.x}% ${shine.y}%, rgba(255,255,255,${shine.opacity}), transparent 70%)`,
+            position: "absolute", inset: 0, zIndex: 10, pointerEvents: "none",
+            transition: isHovered ? "none" : "opacity 0.5s",
+          }}
+        />
+
+        {/* Image */}
+        <div className="h-44 overflow-hidden">
+          <img
+            src={item.img}
+            alt={item.n}
+            className="w-full h-full object-cover"
+            style={{
+              transform: isHovered ? "scale(1.08)" : "scale(1)",
+              transition: "transform 0.5s ease",
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" style={{ zIndex: 5 }} />
+        </div>
+
+        {/* Content */}
+        <div className="p-4 relative z-10">
+          <div className="flex justify-between items-start gap-2 mb-1">
+            <h5 className="text-sm font-semibold leading-tight text-[#1a1a1a]">{item.n}</h5>
+            <span className="text-[#c5a059] text-sm font-black whitespace-nowrap">{item.p}</span>
+          </div>
+          <p className="text-zinc-400 text-xs italic leading-relaxed">{item.d}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
 /* --- 2. SPORTZONE FOOTBALL --- */
 /* -------------------------------------------------------------------------- */
-// Interface para o Produto
 function ElarisSportApp() {
   interface Product {
     id: number;
     name: string;
     price: number;
+    originalPrice?: number;
     brand: string;
     image: string;
     category: string;
+    badge?: string;
+    rating: number;
+    reviews: number;
+    sizes: string[];
+    description: string;
   }
+  interface CartItem extends Product { quantity: number; selectedSize: string; }
 
-  interface CartItem extends Product {
-    quantity: number;
-  }
-
-  const [view, setView] = useState<'shop' | 'cart' | 'success'>('shop');
+  const [view, setView] = useState<'shop'|'product'|'cart'|'checkout'|'success'>('shop');
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [showPrivacy, setShowPrivacy] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState('Todos');
+  const [selectedCategory, setSelectedCategory] = useState('All');
   const [search, setSearch] = useState('');
+  const [selectedProduct, setSelectedProduct] = useState<Product|null>(null);
+  const [selectedSize, setSelectedSize] = useState('');
+  const [sizeError, setSizeError] = useState(false);
+  const [sortBy, setSortBy] = useState<'featured'|'price-asc'|'price-desc'>('featured');
+  const [wishlist, setWishlist] = useState<number[]>([]);
+  const [checkoutForm, setCheckoutForm] = useState({ name:'', email:'', address:'', card:'' });
+  const [checkoutErrors, setCheckoutErrors] = useState<Record<string,string>>({});
+  const [addedId, setAddedId] = useState<number|null>(null);
 
-  const gear: Product[] = [
-    {
-      id: 1,
-      name: "Predator Elite FG",
-      price: 250,
-      brand: "Adidas",
-      category: "Futebol",
-      image:
-        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1000",
-    },
-    {
-      id: 2,
-      name: "Portugal 24 Authentic",
-      price: 140,
-      brand: "Nike",
-      category: "Equipamento",
-      image:
-        "https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=1000",
-    },
-    {
-      id: 3,
-      name: "Champions League Pro",
-      price: 150,
-      brand: "Adidas",
-      category: "Bolas",
-      image:
-        "https://images.unsplash.com/photo-1614632537190-23e414dcb33d?q=80&w=1000",
-    },
-    {
-      id: 4,
-      name: "Reusch Gold Grip",
-      price: 85,
-      brand: "Reusch",
-      category: "Guarda-Redes",
-      image:
-        "https://images.unsplash.com/photo-1510566337590-2fc1f21d0faa?q=80&w=1000",
-    },
-    {
-      id: 5,
-      name: "Mercurial Vapor Elite",
-      price: 270,
-      brand: "Nike",
-      category: "Futebol",
-      image:
-        "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?q=80&w=1000",
-    },
-    {
-      id: 6,
-      name: "Fitness Pro Mat",
-      price: 60,
-      brand: "Domyos",
-      category: "Fitness",
-      image:
-        "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1000",
-    },
+  const products: Product[] = [
+    { id:1, name:"Predator Elite FG", price:250, originalPrice:320, brand:"Adidas", category:"Boots",
+      badge:"Sale", rating:4.8, reviews:312,
+      sizes:["39","40","41","42","43","44","45"],
+      description:"Elite football boots engineered for total control. Laceless design with Primeknit upper for a sock-like fit and explosive first touch.",
+      image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1000" },
+    { id:2, name:"Mercurial Vapor 16 Elite", price:275, brand:"Nike", category:"Boots",
+      badge:"New", rating:4.9, reviews:198,
+      sizes:["38","39","40","41","42","43","44"],
+      description:"Designed for pure speed. The ultra-thin Flyknit upper delivers a barefoot feel while the carbon fibre soleplate maximises energy return.",
+      image:"https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?q=80&w=1000" },
+    { id:3, name:"Portugal 24 Home Kit", price:140, brand:"Nike", category:"Kits",
+      badge:"Hot", rating:4.7, reviews:540,
+      sizes:["XS","S","M","L","XL","XXL"],
+      description:"The official Portugal 2024 home jersey. Sweat-wicking Dri-FIT ADV technology keeps you cool and dry during the most intense moments.",
+      image:"https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=1000" },
+    { id:4, name:"UCL Pro Ball", price:165, brand:"Adidas", category:"Balls",
+      rating:4.6, reviews:87,
+      sizes:["Size 4","Size 5"],
+      description:"The official match ball of the UEFA Champions League. Thermally bonded panels and a butyl bladder for consistent flight and touch.",
+      image:"https://images.unsplash.com/photo-1614632537190-23e414dcb33d?q=80&w=1000" },
+    { id:5, name:"Phantom GK Elite", price:95, brand:"Reusch", category:"Goalkeeper",
+      rating:4.5, reviews:63,
+      sizes:["7","8","9","10","11"],
+      description:"Professional-grade goalkeeper gloves with NC Excellent 3mm latex palm. Exceptional grip in all weather conditions.",
+      image:"https://images.unsplash.com/photo-1510566337590-2fc1f21d0faa?q=80&w=1000" },
+    { id:6, name:"France Away Kit", price:130, originalPrice:150, brand:"Nike", category:"Kits",
+      badge:"Sale", rating:4.4, reviews:221,
+      sizes:["XS","S","M","L","XL","XXL"],
+      description:"The France 2024 away kit featuring a stunning navy gradient design. Official Dri-FIT ADV technology for peak performance.",
+      image:"https://images.unsplash.com/photo-1529466596914-ca0a88b2bcd5?q=80&w=1000" },
+    { id:7, name:"Pro Training Ball", price:45, brand:"Adidas", category:"Balls",
+      rating:4.3, reviews:145,
+      sizes:["Size 4","Size 5"],
+      description:"Durable 32-panel training ball with a butyl inner tube for consistent bounce and shape retention through thousands of kicks.",
+      image:"https://images.unsplash.com/photo-1575361204480-aadea25e6e68?q=80&w=1000" },
+    { id:8, name:"Phantom Luna Elite FG", price:230, brand:"Nike", category:"Boots",
+      badge:"New", rating:4.8, reviews:76,
+      sizes:["36","37","38","39","40","41","42"],
+      description:"Nike's most precise boot ever. Textured touch zone and split outsole geometry for explosive multi-directional movement.",
+      image:"https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?q=80&w=1000" },
+    { id:9, name:"Training Compression Set", price:75, brand:"Nike", category:"Training",
+      rating:4.5, reviews:189,
+      sizes:["S","M","L","XL"],
+      description:"Full compression top and shorts set with Dri-FIT technology. Designed to support muscles and enhance recovery during training.",
+      image:"https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1000" },
+    { id:10, name:"Speed Training Cones Set", price:25, brand:"Generic", category:"Training",
+      rating:4.2, reviews:302,
+      sizes:["One Size"],
+      description:"50-piece set of high-visibility training cones. Lightweight, stackable and perfect for agility drills and pitch marking.",
+      image:"https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?q=80&w=1000" },
+    { id:11, name:"Elite Shin Guards", price:55, brand:"Adidas", category:"Accessories",
+      rating:4.6, reviews:93,
+      sizes:["S","M","L","XL"],
+      description:"Lightweight EVA foam shin guards with anatomical shape. Ankle protection straps included for a secure, comfortable fit.",
+      image:"https://images.unsplash.com/photo-1553778263-73a83bab9b0c?q=80&w=1000" },
+    { id:12, name:"Goalkeeper Jersey Pro", price:85, brand:"Reusch", category:"Goalkeeper",
+      rating:4.3, reviews:41,
+      sizes:["S","M","L","XL","XXL"],
+      description:"Professional goalkeeper jersey with padded elbows for diving protection. Ultra-breathable mesh panels for maximum ventilation.",
+      image:"https://images.unsplash.com/photo-1606902965551-dce093cda6e7?q=80&w=1000" },
   ];
 
-  const categories = [
-    "Todos",
-    "Futebol",
-    "Equipamento",
-    "Bolas",
-    "Fitness",
-    "Guarda-Redes",
-  ];
+  const categories = ['All','Boots','Kits','Balls','Goalkeeper','Training','Accessories'];
 
-  const addToCart = (product: Product) => {
-    setCart((prev) => {
-      const existing = prev.find((item) => item.id === product.id);
-
-      if (existing) {
-        return prev.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      }
-
-      return [...prev, { ...product, quantity: 1 }];
+  const addToCart = (product: Product, size: string) => {
+    setCart(prev => {
+      const key = `${product.id}-${size}`;
+      const existing = prev.find(i => `${i.id}-${i.selectedSize}` === key);
+      if (existing) return prev.map(i => `${i.id}-${i.selectedSize}` === key ? {...i, quantity: i.quantity+1} : i);
+      return [...prev, {...product, quantity:1, selectedSize:size}];
     });
+    setAddedId(product.id);
+    setTimeout(() => setAddedId(null), 1200);
   };
 
-  const removeFromCart = (id: number) => {
-    setCart((prev) => prev.filter((item) => item.id !== id));
+  const removeFromCart = (id: number, size: string) =>
+    setCart(prev => prev.filter(i => !(i.id===id && i.selectedSize===size)));
+
+  const updateQuantity = (id: number, size: string, delta: number) =>
+    setCart(prev => prev.map(i => i.id===id && i.selectedSize===size
+      ? {...i, quantity: Math.max(1, i.quantity+delta)} : i));
+
+  const toggleWishlist = (id: number) =>
+    setWishlist(prev => prev.includes(id) ? prev.filter(x=>x!==id) : [...prev, id]);
+
+  const total = cart.reduce((acc,i) => acc + i.price * i.quantity, 0);
+  const cartCount = cart.reduce((acc,i) => acc + i.quantity, 0);
+  const savings = cart.reduce((acc,i) => acc + ((i.originalPrice||i.price)-i.price)*i.quantity, 0);
+
+  const filtered = products
+    .filter(p => selectedCategory==='All' || p.category===selectedCategory)
+    .filter(p => p.name.toLowerCase().includes(search.toLowerCase()) || p.brand.toLowerCase().includes(search.toLowerCase()))
+    .sort((a,b) => sortBy==='price-asc' ? a.price-b.price : sortBy==='price-desc' ? b.price-a.price : 0);
+
+  const validateCheckout = () => {
+    const e: Record<string,string> = {};
+    if (!checkoutForm.name.trim()) e.name = 'Required';
+    if (!checkoutForm.email.includes('@')) e.email = 'Invalid email';
+    if (!checkoutForm.address.trim()) e.address = 'Required';
+    if (checkoutForm.card.replace(/\s/g,'').length < 16) e.card = 'Enter a valid card number';
+    return e;
   };
 
-  const updateQuantity = (id: number, delta: number) => {
-    setCart((prev) =>
-      prev.map((item) => {
-        if (item.id === id) {
-          return {
-            ...item,
-            quantity: Math.max(1, item.quantity + delta),
-          };
-        }
-
-        return item;
-      })
-    );
-  };
-
-  const total = cart.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
+  const Stars = ({ rating }: { rating: number }) => (
+    <span className="flex gap-0.5">
+      {[1,2,3,4,5].map(s => (
+        <span key={s} className={`text-xs ${s<=Math.round(rating) ? 'text-amber-400' : 'text-zinc-300'}`}>★</span>
+      ))}
+    </span>
   );
 
-  const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
-
-  const filteredGear = gear.filter((item) => {
-    const matchesCategory =
-      selectedCategory === "Todos" ||
-      item.category === selectedCategory;
-
-    const matchesSearch =
-      item.name.toLowerCase().includes(search.toLowerCase()) ||
-      item.brand.toLowerCase().includes(search.toLowerCase());
-
-    return matchesCategory && matchesSearch;
-  });
-
   return (
-    <div className="h-full flex flex-col bg-[#f4f6f8] text-[#111] overflow-hidden relative">
+    <div className="h-full flex flex-col bg-[#f8f9fb] text-[#111] overflow-hidden relative font-sans">
 
-      {/* PRIVACY */}
-      <AnimatePresence>
-        {showPrivacy && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="absolute inset-0 z-[100] bg-black/70 backdrop-blur-md flex items-center justify-center p-4"
-          >
-            <motion.div
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              className="bg-white max-w-lg w-full p-8 rounded-2xl shadow-2xl border-t-8 border-[#0082c3]"
-            >
-              <ShieldCheck
-                className="text-[#0082c3] mb-4"
-                size={40}
-              />
-
-              <h3 className="text-2xl font-black mb-4 uppercase">
-                Segurança Elaris
-              </h3>
-
-              <p className="text-sm text-zinc-600 mb-8 leading-relaxed">
-                Todos os pagamentos e dados pessoais são protegidos
-                através de protocolos encriptados de última geração.
-              </p>
-
-              <button
-                onClick={() => setShowPrivacy(false)}
-                className="w-full py-4 bg-[#0082c3] text-white font-black uppercase tracking-widest text-xs rounded-xl"
-              >
-                Fechar
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* HEADER */}
-      <nav className="bg-white border-b border-zinc-200 px-4 md:px-8 py-4 flex items-center justify-between  top-0 z-40">
-
-        <div
-          onClick={() => setView('shop')}
-          className="flex items-center gap-3 cursor-pointer"
-        >
-          <div className="bg-[#0082c3] p-2 rounded-lg">
-            <Trophy size={20} className="text-white" />
-          </div>
-
+      {/* ── NAVBAR ── */}
+      <nav className="bg-white border-b border-zinc-200 px-4 md:px-8 py-3 flex items-center gap-4 z-40 shrink-0">
+        <div onClick={()=>{setView('shop');setSearch('');}} className="flex items-center gap-2.5 cursor-pointer mr-2 shrink-0">
+          <div className="bg-black p-1.5 rounded-lg"><Trophy size={18} className="text-white"/></div>
           <div>
-            <h1 className="font-black text-xl tracking-tight">
-              ELARIS<span className="text-[#0082c3]">SPORT</span>
-            </h1>
-
-            <p className="text-[9px] uppercase tracking-[0.3em] text-zinc-400 font-black">
-              Performance Store
-            </p>
+            <h1 className="font-black text-lg tracking-tight leading-none">ELARIS<span className="text-[#0066ff]">SPORT</span></h1>
+            <p className="text-[8px] uppercase tracking-[0.3em] text-zinc-400 font-bold">Performance Store</p>
           </div>
         </div>
 
-        {/* SEARCH */}
-        <div className="hidden md:flex items-center bg-zinc-100 rounded-full px-4 py-2 w-[420px]">
-          <Search size={18} className="text-zinc-400" />
-
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Pesquisar equipamentos..."
-            className="bg-transparent outline-none px-3 text-sm w-full"
-          />
+        {/* categories bar (desktop) */}
+        <div className="hidden md:flex items-center gap-1 flex-1">
+          {categories.map(cat => (
+            <button key={cat} onClick={()=>setSelectedCategory(cat)}
+              className={`px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all ${selectedCategory===cat ? 'bg-black text-white' : 'hover:bg-zinc-100 text-zinc-500'}`}>
+              {cat}
+            </button>
+          ))}
         </div>
 
-        {/* CART */}
-        <button
-          onClick={() => setView('cart')}
-          className="relative flex items-center gap-3 bg-[#0082c3] hover:bg-[#006fa7] text-white px-5 py-3 rounded-full transition-all"
-        >
-          <ShoppingBag size={18} />
+        {/* Search */}
+        <div className="flex items-center bg-zinc-100 rounded-full px-3 py-2 w-[200px] ml-auto">
+          <Search size={14} className="text-zinc-400 shrink-0"/>
+          <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search…"
+            className="bg-transparent outline-none px-2 text-xs w-full"/>
+        </div>
 
-          <span className="hidden sm:block text-xs font-black uppercase tracking-widest">
-            Carrinho
-          </span>
+        {/* Wishlist */}
+        <button onClick={()=>{}} className="relative p-2">
+          <Heart size={20} className="text-zinc-500"/>
+          {wishlist.length>0 && <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center">{wishlist.length}</span>}
+        </button>
 
-          {cartCount > 0 && (
-            <span className="absolute -top-2 -right-2 bg-black text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center">
-              {cartCount}
-            </span>
-          )}
+        {/* Cart */}
+        <button onClick={()=>setView('cart')} className="relative flex items-center gap-2 bg-black hover:bg-[#0066ff] text-white px-4 py-2 rounded-full transition-all text-xs font-black uppercase tracking-widest shrink-0">
+          <ShoppingBag size={16}/>
+          <span className="hidden sm:block">Cart</span>
+          {cartCount>0 && <span className="absolute -top-2 -right-2 bg-[#0066ff] text-white text-[9px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">{cartCount}</span>}
         </button>
       </nav>
 
-      {/* MOBILE SEARCH */}
-      <div className="md:hidden bg-white px-4 pb-4 border-b border-zinc-200">
-        <div className="flex items-center bg-zinc-100 rounded-full px-4 py-3">
-          <Search size={18} className="text-zinc-400" />
-
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Pesquisar..."
-            className="bg-transparent outline-none px-3 text-sm w-full"
-          />
-        </div>
-      </div>
-
-      {/* CONTENT */}
+      {/* ── MAIN CONTENT ── */}
       <div className="flex-1 overflow-y-auto">
-
         <AnimatePresence mode="wait">
 
           {/* SHOP */}
-          {view === 'shop' && (
-            <motion.div
-              key="shop"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
+          {view==='shop' && (
+            <motion.div key="shop" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}>
 
-              {/* HERO */}
-              <div className="relative h-[380px] overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1511886929837-354d827aae26?q=80&w=2000"
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-
-                <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/20" />
-
-                <div className="relative z-10 h-full flex flex-col justify-center px-8 md:px-20 text-white">
-                  <span className="text-[#4fc3ff] font-black text-xs tracking-[0.4em] uppercase mb-4">
-                    Nova Coleção
-                  </span>
-
-                  <h2 className="text-5xl md:text-7xl font-black leading-none max-w-3xl">
-                    EQUIPAMENTO
-                    <br />
-                    DE ELITE
+              {/* Hero Banner */}
+              <div className="relative h-[260px] bg-black overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1522778526097-ce0a22ceb253?q=80&w=2000"
+                  className="absolute inset-0 w-full h-full object-cover opacity-50"/>
+                <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"/>
+                <div className="relative z-10 h-full flex flex-col justify-center px-8 md:px-14 text-white">
+                  <span className="text-[#0066ff] font-black text-[10px] tracking-[0.4em] uppercase mb-3">New Season 2026</span>
+                  <h2 className="text-4xl md:text-6xl font-black leading-none mb-4">
+                    PLAY AT YOUR<br/>
+                    <span className="text-[#0066ff]">PEAK.</span>
                   </h2>
-
-                  <p className="mt-6 text-zinc-300 max-w-xl">
-                    Descobre produtos premium para futebol, fitness
-                    e alta performance.
-                  </p>
+                  <p className="text-zinc-300 text-sm max-w-md mb-6">Premium football gear for every level. Free shipping on orders over €100.</p>
+                  <div className="flex gap-3">
+                    <button onClick={()=>setSelectedCategory('Boots')} className="px-6 py-2.5 bg-[#0066ff] hover:bg-white hover:text-black text-white font-black text-[10px] uppercase tracking-widest rounded-full transition-all">
+                      Shop Boots
+                    </button>
+                    <button onClick={()=>setSelectedCategory('Kits')} className="px-6 py-2.5 border border-white/40 hover:bg-white hover:text-black text-white font-black text-[10px] uppercase tracking-widest rounded-full transition-all">
+                      Shop Kits
+                    </button>
+                  </div>
+                </div>
+                {/* sale badge */}
+                <div className="absolute top-6 right-8 bg-red-600 text-white px-4 py-2 rounded-xl text-center shadow-xl">
+                  <div className="text-xl font-black leading-none">-20%</div>
+                  <div className="text-[9px] uppercase tracking-widest font-bold">on boots</div>
                 </div>
               </div>
 
-              {/* CATEGORIES */}
-              <div className="bg-white border-b border-zinc-200 px-4 md:px-8 py-4 sticky top-0 z-20">
-                <div className="flex gap-3 overflow-x-auto no-scrollbar">
-                  {categories.map((cat) => (
-                    <button
-                      key={cat}
-                      onClick={() => setSelectedCategory(cat)}
-                      className={`px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest whitespace-nowrap transition-all ${
-                        selectedCategory === cat
-                          ? "bg-[#0082c3] text-white"
-                          : "bg-zinc-100 hover:bg-zinc-200"
-                      }`}
-                    >
+              {/* Mobile categories */}
+              <div className="md:hidden bg-white border-b border-zinc-200 px-4 py-3 sticky top-0 z-20">
+                <div className="flex gap-2 overflow-x-auto no-scrollbar">
+                  {categories.map(cat => (
+                    <button key={cat} onClick={()=>setSelectedCategory(cat)}
+                      className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest whitespace-nowrap transition-all shrink-0 ${selectedCategory===cat ? 'bg-black text-white' : 'bg-zinc-100'}`}>
                       {cat}
                     </button>
                   ))}
                 </div>
               </div>
 
-              {/* PRODUCTS */}
-              <div className="p-4 md:p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {/* Toolbar */}
+              <div className="px-6 md:px-10 py-4 flex items-center justify-between">
+                <p className="text-xs text-zinc-400 font-bold">{filtered.length} products</p>
+                <select value={sortBy} onChange={e=>setSortBy(e.target.value as any)}
+                  className="text-xs bg-white border border-zinc-200 rounded-lg px-3 py-2 outline-none font-bold cursor-pointer">
+                  <option value="featured">Featured</option>
+                  <option value="price-asc">Price: Low → High</option>
+                  <option value="price-desc">Price: High → Low</option>
+                </select>
+              </div>
 
-                {filteredGear.map((item) => (
-                  <motion.div
-                    key={item.id}
-                    whileHover={{ y: -6 }}
-                    className="bg-white rounded-2xl overflow-hidden border border-zinc-200 hover:shadow-2xl transition-all group"
-                  >
-                    <div className="h-64 bg-zinc-100 overflow-hidden relative">
-                      <img
-                        src={item.image}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                      />
-
-                      <div className="absolute top-3 left-3 bg-[#0082c3] text-white text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-widest">
-                        {item.category}
-                      </div>
-                    </div>
-
-                    <div className="p-5">
-                      <span className="text-[10px] font-black uppercase tracking-widest text-[#0082c3]">
-                        {item.brand}
-                      </span>
-
-                      <h4 className="font-black text-lg mt-2 leading-tight min-h-[56px]">
-                        {item.name}
-                      </h4>
-
-                      <div className="flex items-center justify-between mt-6">
-                        <span className="text-2xl font-black">
-                          €{item.price}
+              {/* Products Grid */}
+              <div className="px-6 md:px-10 pb-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {filtered.length===0 && (
+                  <div className="col-span-4 text-center py-20 text-zinc-400">
+                    <Search size={40} className="mx-auto mb-4 opacity-30"/>
+                    <p className="font-bold">No products found for "{search}"</p>
+                  </div>
+                )}
+                {filtered.map(item => (
+                  <motion.div key={item.id} whileHover={{y:-4}} transition={{duration:0.2}}
+                    className="bg-white rounded-2xl overflow-hidden border border-zinc-200 hover:border-[#0066ff]/30 hover:shadow-xl transition-all group cursor-pointer"
+                    onClick={()=>{setSelectedProduct(item);setSelectedSize('');setSizeError(false);setView('product');}}>
+                    <div className="relative h-52 bg-zinc-50 overflow-hidden">
+                      <img src={item.image} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+                      {item.badge && (
+                        <span className={`absolute top-2 left-2 text-white text-[9px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider ${item.badge==='Sale'?'bg-red-500':item.badge==='New'?'bg-[#0066ff]':'bg-amber-500'}`}>
+                          {item.badge}
                         </span>
-
-                        <button
-                          onClick={() => addToCart(item)}
-                          className="bg-[#0082c3] hover:bg-black text-white p-3 rounded-xl transition-all"
-                        >
-                          <Plus size={18} />
+                      )}
+                      <button onClick={e=>{e.stopPropagation();toggleWishlist(item.id);}}
+                        className="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center shadow transition-all hover:scale-110">
+                        <Heart size={14} className={wishlist.includes(item.id) ? 'text-rose-500 fill-rose-500' : 'text-zinc-400'}/>
+                      </button>
+                      {addedId===item.id && (
+                        <div className="absolute inset-0 bg-[#0066ff]/90 flex items-center justify-center">
+                          <CheckCircle2 size={40} className="text-white"/>
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-4">
+                      <p className="text-[9px] font-black uppercase tracking-widest text-[#0066ff] mb-1">{item.brand} · {item.category}</p>
+                      <h4 className="font-black text-sm leading-snug mb-2 min-h-[36px]">{item.name}</h4>
+                      <div className="flex items-center gap-1.5 mb-3">
+                        <Stars rating={item.rating}/>
+                        <span className="text-[10px] text-zinc-400">({item.reviews})</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <span className="text-lg font-black">€{item.price}</span>
+                          {item.originalPrice && <span className="text-xs text-zinc-400 line-through ml-1">€{item.originalPrice}</span>}
+                        </div>
+                        <button onClick={e=>{e.stopPropagation();if(item.sizes.length===1){addToCart(item,item.sizes[0]);}else{setSelectedProduct(item);setSelectedSize('');setSizeError(false);setView('product');}}}
+                          className="w-8 h-8 bg-black hover:bg-[#0066ff] text-white rounded-xl flex items-center justify-center transition-all">
+                          <Plus size={16}/>
                         </button>
                       </div>
                     </div>
                   </motion.div>
                 ))}
+              </div>
+            </motion.div>
+          )}
 
+          {/* PRODUCT DETAIL */}
+          {view==='product' && selectedProduct && (
+            <motion.div key="product" initial={{opacity:0,x:20}} animate={{opacity:1,x:0}} exit={{opacity:0}} className="p-6 md:p-10 max-w-5xl mx-auto">
+              <button onClick={()=>setView('shop')} className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-zinc-400 hover:text-black mb-8 transition-colors">
+                <ArrowLeft size={16}/> Back to Shop
+              </button>
+              <div className="grid md:grid-cols-2 gap-10">
+                {/* Image */}
+                <div className="bg-zinc-100 rounded-3xl overflow-hidden h-[380px]">
+                  <img src={selectedProduct.image} className="w-full h-full object-cover"/>
+                </div>
+                {/* Info */}
+                <div className="flex flex-col justify-center">
+                  {selectedProduct.badge && (
+                    <span className={`self-start text-white text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-widest mb-3 ${selectedProduct.badge==='Sale'?'bg-red-500':selectedProduct.badge==='New'?'bg-[#0066ff]':'bg-amber-500'}`}>
+                      {selectedProduct.badge}
+                    </span>
+                  )}
+                  <p className="text-[10px] font-black uppercase tracking-widest text-[#0066ff] mb-2">{selectedProduct.brand} · {selectedProduct.category}</p>
+                  <h2 className="text-3xl font-black mb-3">{selectedProduct.name}</h2>
+                  <div className="flex items-center gap-2 mb-4">
+                    <Stars rating={selectedProduct.rating}/>
+                    <span className="text-xs text-zinc-500">{selectedProduct.rating} · {selectedProduct.reviews} reviews</span>
+                  </div>
+                  <p className="text-zinc-500 text-sm leading-relaxed mb-6">{selectedProduct.description}</p>
+                  <div className="flex items-center gap-3 mb-6">
+                    <span className="text-3xl font-black">€{selectedProduct.price}</span>
+                    {selectedProduct.originalPrice && <>
+                      <span className="text-lg text-zinc-400 line-through">€{selectedProduct.originalPrice}</span>
+                      <span className="bg-red-100 text-red-600 text-xs font-black px-2 py-0.5 rounded-full">-{Math.round((1-selectedProduct.price/selectedProduct.originalPrice)*100)}%</span>
+                    </>}
+                  </div>
+                  {/* Size picker */}
+                  <div className="mb-6">
+                    <p className="text-[10px] font-black uppercase tracking-widest mb-3 flex items-center gap-2">
+                      Select Size
+                      {sizeError && <span className="text-red-500 normal-case font-normal">Please select a size</span>}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedProduct.sizes.map(s => (
+                        <button key={s} onClick={()=>{setSelectedSize(s);setSizeError(false);}}
+                          className={`px-4 py-2 rounded-xl text-sm font-bold border-2 transition-all ${selectedSize===s ? 'bg-black text-white border-black' : 'border-zinc-200 hover:border-black'}`}>
+                          {s}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <button onClick={()=>{
+                      if(!selectedSize){setSizeError(true);return;}
+                      addToCart(selectedProduct, selectedSize);
+                      setView('shop');
+                    }} className="flex-1 py-4 bg-black hover:bg-[#0066ff] text-white font-black uppercase tracking-widest text-xs rounded-2xl transition-all flex items-center justify-center gap-2">
+                      <ShoppingBag size={16}/> Add to Cart
+                    </button>
+                    <button onClick={()=>toggleWishlist(selectedProduct.id)}
+                      className={`w-14 h-14 rounded-2xl border-2 flex items-center justify-center transition-all ${wishlist.includes(selectedProduct.id) ? 'border-rose-500 bg-rose-50' : 'border-zinc-200 hover:border-rose-400'}`}>
+                      <Heart size={20} className={wishlist.includes(selectedProduct.id) ? 'text-rose-500 fill-rose-500' : 'text-zinc-400'}/>
+                    </button>
+                  </div>
+                </div>
               </div>
             </motion.div>
           )}
 
           {/* CART */}
-          {view === 'cart' && (
-            <motion.div
-              key="cart"
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="p-4 md:p-10 max-w-6xl mx-auto"
-            >
-              <div className="flex items-center justify-between mb-10">
-                <h2 className="text-4xl md:text-6xl font-black tracking-tight">
-                  Carrinho
-                </h2>
-
-                <button
-                  onClick={() => setView('shop')}
-                  className="text-xs font-black uppercase tracking-widest text-[#0082c3]"
-                >
-                  Continuar Compras
+          {view==='cart' && (
+            <motion.div key="cart" initial={{opacity:0,x:40}} animate={{opacity:1,x:0}} exit={{opacity:0}} className="p-6 md:p-10 max-w-5xl mx-auto">
+              <div className="flex items-center justify-between mb-8">
+                <h2 className="text-3xl font-black">Your Cart <span className="text-zinc-300 text-2xl">({cartCount})</span></h2>
+                <button onClick={()=>setView('shop')} className="text-xs font-black uppercase tracking-widest text-[#0066ff] flex items-center gap-1 hover:gap-2 transition-all">
+                  <ArrowLeft size={14}/> Continue Shopping
                 </button>
               </div>
-
-              {cart.length === 0 ? (
+              {cart.length===0 ? (
                 <div className="bg-white rounded-3xl p-20 text-center border border-zinc-200">
-                  <ShoppingBasket
-                    size={52}
-                    className="mx-auto text-zinc-300 mb-5"
-                  />
-
-                  <h3 className="text-2xl font-black mb-2">
-                    Carrinho vazio
-                  </h3>
-
-                  <p className="text-zinc-500">
-                    Adiciona equipamento para começar.
-                  </p>
+                  <ShoppingBasket size={52} className="mx-auto text-zinc-300 mb-5"/>
+                  <h3 className="text-2xl font-black mb-2">Your cart is empty</h3>
+                  <p className="text-zinc-400 mb-8">Add some gear to get started</p>
+                  <button onClick={()=>setView('shop')} className="px-8 py-3 bg-black text-white font-black uppercase tracking-widest text-xs rounded-full hover:bg-[#0066ff] transition-all">
+                    Browse Products
+                  </button>
                 </div>
               ) : (
-                <div className="grid lg:grid-cols-[1fr_350px] gap-8">
-
-                  {/* ITEMS */}
-                  <div className="space-y-5">
-                    {cart.map((item) => (
-                      <div
-                        key={item.id}
-                        className="bg-white rounded-2xl p-5 flex gap-5 border border-zinc-200"
-                      >
-                        <img
-                          src={item.image}
-                          className="w-28 h-28 rounded-xl object-cover"
-                        />
-
-                        <div className="flex-1">
-                          <span className="text-[10px] uppercase font-black tracking-widest text-[#0082c3]">
-                            {item.brand}
-                          </span>
-
-                          <h4 className="font-black text-lg mt-1">
-                            {item.name}
-                          </h4>
-
-                          <div className="flex items-center gap-4 mt-5">
-
-                            <div className="flex items-center border rounded-full overflow-hidden">
-                              <button
-                                onClick={() =>
-                                  updateQuantity(item.id, -1)
-                                }
-                                className="px-4 py-2 hover:bg-zinc-100"
-                              >
-                                <Minus size={14} />
-                              </button>
-
-                              <span className="px-4 font-black">
-                                {item.quantity}
-                              </span>
-
-                              <button
-                                onClick={() =>
-                                  updateQuantity(item.id, 1)
-                                }
-                                className="px-4 py-2 hover:bg-zinc-100"
-                              >
-                                <Plus size={14} />
-                              </button>
+                <div className="grid lg:grid-cols-[1fr_320px] gap-6">
+                  <div className="space-y-4">
+                    {cart.map(item => (
+                      <div key={`${item.id}-${item.selectedSize}`} className="bg-white rounded-2xl p-4 flex gap-4 border border-zinc-200">
+                        <img src={item.image} className="w-24 h-24 rounded-xl object-cover shrink-0"/>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-[9px] font-black uppercase tracking-widest text-[#0066ff]">{item.brand}</p>
+                          <h4 className="font-black text-sm mt-0.5 truncate">{item.name}</h4>
+                          <p className="text-xs text-zinc-400 mt-0.5">Size: <span className="font-bold text-zinc-600">{item.selectedSize}</span></p>
+                          <div className="flex items-center gap-3 mt-3">
+                            <div className="flex items-center bg-zinc-100 rounded-full overflow-hidden">
+                              <button onClick={()=>updateQuantity(item.id,item.selectedSize,-1)} className="px-3 py-1.5 hover:bg-zinc-200 transition-all"><Minus size={12}/></button>
+                              <span className="px-3 text-sm font-black">{item.quantity}</span>
+                              <button onClick={()=>updateQuantity(item.id,item.selectedSize,1)} className="px-3 py-1.5 hover:bg-zinc-200 transition-all"><Plus size={12}/></button>
                             </div>
-
-                            <button
-                              onClick={() => removeFromCart(item.id)}
-                              className="text-zinc-400 hover:text-red-500"
-                            >
-                              <Trash2 size={18} />
-                            </button>
+                            <button onClick={()=>removeFromCart(item.id,item.selectedSize)} className="text-zinc-300 hover:text-red-500 transition-colors"><Trash2 size={16}/></button>
                           </div>
                         </div>
-
-                        <div className="text-right">
-                          <span className="text-2xl font-black">
-                            €{item.price * item.quantity}
-                          </span>
-
-                          <p className="text-xs text-zinc-400">
-                            €{item.price} unidade
-                          </p>
+                        <div className="text-right shrink-0">
+                          <p className="font-black text-lg">€{item.price*item.quantity}</p>
+                          {item.quantity>1 && <p className="text-xs text-zinc-400">€{item.price} each</p>}
                         </div>
                       </div>
                     ))}
                   </div>
-
-                  {/* SUMMARY */}
-                  <div className="bg-white rounded-3xl border border-zinc-200 p-8 h-fit sticky top-6">
-                    <h3 className="font-black text-2xl mb-8">
-                      Resumo
-                    </h3>
-
-                    <div className="space-y-4 mb-8">
-                      <div className="flex justify-between">
-                        <span className="text-zinc-500">
-                          Subtotal
-                        </span>
-
-                        <span className="font-bold">
-                          €{total}
-                        </span>
-                      </div>
-
-                      <div className="flex justify-between">
-                        <span className="text-zinc-500">
-                          Entrega
-                        </span>
-
-                        <span className="font-bold text-green-600">
-                          Grátis
-                        </span>
-                      </div>
+                  {/* Order Summary */}
+                  <div className="bg-white rounded-3xl border border-zinc-200 p-6 h-fit sticky top-4">
+                    <h3 className="font-black text-xl mb-6">Order Summary</h3>
+                    <div className="space-y-3 mb-4">
+                      <div className="flex justify-between text-sm"><span className="text-zinc-500">Subtotal</span><span className="font-bold">€{total}</span></div>
+                      {savings>0 && <div className="flex justify-between text-sm"><span className="text-zinc-500">Savings</span><span className="font-bold text-green-600">-€{savings}</span></div>}
+                      <div className="flex justify-between text-sm"><span className="text-zinc-500">Shipping</span><span className="font-bold text-green-600">{total>=100?'Free':'€5.99'}</span></div>
                     </div>
-
-                    <div className="border-t pt-5 flex justify-between items-center mb-8">
-                      <span className="font-black text-lg">
-                        Total
-                      </span>
-
-                      <span className="text-3xl font-black">
-                        €{total}
-                      </span>
+                    {total<100 && <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 mb-4 text-xs text-blue-700 font-bold">Add €{(100-total).toFixed(0)} more for free shipping!</div>}
+                    <div className="border-t pt-4 flex justify-between items-center mb-6">
+                      <span className="font-black text-lg">Total</span>
+                      <span className="text-2xl font-black">€{total<100?(total+5.99).toFixed(2):total}</span>
                     </div>
-
-                    <button
-                      onClick={() => setView('success')}
-                      className="w-full py-5 bg-[#0082c3] hover:bg-black text-white font-black uppercase tracking-widest rounded-2xl transition-all"
-                    >
-                      Finalizar Compra
+                    <button onClick={()=>setView('checkout')} className="w-full py-4 bg-black hover:bg-[#0066ff] text-white font-black uppercase tracking-widest text-xs rounded-2xl transition-all">
+                      Checkout
+                    </button>
+                    <button onClick={()=>setView('shop')} className="w-full py-3 text-zinc-400 hover:text-black text-xs font-bold uppercase tracking-widest transition-colors mt-3">
+                      Continue Shopping
                     </button>
                   </div>
                 </div>
@@ -1257,385 +1437,526 @@ function ElarisSportApp() {
             </motion.div>
           )}
 
-          {/* SUCCESS */}
-          {view === 'success' && (
-            <motion.div
-              key="success"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="h-full flex flex-col items-center justify-center text-center p-10"
-            >
-              <div className="w-28 h-28 rounded-full bg-[#0082c3] flex items-center justify-center mb-8 shadow-2xl">
-                <CheckCircle2 size={50} className="text-white" />
+          {/* CHECKOUT */}
+          {view==='checkout' && (
+            <motion.div key="checkout" initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} exit={{opacity:0}} className="p-6 md:p-10 max-w-4xl mx-auto">
+              <button onClick={()=>setView('cart')} className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-zinc-400 hover:text-black mb-8 transition-colors">
+                <ArrowLeft size={16}/> Back to Cart
+              </button>
+              <div className="grid md:grid-cols-[1fr_280px] gap-8">
+                <div className="bg-white rounded-3xl border border-zinc-200 p-8">
+                  <h2 className="text-2xl font-black mb-8">Shipping & Payment</h2>
+                  <div className="space-y-6">
+                    {[
+                      {field:'name', label:'Full Name', placeholder:'John Doe', type:'text'},
+                      {field:'email', label:'Email Address', placeholder:'john@example.com', type:'email'},
+                      {field:'address', label:'Shipping Address', placeholder:'123 Main St, Lisbon, Portugal', type:'text'},
+                      {field:'card', label:'Card Number', placeholder:'1234 5678 9012 3456', type:'text'},
+                    ].map(({field,label,placeholder,type}) => (
+                      <div key={field}>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-[#0066ff] block mb-2">{label} *</label>
+                        <input type={type} placeholder={placeholder}
+                          value={(checkoutForm as any)[field]}
+                          onChange={e=>{
+                            const val = field==='card'
+                              ? e.target.value.replace(/\D/g,'').slice(0,16).replace(/(.{4})/g,'$1 ').trim()
+                              : e.target.value;
+                            setCheckoutForm(p=>({...p,[field]:val}));
+                            setCheckoutErrors(p=>({...p,[field]:''}));
+                          }}
+                          className={`w-full border-b-2 py-3 outline-none bg-transparent text-sm transition-colors ${checkoutErrors[field] ? 'border-red-400' : 'border-zinc-200 focus:border-[#0066ff]'}`}
+                        />
+                        {checkoutErrors[field] && <p className="text-red-500 text-[10px] mt-1">{checkoutErrors[field]}</p>}
+                      </div>
+                    ))}
+                    <button onClick={()=>{
+                      const errs = validateCheckout();
+                      setCheckoutErrors(errs);
+                      if(Object.keys(errs).length===0) setView('success');
+                    }} className="w-full py-4 bg-black hover:bg-[#0066ff] text-white font-black uppercase tracking-widest text-xs rounded-2xl transition-all mt-4">
+                      Place Order · €{total<100?(total+5.99).toFixed(2):total}
+                    </button>
+                  </div>
+                </div>
+                {/* Mini summary */}
+                <div className="bg-white rounded-3xl border border-zinc-200 p-6 h-fit">
+                  <h3 className="font-black mb-4 text-sm uppercase tracking-wider">Order ({cartCount} items)</h3>
+                  <div className="space-y-3 max-h-64 overflow-y-auto">
+                    {cart.map(item => (
+                      <div key={`${item.id}-${item.selectedSize}`} className="flex gap-3">
+                        <img src={item.image} className="w-12 h-12 rounded-lg object-cover shrink-0"/>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs font-bold truncate">{item.name}</p>
+                          <p className="text-[10px] text-zinc-400">×{item.quantity} · {item.selectedSize}</p>
+                        </div>
+                        <p className="text-sm font-black shrink-0">€{item.price*item.quantity}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="border-t mt-4 pt-4 flex justify-between font-black">
+                    <span>Total</span>
+                    <span>€{total<100?(total+5.99).toFixed(2):total}</span>
+                  </div>
+                </div>
               </div>
+            </motion.div>
+          )}
 
-              <h2 className="text-5xl md:text-7xl font-black leading-none">
-                Compra
-                <br />
-                Confirmada
-              </h2>
-
-              <p className="text-zinc-500 mt-6 max-w-lg text-lg">
-                O teu equipamento premium está a ser preparado para envio.
-              </p>
-
-              <button
-                onClick={() => {
-                  setCart([]);
-                  setView('shop');
-                }}
-                className="mt-12 px-12 py-5 bg-black hover:bg-[#0082c3] text-white font-black uppercase tracking-widest rounded-2xl transition-all"
-              >
-                Voltar à Loja
+          {/* SUCCESS */}
+          {view==='success' && (
+            <motion.div key="success" initial={{opacity:0,scale:0.95}} animate={{opacity:1,scale:1}} exit={{opacity:0}}
+              className="h-full flex flex-col items-center justify-center text-center p-10">
+              <motion.div initial={{scale:0}} animate={{scale:1}} transition={{type:'spring',delay:0.1}}
+                className="w-24 h-24 rounded-full bg-[#0066ff] flex items-center justify-center mb-8 shadow-2xl shadow-blue-200">
+                <CheckCircle2 size={46} className="text-white"/>
+              </motion.div>
+              <span className="text-[#0066ff] text-[10px] font-black uppercase tracking-[0.4em] mb-4">Order Confirmed</span>
+              <h2 className="text-5xl font-black leading-tight mb-4">Thank you,<br/>{checkoutForm.name.split(' ')[0] || 'Athlete'}!</h2>
+              <p className="text-zinc-400 max-w-md mb-2">Your order has been confirmed. A confirmation has been sent to <span className="font-bold text-zinc-600">{checkoutForm.email||'your email'}</span>.</p>
+              <p className="text-zinc-400 text-sm mb-10">Estimated delivery: <span className="font-bold text-zinc-600">3–5 business days</span></p>
+              <button onClick={()=>{setCart([]);setView('shop');setCheckoutForm({name:'',email:'',address:'',card:''});}}
+                className="px-12 py-4 bg-black hover:bg-[#0066ff] text-white font-black uppercase tracking-widest text-xs rounded-full transition-all">
+                Back to Store
               </button>
             </motion.div>
           )}
 
         </AnimatePresence>
       </div>
-
-      {/* FOOTER */}
-      
     </div>
   );
 }
 
 /* -------------------------------------------------------------------------- */
-/* --- 3. BARBEARIA ASGARD --- */
+/* --- 3. BARBEARIA ELARIS — WORLD CLASS EDITION --- */
 /* -------------------------------------------------------------------------- */
 function AsgardBarberApp() {
   const [view, setView] = useState<'intro' | 'services' | 'book' | 'done'>('intro');
   const [user, setUser] = useState("");
+  const [activeService, setActiveService] = useState<number | null>(null);
 
   const services = [
     {
+      id: 1,
       name: "Signature Cut",
+      time: "45 min",
       price: "€45",
-      desc: "Precisão internacional com acabamento premium."
+      desc: "Corte de precisão executado por master barbers treinados em Londres, Milano e Nova York. Acabamento com produtos Baxter of California.",
+      tag: "Bestseller",
     },
     {
+      id: 2,
       name: "Royal Beard Ritual",
+      time: "35 min",
       price: "€35",
-      desc: "Contorno perfeito com toalha quente e óleos exclusivos."
+      desc: "Ritual completo de barba com navalha tradicional, toalha quente de eucalipto, bálsamos premium e contorno de alto detalhe.",
+      tag: "Premium",
     },
     {
+      id: 3,
       name: "Executive Package",
+      time: "90 min",
       price: "€90",
-      desc: "Corte, barba, skincare e styling de luxo."
-    }
+      desc: "Experiência total: corte, barba, tratamento facial masculino, scalp massage e styling com produtos de luxo. O standard máximo.",
+      tag: "Elite",
+    },
+    {
+      id: 4,
+      name: "Scalp Ritual",
+      time: "30 min",
+      price: "€55",
+      desc: "Tratamento profundo do couro cabeludo com óleos essenciais importados, massagem de relaxamento e tónico revitalizante.",
+      tag: "Wellness",
+    },
+  ];
+
+  const barbers = [
+    { name: "Marcus Elaris", role: "Head Barber • Dubai", exp: "12y", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400" },
+    { name: "André Sousa", role: "Master Cut • Porto", exp: "8y", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400" },
+    { name: "James Whitfield", role: "Razor Specialist • London", exp: "15y", img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400" },
+  ];
+
+  const testimonials = [
+    { name: "Rui Teixeira", city: "Porto", text: "A melhor experiência de barbearia que já tive. Nível absolutamente internacional.", stars: 5 },
+    { name: "Ahmad Al-Rashid", city: "Dubai", text: "From the moment you walk in, you know this is different class. World-class precision.", stars: 5 },
+    { name: "George H.", city: "London", text: "I've been to barbers in Mayfair, Soho, NYC — Elaris beats them all.", stars: 5 },
   ];
 
   return (
-    <div className="h-full flex flex-col bg-[#050505] text-white overflow-hidden relative font-sans">
+    <div className="h-full flex flex-col bg-[#080808] text-white overflow-hidden relative font-sans">
 
-      {/* BACKGROUND FX */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-red-700/10 blur-[140px]" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-amber-500/10 blur-[140px]" />
+      {/* AMBIENT LIGHT */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-gradient-to-b from-amber-900/20 to-transparent" />
+        <div className="absolute top-[-30%] right-[-20%] w-[600px] h-[600px] rounded-full bg-red-900/8 blur-[120px]" />
+        <div className="absolute bottom-[-20%] left-[-15%] w-[500px] h-[500px] rounded-full bg-amber-900/10 blur-[100px]" />
+        {/* Grain texture */}
+        <div className="absolute inset-0 opacity-[0.03]" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+          backgroundSize: '200px 200px',
+        }} />
       </div>
 
       {/* NAVBAR */}
-      <nav className="relative z-20 px-8 md:px-16 py-6 flex items-center justify-between border-b border-white/5 backdrop-blur-xl bg-black/40">
-        <div
-          onClick={() => setView('intro')}
-          className="cursor-pointer flex items-center gap-4 group"
-        >
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-red-600 to-red-900 flex items-center justify-center shadow-[0_0_25px_rgba(220,38,38,0.4)]">
-            <Scissors size={18} />
+      <nav className="relative z-30 px-6 md:px-14 py-5 flex items-center justify-between border-b border-white/[0.06] bg-black/60 backdrop-blur-2xl shrink-0">
+        <div onClick={() => setView('intro')} className="cursor-pointer flex items-center gap-3 group">
+          {/* Logo mark */}
+          <div className="relative w-9 h-9 flex items-center justify-center">
+            <div className="absolute inset-0 rounded-sm bg-gradient-to-br from-amber-400 to-amber-700 opacity-90" />
+            <Scissors size={16} className="relative z-10 text-black" strokeWidth={2.5} />
           </div>
-
           <div>
-            <h1 className="text-2xl font-black italic tracking-tight">
-              ELARIS
-            </h1>
-            <span className="text-[9px] uppercase tracking-[0.4em] text-zinc-500">
-              International Barber House
+            <div className="flex items-baseline gap-1">
+              <span className="text-white font-black text-lg tracking-widest">ELARIS</span>
+              <span className="text-amber-500 text-xs font-black">®</span>
+            </div>
+            <span className="text-[8px] uppercase tracking-[0.45em] text-white/30 font-bold block -mt-0.5">
+              Barber House
             </span>
           </div>
         </div>
 
-        <div className="hidden md:flex items-center gap-10 text-[11px] uppercase tracking-[0.3em] font-bold">
-          <button
-            onClick={() => setView('services')}
-            className="hover:text-red-500 transition-colors"
-          >
-            Services
-          </button>
+        <div className="hidden md:flex items-center gap-1">
+          {[
+            { label: "Serviços", action: () => setView('services') },
+            { label: "Equipa", action: () => setView('intro') },
+            { label: "Reservar", action: () => setView('book'), primary: true },
+          ].map((item) => (
+            <button
+              key={item.label}
+              onClick={item.action}
+              className={`px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.25em] transition-all ${
+                item.primary
+                  ? 'bg-amber-500 text-black hover:bg-white ml-4 px-7'
+                  : 'text-white/50 hover:text-white'
+              }`}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
 
-          <button
-            onClick={() => setView('book')}
-            className="hover:text-red-500 transition-colors"
-          >
-            Booking
-          </button>
-
-          <button
-            onClick={() => setView('book')}
-            className="px-8 py-3 bg-red-600 hover:bg-white hover:text-black transition-all"
-          >
-            Reserve
+        <div className="flex md:hidden items-center gap-3">
+          <button onClick={() => setView('book')} className="px-4 py-2 bg-amber-500 text-black text-[9px] font-black uppercase tracking-widest">
+            Reservar
           </button>
         </div>
       </nav>
 
       {/* CONTENT */}
-      <div className="flex-1 overflow-y-auto relative z-10">
-
+      <div className="flex-1 overflow-y-auto relative z-10 scrollbar-hide">
         <AnimatePresence mode="wait">
 
-          {/* INTRO */}
+          {/* ── INTRO / HOME ── */}
           {view === 'intro' && (
-            <motion.div
-              key="intro"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="min-h-full"
-            >
+            <motion.div key="intro" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="min-h-full">
 
               {/* HERO */}
-              <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
-
+              <section className="relative h-[82vh] flex items-end overflow-hidden">
                 <img
-                  src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?q=80&w=2000"
-                  className="absolute inset-0 w-full h-full object-cover opacity-40 scale-105"
-                  alt="Barber"
+                  src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=2000"
+                  className="absolute inset-0 w-full h-full object-cover opacity-50"
+                  alt=""
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/40 to-transparent" />
 
-                <div className="absolute inset-0 bg-black/60" />
+                {/* Floating badge */}
+                <div className="absolute top-8 right-8 border border-amber-500/40 bg-black/60 backdrop-blur-xl px-5 py-3 text-center hidden md:block">
+                  <div className="text-amber-400 text-[9px] uppercase tracking-[0.4em] font-black mb-1">Reconhecido</div>
+                  <div className="text-white text-xs font-bold">Top 10 Barbers</div>
+                  <div className="text-white/40 text-[8px] uppercase tracking-widest mt-0.5">GQ Magazine · 2025</div>
+                </div>
 
-                <div className="relative z-10 text-center px-6 max-w-5xl">
-                  <span className="text-red-500 font-black uppercase tracking-[0.5em] text-xs block mb-6">
-                    Dubai • London • Porto
-                  </span>
+                <div className="relative z-10 px-8 md:px-16 pb-16 w-full">
+                  <motion.div initial={{ y: 40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.1, duration: 0.8 }}>
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="h-px w-12 bg-amber-500" />
+                      <span className="text-amber-400 text-[9px] uppercase tracking-[0.6em] font-black">Dubai · London · Porto</span>
+                    </div>
+                    <h2 className="text-6xl md:text-[7rem] font-black leading-[0.9] tracking-tight mb-8 max-w-3xl">
+                      THE CRAFT
+                      <br />
+                      <span className="text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.25)' }}>
+                        OF MEN.
+                      </span>
+                    </h2>
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <button onClick={() => setView('book')} className="px-10 py-4 bg-amber-500 text-black text-[11px] font-black uppercase tracking-[0.3em] hover:bg-white transition-all">
+                        Marcar Sessão
+                      </button>
+                      <button onClick={() => setView('services')} className="px-10 py-4 border border-white/20 text-[11px] font-black uppercase tracking-[0.3em] hover:border-amber-500 hover:text-amber-400 transition-all">
+                        Ver Serviços
+                      </button>
+                    </div>
+                  </motion.div>
+                </div>
+              </section>
 
-                  <h2 className="text-6xl md:text-8xl font-black italic leading-none tracking-tight mb-8">
-                    WORLD CLASS
-                    <br />
-                    GROOMING.
-                  </h2>
+              {/* STATS */}
+              <section className="py-14 px-8 md:px-16 border-y border-white/[0.06]">
+                <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+                  {[
+                    { val: 20, suffix: "+", label: "Anos de Excelência" },
+                    { val: 3, suffix: "", label: "Cidades Internacionais" },
+                    { val: 98, suffix: "%", label: "Clientes Satisfeitos" },
+                    { val: 12, suffix: "", label: "Master Barbers" },
+                  ].map((stat, i) => (
+                    <div key={i} className={`text-center ${i < 3 ? 'md:border-r border-white/[0.06]' : ''}`}>
+                      <div className="text-4xl md:text-5xl font-black text-amber-400 mb-2 tabular-nums">
+                        <AnimatedCounter target={stat.val} duration={1800 + i * 200} suffix={stat.suffix} />
+                      </div>
+                      <div className="text-[9px] uppercase tracking-[0.35em] text-white/40 font-bold">{stat.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </section>
 
-                  <p className="text-zinc-400 max-w-2xl mx-auto text-lg leading-relaxed mb-12">
-                    Uma experiência de elite inspirada nas barbearias mais luxuosas
-                    do mundo. Precisão absoluta, ambiente premium e detalhe obsessivo.
-                  </p>
-
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                    <button
-                      onClick={() => setView('book')}
-                      className="px-12 py-5 bg-red-600 hover:bg-white hover:text-black transition-all font-black uppercase tracking-[0.2em] text-sm shadow-2xl"
-                    >
-                      Reservar Agora
+              {/* BARBERS */}
+              <section className="py-20 px-8 md:px-16">
+                <div className="max-w-6xl mx-auto">
+                  <div className="mb-14 flex items-end justify-between">
+                    <div>
+                      <span className="text-amber-500 text-[9px] uppercase tracking-[0.5em] font-black block mb-3">A Nossa Equipa</span>
+                      <h3 className="text-4xl md:text-5xl font-black leading-tight">
+                        Master<br/>Barbers<span className="text-amber-500">.</span>
+                      </h3>
+                    </div>
+                    <button onClick={() => setView('book')} className="hidden md:flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-amber-400 hover:text-white transition-colors">
+                      Reservar <ChevronRight size={14} />
                     </button>
+                  </div>
 
-                    <button
-                      onClick={() => setView('services')}
-                      className="px-12 py-5 border border-white/20 hover:border-red-600 hover:bg-red-600 transition-all font-black uppercase tracking-[0.2em] text-sm"
-                    >
-                      Explorar Serviços
-                    </button>
+                  <div className="grid md:grid-cols-3 gap-6">
+                    {barbers.map((b, i) => (
+                      <motion.div key={i} whileHover={{ y: -6 }} className="group relative overflow-hidden bg-white/[0.03] border border-white/[0.07] hover:border-amber-500/40 transition-all duration-500">
+                        <div className="h-64 overflow-hidden">
+                          <img src={b.img} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 opacity-80" alt={b.name} />
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-transparent to-transparent" />
+                        </div>
+                        <div className="p-6">
+                          <div className="text-amber-400 text-[8px] uppercase tracking-[0.4em] font-black mb-1">{b.role}</div>
+                          <h4 className="text-xl font-black">{b.name}</h4>
+                          <div className="flex items-center gap-2 mt-3">
+                            <div className="px-2 py-0.5 bg-amber-500/10 border border-amber-500/20 text-amber-400 text-[8px] uppercase tracking-widest font-bold">{b.exp} experiência</div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
                   </div>
                 </div>
               </section>
 
-              {/* PREMIUM SECTION */}
-              <section className="py-24 px-8 md:px-16 max-w-7xl mx-auto grid md:grid-cols-3 gap-10">
-
-                <div className="bg-white/5 border border-white/10 p-10 backdrop-blur-xl">
-                  <Award size={38} className="text-red-500 mb-6" />
-                  <h3 className="text-2xl font-black italic mb-4">
-                    Master Barbers
-                  </h3>
-                  <p className="text-zinc-500 leading-relaxed">
-                    Especialistas treinados nas maiores academias internacionais
-                    de grooming e estética masculina.
-                  </p>
+              {/* TESTIMONIALS */}
+              <section className="py-20 px-8 md:px-16 bg-white/[0.02] border-y border-white/[0.05]">
+                <div className="max-w-6xl mx-auto">
+                  <div className="text-center mb-14">
+                    <span className="text-amber-500 text-[9px] uppercase tracking-[0.5em] font-black block mb-3">Testemunhos</span>
+                    <h3 className="text-4xl font-black">O que dizem os clientes<span className="text-amber-500">.</span></h3>
+                  </div>
+                  <div className="grid md:grid-cols-3 gap-6">
+                    {testimonials.map((t, i) => (
+                      <div key={i} className="p-8 border border-white/[0.07] bg-white/[0.02] hover:border-amber-500/30 transition-all">
+                        <div className="flex gap-0.5 mb-5">
+                          {[...Array(t.stars)].map((_, s) => (
+                            <Star key={s} size={12} className="text-amber-400 fill-amber-400" />
+                          ))}
+                        </div>
+                        <p className="text-white/70 text-sm leading-relaxed italic mb-6">"{t.text}"</p>
+                        <div className="border-t border-white/[0.07] pt-5">
+                          <div className="font-black text-sm">{t.name}</div>
+                          <div className="text-white/30 text-[9px] uppercase tracking-widest mt-0.5">{t.city}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-
-                <div className="bg-white/5 border border-white/10 p-10 backdrop-blur-xl">
-                  <Crown size={38} className="text-red-500 mb-6" />
-                  <h3 className="text-2xl font-black italic mb-4">
-                    VIP Experience
-                  </h3>
-                  <p className="text-zinc-500 leading-relaxed">
-                    Whiskey lounge, toalhas quentes, aromas premium e atendimento
-                    exclusivo.
-                  </p>
-                </div>
-
-                <div className="bg-white/5 border border-white/10 p-10 backdrop-blur-xl">
-                  <Sparkles size={38} className="text-red-500 mb-6" />
-                  <h3 className="text-2xl font-black italic mb-4">
-                    Luxury Products
-                  </h3>
-                  <p className="text-zinc-500 leading-relaxed">
-                    Produtos importados e tratamentos profissionais usados pelos
-                    melhores barbeiros do mundo.
-                  </p>
-                </div>
-
               </section>
+
             </motion.div>
           )}
 
-          {/* SERVICES */}
+          {/* ── SERVICES ── */}
           {view === 'services' && (
-            <motion.div
-              key="services"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="p-8 md:p-20 max-w-7xl mx-auto"
-            >
-
-              <div className="mb-20 text-center">
-                <span className="text-red-500 uppercase tracking-[0.5em] text-xs font-black">
-                  Elite Services
-                </span>
-
-                <h2 className="text-6xl font-black italic mt-6 tracking-tight">
-                  THE EXPERIENCE
+            <motion.div key="services" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="p-8 md:p-16 max-w-7xl mx-auto">
+              <div className="mb-16">
+                <button onClick={() => setView('intro')} className="flex items-center gap-2 text-white/30 hover:text-amber-400 text-[10px] uppercase tracking-widest font-black transition-colors mb-10">
+                  <ArrowLeft size={12} /> Voltar
+                </button>
+                <span className="text-amber-500 text-[9px] uppercase tracking-[0.5em] font-black block mb-4">Serviços Premium</span>
+                <h2 className="text-5xl md:text-7xl font-black leading-tight">
+                  A Experiência<span className="text-amber-500">.</span>
                 </h2>
               </div>
 
-              <div className="grid md:grid-cols-3 gap-8">
-
-                {services.map((service, index) => (
+              <div className="grid md:grid-cols-2 gap-5">
+                {services.map((s, i) => (
                   <motion.div
-                    key={index}
-                    whileHover={{ y: -10 }}
-                    className="bg-white/5 border border-white/10 p-10 group hover:border-red-600 transition-all"
+                    key={i}
+                    whileHover={{ scale: 1.01 }}
+                    onClick={() => setActiveService(activeService === s.id ? null : s.id)}
+                    className={`group p-8 border cursor-pointer transition-all duration-300 ${
+                      activeService === s.id
+                        ? 'border-amber-500 bg-amber-500/5'
+                        : 'border-white/[0.08] bg-white/[0.02] hover:border-amber-500/40'
+                    }`}
                   >
-
-                    <div className="flex justify-between items-start mb-10">
-                      <span className="text-zinc-500 text-[10px] uppercase tracking-[0.3em] font-bold">
-                        Premium
+                    <div className="flex justify-between items-start mb-6">
+                      <span className={`text-[8px] uppercase tracking-[0.4em] font-black px-2 py-0.5 border ${
+                        s.tag === 'Elite' ? 'text-amber-400 border-amber-500/30 bg-amber-500/10' :
+                        s.tag === 'Bestseller' ? 'text-green-400 border-green-500/30 bg-green-500/10' :
+                        'text-white/40 border-white/10'
+                      }`}>
+                        {s.tag}
                       </span>
-
-                      <span className="text-red-500 text-2xl font-black italic">
-                        {service.price}
-                      </span>
+                      <span className="text-2xl font-black text-amber-400">{s.price}</span>
                     </div>
-
-                    <h3 className="text-3xl font-black italic mb-6 group-hover:text-red-500 transition-colors">
-                      {service.name}
-                    </h3>
-
-                    <p className="text-zinc-500 leading-relaxed mb-10">
-                      {service.desc}
-                    </p>
-
-                    <button
-                      onClick={() => setView('book')}
-                      className="w-full py-4 bg-white text-black font-black uppercase tracking-widest text-xs hover:bg-red-600 hover:text-white transition-all"
-                    >
-                      Reservar
-                    </button>
+                    <h3 className="text-2xl font-black mb-1 group-hover:text-amber-400 transition-colors">{s.name}</h3>
+                    <div className="flex items-center gap-2 mb-4">
+                      <Clock size={11} className="text-white/30" />
+                      <span className="text-[9px] uppercase tracking-widest text-white/30 font-bold">{s.time}</span>
+                    </div>
+                    <AnimatePresence>
+                      {activeService === s.id && (
+                        <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
+                          <p className="text-white/50 text-sm leading-relaxed mb-6 border-t border-white/[0.06] pt-4">{s.desc}</p>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); setView('book'); }}
+                            className="w-full py-3.5 bg-amber-500 text-black font-black uppercase tracking-[0.3em] text-[10px] hover:bg-white transition-all"
+                          >
+                            Reservar Este Serviço
+                          </button>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </motion.div>
                 ))}
+              </div>
 
+              <div className="mt-10 text-center">
+                <button onClick={() => setView('book')} className="px-14 py-5 bg-amber-500 text-black font-black uppercase tracking-[0.3em] text-[11px] hover:bg-white transition-all">
+                  Marcar Sessão
+                </button>
               </div>
             </motion.div>
           )}
 
-          {/* BOOK */}
+          {/* ── BOOK ── */}
           {view === 'book' && (
-            <motion.div
-              key="book"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="p-8 md:p-20 flex items-center justify-center"
-            >
+            <motion.div key="book" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="p-8 md:p-16 flex items-start justify-center min-h-full">
+              <div className="w-full max-w-2xl">
+                <button onClick={() => setView('intro')} className="flex items-center gap-2 text-white/30 hover:text-amber-400 text-[10px] uppercase tracking-widest font-black transition-colors mb-10">
+                  <ArrowLeft size={12} /> Voltar
+                </button>
 
-              <div className="w-full max-w-4xl bg-white/5 border border-white/10 backdrop-blur-2xl p-10 md:p-16 shadow-[0_0_80px_rgba(0,0,0,0.5)]">
+                <span className="text-amber-500 text-[9px] uppercase tracking-[0.5em] font-black block mb-4">Reserva</span>
+                <h2 className="text-4xl md:text-5xl font-black mb-12 leading-tight">
+                  Marcar Sessão<span className="text-amber-500">.</span>
+                </h2>
 
-                <div className="text-center mb-14">
-                  <span className="text-red-500 uppercase tracking-[0.5em] text-xs font-black">
-                    Reservation
-                  </span>
+                <div className="space-y-5">
+                  <div>
+                    <label className="text-[9px] uppercase tracking-[0.4em] font-black text-white/40 block mb-2">Nome Completo</label>
+                    <input
+                      id="name-elaris-barber"
+                      className="w-full bg-white/[0.04] border border-white/[0.08] focus:border-amber-500 outline-none px-5 py-4 text-sm transition-all placeholder:text-white/20"
+                      placeholder="O teu nome"
+                    />
+                  </div>
 
-                  <h2 className="text-5xl font-black italic mt-6">
-                    BOOK YOUR SESSION
-                  </h2>
-                </div>
+                  <div className="grid grid-cols-2 gap-5">
+                    <div>
+                      <label className="text-[9px] uppercase tracking-[0.4em] font-black text-white/40 block mb-2">Telefone</label>
+                      <input
+                        className="w-full bg-white/[0.04] border border-white/[0.08] focus:border-amber-500 outline-none px-5 py-4 text-sm transition-all placeholder:text-white/20"
+                        placeholder="+351 912..."
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[9px] uppercase tracking-[0.4em] font-black text-white/40 block mb-2">Data</label>
+                      <input
+                        type="date"
+                        className="w-full bg-white/[0.04] border border-white/[0.08] focus:border-amber-500 outline-none px-5 py-4 text-sm transition-all text-white/60"
+                      />
+                    </div>
+                  </div>
 
-                <div className="grid md:grid-cols-2 gap-8">
+                  <div>
+                    <label className="text-[9px] uppercase tracking-[0.4em] font-black text-white/40 block mb-2">Serviço</label>
+                    <select className="w-full bg-white/[0.04] border border-white/[0.08] focus:border-amber-500 outline-none px-5 py-4 text-sm transition-all text-white/60 appearance-none cursor-pointer">
+                      <option value="" className="bg-[#111]">Selecionar serviço</option>
+                      {services.map((s) => (
+                        <option key={s.id} value={s.name} className="bg-[#111]">{s.name} — {s.price}</option>
+                      ))}
+                    </select>
+                  </div>
 
-                  <input
-                    id="name-asgard"
-                    className="bg-black/60 border border-white/10 p-5 outline-none focus:border-red-600 transition-all"
-                    placeholder="Nome Completo"
-                  />
-
-                  <input
-                    className="bg-black/60 border border-white/10 p-5 outline-none focus:border-red-600 transition-all"
-                    placeholder="Telefone"
-                  />
-
-                  <input
-                    type="date"
-                    className="bg-black/60 border border-white/10 p-5 outline-none focus:border-red-600 transition-all"
-                  />
-
-                  <select className="bg-black/60 border border-white/10 p-5 outline-none focus:border-red-600 transition-all">
-                    <option>Signature Cut</option>
-                    <option>Royal Beard Ritual</option>
-                    <option>Executive Package</option>
-                  </select>
-
+                  <div>
+                    <label className="text-[9px] uppercase tracking-[0.4em] font-black text-white/40 block mb-3">Horário</label>
+                    <div className="grid grid-cols-4 gap-2">
+                      {["10:00","11:00","14:00","15:00","16:00","17:00","18:00","19:00"].map((t) => (
+                        <button key={t} className="py-2.5 border border-white/[0.08] text-[10px] font-black hover:border-amber-500 hover:text-amber-400 transition-all text-white/40">
+                          {t}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
 
                 <button
                   onClick={() => {
-                    const name =
-                      (document.getElementById(
-                        'name-asgard'
-                      ) as HTMLInputElement).value;
-
-                    setUser(name || "Cliente");
+                    const nameInput = document.getElementById('name-elaris-barber') as HTMLInputElement;
+                    setUser(nameInput?.value || "Cliente");
                     setView('done');
                   }}
-                  className="w-full mt-12 py-5 bg-red-600 hover:bg-white hover:text-black transition-all font-black uppercase tracking-[0.3em] text-sm"
+                  className="w-full mt-10 py-5 bg-amber-500 text-black font-black uppercase tracking-[0.35em] text-[11px] hover:bg-white transition-all"
                 >
                   Confirmar Reserva
                 </button>
-
               </div>
             </motion.div>
           )}
 
-          {/* DONE */}
+          {/* ── DONE ── */}
           {view === 'done' && (
             <motion.div
               key="done"
-              initial={{ scale: 0.8, opacity: 0 }}
+              initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="h-full flex flex-col items-center justify-center text-center p-10"
+              className="min-h-full flex flex-col items-center justify-center text-center p-10"
             >
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.15 }}
+                className="w-24 h-24 mb-10 bg-amber-500 flex items-center justify-center shadow-[0_0_80px_rgba(245,158,11,0.35)]"
+              >
+                <CheckCircle2 size={44} className="text-black" strokeWidth={2.5} />
+              </motion.div>
 
-              <div className="w-28 h-28 rounded-full bg-red-600 flex items-center justify-center shadow-[0_0_60px_rgba(220,38,38,0.5)] mb-10">
-                <CheckCircle2 size={52} />
-              </div>
-
-              <span className="text-red-500 uppercase tracking-[0.5em] text-xs font-black mb-6">
-                Reservation Confirmed
+              <span className="text-amber-400 text-[9px] uppercase tracking-[0.6em] font-black mb-5">
+                Reserva Confirmada
               </span>
 
-              <h2 className="text-6xl font-black italic leading-none tracking-tight mb-8">
-                SEE YOU
-                <br />
-                SOON.
+              <h2 className="text-6xl md:text-7xl font-black leading-none tracking-tight mb-6">
+                ATÉ JÁ
+                <span className="text-amber-500">.</span>
               </h2>
 
-              <p className="text-zinc-500 text-xl max-w-xl leading-relaxed">
-                A tua sessão premium está marcada, {user}. 
-                Bem-vindo ao nível mais alto da barbearia internacional.
+              <p className="text-white/40 text-lg max-w-lg leading-relaxed">
+                A tua sessão premium está marcada{user ? `, ${user}` : ""}. <br />
+                Bem-vindo ao padrão mais alto da barbearia internacional.
               </p>
+
+              <div className="flex items-center gap-3 mt-10 text-[9px] uppercase tracking-widest text-white/20 font-black">
+                <MapPin size={10} className="text-amber-500/60" />
+                <span>Dubai · London · Porto</span>
+              </div>
 
               <button
                 onClick={() => setView('intro')}
-                className="mt-14 px-14 py-5 border border-white/20 hover:border-red-600 hover:bg-red-600 transition-all uppercase tracking-[0.3em] text-xs font-black"
+                className="mt-12 px-12 py-4 border border-white/10 hover:border-amber-500 hover:text-amber-400 transition-all uppercase tracking-[0.3em] text-[10px] font-black"
               >
-                Voltar
+                Voltar ao Início
               </button>
             </motion.div>
           )}
@@ -1644,25 +1965,26 @@ function AsgardBarberApp() {
       </div>
 
       {/* FOOTER */}
-      <footer className="relative z-20 border-t border-white/5 bg-black/40 backdrop-blur-xl px-8 md:px-16 py-6 flex flex-col md:flex-row items-center justify-between gap-6">
-
+      <footer className="relative z-20 border-t border-white/[0.05] bg-black/50 backdrop-blur-xl px-8 md:px-14 py-5 flex flex-col md:flex-row items-center justify-between gap-4 shrink-0">
         <div>
-          <h3 className="font-black italic text-xl">
-            ELARIS<span className="text-red-600">.</span>
+          <h3 className="font-black text-base tracking-widest flex items-baseline gap-0.5">
+            ELARIS<span className="text-amber-500 text-lg">®</span>
           </h3>
-
-          <p className="text-zinc-600 text-[10px] uppercase tracking-[0.3em] mt-2">
-            Luxury Grooming House
-          </p>
+          <p className="text-white/20 text-[8px] uppercase tracking-[0.4em] mt-0.5">Luxury Grooming House</p>
         </div>
 
-        <div className="flex items-center gap-8 text-[10px] uppercase tracking-[0.3em] font-bold text-zinc-500">
+        <div className="flex items-center gap-6 text-[8px] uppercase tracking-[0.35em] font-bold text-white/20">
           <span>Dubai</span>
+          <span className="text-amber-500/30">·</span>
           <span>London</span>
+          <span className="text-amber-500/30">·</span>
           <span>Porto</span>
         </div>
 
+        <div className="text-[8px] uppercase tracking-widest text-white/15 font-bold">
+          © 2026 Elaris Group
+        </div>
       </footer>
     </div>
   );
-};
+}
