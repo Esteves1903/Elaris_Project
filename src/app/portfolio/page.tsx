@@ -255,7 +255,7 @@ function ElarisFinalDubai() {
   };
 
   return (
-    <div className="h-screen w-full bg-[#faf9f6] text-[#1a1a1a] font-sans overflow-hidden relative p-4 pb-0">
+    <div className="h-full w-full bg-[#faf9f6] text-[#1a1a1a] font-sans overflow-hidden relative">
 
       {/* NAVBAR */}
       <nav className="h-20 md:h-24 bg-white border-b border-zinc-100 flex justify-between items-center px-6 md:px-16 z-50">
@@ -304,7 +304,7 @@ function ElarisFinalDubai() {
       </nav>
 
       {/* MAIN */}
-      <main className="h-[calc(100vh-80px)] md:h-[calc(100vh-96px)] overflow-hidden relative">
+      <main className="h-[calc(100%-160px)] md:h-[calc(100%-176px)] overflow-hidden relative">
 
         <AnimatePresence mode="wait">
 
@@ -372,70 +372,6 @@ function ElarisFinalDubai() {
                 </p>
               </section>
 
-              {/* FOOTER PEQUENO */}
-              <footer className="bg-[#0a0a0a] text-white px-8 md:px-16 py-10 mt-auto border-t border-white/5 w-full rounded-b-[2rem]">
-  <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
-
-    {/* LEFT */}
-    <div className="space-y-4">
-      <h4 className="text-2xl font-light tracking-[0.4em] uppercase">
-        Elaris
-      </h4>
-
-      <p className="text-zinc-500 text-xs leading-loose tracking-widest uppercase">
-        Jumeirah Beach Road <br />
-        Dubai, UAE
-      </p>
-    </div>
-
-    {/* RIGHT */}
-    <div className="grid grid-cols-2 gap-16 text-[10px] font-black uppercase tracking-[0.3em]">
-
-      <div className="flex flex-col gap-4 text-zinc-400">
-        <button
-          onClick={() => navigateTo('menu')}
-          className="hover:text-[#c5a059] transition-colors text-left"
-        >
-          Menu
-        </button>
-
-        <button
-          onClick={() => navigateTo('story')}
-          className="hover:text-[#c5a059] transition-colors text-left"
-        >
-          Heritage
-        </button>
-
-        <button
-          onClick={() => setShowPrivacy(true)}
-          className="hover:text-[#c5a059] transition-colors text-left"
-        >
-          Privacy
-        </button>
-      </div>
-
-      <div className="flex flex-col items-end gap-4 text-zinc-500">
-        <Globe
-          size={18}
-          className="hover:text-[#c5a059] cursor-pointer transition-colors"
-        />
-
-        <span className="text-[9px] tracking-[0.4em] uppercase">
-          Luxury Dining
-        </span>
-      </div>
-
-    </div>
-  </div>
-
-  {/* BOTTOM */}
-  <div className="max-w-7xl mx-auto mt-10 pt-6 border-t border-white/5 text-center">
-    <p className="text-[8px] tracking-[0.5em] uppercase text-zinc-700">
-      © 2026 Elaris Global Hospitality Group. All rights reserved.
-    </p>
-  </div>
-</footer>
- 
             </motion.div>
           )}
 
@@ -758,6 +694,42 @@ function ElarisFinalDubai() {
         </AnimatePresence>
 
       </main>
+
+      {/* FOOTER FIXO */}
+      <footer className="bg-[#0a0a0a] text-white px-8 md:px-16 py-6 border-t border-white/5 w-full z-50">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+
+          {/* LEFT */}
+          <div>
+            <h4 className="text-xl font-light tracking-[0.4em] uppercase">
+              Elaris
+            </h4>
+            <p className="text-zinc-500 text-[9px] leading-loose tracking-widest uppercase">
+              Jumeirah Beach Road · Dubai, UAE
+            </p>
+          </div>
+
+          {/* CENTER LINKS */}
+          <div className="flex gap-8 text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400">
+            <button onClick={() => navigateTo('menu')} className="hover:text-[#c5a059] transition-colors">Menu</button>
+            <button onClick={() => navigateTo('story')} className="hover:text-[#c5a059] transition-colors">Heritage</button>
+            <button onClick={() => setShowPrivacy(true)} className="hover:text-[#c5a059] transition-colors">Privacy</button>
+          </div>
+
+          {/* RIGHT */}
+          <div className="flex items-center gap-4 text-zinc-500">
+            <Globe size={16} className="hover:text-[#c5a059] cursor-pointer transition-colors" />
+            <span className="text-[9px] tracking-[0.4em] uppercase">Luxury Dining</span>
+          </div>
+
+        </div>
+        <div className="max-w-7xl mx-auto mt-4 pt-4 border-t border-white/5 text-center">
+          <p className="text-[8px] tracking-[0.5em] uppercase text-zinc-700">
+            © 2026 Elaris Global Hospitality Group. All rights reserved.
+          </p>
+        </div>
+      </footer>
+
     </div>
   );
 }
