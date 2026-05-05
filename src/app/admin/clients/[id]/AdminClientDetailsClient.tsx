@@ -7,6 +7,11 @@ import {
     clearMockAdminSession,
     hasMockAdminSession,
 } from "@/lib/mock-admin-auth";
+import {
+    clientRequirementStatusOptions,
+    projectStageOptions,
+    websiteStatusOptions,
+} from "@/lib/project-options";
 
 type ClientNeed = {
     item: string;
@@ -267,11 +272,9 @@ export default function AdminClientDetailsClient({
                                         onChange={(event) => setWebsiteStatus(event.target.value)}
                                         className="w-full rounded-2xl border border-white/10 bg-[#111827] px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-400/50"
                                     >
-                                        <option>In production</option>
-                                        <option>Online</option>
-                                        <option>Offline</option>
-                                        <option>Waiting for client</option>
-                                        <option>Maintenance</option>
+                                        {websiteStatusOptions.map((status) => (
+                                            <option key={status}>{status}</option>
+                                        ))}
                                     </select>
                                 </div>
 
@@ -284,12 +287,9 @@ export default function AdminClientDetailsClient({
                                         onChange={(event) => setCurrentStage(event.target.value)}
                                         className="w-full rounded-2xl border border-white/10 bg-[#111827] px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-400/50"
                                     >
-                                        <option>Discovery</option>
-                                        <option>Planning</option>
-                                        <option>Design & Development</option>
-                                        <option>Review</option>
-                                        <option>Launch</option>
-                                        <option>Launched</option>
+                                        {projectStageOptions.map((stage) => (
+                                            <option key={stage}>{stage}</option>
+                                        ))}
                                     </select>
                                 </div>
 
@@ -360,8 +360,11 @@ export default function AdminClientDetailsClient({
                                         }
                                         className="rounded-full border border-white/10 bg-[#111827] px-3 py-1 text-xs font-semibold text-white outline-none"
                                     >
-                                        <option value="received">Received</option>
-                                        <option value="missing">Missing</option>
+                                        {clientRequirementStatusOptions.map((status) => (
+                                            <option key={status.value} value={status.value}>
+                                                {status.label}
+                                            </option>
+                                        ))}
                                     </select>
                                 </div>
                             ))}

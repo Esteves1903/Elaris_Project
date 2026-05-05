@@ -7,6 +7,11 @@ import {
     clearMockAdminSession,
     hasMockAdminSession,
 } from "@/lib/mock-admin-auth";
+import {
+    projectStageOptions,
+    projectTypeOptions,
+    websiteStatusOptions,
+} from "@/lib/project-options";
 
 export default function NewAdminClientPage() {
     const router = useRouter();
@@ -158,9 +163,9 @@ export default function NewAdminClientPage() {
                                 Project type
                             </label>
                             <select className="w-full rounded-2xl border border-white/10 bg-[#111827] px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-400/50">
-                                <option>Website Creation</option>
-                                <option>Website Improvement</option>
-                                <option>Ongoing Support</option>
+                                {projectTypeOptions.map((projectType) => (
+                                    <option key={projectType}>{projectType}</option>
+                                ))}
                             </select>
                         </div>
 
@@ -199,11 +204,9 @@ export default function NewAdminClientPage() {
                                 Website status
                             </label>
                             <select className="w-full rounded-2xl border border-white/10 bg-[#111827] px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-400/50">
-                                <option>In production</option>
-                                <option>Online</option>
-                                <option>Offline</option>
-                                <option>Waiting for client</option>
-                                <option>Maintenance</option>
+                                {websiteStatusOptions.map((status) => (
+                                    <option key={status}>{status}</option>
+                                ))}
                             </select>
                         </div>
 
@@ -212,12 +215,9 @@ export default function NewAdminClientPage() {
                                 Current stage
                             </label>
                             <select className="w-full rounded-2xl border border-white/10 bg-[#111827] px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-400/50">
-                                <option>Discovery</option>
-                                <option>Planning</option>
-                                <option>Design & Development</option>
-                                <option>Review</option>
-                                <option>Launch</option>
-                                <option>Launched</option>
+                                {projectStageOptions.map((stage) => (
+                                    <option key={stage}>{stage}</option>
+                                ))}
                             </select>
                         </div>
 
