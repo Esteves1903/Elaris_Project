@@ -1,38 +1,7 @@
 import Link from "next/link";
+import { adminClients } from "@/lib/mock-admin-data";
 
 export default function AdminPage() {
-  const clients = [
-    {
-      id: "silva-cafe",
-      clientName: "João Silva",
-      company: "Silva Café",
-      projectType: "Website Creation",
-      websiteStatus: "In production",
-      currentStage: "Design & Development",
-      nextStep: "Homepage first version in progress",
-      lastUpdate: "05 May 2026",
-    },
-    {
-      id: "costa-studio",
-      clientName: "Maria Costa",
-      company: "Costa Studio",
-      projectType: "Website Improvement",
-      websiteStatus: "Online",
-      currentStage: "Launched",
-      nextStep: "Monthly maintenance check",
-      lastUpdate: "02 May 2026",
-    },
-    {
-      id: "alves-barber",
-      clientName: "Pedro Alves",
-      company: "Alves Barber",
-      projectType: "Website Creation",
-      websiteStatus: "Waiting for client",
-      currentStage: "Planning",
-      nextStep: "Waiting for final service descriptions",
-      lastUpdate: "30 April 2026",
-    },
-  ];
 
   return (
     <main className="min-h-screen bg-[#0B0F19] px-6 pb-24 pt-32 text-white">
@@ -65,14 +34,14 @@ export default function AdminPage() {
       <section className="mx-auto grid max-w-6xl gap-6 md:grid-cols-3">
         <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
           <p className="mb-2 text-sm text-zinc-500">Total clients</p>
-          <p className="text-3xl font-bold">{clients.length}</p>
+          <p className="text-3xl font-bold">{adminClients.length}</p>
         </div>
 
         <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
           <p className="mb-2 text-sm text-zinc-500">In production</p>
           <p className="text-3xl font-bold">
             {
-              clients.filter(
+              adminClients.filter(
                 (client) => client.websiteStatus === "In production",
               ).length
             }
@@ -83,7 +52,7 @@ export default function AdminPage() {
           <p className="mb-2 text-sm text-zinc-500">Waiting for client</p>
           <p className="text-3xl font-bold">
             {
-              clients.filter(
+              adminClients.filter(
                 (client) => client.websiteStatus === "Waiting for client",
               ).length
             }
@@ -112,7 +81,7 @@ export default function AdminPage() {
         </div>
 
         <div className="grid gap-4">
-          {clients.map((client) => (
+          {adminClients.map((client) => (
             <div
               key={client.id}
               className="grid gap-6 rounded-2xl border border-white/10 bg-white/[0.03] p-5 lg:grid-cols-[1fr_1fr_auto] lg:items-center"
