@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { UserCircle } from "lucide-react";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -32,12 +33,22 @@ export function Header() {
           ))}
         </nav>
 
-        <Link
-          href="/contact"
-          className="hidden justify-self-end rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-zinc-200 md:inline-flex"
-        >
-          Request a quote
-        </Link>
+        <div className="hidden items-center justify-self-end gap-3 md:flex">
+          <Link
+            href="/client-area"
+            className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2.5 text-sm font-semibold text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]"
+          >
+            <UserCircle className="h-4 w-4 text-cyan-400" />
+            Client Area
+          </Link>
+
+          <Link
+            href="/contact"
+            className="inline-flex rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-zinc-200"
+          >
+            Request a quote
+          </Link>
+        </div>
       </div>
     </header>
   );
