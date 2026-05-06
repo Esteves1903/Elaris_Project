@@ -1,24 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase-admin";
-import { createClient } from "@supabase/supabase-js";
 
-function getCallerSupabase(req: NextRequest) {
+async function verifyAdmin(req: NextRequest) {
   const token = req.headers.get("authorization")?.replace("Bearer ", "");
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    { global: { headers: { Authorization: `Bearer ${token}` } } },
-  );
+  if (!token) return null;
+  const { data: { user } } = await supabaseAdmin.auth.getUser(token);
+  if (!user || user.user_metadata?.role !== "admin") return null;
+  return user;
 }
 
 type Params = { params: Promise<{ id: string }> };
 
 export async function POST(req: NextRequest, { params }: Params) {
-  const callerSupabase = getCallerSupabase(req);
-  const { data: { user } } = await callerSupabase.auth.getUser();
-  if (!user || user.user_metadata?.role !== "admin") {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const user = await verifyAdmin(req);
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const { id } = await params;
   const { title, message } = await req.json();
