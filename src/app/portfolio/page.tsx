@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { History as HistoryIcon } from "lucide-react";
+import { img } from "framer-motion/client";
 
 // --- ANIMATED COUNTER COMPONENT ---
 function AnimatedCounter({ target, duration = 2000, suffix = "" }: { target: number; duration?: number; suffix?: string }) {
@@ -200,15 +201,15 @@ function ElarisFinalDubai() {
   // --- CONTENT DATA ---
   const slides = [
     {
-      url: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?q=80&w=2000",
+      url: "/ElarisRest1.png",
       title: "The Golden Era",
     },
     {
-      url: "https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=2000",
+      url: "/ElarisRest2.png",
       title: "Culinary Alchemy",
     },
     {
-      url: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2000",
+      url: "/ElarisRest3.png",
       title: "Prestige Lounge",
     }
   ];
@@ -221,25 +222,25 @@ function ElarisFinalDubai() {
           n: "A5 Wagyu Tartare",
           p: "AED 245",
           d: "Truffle pearls, 24k gold, quail egg.",
-          img: "https://images.unsplash.com/photo-1546241072-48010ad28c2c?q=80&w=400"
+          img: "/A5Wagyu.png"
         },
         {
           n: "Blue Lobster Salad",
           p: "AED 190",
           d: "Citrus emulsion, caviar, sea herbs.",
-          img: "https://images.unsplash.com/photo-1551326844-4df70f78d0e9?q=80&w=400"
+          img: "/LagostaAzul.png"
         },
         {
           n: "Imperial Beluga Caviar",
           p: "AED 850",
           d: "30g selection, traditional garnishes, gold leaf blinis.",
-          img: "https://images.unsplash.com/photo-1534604973900-c41ab4c5e636?q=80&w=400"
+          img: "/caviar.png"
         },
         {
           n: "Seared Foie Gras",
           p: "AED 210",
           d: "Port wine reduction, caramelized figs, toasted brioche.",
-          img: "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?q=80&w=400"
+          img: "/FoieGras.png"
         }
       ]
     },
@@ -250,31 +251,31 @@ function ElarisFinalDubai() {
           n: "The Elaris Francesinha",
           p: "AED 320",
           d: "Wagyu beef, Pata Negra, champagne sauce.",
-          img: "https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=400"
+          img: "/francesinha.png"
         },
         {
           n: "Sea Bass in Salt",
           p: "AED 450",
           d: "Mediterranean herbs, flamed tableside.",
-          img: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=400"
+          img: "/seabass.png"
         },
         {
           n: "Octopus 'Lagareiro'",
           p: "AED 280",
           d: "Roasted potatoes, garlic confit, premium olive oil.",
-          img: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?q=80&w=400"
+          img: "/octopus.png"
         },
         {
           n: "Golden Lamb Chops",
           p: "AED 390",
           d: "Pistachio crust, saffron risotto, mint jus.",
-          img: "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=400"
+          img: "/lambchops.png"
         },
         {
           n: "Black Truffle Risotto",
           p: "AED 310",
           d: "Acquerello rice, fresh winter truffles, 36-month Parmesan.",
-          img: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?q=80&w=400"
+          img: "/truffleRisotto.png"
         }
       ]
     },
