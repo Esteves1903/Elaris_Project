@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { adminClients } from "@/lib/mock-admin-data";
-import { clearMockAdminSession, hasMockAdminSession } from "@/lib/mock-admin-auth";
+import { getUserRole, signOut } from "@/lib/auth";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
 
 const sectionVariants = {
@@ -22,16 +22,17 @@ export default function AdminPage() {
   const [isCheckingSession, setIsCheckingSession] = useState(true);
 
   useEffect(() => {
-    const isLoggedIn = hasMockAdminSession();
-    if (!isLoggedIn) {
-      router.push("/client-login");
-      return;
-    }
-    setIsCheckingSession(false);
+    getUserRole().then((role) => {
+      if (role !== "admin") {
+        router.push("/client-login");
+        return;
+      }
+      setIsCheckingSession(false);
+    });
   }, [router]);
 
   function handleLogout() {
-    clearMockAdminSession();
+    signOut();
     router.push("/client-login");
   }
 

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { getMockClientPassword, hasMockClientSession, updateMockClientPassword } from "@/lib/mock-auth";
+import { getUser, getUserRole, signIn, updatePassword } from "@/lib/auth";
 import { client } from "@/lib/mock-client-data";
 
 export default function ClientAccountPage() {
@@ -17,23 +17,20 @@ export default function ClientAccountPage() {
   const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
-    const isLoggedIn = hasMockClientSession();
-    if (!isLoggedIn) {
-      router.push("/client-login");
-      return;
-    }
-    setIsCheckingSession(false);
+    getUserRole().then((role) => {
+      if (role !== "client") {
+        router.push("/client-login");
+        return;
+      }
+      setIsCheckingSession(false);
+    });
   }, [router]);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setErrorMessage("");
     setSuccessMessage("");
 
-    if (currentPassword !== getMockClientPassword()) {
-      setErrorMessage("Current password is incorrect.");
-      return;
-    }
     if (newPassword.length < 6) {
       setErrorMessage("New password must have at least 6 characters.");
       return;
@@ -43,7 +40,19 @@ export default function ClientAccountPage() {
       return;
     }
 
-    updateMockClientPassword(newPassword);
+    const user = await getUser();
+    const { error: verifyError } = await signIn(user!.email!, currentPassword);
+    if (verifyError) {
+      setErrorMessage("Current password is incorrect.");
+      return;
+    }
+
+    const { error } = await updatePassword(newPassword);
+    if (error) {
+      setErrorMessage("Failed to update password. Please try again.");
+      return;
+    }
+
     setCurrentPassword("");
     setNewPassword("");
     setConfirmNewPassword("");

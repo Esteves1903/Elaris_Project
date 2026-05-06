@@ -4,14 +4,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Building2, LockKeyhole } from "lucide-react";
-import { createMockClientSession, validateMockClientLogin } from "@/lib/mock-auth";
-import { createMockAdminSession, validateMockAdminLogin } from "@/lib/mock-admin-auth";
+import { Mail, LockKeyhole } from "lucide-react";
+import { signIn, getUserRole } from "@/lib/auth";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
 
 export default function ClientLoginPage() {
   const router = useRouter();
-  const [companyAccessName, setCompanyAccessName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,24 +20,24 @@ export default function ClientLoginPage() {
     setLoading(true);
     setErrorMessage("");
 
-    await new Promise((r) => setTimeout(r, 600));
+    const { error } = await signIn(email, password);
 
-    const isValidAdminLogin = validateMockAdminLogin(companyAccessName, password);
-    if (isValidAdminLogin) {
-      createMockAdminSession();
+    if (error) {
+      setLoading(false);
+      setErrorMessage("Invalid email or password.");
+      return;
+    }
+
+    const role = await getUserRole();
+
+    if (role === "admin") {
       router.push("/admin");
-      return;
-    }
-
-    const isValidClientLogin = validateMockClientLogin(companyAccessName, password);
-    if (isValidClientLogin) {
-      createMockClientSession();
+    } else if (role === "client") {
       router.push("/client-area");
-      return;
+    } else {
+      setLoading(false);
+      setErrorMessage("Access not configured. Please contact the Elaris team.");
     }
-
-    setLoading(false);
-    setErrorMessage("Invalid access name or password.");
   }
 
   const inputClass =
@@ -46,7 +45,6 @@ export default function ClientLoginPage() {
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#0B0F19] px-6 pb-24 pt-20 text-white">
-      {/* Background */}
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.06]"
         style={{
@@ -75,16 +73,16 @@ export default function ClientLoginPage() {
             </span>
           </h1>
           <p className="max-w-xl text-base leading-7 text-zinc-300">
-            This area is reserved for Elaris clients. Use the company access name and
-            password provided after your project has been confirmed.
+            This area is reserved for Elaris clients. Use the email and password
+            provided after your project has been confirmed.
           </p>
 
           <div className="mt-10 grid gap-4 sm:grid-cols-2">
             <SpotlightCard className="rounded-2xl border border-white/10 bg-white/[0.04] p-5 transition-colors hover:border-cyan-400/20">
-              <Building2 className="mb-4 h-5 w-5 text-cyan-400" />
-              <h2 className="mb-2 font-semibold text-white">Company access</h2>
+              <Mail className="mb-4 h-5 w-5 text-cyan-400" />
+              <h2 className="mb-2 font-semibold text-white">Secure access</h2>
               <p className="text-sm leading-6 text-zinc-400">
-                Login with the unique access name assigned to your company.
+                Login with the email and password provided by Elaris.
               </p>
             </SpotlightCard>
 
@@ -114,34 +112,30 @@ export default function ClientLoginPage() {
 
           <form onSubmit={handleSubmit} className="grid gap-5">
             <div>
-              <label
-                htmlFor="companyAccessName"
-                className="mb-2 block text-sm font-medium text-zinc-300"
-              >
-                Company access name
+              <label htmlFor="email" className="mb-2 block text-sm font-medium text-zinc-300">
+                Email
               </label>
               <input
-                id="companyAccessName"
-                name="companyAccessName"
-                type="text"
-                value={companyAccessName}
-                onChange={(e) => setCompanyAccessName(e.target.value)}
-                placeholder="silva-cafe"
+                id="email"
+                name="email"
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="your@email.com"
                 className={inputClass}
               />
             </div>
 
             <div>
-              <label
-                htmlFor="password"
-                className="mb-2 block text-sm font-medium text-zinc-300"
-              >
+              <label htmlFor="password" className="mb-2 block text-sm font-medium text-zinc-300">
                 Password
               </label>
               <input
                 id="password"
                 name="password"
                 type="password"
+                required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
@@ -203,16 +197,10 @@ export default function ClientLoginPage() {
               Login details are created and provided directly by Elaris. If you do not
               have access yet, please contact our team.
             </p>
-            <p className="text-xs leading-5 text-zinc-600">
-              Demo access: silva-cafe / demo123
-            </p>
           </div>
 
           <div className="mt-6">
-            <Link
-              href="/"
-              className="text-sm font-medium text-zinc-400 transition hover:text-cyan-300"
-            >
+            <Link href="/" className="text-sm font-medium text-zinc-400 transition hover:text-cyan-300">
               ← Back to homepage
             </Link>
           </div>

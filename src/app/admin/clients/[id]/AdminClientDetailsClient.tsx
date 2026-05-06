@@ -4,10 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-    clearMockAdminSession,
-    hasMockAdminSession,
-} from "@/lib/mock-admin-auth";
+import { getUserRole, signOut } from "@/lib/auth";
 import {
     clientRequirementStatusOptions,
     projectStageOptions,
@@ -54,19 +51,17 @@ export default function AdminClientDetailsClient({
     const [isCheckingSession, setIsCheckingSession] = useState(true);
 
     useEffect(() => {
-        const isLoggedIn = hasMockAdminSession();
-
-        if (!isLoggedIn) {
-            router.push("/client-login");
-            return;
-        }
-
-        setIsCheckingSession(false);
+        getUserRole().then((role) => {
+            if (role !== "admin") {
+                router.push("/client-login");
+                return;
+            }
+            setIsCheckingSession(false);
+        });
     }, [router]);
 
     function handleLogout() {
-        clearMockAdminSession();
-        router.push("/client-login");
+        signOut().then(() => router.push("/client-login"));
     }
     const [websiteName, setWebsiteName] = useState(client.websiteName);
     const [websiteUrl, setWebsiteUrl] = useState(client.websiteUrl);

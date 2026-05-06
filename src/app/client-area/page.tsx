@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { clearMockClientSession, hasMockClientSession } from "@/lib/mock-auth";
+import { getUserRole, signOut } from "@/lib/auth";
 import { client, clientNeeds, latestUpdates, progressSteps } from "@/lib/mock-client-data";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
 
@@ -22,16 +22,17 @@ export default function ClientAreaPage() {
   const [isCheckingSession, setIsCheckingSession] = useState(true);
 
   useEffect(() => {
-    const isLoggedIn = hasMockClientSession();
-    if (!isLoggedIn) {
-      router.push("/client-login");
-      return;
-    }
-    setIsCheckingSession(false);
+    getUserRole().then((role) => {
+      if (role !== "client") {
+        router.push("/client-login");
+        return;
+      }
+      setIsCheckingSession(false);
+    });
   }, [router]);
 
   function handleLogout() {
-    clearMockClientSession();
+    signOut();
     router.push("/client-login");
   }
 
