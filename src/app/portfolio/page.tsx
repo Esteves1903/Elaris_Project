@@ -1009,7 +1009,7 @@ function DishCard3D({ item }: { item: { n: string; p: string; d: string; img: st
   return (
     <div
       style={{ perspective: "900px" }}
-      className="cursor-pointer"
+      className="cursor-pointer h-full"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
     >
@@ -1021,7 +1021,7 @@ function DishCard3D({ item }: { item: { n: string; p: string; d: string; img: st
           transition: isHovered ? "transform 0.08s ease-out" : "transform 0.5s ease",
           transformStyle: "preserve-3d",
         }}
-        className="relative rounded-2xl overflow-hidden shadow-xl border border-zinc-200 bg-white"
+        className="relative rounded-2xl overflow-hidden shadow-xl border border-zinc-200 bg-white h-full flex flex-col"
       >
         {/* Shine overlay */}
         <div
@@ -1033,7 +1033,7 @@ function DishCard3D({ item }: { item: { n: string; p: string; d: string; img: st
         />
 
         {/* Image */}
-        <div className="h-44 overflow-hidden">
+        <div className="h-44 overflow-hidden shrink-0">
           <img
             src={item.img}
             alt={item.n}
@@ -1047,12 +1047,12 @@ function DishCard3D({ item }: { item: { n: string; p: string; d: string; img: st
         </div>
 
         {/* Content */}
-        <div className="p-4 relative z-10">
-          <div className="flex justify-between items-start gap-2 mb-1">
+        <div className="p-4 relative z-10 flex-1 flex flex-col">
+          <div className="flex justify-between items-start gap-2 mb-2">
             <h5 className="text-sm font-semibold leading-tight text-[#1a1a1a]">{item.n}</h5>
             <span className="text-[#c5a059] text-sm font-black whitespace-nowrap">{item.p}</span>
           </div>
-          <p className="text-zinc-400 text-xs italic leading-relaxed">{item.d}</p>
+          <p className="text-[#1a1a1a] text-xs italic leading-relaxed">{item.d}</p>
         </div>
       </div>
     </div>
@@ -1085,6 +1085,7 @@ function ElarisSportApp() {
       yourEmail: "your email", estDelivery: "Estimated delivery:", deliveryDays: "3–5 business days",
       backToStore: "Back to Store", size: "Size", each: "each",
       errName: "Required", errEmail: "Invalid email", errAddress: "Required", errCard: "Enter a valid card number",
+      orderSummary: "Order Summary", backToCart: "Back to Cart",
     },
     pt: {
       newSeason: "Nova Temporada 2026", heroTitle1: "JOGA NO TEU", heroTitle2: "MELHOR.",
@@ -1105,6 +1106,7 @@ function ElarisSportApp() {
       yourEmail: "o teu email", estDelivery: "Entrega estimada:", deliveryDays: "3–5 dias úteis",
       backToStore: "Voltar à Loja", size: "Tamanho", each: "cada",
       errName: "Obrigatório", errEmail: "Email inválido", errAddress: "Obrigatório", errCard: "Número de cartão inválido",
+      orderSummary: "Resumo da Encomenda", backToCart: "Voltar ao Carrinho",
     },
   }[lang] ?? {
     newSeason: "New Season 2026", heroTitle1: "PLAY AT YOUR", heroTitle2: "PEAK.",
@@ -1333,7 +1335,7 @@ function ElarisSportApp() {
                 <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"/>
                 <div className="relative z-10 h-full flex flex-col justify-center px-8 md:px-14 text-white">
                   <span className="text-[#0066ff] font-black text-[10px] tracking-[0.4em] uppercase mb-3">{t.newSeason}</span>
-                  <h2 className="text-4xl md:text-6xl font-black leading-none mb-4">
+                  <h2 className="text-4xl md:text-6xl font-black leading-tight mb-5">
                     {t.heroTitle1}<br/>
                     <span className="text-[#0066ff]">{t.heroTitle2}</span>
                   </h2>
@@ -1407,8 +1409,8 @@ function ElarisSportApp() {
                       )}
                     </div>
                     <div className="p-4">
-                      <p className="text-[9px] font-black uppercase tracking-widest text-[#0066ff] mb-1">{item.brand} · {item.category}</p>
-                      <h4 className="font-black text-sm leading-snug mb-2 min-h-[36px]">{item.name}</h4>
+                      <p className="text-[9px] font-black uppercase tracking-widest text-[#0066ff] mb-2">{item.brand} · {item.category}</p>
+                      <h4 className="font-black text-sm leading-snug mb-3 min-h-[36px]">{item.name}</h4>
                       <div className="flex items-center gap-1.5 mb-3">
                         <Stars rating={item.rating}/>
                         <span className="text-[10px] text-zinc-400">({item.reviews})</span>
@@ -1499,18 +1501,18 @@ function ElarisSportApp() {
           {view==='cart' && (
             <motion.div key="cart" initial={{opacity:0,x:40}} animate={{opacity:1,x:0}} exit={{opacity:0}} className="p-6 md:p-10 max-w-5xl mx-auto">
               <div className="flex items-center justify-between mb-8">
-                <h2 className="text-3xl font-black">Your Cart <span className="text-zinc-300 text-2xl">({cartCount})</span></h2>
+                <h2 className="text-3xl font-black">{t.yourCart} <span className="text-zinc-300 text-2xl">({cartCount})</span></h2>
                 <button onClick={()=>setView('shop')} className="text-xs font-black uppercase tracking-widest text-[#0066ff] flex items-center gap-1 hover:gap-2 transition-all">
-                  <ArrowLeft size={14}/> Continue Shopping
+                  <ArrowLeft size={14}/> {t.continueShopping}
                 </button>
               </div>
               {cart.length===0 ? (
                 <div className="bg-white rounded-3xl p-20 text-center border border-zinc-200">
                   <ShoppingBasket size={52} className="mx-auto text-zinc-300 mb-5"/>
-                  <h3 className="text-2xl font-black mb-2">Your cart is empty</h3>
-                  <p className="text-zinc-400 mb-8">Add some gear to get started</p>
+                  <h3 className="text-2xl font-black mb-2">{t.cartEmpty}</h3>
+                  <p className="text-zinc-400 mb-8">{t.cartEmptySub}</p>
                   <button onClick={()=>setView('shop')} className="px-8 py-3 bg-black text-white font-black uppercase tracking-widest text-xs rounded-full hover:bg-[#0066ff] transition-all">
-                    Browse Products
+                    {t.browseProducts}
                   </button>
                 </div>
               ) : (
@@ -1522,7 +1524,7 @@ function ElarisSportApp() {
                         <div className="flex-1 min-w-0">
                           <p className="text-[9px] font-black uppercase tracking-widest text-[#0066ff]">{item.brand}</p>
                           <h4 className="font-black text-sm mt-0.5 truncate">{item.name}</h4>
-                          <p className="text-xs text-zinc-400 mt-0.5">Size: <span className="font-bold text-zinc-600">{item.selectedSize}</span></p>
+                          <p className="text-xs text-zinc-400 mt-0.5">{t.size}: <span className="font-bold text-zinc-600">{item.selectedSize}</span></p>
                           <div className="flex items-center gap-3 mt-3">
                             <div className="flex items-center bg-zinc-100 rounded-full overflow-hidden">
                               <button onClick={()=>updateQuantity(item.id,item.selectedSize,-1)} className="px-3 py-1.5 hover:bg-zinc-200 transition-all"><Minus size={12}/></button>
@@ -1534,29 +1536,29 @@ function ElarisSportApp() {
                         </div>
                         <div className="text-right shrink-0">
                           <p className="font-black text-lg">€{item.price*item.quantity}</p>
-                          {item.quantity>1 && <p className="text-xs text-zinc-400">€{item.price} each</p>}
+                          {item.quantity>1 && <p className="text-xs text-zinc-400">€{item.price} {t.each}</p>}
                         </div>
                       </div>
                     ))}
                   </div>
                   {/* Order Summary */}
                   <div className="bg-white rounded-3xl border border-zinc-200 p-6 h-fit sticky top-4">
-                    <h3 className="font-black text-xl mb-6">Order Summary</h3>
+                    <h3 className="font-black text-xl mb-6">{t.orderSummary}</h3>
                     <div className="space-y-3 mb-4">
-                      <div className="flex justify-between text-sm"><span className="text-zinc-500">Subtotal</span><span className="font-bold">€{total}</span></div>
-                      {savings>0 && <div className="flex justify-between text-sm"><span className="text-zinc-500">Savings</span><span className="font-bold text-green-600">-€{savings}</span></div>}
-                      <div className="flex justify-between text-sm"><span className="text-zinc-500">Shipping</span><span className="font-bold text-green-600">{total>=100?'Free':'€5.99'}</span></div>
+                      <div className="flex justify-between text-sm"><span className="text-zinc-500">{t.subtotal}</span><span className="font-bold">€{total}</span></div>
+                      {savings>0 && <div className="flex justify-between text-sm"><span className="text-zinc-500">{t.savings}</span><span className="font-bold text-green-600">-€{savings}</span></div>}
+                      <div className="flex justify-between text-sm"><span className="text-zinc-500">{t.shipping}</span><span className="font-bold text-green-600">{total>=100?t.free:'€5.99'}</span></div>
                     </div>
-                    {total<100 && <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 mb-4 text-xs text-blue-700 font-bold">Add €{(100-total).toFixed(0)} more for free shipping!</div>}
+                    {total<100 && <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 mb-4 text-xs text-blue-700 font-bold">{t.addMore} €{(100-total).toFixed(0)} {t.moreForFree}</div>}
                     <div className="border-t pt-4 flex justify-between items-center mb-6">
-                      <span className="font-black text-lg">Total</span>
+                      <span className="font-black text-lg">{t.total}</span>
                       <span className="text-2xl font-black">€{total<100?(total+5.99).toFixed(2):total}</span>
                     </div>
                     <button onClick={()=>setView('checkout')} className="w-full py-4 bg-black hover:bg-[#0066ff] text-white font-black uppercase tracking-widest text-xs rounded-2xl transition-all">
-                      Checkout
+                      {t.checkout}
                     </button>
                     <button onClick={()=>setView('shop')} className="w-full py-3 text-zinc-400 hover:text-black text-xs font-bold uppercase tracking-widest transition-colors mt-3">
-                      Continue Shopping
+                      {t.continueShopping}
                     </button>
                   </div>
                 </div>
@@ -1568,17 +1570,17 @@ function ElarisSportApp() {
           {view==='checkout' && (
             <motion.div key="checkout" initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} exit={{opacity:0}} className="p-6 md:p-10 max-w-4xl mx-auto">
               <button onClick={()=>setView('cart')} className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-zinc-400 hover:text-black mb-8 transition-colors">
-                <ArrowLeft size={16}/> Back to Cart
+                <ArrowLeft size={16}/> {t.backToCart}
               </button>
               <div className="grid md:grid-cols-[1fr_280px] gap-8">
                 <div className="bg-white rounded-3xl border border-zinc-200 p-8">
-                  <h2 className="text-2xl font-black mb-8">Shipping & Payment</h2>
+                  <h2 className="text-2xl font-black mb-8">{t.shippingPayment}</h2>
                   <div className="space-y-6">
                     {[
-                      {field:'name', label:'Full Name', placeholder:'John Doe', type:'text'},
-                      {field:'email', label:'Email Address', placeholder:'john@example.com', type:'email'},
-                      {field:'address', label:'Shipping Address', placeholder:'123 Main St, Lisbon, Portugal', type:'text'},
-                      {field:'card', label:'Card Number', placeholder:'1234 5678 9012 3456', type:'text'},
+                      {field:'name', label:t.fullName, placeholder:'John Doe', type:'text'},
+                      {field:'email', label:t.email, placeholder:'john@example.com', type:'email'},
+                      {field:'address', label:t.address, placeholder:'123 Main St, Lisbon, Portugal', type:'text'},
+                      {field:'card', label:t.card, placeholder:'1234 5678 9012 3456', type:'text'},
                     ].map(({field,label,placeholder,type}) => (
                       <div key={field}>
                         <label className="text-[10px] font-black uppercase tracking-widest text-[#0066ff] block mb-2">{label} *</label>
@@ -1601,13 +1603,13 @@ function ElarisSportApp() {
                       setCheckoutErrors(errs);
                       if(Object.keys(errs).length===0) setView('success');
                     }} className="w-full py-4 bg-black hover:bg-[#0066ff] text-white font-black uppercase tracking-widest text-xs rounded-2xl transition-all mt-4">
-                      Place Order · €{total<100?(total+5.99).toFixed(2):total}
+                      {t.placeOrder} · €{total<100?(total+5.99).toFixed(2):total}
                     </button>
                   </div>
                 </div>
                 {/* Mini summary */}
                 <div className="bg-white rounded-3xl border border-zinc-200 p-6 h-fit">
-                  <h3 className="font-black mb-4 text-sm uppercase tracking-wider">Order ({cartCount} items)</h3>
+                  <h3 className="font-black mb-4 text-sm uppercase tracking-wider">{t.order} ({cartCount} {t.items})</h3>
                   <div className="space-y-3 max-h-64 overflow-y-auto">
                     {cart.map(item => (
                       <div key={`${item.id}-${item.selectedSize}`} className="flex gap-3">
@@ -1621,7 +1623,7 @@ function ElarisSportApp() {
                     ))}
                   </div>
                   <div className="border-t mt-4 pt-4 flex justify-between font-black">
-                    <span>Total</span>
+                    <span>{t.total}</span>
                     <span>€{total<100?(total+5.99).toFixed(2):total}</span>
                   </div>
                 </div>
@@ -1637,13 +1639,13 @@ function ElarisSportApp() {
                 className="w-24 h-24 rounded-full bg-[#0066ff] flex items-center justify-center mb-8 shadow-2xl shadow-blue-200">
                 <CheckCircle2 size={46} className="text-white"/>
               </motion.div>
-              <span className="text-[#0066ff] text-[10px] font-black uppercase tracking-[0.4em] mb-4">Order Confirmed</span>
-              <h2 className="text-5xl font-black leading-tight mb-4">Thank you,<br/>{checkoutForm.name.split(' ')[0] || 'Athlete'}!</h2>
-              <p className="text-zinc-400 max-w-md mb-2">Your order has been confirmed. A confirmation has been sent to <span className="font-bold text-zinc-600">{checkoutForm.email||'your email'}</span>.</p>
-              <p className="text-zinc-400 text-sm mb-10">Estimated delivery: <span className="font-bold text-zinc-600">3–5 business days</span></p>
+              <span className="text-[#0066ff] text-[10px] font-black uppercase tracking-[0.4em] mb-4">{t.orderConfirmed}</span>
+              <h2 className="text-5xl font-black leading-tight mb-4">{t.thankYou}<br/>{checkoutForm.name.split(' ')[0] || 'Athlete'}!</h2>
+              <p className="text-zinc-400 max-w-md mb-2">{t.confirmation} <span className="font-bold text-zinc-600">{checkoutForm.email||t.yourEmail}</span>.</p>
+              <p className="text-zinc-400 text-sm mb-10">{t.estDelivery} <span className="font-bold text-zinc-600">{t.deliveryDays}</span></p>
               <button onClick={()=>{setCart([]);setView('shop');setCheckoutForm({name:'',email:'',address:'',card:''});}}
                 className="px-12 py-4 bg-black hover:bg-[#0066ff] text-white font-black uppercase tracking-widest text-xs rounded-full transition-all">
-                Back to Store
+                {t.backToStore}
               </button>
             </motion.div>
           )}
