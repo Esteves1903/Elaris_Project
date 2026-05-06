@@ -79,6 +79,7 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
   const [addLoading, setAddLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [updateError, setUpdateError] = useState("");
 
   useEffect(() => {
     getUserRole().then((role) => {
@@ -128,6 +129,7 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
     event.preventDefault();
     if (!newUpdateTitle || !newUpdateMessage) return;
     setAddLoading(true);
+    setUpdateError("");
 
     const headers = await getAuthHeader();
     const res = await fetch(`/api/admin/clients/${client.id}/updates`, {
@@ -139,7 +141,7 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
     setAddLoading(false);
     if (!res.ok) {
       const json = await res.json();
-      setErrorMessage(json.error ?? "Failed to add update.");
+      setUpdateError(json.error ?? "Failed to add update.");
       return;
     }
 
@@ -147,6 +149,7 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
     setLatestUpdates((prev) => [json.update, ...prev]);
     setNewUpdateTitle("");
     setNewUpdateMessage("");
+    setUpdateError("");
     setIsAddingUpdate(false);
   }
 
@@ -382,6 +385,11 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
                     className={`${inputClass} resize-none`}
                   />
                 </div>
+                {updateError && (
+                  <p className="rounded-2xl border border-red-400/20 bg-red-400/10 px-4 py-3 text-sm text-red-300">
+                    {updateError}
+                  </p>
+                )}
                 <button
                   type="submit"
                   disabled={addLoading}
