@@ -100,10 +100,6 @@ export default function ContactPage() {
             Send request
           </button>
 
-          <p className="mt-4 text-xs leading-5 text-zinc-500">
-            This form is currently prepared visually. The sending functionality
-            will be connected later.
-          </p>
         </form>
       </section>
     </main>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { portfolioProjects } from "@/lib/portfolio-projects";
 import RevealCard from "@/components/ui/RevealCard";
+import { HeroSection } from "@/components/ui/HeroSection";
 
 const services = [
   {
@@ -51,36 +52,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#0B0F19] bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.12),_transparent_35%)] pt-20">
       {/* Hero Section */}
-      <section className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-6xl flex-col items-center justify-center px-6 text-center">
-        <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
-          Elaris
-        </p>
-
-        <h1 className="max-w-4xl text-4xl font-bold tracking-tight text-white sm:text-6xl">
-          Digital solutions for growing businesses.
-        </h1>
-
-        <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-300 sm:text-lg">
-          We create modern websites and digital tools that help small businesses
-          grow online with clarity, design and performance.
-        </p>
-
-        <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-          <Link
-            href="/contact"
-            className="rounded-full bg-white px-7 py-3 text-sm font-semibold text-black transition hover:bg-zinc-200"
-          >
-            Request a quote
-          </Link>
-
-          <Link
-            href="/services"
-            className="rounded-full border border-white/20 px-7 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
-          >
-            View services
-          </Link>
-        </div>
-      </section>
+      <HeroSection />
 
       {/* About Section */}
       <section className="mx-auto max-w-6xl px-6 py-24">

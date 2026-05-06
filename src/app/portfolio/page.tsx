@@ -73,7 +73,7 @@ const technicalDetails: Record<string, ProjectDetails> = {
   },
 };
 
-export default function() {
+export default function PortfolioPage() {
   const [sidebarData, setSidebarData] = useState<ProjectDetails | null>(null);
 
   return (

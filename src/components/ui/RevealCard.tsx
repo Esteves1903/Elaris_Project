@@ -16,18 +16,17 @@ export default function RevealCard({
 }: RevealCardProps) {
     return (
         <motion.div
-            initial={{ opacity: 0, x: -24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -24 }}
-            viewport={{ once: false, amount: 0.35 }}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.25 }}
             transition={{
                 opacity: {
-                    duration: 0.9,
+                    duration: 0.7,
                     delay,
                     ease: "easeOut",
                 },
-                x: {
-                    duration: 1.2,
+                y: {
+                    duration: 0.9,
                     delay,
                     ease: [0.16, 1, 0.3, 1],
                 },
