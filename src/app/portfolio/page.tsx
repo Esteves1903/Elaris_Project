@@ -283,16 +283,16 @@ function ElarisFinalDubai() {
       name: "Grand Finale",
       items: [
         {
-          n: "24k Gold Abade de Priscos",
+          n: "Abade de Priscos",
           p: "AED 110",
-          d: "Traditional bacon pudding, citrus sorbet, gold leaf.",
-          img: "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400"
+          d: "Traditional bacon pudding, citrus sorbet.",
+          img: "/abade.png"
         },
         {
           n: "Chocolate Decadence",
           p: "AED 135",
           d: "70% Valrhona chocolate, hazelnut praline, sea salt.",
-          img: "https://images.unsplash.com/photo-1541783245831-57d6fb0926d3?q=80&w=400"
+          img: "/chocolate.png"
         }
       ]
     }
