@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle } from "lucide-react";
 import RevealCard from "@/components/ui/RevealCard";
+import { supabase } from "@/lib/supabase";
 
 type FormState = {
   name: string;
@@ -23,6 +24,7 @@ export default function ContactPage() {
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
 
   function handleChange(
     e: React.ChangeEvent<
@@ -35,8 +37,23 @@ export default function ContactPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1400));
+    setError("");
+
+    const { error: sbError } = await supabase.from("leads").insert({
+      name: form.name,
+      email: form.email,
+      business: form.business || null,
+      type: form.type,
+      message: form.message,
+    });
+
     setLoading(false);
+
+    if (sbError) {
+      setError("Something went wrong. Please try again or email us directly.");
+      return;
+    }
+
     setSuccess(true);
   }
 
@@ -49,7 +66,7 @@ export default function ContactPage() {
         <RevealCard className="flex flex-col gap-6">
           <div>
             <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
-              Contact
+              Get a quote
             </p>
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
               Tell us about{" "}
@@ -207,6 +224,12 @@ export default function ContactPage() {
                     className={`${inputClass} resize-none`}
                   />
                 </div>
+
+                {error && (
+                  <p className="rounded-2xl border border-red-400/20 bg-red-400/10 px-4 py-3 text-sm text-red-300">
+                    {error}
+                  </p>
+                )}
 
                 <button
                   type="submit"
