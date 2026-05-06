@@ -1,13 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase-admin";
-
-async function verifyAdmin(req: NextRequest) {
-  const token = req.headers.get("authorization")?.replace("Bearer ", "");
-  if (!token) return null;
-  const { data: { user } } = await supabaseAdmin.auth.getUser(token);
-  if (!user || user.user_metadata?.role !== "admin") return null;
-  return user;
-}
+import { verifyAdmin } from "@/lib/verify-admin";
 
 type Params = { params: Promise<{ id: string }> };
 

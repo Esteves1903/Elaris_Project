@@ -1,14 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 
-export async function PATCH(req: NextRequest) {
+async function verifyClient(req: NextRequest) {
   const token = req.headers.get("authorization")?.replace("Bearer ", "");
-  if (!token) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!token) return null;
 
-  const { data: { user } } = await supabaseAdmin.auth.getUser(token);
-  if (!user || user.user_metadata?.role !== "client") {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/auth/v1/user`, {
+    headers: {
+      apikey: process.env.SUPABASE_SERVICE_ROLE_KEY!,
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) return null;
+
+  const user = await res.json();
+  if (user.user_metadata?.role !== "client") return null;
+
+  return user as { id: string; email: string };
+}
+
+export async function PATCH(req: NextRequest) {
+  const user = await verifyClient(req);
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const { password } = await req.json();
 
