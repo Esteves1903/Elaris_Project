@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Fragment } from "react";
+
+export const metadata: Metadata = {
+  title: "Elaris — Websites for growing businesses",
+  description:
+    "Elaris helps small businesses grow online with modern websites, digital tools and a clear development process.",
+};
 import { ArrowRight, LayoutDashboard, MessageCircle, Shield, Zap, Monitor, Wrench, Headphones } from "lucide-react";
 import { portfolioProjects } from "@/lib/portfolio-projects";
 import { HeroSection } from "@/components/ui/HeroSection";

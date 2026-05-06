@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
     clearMockAdminSession,
     hasMockAdminSession,
@@ -135,23 +136,38 @@ export default function AdminClientDetailsClient({
         );
     }
     return (
-        <main className="min-h-screen bg-[#0B0F19] px-6 pb-24 pt-32 text-white">
-            <section className="mx-auto max-w-6xl">
-                <Link
-                    href="/admin"
-                    className="mb-10 inline-flex text-sm font-medium text-zinc-400 transition hover:text-cyan-300"
-                >
-                    ← Back to admin
-                </Link>
+        <main className="relative min-h-screen overflow-hidden bg-[#0B0F19] px-6 pb-24 pt-32 text-white">
+            <div className="pointer-events-none absolute -right-60 top-10 h-[400px] w-[400px] rounded-full bg-cyan-500/[0.04] blur-[120px]" />
 
-                <div className="mb-10 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+            <section className="relative z-10 mx-auto max-w-6xl">
+                <motion.div
+                    initial={{ opacity: 0, x: -12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    <Link
+                        href="/admin"
+                        className="mb-10 inline-flex text-sm font-medium text-zinc-400 transition hover:text-cyan-300"
+                    >
+                        ← Back to admin
+                    </Link>
+                </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
+                    className="mb-10 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between"
+                >
                     <div>
                         <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
                             Client details
                         </p>
 
                         <h1 className="mb-5 text-4xl font-bold tracking-tight sm:text-5xl">
-                            {client.company}
+                            <span className="bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">
+                                {client.company}
+                            </span>
                         </h1>
 
                         <p className="max-w-2xl text-base leading-7 text-zinc-300">
@@ -173,9 +189,14 @@ export default function AdminClientDetailsClient({
                             Log out
                         </button>
                     </div>
-                </div>
+                </motion.div>
 
-                <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+                    className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr]"
+                >
                     <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-8">
                         <p className="mb-6 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
                             Client profile
@@ -331,9 +352,14 @@ export default function AdminClientDetailsClient({
                             </div>
                         </form>
                     </div>
-                </div>
+                </motion.div>
 
-                <div className="mt-6 grid gap-6 lg:grid-cols-2">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                    className="mt-6 grid gap-6 lg:grid-cols-2"
+                >
                     <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-8">
                         <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
                             Needed from client
@@ -467,7 +493,7 @@ export default function AdminClientDetailsClient({
                             ))}
                         </div>
                     </div>
-                </div>
+                </motion.div>
             </section>
         </main>
     );

@@ -10,8 +10,15 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Elaris",
-  description: "Digital solutions for growing businesses.",
+  title: {
+    default: "Elaris",
+    template: "%s | Elaris",
+  },
+  description:
+    "Elaris builds modern, responsive websites for small businesses. Website creation, improvement and ongoing support.",
+  icons: {
+    icon: "/brand/logo-horizontal-transparent.svg",
+  },
 };
 
 export default function RootLayout({

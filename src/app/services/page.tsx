@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import RevealCard from "@/components/ui/RevealCard";
+
+export const metadata: Metadata = {
+  title: "Services",
+  description:
+    "Website creation, improvement and ongoing support for small businesses. Modern, responsive and professionally built.",
+};
 
 export default function ServicesPage() {
   const services = [

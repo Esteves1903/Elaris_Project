@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import RevealCard from "@/components/ui/RevealCard";
+
+export const metadata: Metadata = {
+  title: "Process",
+  description:
+    "A clear four-step process from first contact to final delivery. Understand, Plan, Build and Deliver.",
+};
 
 export default function ProcessPage() {
   const processSteps = [
