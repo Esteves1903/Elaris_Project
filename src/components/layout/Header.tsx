@@ -79,7 +79,7 @@ export function Header() {
           </div>
 
           <button
-            className="justify-self-end text-white md:hidden"
+            className="col-start-3 justify-self-end text-white md:hidden"
             onClick={() => setMobileOpen(true)}
             aria-label="Open menu"
           >
@@ -153,6 +153,11 @@ export function Header() {
                 >
                   Request a quote
                 </Link>
+              </div>
+
+              <div className="mt-auto border-t border-white/10 pt-6">
+                <p className="text-xs text-zinc-600">contact@elaris.com</p>
+                <p className="mt-1 text-xs text-zinc-700">© 2026 Elaris</p>
               </div>
             </motion.div>
           </>
