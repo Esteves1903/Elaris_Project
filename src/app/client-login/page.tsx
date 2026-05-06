@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mail, LockKeyhole } from "lucide-react";
 import { signIn, getUserRole } from "@/lib/auth";
@@ -14,6 +14,13 @@ export default function ClientLoginPage() {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    getUserRole().then((role) => {
+      if (role === "admin") router.push("/admin");
+      else if (role === "client") router.push("/client-area");
+    });
+  }, [router]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
