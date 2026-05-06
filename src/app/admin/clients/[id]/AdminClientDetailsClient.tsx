@@ -264,6 +264,7 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
               <AnimatePresence>
                 {successMessage && (
                   <motion.p
+                    key="success"
                     initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
@@ -274,6 +275,7 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
                 )}
                 {errorMessage && (
                   <motion.p
+                    key="error"
                     initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
@@ -352,6 +354,7 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
           <AnimatePresence>
             {isAddingUpdate && (
               <motion.form
+                key="add-update-form"
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
