@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   description:
     "Elaris builds modern, responsive websites for small businesses. Website creation, improvement and ongoing support.",
   icons: {
-    icon: "/brand/logo-horizontal-transparent.svg",
+    icon: "/brand/icon.svg",
   },
 };
 
