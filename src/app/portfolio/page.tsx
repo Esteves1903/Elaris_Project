@@ -77,36 +77,18 @@ type Lang = "en" | "pt";
 
 export default function PortfolioPage() {
   const [sidebarData, setSidebarData] = useState<ProjectDetails | null>(null);
-  const [lang, setLang] = useState<Lang>("en");
 
   return (
     <main className="min-h-screen bg-[#0B0F19] px-6 pb-24 pt-32 text-white font-sans">
       {/* Hero Section */}
       <section className="mx-auto max-w-6xl">
-        <div className="max-w-3xl flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6">
-          <div>
-            <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
-              Portfolio
-            </p>
-            <h1 className="mb-8 text-4xl font-bold tracking-tight sm:text-5xl">
-              Interactive Layouts Previews.
-            </h1>
-          </div>
-          {/* Global language toggle */}
-          <div className="flex items-center gap-1 self-start mt-1 shrink-0">
-            <button
-              onClick={() => setLang("en")}
-              className={`px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-full transition-all border ${lang === "en" ? "bg-cyan-400 text-black border-cyan-400" : "border-white/20 text-white/40 hover:border-white/40"}`}
-            >
-              EN
-            </button>
-            <button
-              onClick={() => setLang("pt")}
-              className={`px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-full transition-all border ${lang === "pt" ? "bg-cyan-400 text-black border-cyan-400" : "border-white/20 text-white/40 hover:border-white/40"}`}
-            >
-              PT
-            </button>
-          </div>
+        <div className="max-w-3xl">
+          <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
+            Portfolio
+          </p>
+          <h1 className="mb-8 text-4xl font-bold tracking-tight sm:text-5xl">
+            Interactive Layouts Previews.
+          </h1>
         </div>
       </section>
 
@@ -142,8 +124,8 @@ export default function PortfolioPage() {
         {/* 1. RESTAURANTE */}
         <div className="space-y-6">
           <h2 className="text-3xl font-black tracking-tight">1. Elaris Restaurant</h2>
-          <div className="rounded-[2.5rem] overflow-hidden border border-white/10 h-[700px] relative bg-orange-50 shadow-2xl">
-            <ElarisFinalDubai lang={lang}/>
+          <div className="rounded-[2.5rem] overflow-hidden border border-white/10 h-[700px] relative bg-orange-50 shadow-2xl isolate">
+            <ElarisFinalDubai />
           </div>
           <div className="flex justify-end">
             <button onClick={() => setSidebarData(technicalDetails.cafe)} className="px-6 py-3 bg-white/5 border border-white/10 text-white rounded-xl font-bold hover:bg-cyan-400 hover:text-black transition-all flex items-center gap-2 text-xs tracking-widest uppercase">
@@ -155,8 +137,8 @@ export default function PortfolioPage() {
         {/* 2. SPORT STORE */}
         <div className="space-y-6">
           <h2 className="text-3xl font-black tracking-tight">2. Elaris Football Store</h2>
-          <div className="rounded-[2.5rem] overflow-hidden border border-white/10 h-[700px] relative bg-white shadow-2xl">
-            <ElarisSportApp lang={lang} />
+          <div className="rounded-[2.5rem] overflow-hidden border border-white/10 h-[700px] relative bg-white shadow-2xl isolate">
+            <ElarisSportApp />
           </div>
           <div className="flex justify-end">
             <button onClick={() => setSidebarData(technicalDetails.sport)} className="px-6 py-3 bg-white/5 border border-white/10 text-white rounded-xl font-bold hover:bg-blue-600 transition-all flex items-center gap-2 text-xs tracking-widest uppercase">
@@ -168,8 +150,8 @@ export default function PortfolioPage() {
         {/* 3. BARBER SHOP */}
         <div className="space-y-6">
           <h2 className="text-3xl font-black tracking-tight">3. Elaris Barber Shop</h2>
-          <div className="rounded-[2.5rem] overflow-hidden border border-white/10 h-[700px] relative bg-[#0a0a0a] shadow-2xl">
-            <AsgardBarberApp lang={lang} />
+          <div className="rounded-[2.5rem] overflow-hidden border border-white/10 h-[700px] relative bg-[#0a0a0a] shadow-2xl isolate">
+            <AsgardBarberApp />
           </div>
           <div className="flex justify-end">
             <button onClick={() => setSidebarData(technicalDetails.asgard)} className="px-6 py-3 bg-white/5 border border-white/10 text-white rounded-xl font-bold hover:bg-red-600 transition-all flex items-center gap-2 text-xs tracking-widest uppercase">
@@ -183,7 +165,8 @@ export default function PortfolioPage() {
   );
 }
 
-function ElarisFinalDubai({ lang = "en" }: { lang?: Lang }) {
+function ElarisFinalDubai() {
+  const [lang, setLang] = useState<Lang>("en");
   const t = {
     en: {
       story: "The Story", menu: "The Menu", bookNow: "Book Now",
@@ -330,7 +313,7 @@ function ElarisFinalDubai({ lang = "en" }: { lang?: Lang }) {
   };
 
   return (
-    <div className="h-full w-full bg-[#faf9f6] text-[#1a1a1a] font-sans overflow-hidden relative">
+    <div className="h-full w-full bg-[#faf9f6] text-[#1a1a1a] font-sans overflow-hidden relative flex flex-col">
 
       {/* NAVBAR */}
       <nav className="h-20 md:h-24 bg-white border-b border-zinc-100 flex justify-between items-center px-6 md:px-16 z-50">
@@ -368,6 +351,11 @@ function ElarisFinalDubai({ lang = "en" }: { lang?: Lang }) {
           >
             {t.bookNow}
           </button>
+
+          <div className="flex items-center gap-1 ml-2">
+            <button onClick={() => setLang("en")} className={`px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-full transition-all border ${lang === "en" ? "bg-[#c5a059] text-black border-[#c5a059]" : "border-zinc-300 text-zinc-400 hover:border-zinc-500"}`}>EN</button>
+            <button onClick={() => setLang("pt")} className={`px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-full transition-all border ${lang === "pt" ? "bg-[#c5a059] text-black border-[#c5a059]" : "border-zinc-300 text-zinc-400 hover:border-zinc-500"}`}>PT</button>
+          </div>
         </div>
 
         <button
@@ -706,10 +694,14 @@ function ElarisFinalDubai({ lang = "en" }: { lang?: Lang }) {
                 </button>
               </div>
 
-              <div className="mt-auto border-t border-zinc-100 pt-10">
+              <div className="mt-auto border-t border-zinc-100 pt-10 flex items-center justify-between">
                 <p className="text-[9px] tracking-widest text-zinc-400 uppercase leading-loose">
                   Jumeirah Beach Road • Dubai
                 </p>
+                <div className="flex items-center gap-1">
+                  <button onClick={() => setLang("en")} className={`px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-full transition-all border ${lang === "en" ? "bg-[#c5a059] text-black border-[#c5a059]" : "border-zinc-300 text-zinc-400"}`}>EN</button>
+                  <button onClick={() => setLang("pt")} className={`px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-full transition-all border ${lang === "pt" ? "bg-[#c5a059] text-black border-[#c5a059]" : "border-zinc-300 text-zinc-400"}`}>PT</button>
+                </div>
               </div>
             </motion.div>
           )}
@@ -718,7 +710,7 @@ function ElarisFinalDubai({ lang = "en" }: { lang?: Lang }) {
       </main>
 
       {/* FOOTER FIXO */}
-      <footer className="sticky bottom-0 bg-[#0a0a0a] text-white px-4 md:px-16 py-4 border-t border-white/5 w-full z-50 shrink-0">
+      <footer className="bg-[#0a0a0a] text-white px-4 md:px-16 py-4 border-t border-white/5 w-full shrink-0">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-3">
 
           {/* LEFT */}
@@ -1070,7 +1062,8 @@ function DishCard3D({ item }: { item: { n: string; p: string; d: string; img: st
 /* -------------------------------------------------------------------------- */
 /* --- 2. SPORTZONE FOOTBALL --- */
 /* -------------------------------------------------------------------------- */
-function ElarisSportApp({ lang = "en" }: { lang?: string }) {
+function ElarisSportApp() {
+  const [lang, setLang] = useState<Lang>("en");
   const t = {
     en: {
       newSeason: "New Season 2026", heroTitle1: "PLAY AT YOUR", heroTitle2: "PEAK.",
@@ -1112,7 +1105,7 @@ function ElarisSportApp({ lang = "en" }: { lang?: string }) {
       backToStore: "Voltar à Loja", size: "Tamanho", each: "cada",
       errName: "Obrigatório", errEmail: "Email inválido", errAddress: "Obrigatório", errCard: "Número de cartão inválido",
     },
-  }[lang as "en" | "pt"] ?? {
+  }[lang] ?? {
     newSeason: "New Season 2026", heroTitle1: "PLAY AT YOUR", heroTitle2: "PEAK.",
     heroSub: "Premium football gear for every level. Free shipping on orders over €100.",
     shopBoots: "Shop Boots", shopKits: "Shop Kits", onBoots: "on boots",
@@ -1302,6 +1295,12 @@ function ElarisSportApp({ lang = "en" }: { lang?: string }) {
           <Search size={14} className="text-zinc-400 shrink-0"/>
           <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search…"
             className="bg-transparent outline-none px-2 text-xs w-full"/>
+        </div>
+
+        {/* Lang Toggle */}
+        <div className="flex items-center gap-1">
+          <button onClick={() => setLang("en")} className={`px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-full transition-all border ${lang === "en" ? "bg-[#0066ff] text-white border-[#0066ff]" : "border-zinc-300 text-zinc-400 hover:border-zinc-500"}`}>EN</button>
+          <button onClick={() => setLang("pt")} className={`px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-full transition-all border ${lang === "pt" ? "bg-[#0066ff] text-white border-[#0066ff]" : "border-zinc-300 text-zinc-400 hover:border-zinc-500"}`}>PT</button>
         </div>
 
         {/* Wishlist */}
@@ -1655,45 +1654,233 @@ function ElarisSportApp({ lang = "en" }: { lang?: string }) {
 }
 
 /* -------------------------------------------------------------------------- */
+/* --- BARBER BOOKING FORM (componente próprio para respeitar as regras dos hooks) --- */
+/* -------------------------------------------------------------------------- */
+type BarberService = { id: number; name: string; price: string; time: string; desc: string; tag: string };
+type BarberTrans = {
+  fullName: string; phone: string; date: string; service: string; schedule: string; confirm: string;
+  selectService: string; namePlaceholder: string; back: string; bookSession: string; book: string;
+  errName: string; errPhone: string; errDate: string; errService: string; errTime: string;
+};
+
+function BarberBookingForm({ services, tBarber, setView, setUser }: {
+  services: BarberService[];
+  tBarber: BarberTrans;
+  setView: (v: 'intro' | 'services' | 'book' | 'done') => void;
+  setUser: (n: string) => void;
+}) {
+  const [bForm, setBForm] = useState({ name: "", phone: "", date: "", service: "", time: "" });
+  const [bErrors, setBErrors] = useState<Record<string, string>>({});
+  const [bTouched, setBTouched] = useState<Record<string, boolean>>({});
+
+  const validateBook = (f: typeof bForm) => {
+    const e: Record<string, string> = {};
+    if (!f.name.trim()) e.name = tBarber.errName;
+    if (!f.phone.trim()) e.phone = tBarber.errPhone;
+    if (!f.date) e.date = tBarber.errDate;
+    if (!f.service) e.service = tBarber.errService;
+    if (!f.time) e.time = tBarber.errTime;
+    return e;
+  };
+
+  const handleChange = (field: string, value: string) => {
+    const next = { ...bForm, [field]: value };
+    setBForm(next);
+    if (bTouched[field]) setBErrors(validateBook(next));
+  };
+
+  const handleBlur = (field: string) => {
+    setBTouched(prev => ({ ...prev, [field]: true }));
+    setBErrors(validateBook(bForm));
+  };
+
+  const handleSubmit = () => {
+    const allTouched = Object.fromEntries(Object.keys(bForm).map(k => [k, true]));
+    setBTouched(allTouched);
+    const errs = validateBook(bForm);
+    setBErrors(errs);
+    if (Object.keys(errs).length === 0) {
+      setUser(bForm.name);
+      setView('done');
+    }
+  };
+
+  const fieldCls = (field: string) =>
+    `w-full bg-white/[0.04] border outline-none px-5 py-4 text-sm transition-all placeholder:text-white/20 ${bErrors[field] && bTouched[field] ? "border-red-500 text-red-400" : "border-white/[0.08] focus:border-amber-500"}`;
+
+  return (
+    <motion.div key="book" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="p-8 md:p-16 flex items-start justify-center min-h-full">
+      <div className="w-full max-w-2xl">
+        <button onClick={() => setView('intro')} className="flex items-center gap-2 text-white/30 hover:text-amber-400 text-[10px] uppercase tracking-widest font-black transition-colors mb-10">
+          <ArrowLeft size={12} /> {tBarber.back}
+        </button>
+
+        <span className="text-amber-500 text-[9px] uppercase tracking-[0.5em] font-black block mb-4">{tBarber.book}</span>
+        <h2 className="text-4xl md:text-5xl font-black mb-12 leading-tight">
+          {tBarber.bookSession}<span className="text-amber-500">.</span>
+        </h2>
+
+        <div className="space-y-5">
+          <div>
+            <label className="text-[9px] uppercase tracking-[0.4em] font-black text-white/40 block mb-2">{tBarber.fullName} *</label>
+            <input
+              className={fieldCls("name")}
+              placeholder={tBarber.namePlaceholder}
+              value={bForm.name}
+              onChange={e => handleChange("name", e.target.value)}
+              onBlur={() => handleBlur("name")}
+            />
+            {bErrors.name && bTouched.name && <p className="text-red-400 text-[9px] mt-1">{bErrors.name}</p>}
+          </div>
+
+          <div className="grid grid-cols-2 gap-5">
+            <div>
+              <label className="text-[9px] uppercase tracking-[0.4em] font-black text-white/40 block mb-2">{tBarber.phone} *</label>
+              <input
+                className={fieldCls("phone")}
+                placeholder="+351 912..."
+                value={bForm.phone}
+                onChange={e => handleChange("phone", e.target.value)}
+                onBlur={() => handleBlur("phone")}
+                inputMode="tel"
+              />
+              {bErrors.phone && bTouched.phone && <p className="text-red-400 text-[9px] mt-1">{bErrors.phone}</p>}
+            </div>
+            <div>
+              <label className="text-[9px] uppercase tracking-[0.4em] font-black text-white/40 block mb-2">{tBarber.date} *</label>
+              <input
+                type="date"
+                className={fieldCls("date") + " text-white/60"}
+                value={bForm.date}
+                onChange={e => handleChange("date", e.target.value)}
+                onBlur={() => handleBlur("date")}
+              />
+              {bErrors.date && bTouched.date && <p className="text-red-400 text-[9px] mt-1">{bErrors.date}</p>}
+            </div>
+          </div>
+
+          <div>
+            <label className="text-[9px] uppercase tracking-[0.4em] font-black text-white/40 block mb-2">{tBarber.service} *</label>
+            <select
+              className={fieldCls("service") + " text-white/60 appearance-none cursor-pointer"}
+              value={bForm.service}
+              onChange={e => handleChange("service", e.target.value)}
+              onBlur={() => handleBlur("service")}
+            >
+              <option value="" className="bg-[#111]">{tBarber.selectService}</option>
+              {services.map((s) => (
+                <option key={s.id} value={s.name} className="bg-[#111]">{s.name} — {s.price}</option>
+              ))}
+            </select>
+            {bErrors.service && bTouched.service && <p className="text-red-400 text-[9px] mt-1">{bErrors.service}</p>}
+          </div>
+
+          <div>
+            <label className="text-[9px] uppercase tracking-[0.4em] font-black text-white/40 block mb-3">{tBarber.schedule} *</label>
+            <div className="grid grid-cols-4 gap-2">
+              {["10:00","11:00","14:00","15:00","16:00","17:00","18:00","19:00"].map((slot) => (
+                <button
+                  key={slot}
+                  type="button"
+                  onClick={() => handleChange("time", slot)}
+                  className={`py-2.5 border text-[10px] font-black transition-all ${bForm.time === slot ? "border-amber-500 text-amber-400 bg-amber-500/10" : "border-white/[0.08] text-white/40 hover:border-amber-500 hover:text-amber-400"}`}
+                >
+                  {slot}
+                </button>
+              ))}
+            </div>
+            {bErrors.time && bTouched.time && <p className="text-red-400 text-[9px] mt-2">{bErrors.time}</p>}
+          </div>
+        </div>
+
+        <button
+          onClick={handleSubmit}
+          className="w-full mt-10 py-5 bg-amber-500 text-black font-black uppercase tracking-[0.35em] text-[11px] hover:bg-white transition-all"
+        >
+          {tBarber.confirm}
+        </button>
+      </div>
+    </motion.div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
 /* --- 3. BARBEARIA ELARIS — WORLD CLASS EDITION --- */
 /* -------------------------------------------------------------------------- */
-function AsgardBarberApp({ lang }: { lang?: string }) {
+function AsgardBarberApp() {
+  const [lang, setLang] = useState<Lang>("en");
+  const tBarber = {
+    en: {
+      services: "Services", team: "Team", book: "Book",
+      fullName: "Full Name", phone: "Phone", date: "Date",
+      service: "Service", schedule: "Schedule", confirm: "Confirm Booking",
+      selectService: "Select service", namePlaceholder: "Your name",
+      errName: "Full name required", errPhone: "Phone required",
+      errDate: "Date required", errService: "Select a service",
+      errTime: "Select a time slot",
+      back: "Back", bookSession: "Book Session",
+      bookNow: "Book Session", viewServices: "View Services", recognized: "Recognized",
+      yearsExc: "Years of Excellence", intlCities: "International Cities",
+      happyClients: "Happy Clients", masterBarbers: "Master Barbers",
+      ourTeam: "Our Team", experience: "experience",
+      testimonials: "Testimonials", clientsSay: "What clients say",
+      premiumServices: "Premium Services", theExperience: "The Experience",
+      bookThisService: "Book This Service",
+      bookingConfirmed: "Booking Confirmed", seeYou: "SEE YOU",
+      sessionBooked: "Your premium session is booked",
+      welcomeMsg: "Welcome to the highest international grooming standard.",
+      backHome: "Back to Home",
+    },
+    pt: {
+      services: "Serviços", team: "Equipa", book: "Reservar",
+      fullName: "Nome Completo", phone: "Telefone", date: "Data",
+      service: "Serviço", schedule: "Horário", confirm: "Confirmar Reserva",
+      selectService: "Selecionar serviço", namePlaceholder: "O teu nome",
+      errName: "Nome completo obrigatório", errPhone: "Telefone obrigatório",
+      errDate: "Data obrigatória", errService: "Seleciona um serviço",
+      errTime: "Seleciona um horário",
+      back: "Voltar", bookSession: "Marcar Sessão",
+      bookNow: "Marcar Sessão", viewServices: "Ver Serviços", recognized: "Reconhecido",
+      yearsExc: "Anos de Excelência", intlCities: "Cidades Internacionais",
+      happyClients: "Clientes Satisfeitos", masterBarbers: "Master Barbers",
+      ourTeam: "A Nossa Equipa", experience: "experiência",
+      testimonials: "Testemunhos", clientsSay: "O que dizem os clientes",
+      premiumServices: "Serviços Premium", theExperience: "A Experiência",
+      bookThisService: "Reservar Este Serviço",
+      bookingConfirmed: "Reserva Confirmada", seeYou: "ATÉ JÁ",
+      sessionBooked: "A tua sessão premium está marcada",
+      welcomeMsg: "Bem-vindo ao padrão mais alto da barbearia internacional.",
+      backHome: "Voltar ao Início",
+    },
+  }[lang];
   const [view, setView] = useState<'intro' | 'services' | 'book' | 'done'>('intro');
   const [user, setUser] = useState("");
   const [activeService, setActiveService] = useState<number | null>(null);
 
   const services = [
     {
-      id: 1,
-      name: "Signature Cut",
-      time: "45 min",
-      price: "€45",
-      desc: "Corte de precisão executado por master barbers treinados em Londres, Milano e Nova York. Acabamento com produtos Baxter of California.",
-      tag: "Bestseller",
+      id: 1, name: "Signature Cut", time: "45 min", price: "€45", tag: "Bestseller",
+      desc: lang === "en"
+        ? "Precision cut by master barbers trained in London, Milan and New York. Finished with Baxter of California products."
+        : "Corte de precisão executado por master barbers treinados em Londres, Milano e Nova York. Acabamento com produtos Baxter of California.",
     },
     {
-      id: 2,
-      name: "Royal Beard Ritual",
-      time: "35 min",
-      price: "€35",
-      desc: "Ritual completo de barba com navalha tradicional, toalha quente de eucalipto, bálsamos premium e contorno de alto detalhe.",
-      tag: "Premium",
+      id: 2, name: "Royal Beard Ritual", time: "35 min", price: "€35", tag: "Premium",
+      desc: lang === "en"
+        ? "Complete beard ritual with traditional straight razor, hot eucalyptus towel, premium balms and high-detail contouring."
+        : "Ritual completo de barba com navalha tradicional, toalha quente de eucalipto, bálsamos premium e contorno de alto detalhe.",
     },
     {
-      id: 3,
-      name: "Executive Package",
-      time: "90 min",
-      price: "€90",
-      desc: "Experiência total: corte, barba, tratamento facial masculino, scalp massage e styling com produtos de luxo. O standard máximo.",
-      tag: "Elite",
+      id: 3, name: "Executive Package", time: "90 min", price: "€90", tag: "Elite",
+      desc: lang === "en"
+        ? "Full experience: cut, beard, men's facial treatment, scalp massage and styling with luxury products. The ultimate standard."
+        : "Experiência total: corte, barba, tratamento facial masculino, scalp massage e styling com produtos de luxo. O standard máximo.",
     },
     {
-      id: 4,
-      name: "Scalp Ritual",
-      time: "30 min",
-      price: "€55",
-      desc: "Tratamento profundo do couro cabeludo com óleos essenciais importados, massagem de relaxamento e tónico revitalizante.",
-      tag: "Wellness",
+      id: 4, name: "Scalp Ritual", time: "30 min", price: "€55", tag: "Wellness",
+      desc: lang === "en"
+        ? "Deep scalp treatment with imported essential oils, relaxation massage and revitalising tonic."
+        : "Tratamento profundo do couro cabeludo com óleos essenciais importados, massagem de relaxamento e tónico revitalizante.",
     },
   ];
 
@@ -1745,9 +1932,9 @@ function AsgardBarberApp({ lang }: { lang?: string }) {
 
         <div className="hidden md:flex items-center gap-1">
           {[
-            { label: "Serviços", action: () => setView('services') },
-            { label: "Equipa", action: () => setView('intro') },
-            { label: "Reservar", action: () => setView('book'), primary: true },
+            { label: tBarber.services, action: () => setView('services') },
+            { label: tBarber.team, action: () => setView('intro') },
+            { label: tBarber.book, action: () => setView('book'), primary: true },
           ].map((item) => (
             <button
               key={item.label}
@@ -1761,11 +1948,19 @@ function AsgardBarberApp({ lang }: { lang?: string }) {
               {item.label}
             </button>
           ))}
+          <div className="flex items-center gap-1 ml-4">
+            <button onClick={() => setLang("en")} className={`px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-full transition-all border ${lang === "en" ? "bg-amber-500 text-black border-amber-500" : "border-white/20 text-white/40 hover:border-white/40"}`}>EN</button>
+            <button onClick={() => setLang("pt")} className={`px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-full transition-all border ${lang === "pt" ? "bg-amber-500 text-black border-amber-500" : "border-white/20 text-white/40 hover:border-white/40"}`}>PT</button>
+          </div>
         </div>
 
         <div className="flex md:hidden items-center gap-3">
+          <div className="flex items-center gap-1">
+            <button onClick={() => setLang("en")} className={`px-2 py-1 text-[8px] font-black uppercase tracking-widest rounded-full transition-all border ${lang === "en" ? "bg-amber-500 text-black border-amber-500" : "border-white/20 text-white/40"}`}>EN</button>
+            <button onClick={() => setLang("pt")} className={`px-2 py-1 text-[8px] font-black uppercase tracking-widest rounded-full transition-all border ${lang === "pt" ? "bg-amber-500 text-black border-amber-500" : "border-white/20 text-white/40"}`}>PT</button>
+          </div>
           <button onClick={() => setView('book')} className="px-4 py-2 bg-amber-500 text-black text-[9px] font-black uppercase tracking-widest">
-            Reservar
+            {tBarber.book}
           </button>
         </div>
       </nav>
@@ -1789,7 +1984,7 @@ function AsgardBarberApp({ lang }: { lang?: string }) {
 
                 {/* Floating badge */}
                 <div className="absolute top-8 right-8 border border-amber-500/40 bg-black/60 backdrop-blur-xl px-5 py-3 text-center hidden md:block">
-                  <div className="text-amber-400 text-[9px] uppercase tracking-[0.4em] font-black mb-1">Reconhecido</div>
+                  <div className="text-amber-400 text-[9px] uppercase tracking-[0.4em] font-black mb-1">{tBarber.recognized}</div>
                   <div className="text-white text-xs font-bold">Top 10 Barbers</div>
                   <div className="text-white/40 text-[8px] uppercase tracking-widest mt-0.5">GQ Magazine · 2025</div>
                 </div>
@@ -1809,10 +2004,10 @@ function AsgardBarberApp({ lang }: { lang?: string }) {
                     </h2>
                     <div className="flex flex-col sm:flex-row gap-4">
                       <button onClick={() => setView('book')} className="px-10 py-4 bg-amber-500 text-black text-[11px] font-black uppercase tracking-[0.3em] hover:bg-white transition-all">
-                        Marcar Sessão
+                        {tBarber.bookNow}
                       </button>
                       <button onClick={() => setView('services')} className="px-10 py-4 border border-white/20 text-[11px] font-black uppercase tracking-[0.3em] hover:border-amber-500 hover:text-amber-400 transition-all">
-                        Ver Serviços
+                        {tBarber.viewServices}
                       </button>
                     </div>
                   </motion.div>
@@ -1823,10 +2018,10 @@ function AsgardBarberApp({ lang }: { lang?: string }) {
               <section className="py-14 px-8 md:px-16 border-y border-white/[0.06]">
                 <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
                   {[
-                    { val: 20, suffix: "+", label: "Anos de Excelência" },
-                    { val: 3, suffix: "", label: "Cidades Internacionais" },
-                    { val: 98, suffix: "%", label: "Clientes Satisfeitos" },
-                    { val: 12, suffix: "", label: "Master Barbers" },
+                    { val: 20, suffix: "+", label: tBarber.yearsExc },
+                    { val: 3, suffix: "", label: tBarber.intlCities },
+                    { val: 98, suffix: "%", label: tBarber.happyClients },
+                    { val: 12, suffix: "", label: tBarber.masterBarbers },
                   ].map((stat, i) => (
                     <div key={i} className={`text-center ${i < 3 ? 'md:border-r border-white/[0.06]' : ''}`}>
                       <div className="text-4xl md:text-5xl font-black text-amber-400 mb-2 tabular-nums">
@@ -1843,13 +2038,13 @@ function AsgardBarberApp({ lang }: { lang?: string }) {
                 <div className="max-w-6xl mx-auto">
                   <div className="mb-14 flex items-end justify-between">
                     <div>
-                      <span className="text-amber-500 text-[9px] uppercase tracking-[0.5em] font-black block mb-3">A Nossa Equipa</span>
+                      <span className="text-amber-500 text-[9px] uppercase tracking-[0.5em] font-black block mb-3">{tBarber.ourTeam}</span>
                       <h3 className="text-4xl md:text-5xl font-black leading-tight">
                         Master<br/>Barbers<span className="text-amber-500">.</span>
                       </h3>
                     </div>
                     <button onClick={() => setView('book')} className="hidden md:flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-amber-400 hover:text-white transition-colors">
-                      Reservar <ChevronRight size={14} />
+                      {tBarber.book} <ChevronRight size={14} />
                     </button>
                   </div>
 
@@ -1864,7 +2059,7 @@ function AsgardBarberApp({ lang }: { lang?: string }) {
                           <div className="text-amber-400 text-[8px] uppercase tracking-[0.4em] font-black mb-1">{b.role}</div>
                           <h4 className="text-xl font-black">{b.name}</h4>
                           <div className="flex items-center gap-2 mt-3">
-                            <div className="px-2 py-0.5 bg-amber-500/10 border border-amber-500/20 text-amber-400 text-[8px] uppercase tracking-widest font-bold">{b.exp} experiência</div>
+                            <div className="px-2 py-0.5 bg-amber-500/10 border border-amber-500/20 text-amber-400 text-[8px] uppercase tracking-widest font-bold">{b.exp} {tBarber.experience}</div>
                           </div>
                         </div>
                       </motion.div>
@@ -1877,8 +2072,8 @@ function AsgardBarberApp({ lang }: { lang?: string }) {
               <section className="py-20 px-8 md:px-16 bg-white/[0.02] border-y border-white/[0.05]">
                 <div className="max-w-6xl mx-auto">
                   <div className="text-center mb-14">
-                    <span className="text-amber-500 text-[9px] uppercase tracking-[0.5em] font-black block mb-3">Testemunhos</span>
-                    <h3 className="text-4xl font-black">O que dizem os clientes<span className="text-amber-500">.</span></h3>
+                    <span className="text-amber-500 text-[9px] uppercase tracking-[0.5em] font-black block mb-3">{tBarber.testimonials}</span>
+                    <h3 className="text-4xl font-black">{tBarber.clientsSay}<span className="text-amber-500">.</span></h3>
                   </div>
                   <div className="grid md:grid-cols-3 gap-6">
                     {testimonials.map((t, i) => (
@@ -1907,11 +2102,11 @@ function AsgardBarberApp({ lang }: { lang?: string }) {
             <motion.div key="services" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="p-8 md:p-16 max-w-7xl mx-auto">
               <div className="mb-16">
                 <button onClick={() => setView('intro')} className="flex items-center gap-2 text-white/30 hover:text-amber-400 text-[10px] uppercase tracking-widest font-black transition-colors mb-10">
-                  <ArrowLeft size={12} /> Voltar
+                  <ArrowLeft size={12} /> {tBarber.back}
                 </button>
-                <span className="text-amber-500 text-[9px] uppercase tracking-[0.5em] font-black block mb-4">Serviços Premium</span>
+                <span className="text-amber-500 text-[9px] uppercase tracking-[0.5em] font-black block mb-4">{tBarber.premiumServices}</span>
                 <h2 className="text-5xl md:text-7xl font-black leading-tight">
-                  A Experiência<span className="text-amber-500">.</span>
+                  {tBarber.theExperience}<span className="text-amber-500">.</span>
                 </h2>
               </div>
 
@@ -1950,7 +2145,7 @@ function AsgardBarberApp({ lang }: { lang?: string }) {
                             onClick={(e) => { e.stopPropagation(); setView('book'); }}
                             className="w-full py-3.5 bg-amber-500 text-black font-black uppercase tracking-[0.3em] text-[10px] hover:bg-white transition-all"
                           >
-                            Reservar Este Serviço
+                            {tBarber.bookThisService}
                           </button>
                         </motion.div>
                       )}
@@ -1961,7 +2156,7 @@ function AsgardBarberApp({ lang }: { lang?: string }) {
 
               <div className="mt-10 text-center">
                 <button onClick={() => setView('book')} className="px-14 py-5 bg-amber-500 text-black font-black uppercase tracking-[0.3em] text-[11px] hover:bg-white transition-all">
-                  Marcar Sessão
+                  {tBarber.bookNow}
                 </button>
               </div>
             </motion.div>
@@ -1969,78 +2164,12 @@ function AsgardBarberApp({ lang }: { lang?: string }) {
 
           {/* ── BOOK ── */}
           {view === 'book' && (
-            <motion.div key="book" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="p-8 md:p-16 flex items-start justify-center min-h-full">
-              <div className="w-full max-w-2xl">
-                <button onClick={() => setView('intro')} className="flex items-center gap-2 text-white/30 hover:text-amber-400 text-[10px] uppercase tracking-widest font-black transition-colors mb-10">
-                  <ArrowLeft size={12} /> Voltar
-                </button>
-
-                <span className="text-amber-500 text-[9px] uppercase tracking-[0.5em] font-black block mb-4">Reserva</span>
-                <h2 className="text-4xl md:text-5xl font-black mb-12 leading-tight">
-                  Marcar Sessão<span className="text-amber-500">.</span>
-                </h2>
-
-                <div className="space-y-5">
-                  <div>
-                    <label className="text-[9px] uppercase tracking-[0.4em] font-black text-white/40 block mb-2">Nome Completo</label>
-                    <input
-                      id="name-elaris-barber"
-                      className="w-full bg-white/[0.04] border border-white/[0.08] focus:border-amber-500 outline-none px-5 py-4 text-sm transition-all placeholder:text-white/20"
-                      placeholder="O teu nome"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-5">
-                    <div>
-                      <label className="text-[9px] uppercase tracking-[0.4em] font-black text-white/40 block mb-2">Telefone</label>
-                      <input
-                        className="w-full bg-white/[0.04] border border-white/[0.08] focus:border-amber-500 outline-none px-5 py-4 text-sm transition-all placeholder:text-white/20"
-                        placeholder="+351 912..."
-                      />
-                    </div>
-                    <div>
-                      <label className="text-[9px] uppercase tracking-[0.4em] font-black text-white/40 block mb-2">Data</label>
-                      <input
-                        type="date"
-                        className="w-full bg-white/[0.04] border border-white/[0.08] focus:border-amber-500 outline-none px-5 py-4 text-sm transition-all text-white/60"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="text-[9px] uppercase tracking-[0.4em] font-black text-white/40 block mb-2">Serviço</label>
-                    <select className="w-full bg-white/[0.04] border border-white/[0.08] focus:border-amber-500 outline-none px-5 py-4 text-sm transition-all text-white/60 appearance-none cursor-pointer">
-                      <option value="" className="bg-[#111]">Selecionar serviço</option>
-                      {services.map((s) => (
-                        <option key={s.id} value={s.name} className="bg-[#111]">{s.name} — {s.price}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="text-[9px] uppercase tracking-[0.4em] font-black text-white/40 block mb-3">Horário</label>
-                    <div className="grid grid-cols-4 gap-2">
-                      {["10:00","11:00","14:00","15:00","16:00","17:00","18:00","19:00"].map((t) => (
-                        <button key={t} className="py-2.5 border border-white/[0.08] text-[10px] font-black hover:border-amber-500 hover:text-amber-400 transition-all text-white/40">
-                          {t}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => {
-                    const nameInput = document.getElementById('name-elaris-barber') as HTMLInputElement;
-                    setUser(nameInput?.value || "Cliente");
-                    setView('done');
-                  }}
-                  className="w-full mt-10 py-5 bg-amber-500 text-black font-black uppercase tracking-[0.35em] text-[11px] hover:bg-white transition-all"
-                >
-                  Confirmar Reserva
-                </button>
-              </div>
-            </motion.div>
+            <BarberBookingForm
+              services={services}
+              tBarber={tBarber}
+              setView={setView}
+              setUser={setUser}
+            />
           )}
 
           {/* ── DONE ── */}
@@ -2061,17 +2190,17 @@ function AsgardBarberApp({ lang }: { lang?: string }) {
               </motion.div>
 
               <span className="text-amber-400 text-[9px] uppercase tracking-[0.6em] font-black mb-5">
-                Reserva Confirmada
+                {tBarber.bookingConfirmed}
               </span>
 
               <h2 className="text-6xl md:text-7xl font-black leading-none tracking-tight mb-6">
-                ATÉ JÁ
+                {tBarber.seeYou}
                 <span className="text-amber-500">.</span>
               </h2>
 
               <p className="text-white/40 text-lg max-w-lg leading-relaxed">
-                A tua sessão premium está marcada{user ? `, ${user}` : ""}. <br />
-                Bem-vindo ao padrão mais alto da barbearia internacional.
+                {tBarber.sessionBooked}{user ? `, ${user}` : ""}. <br />
+                {tBarber.welcomeMsg}
               </p>
 
               <div className="flex items-center gap-3 mt-10 text-[9px] uppercase tracking-widest text-white/20 font-black">
@@ -2083,7 +2212,7 @@ function AsgardBarberApp({ lang }: { lang?: string }) {
                 onClick={() => setView('intro')}
                 className="mt-12 px-12 py-4 border border-white/10 hover:border-amber-500 hover:text-amber-400 transition-all uppercase tracking-[0.3em] text-[10px] font-black"
               >
-                Voltar ao Início
+                {tBarber.backHome}
               </button>
             </motion.div>
           )}
