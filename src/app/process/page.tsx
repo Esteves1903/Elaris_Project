@@ -1,4 +1,5 @@
 import Link from "next/link";
+import RevealCard from "@/components/ui/RevealCard";
 
 export default function ProcessPage() {
   const processSteps = [
@@ -60,36 +61,38 @@ export default function ProcessPage() {
       </section>
 
       <section className="mx-auto max-w-6xl">
-        <div className="grid gap-0">
-          {processSteps.map((step) => (
-            <div
-              key={step.title}
-              className="group relative grid gap-10 border-t border-white/10 py-24 lg:grid-cols-[0.8fr_1.2fr] lg:items-start"
-            >
-              <div className="flex flex-col gap-4">
-                <span className="text-5xl font-black text-white/5 transition-colors group-hover:text-cyan-400/20">
-                  {step.number}
-                </span>
+        <div className="relative grid gap-0">
+          {/* Vertical connecting line between steps */}
+          <div className="absolute left-8 top-24 bottom-24 w-px bg-gradient-to-b from-transparent via-white/[0.08] to-transparent hidden lg:block" />
 
-                <p className="text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
-                  {step.label}
-                </p>
+          {processSteps.map((step, index) => (
+            <RevealCard key={step.title} delay={index * 0.1}>
+              <div className="group relative grid gap-10 border-t border-white/10 py-24 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+                <div className="flex flex-col gap-4">
+                  <span className="text-5xl font-black text-white/5 transition-colors group-hover:text-cyan-400/20">
+                    {step.number}
+                  </span>
+
+                  <p className="text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
+                    {step.label}
+                  </p>
+                </div>
+
+                <div>
+                  <h2 className="mb-5 text-3xl font-bold tracking-tight">
+                    {step.title}
+                  </h2>
+
+                  <p className="mb-5 text-lg leading-8 text-zinc-300">
+                    {step.description}
+                  </p>
+
+                  <p className="text-base leading-7 text-zinc-400">
+                    {step.details}
+                  </p>
+                </div>
               </div>
-
-              <div>
-                <h2 className="mb-5 text-3xl font-bold tracking-tight">
-                  {step.title}
-                </h2>
-
-                <p className="mb-5 text-lg leading-8 text-zinc-300">
-                  {step.description}
-                </p>
-
-                <p className="text-base leading-7 text-zinc-400">
-                  {step.details}
-                </p>
-              </div>
-            </div>
+            </RevealCard>
           ))}
         </div>
       </section>

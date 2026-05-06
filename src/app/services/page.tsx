@@ -1,4 +1,5 @@
 import Link from "next/link";
+import RevealCard from "@/components/ui/RevealCard";
 
 export default function ServicesPage() {
   const services = [
@@ -52,35 +53,34 @@ export default function ServicesPage() {
 
       <section className="mx-auto max-w-6xl">
         <div className="grid gap-0">
-          {services.map((service) => (
-            <div
-              key={service.title}
-              className="group relative grid gap-10 border-t border-white/10 py-24 lg:grid-cols-[0.8fr_1.2fr] lg:items-start"
-            >
-              <div className="flex flex-col gap-4">
-                <span className="text-5xl font-black text-white/5 transition-colors group-hover:text-cyan-400/20">
-                  {service.number}
-                </span>
+          {services.map((service, index) => (
+            <RevealCard key={service.title} delay={index * 0.1}>
+              <div className="group relative grid gap-10 border-t border-white/10 py-24 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+                <div className="flex flex-col gap-4">
+                  <span className="text-5xl font-black text-white/5 transition-colors group-hover:text-cyan-400/20">
+                    {service.number}
+                  </span>
 
-                <p className="text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
-                  {service.label}
-                </p>
+                  <p className="text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
+                    {service.label}
+                  </p>
+                </div>
+
+                <div>
+                  <h2 className="mb-5 text-3xl font-bold tracking-tight">
+                    {service.title}
+                  </h2>
+
+                  <p className="mb-5 text-lg leading-8 text-zinc-300">
+                    {service.description}
+                  </p>
+
+                  <p className="text-base leading-7 text-zinc-400">
+                    {service.details}
+                  </p>
+                </div>
               </div>
-
-              <div>
-                <h2 className="mb-5 text-3xl font-bold tracking-tight">
-                  {service.title}
-                </h2>
-
-                <p className="mb-5 text-lg leading-8 text-zinc-300">
-                  {service.description}
-                </p>
-
-                <p className="text-base leading-7 text-zinc-400">
-                  {service.details}
-                </p>
-              </div>
-            </div>
+            </RevealCard>
           ))}
         </div>
       </section>
