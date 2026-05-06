@@ -137,7 +137,7 @@ export function Header() {
                 ))}
               </nav>
 
-              <div className="mt-auto flex flex-col gap-3">
+              <div className="mt-10 flex flex-col gap-3">
                 <Link
                   href="/client-login"
                   onClick={() => setMobileOpen(false)}
