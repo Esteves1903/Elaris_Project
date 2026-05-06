@@ -68,7 +68,7 @@ export default function ClientAccountPage() {
     }
 
     const { data: { session } } = await supabase.auth.getSession();
-    await fetch("/api/client/account", {
+    const syncRes = await fetch("/api/client/account", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -76,6 +76,11 @@ export default function ClientAccountPage() {
       },
       body: JSON.stringify({ password: newPassword }),
     });
+
+    if (!syncRes.ok) {
+      setErrorMessage("Password updated but failed to sync. Please contact support.");
+      return;
+    }
 
     setCurrentPassword("");
     setNewPassword("");

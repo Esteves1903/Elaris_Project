@@ -82,8 +82,8 @@ export default function ClientAreaPage() {
     init();
   }, [router]);
 
-  function handleLogout() {
-    signOut();
+  async function handleLogout() {
+    await signOut();
     router.push("/client-login");
   }
 
