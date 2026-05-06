@@ -14,8 +14,9 @@ export async function getUser() {
 }
 
 export async function getUserRole(): Promise<"admin" | "client" | null> {
-  const user = await getUser();
-  return (user?.user_metadata?.role as "admin" | "client") ?? null;
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) return null;
+  return (session.user.user_metadata?.role as "admin" | "client") ?? null;
 }
 
 export async function updatePassword(newPassword: string) {
