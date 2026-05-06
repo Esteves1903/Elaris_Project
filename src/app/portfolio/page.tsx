@@ -73,20 +73,40 @@ const technicalDetails: Record<string, ProjectDetails> = {
   },
 };
 
+type Lang = "en" | "pt";
+
 export default function PortfolioPage() {
   const [sidebarData, setSidebarData] = useState<ProjectDetails | null>(null);
+  const [lang, setLang] = useState<Lang>("en");
 
   return (
     <main className="min-h-screen bg-[#0B0F19] px-6 pb-24 pt-32 text-white font-sans">
       {/* Hero Section */}
       <section className="mx-auto max-w-6xl">
-        <div className="max-w-3xl">
-          <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
-            Portfolio
-          </p>
-          <h1 className="mb-8 text-4xl font-bold tracking-tight sm:text-5xl">
-            Interactive Layouts Previews.
-          </h1>
+        <div className="max-w-3xl flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6">
+          <div>
+            <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
+              Portfolio
+            </p>
+            <h1 className="mb-8 text-4xl font-bold tracking-tight sm:text-5xl">
+              Interactive Layouts Previews.
+            </h1>
+          </div>
+          {/* Global language toggle */}
+          <div className="flex items-center gap-1 self-start mt-1 shrink-0">
+            <button
+              onClick={() => setLang("en")}
+              className={`px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-full transition-all border ${lang === "en" ? "bg-cyan-400 text-black border-cyan-400" : "border-white/20 text-white/40 hover:border-white/40"}`}
+            >
+              EN
+            </button>
+            <button
+              onClick={() => setLang("pt")}
+              className={`px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-full transition-all border ${lang === "pt" ? "bg-cyan-400 text-black border-cyan-400" : "border-white/20 text-white/40 hover:border-white/40"}`}
+            >
+              PT
+            </button>
+          </div>
         </div>
       </section>
 
@@ -123,7 +143,7 @@ export default function PortfolioPage() {
         <div className="space-y-6">
           <h2 className="text-3xl font-black tracking-tight">1. Elaris Restaurant</h2>
           <div className="rounded-[2.5rem] overflow-hidden border border-white/10 h-[700px] relative bg-orange-50 shadow-2xl">
-            <ElarisFinalDubai/>
+            <ElarisFinalDubai lang={lang}/>
           </div>
           <div className="flex justify-end">
             <button onClick={() => setSidebarData(technicalDetails.cafe)} className="px-6 py-3 bg-white/5 border border-white/10 text-white rounded-xl font-bold hover:bg-cyan-400 hover:text-black transition-all flex items-center gap-2 text-xs tracking-widest uppercase">
@@ -136,7 +156,7 @@ export default function PortfolioPage() {
         <div className="space-y-6">
           <h2 className="text-3xl font-black tracking-tight">2. Elaris Football Store</h2>
           <div className="rounded-[2.5rem] overflow-hidden border border-white/10 h-[700px] relative bg-white shadow-2xl">
-            <ElarisSportApp />
+            <ElarisSportApp lang={lang} />
           </div>
           <div className="flex justify-end">
             <button onClick={() => setSidebarData(technicalDetails.sport)} className="px-6 py-3 bg-white/5 border border-white/10 text-white rounded-xl font-bold hover:bg-blue-600 transition-all flex items-center gap-2 text-xs tracking-widest uppercase">
@@ -149,7 +169,7 @@ export default function PortfolioPage() {
         <div className="space-y-6">
           <h2 className="text-3xl font-black tracking-tight">3. Elaris Barber Shop</h2>
           <div className="rounded-[2.5rem] overflow-hidden border border-white/10 h-[700px] relative bg-[#0a0a0a] shadow-2xl">
-            <AsgardBarberApp />
+            <AsgardBarberApp lang={lang} />
           </div>
           <div className="flex justify-end">
             <button onClick={() => setSidebarData(technicalDetails.asgard)} className="px-6 py-3 bg-white/5 border border-white/10 text-white rounded-xl font-bold hover:bg-red-600 transition-all flex items-center gap-2 text-xs tracking-widest uppercase">
@@ -163,7 +183,31 @@ export default function PortfolioPage() {
   );
 }
 
-function ElarisFinalDubai() {
+function ElarisFinalDubai({ lang = "en" }: { lang?: Lang }) {
+  const t = {
+    en: {
+      story: "The Story", menu: "The Menu", bookNow: "Book Now",
+      home: "Home", heritage: "Heritage", collection: "Collection", reservations: "Reservations",
+      discover: "Discover the Collection", artTitle: "The Art of Honest Luxury",
+      artQuote: '"At Elaris, we don\'t just serve dishes; we curate moments. From the rustic roots of Portugal to the golden skyline of Dubai."',
+      menuTitle: "The Menu", menuSub: "Drag the plates to explore",
+      yearsExp: "Years of Experience", intlAwards: "International Awards", worldCapitals: "World Capitals",
+      privacy: "Privacy", luxuryDining: "Luxury Dining",
+      copyright: "© 2026 Elaris Global Hospitality Group. All rights reserved.",
+      location: "Jumeirah Beach Road · Dubai, UAE",
+    },
+    pt: {
+      story: "A História", menu: "O Menu", bookNow: "Reservar",
+      home: "Início", heritage: "Herança", collection: "Coleção", reservations: "Reservas",
+      discover: "Descobrir a Coleção", artTitle: "A Arte do Luxo Honesto",
+      artQuote: '"Na Elaris, não servimos apenas pratos; criamos momentos. Das raízes rústicas de Portugal ao horizonte dourado do Dubai."',
+      menuTitle: "O Menu", menuSub: "Arrasta os pratos para os explorar",
+      yearsExp: "Anos de Experiência", intlAwards: "Prémios Internacionais", worldCapitals: "Capitais Mundiais",
+      privacy: "Privacidade", luxuryDining: "Restaurante de Luxo",
+      copyright: "© 2026 Elaris Global Hospitality Group. Todos os direitos reservados.",
+      location: "Jumeirah Beach Road · Dubai, EAU",
+    },
+  }[lang];
   // --- STATE MANAGEMENT ---
   const [view, setView] = useState<'home' | 'menu' | 'story' | 'booking' | 'success'>('home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -294,7 +338,7 @@ function ElarisFinalDubai() {
           onClick={() => navigateTo('home')}
           className="cursor-pointer flex flex-col items-center"
         >
-          <span className="text-xl md:text-2xl font-light tracking-[0.5em] uppercase">
+          <span className="text-lg md:text-2xl font-light tracking-[0.5em] uppercase">
             Elaris
           </span>
 
@@ -308,21 +352,21 @@ function ElarisFinalDubai() {
             onClick={() => navigateTo('story')}
             className="hover:text-[#c5a059] transition-all"
           >
-            The Story
+            {t.story}
           </button>
 
           <button
             onClick={() => navigateTo('menu')}
             className="hover:text-[#c5a059] transition-all"
           >
-            The Menu
+            {t.menu}
           </button>
 
           <button
             onClick={() => navigateTo('booking')}
-            className="px-10 py-4 bg-[#1a1a1a] text-white hover:bg-[#c5a059] transition-all"
+            className="px-8 py-3 bg-[#1a1a1a] text-white hover:bg-[#c5a059] transition-all"
           >
-            Book Now
+            {t.bookNow}
           </button>
         </div>
 
@@ -330,12 +374,12 @@ function ElarisFinalDubai() {
           className="md:hidden p-2"
           onClick={() => setIsMobileMenuOpen(true)}
         >
-          <Menu size={24} strokeWidth={1.5} />
+          <Menu size={22} strokeWidth={1.5} />
         </button>
       </nav>
 
       {/* MAIN */}
-      <main className="h-[calc(100%-160px)] md:h-[calc(100%-176px)] overflow-hidden relative">
+      <main className="flex-1 overflow-hidden relative">
 
         <AnimatePresence mode="wait">
 
@@ -377,11 +421,11 @@ function ElarisFinalDubai() {
                     {slides[currentSlide].title}
                   </h2>
 
-                  <button
+                    <button
                     onClick={() => navigateTo('menu')}
                     className="px-12 py-5 border border-white hover:bg-white hover:text-black transition-all uppercase text-[10px] tracking-widest font-black"
                   >
-                    Discover the Collection
+                    {t.discover}
                   </button>
                 </div>
               </div>
@@ -394,12 +438,11 @@ function ElarisFinalDubai() {
                 />
 
                 <h3 className="text-3xl md:text-5xl font-light mb-10">
-                  The Art of Honest Luxury
+                  {t.artTitle}
                 </h3>
 
                 <p className="text-zinc-500 font-serif text-lg italic leading-relaxed">
-                  "At Elaris, we don't just serve dishes; we curate moments.
-                  From the rustic roots of Portugal to the golden skyline of Dubai."
+                  {t.artQuote}
                 </p>
               </section>
 
@@ -418,10 +461,10 @@ function ElarisFinalDubai() {
               <div className="max-w-7xl mx-auto">
                 <header className="text-center mb-16">
                   <h2 className="text-5xl md:text-7xl font-light uppercase tracking-[0.2em] mb-4">
-                    The Menu
+                    {t.menuTitle}
                   </h2>
                   <div className="h-0.5 w-20 bg-[#c5a059] mx-auto mb-4" />
-                  <p className="text-zinc-400 text-xs tracking-[0.3em] uppercase">Arrasta os pratos para os explorar</p>
+                  <p className="text-zinc-400 text-xs tracking-[0.3em] uppercase">{t.menuSub}</p>
                 </header>
 
                 {menuCategories.map((cat) => (
@@ -489,7 +532,7 @@ function ElarisFinalDubai() {
                       <AnimatedCounter target={20} duration={2200} suffix="+" />
                     </span>
                     <span className="text-[#111]/70 text-[9px] uppercase tracking-[0.4em] font-black mt-2">
-                      Anos de Experiência
+                      {t.yearsExp}
                     </span>
                   </div>
                   <div className="flex flex-col items-center gap-1 border-x border-[#111]/20">
@@ -497,7 +540,7 @@ function ElarisFinalDubai() {
                       <AnimatedCounter target={47} duration={2000} />
                     </span>
                     <span className="text-[#111]/70 text-[9px] uppercase tracking-[0.4em] font-black mt-2">
-                      Prémios Internacionais
+                      {t.intlAwards}
                     </span>
                   </div>
                   <div className="flex flex-col items-center gap-1">
@@ -505,7 +548,7 @@ function ElarisFinalDubai() {
                       <AnimatedCounter target={3} duration={1500} />
                     </span>
                     <span className="text-[#111]/70 text-[9px] uppercase tracking-[0.4em] font-black mt-2">
-                      Capitais Mundiais
+                      {t.worldCapitals}
                     </span>
                   </div>
                 </div>
@@ -515,7 +558,7 @@ function ElarisFinalDubai() {
 
           {/* BOOKING */}
           {view === 'booking' && (
-            <BookingForm navigateTo={navigateTo} />
+            <BookingForm navigateTo={navigateTo} lang={lang} />
           )}
 
           {/* SUCCESS */}
@@ -638,28 +681,28 @@ function ElarisFinalDubai() {
                   onClick={() => navigateTo('home')}
                   className="text-left hover:text-[#c5a059]"
                 >
-                  Home
+                  {t.home}
                 </button>
 
                 <button
                   onClick={() => navigateTo('story')}
                   className="text-left hover:text-[#c5a059]"
                 >
-                  Heritage
+                  {t.heritage}
                 </button>
 
                 <button
                   onClick={() => navigateTo('menu')}
                   className="text-left hover:text-[#c5a059]"
                 >
-                  Collection
+                  {t.collection}
                 </button>
 
                 <button
                   onClick={() => navigateTo('booking')}
                   className="text-left text-[#c5a059]"
                 >
-                  Reservations
+                  {t.reservations}
                 </button>
               </div>
 
@@ -675,36 +718,36 @@ function ElarisFinalDubai() {
       </main>
 
       {/* FOOTER FIXO */}
-      <footer className="bg-[#0a0a0a] text-white px-8 md:px-16 py-6 border-t border-white/5 w-full z-50">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+      <footer className="sticky bottom-0 bg-[#0a0a0a] text-white px-4 md:px-16 py-4 border-t border-white/5 w-full z-50 shrink-0">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-3">
 
           {/* LEFT */}
           <div>
-            <h4 className="text-xl font-light tracking-[0.4em] uppercase">
+            <h4 className="text-lg font-light tracking-[0.4em] uppercase">
               Elaris
             </h4>
             <p className="text-zinc-500 text-[9px] leading-loose tracking-widest uppercase">
-              Jumeirah Beach Road · Dubai, UAE
+              {t.location}
             </p>
           </div>
 
           {/* CENTER LINKS */}
-          <div className="flex gap-8 text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400">
-            <button onClick={() => navigateTo('menu')} className="hover:text-[#c5a059] transition-colors">Menu</button>
-            <button onClick={() => navigateTo('story')} className="hover:text-[#c5a059] transition-colors">Heritage</button>
-            <button onClick={() => setShowPrivacy(true)} className="hover:text-[#c5a059] transition-colors">Privacy</button>
+          <div className="flex gap-6 text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400">
+            <button onClick={() => navigateTo('menu')} className="hover:text-[#c5a059] transition-colors">{t.menu}</button>
+            <button onClick={() => navigateTo('story')} className="hover:text-[#c5a059] transition-colors">{t.heritage}</button>
+            <button onClick={() => setShowPrivacy(true)} className="hover:text-[#c5a059] transition-colors">{t.privacy}</button>
           </div>
 
           {/* RIGHT */}
-          <div className="flex items-center gap-4 text-zinc-500">
-            <Globe size={16} className="hover:text-[#c5a059] cursor-pointer transition-colors" />
-            <span className="text-[9px] tracking-[0.4em] uppercase">Luxury Dining</span>
+          <div className="flex items-center gap-3 text-zinc-500">
+            <Globe size={14} className="hover:text-[#c5a059] cursor-pointer transition-colors" />
+            <span className="text-[9px] tracking-[0.4em] uppercase">{t.luxuryDining}</span>
           </div>
 
         </div>
-        <div className="max-w-7xl mx-auto mt-4 pt-4 border-t border-white/5 text-center">
+        <div className="max-w-7xl mx-auto mt-3 pt-3 border-t border-white/5 text-center">
           <p className="text-[8px] tracking-[0.5em] uppercase text-zinc-700">
-            © 2026 Elaris Global Hospitality Group. All rights reserved.
+            {t.copyright}
           </p>
         </div>
       </footer>
@@ -752,7 +795,29 @@ const COUNTRY_CODES = [
   { code: "+60", flag: "🇲🇾", name: "Malaysia" },
 ];
 
-function BookingForm({ navigateTo }: { navigateTo: (v: any) => void }) {
+function BookingForm({ navigateTo, lang = "en" }: { navigateTo: (v: any) => void; lang?: Lang }) {
+  const t = {
+    en: {
+      reservations: "Reservations", fullName: "Full Name", guests: "Guests",
+      selectGuests: "Select guests", date: "Date", time: "Time", selectTime: "Select time",
+      phone: "Phone Number", secureInvitation: "Secure Invitation",
+      errName: "Full name is required", errFullName: "Please enter your full name",
+      errGuests: "Please select number of guests", errDate: "Please select a date",
+      errDateFuture: "Date must be in the future", errTime: "Please select a time",
+      errPhone: "Phone number is required", errPhoneInvalid: "Enter a valid phone number",
+      person: "Person", persons: "Persons",
+    },
+    pt: {
+      reservations: "Reservas", fullName: "Nome Completo", guests: "Convidados",
+      selectGuests: "Selecionar convidados", date: "Data", time: "Hora", selectTime: "Selecionar hora",
+      phone: "Número de Telefone", secureInvitation: "Confirmar Reserva",
+      errName: "Nome completo obrigatório", errFullName: "Insira o seu nome completo",
+      errGuests: "Selecione o número de convidados", errDate: "Selecione uma data",
+      errDateFuture: "A data deve ser no futuro", errTime: "Selecione uma hora",
+      errPhone: "Telefone obrigatório", errPhoneInvalid: "Insira um número válido",
+      person: "Pessoa", persons: "Pessoas",
+    },
+  }[lang];
   const [form, setForm] = React.useState({
     name: "", guests: "", date: "", time: "", countryCode: "+351", phone: "",
   });
@@ -761,14 +826,14 @@ function BookingForm({ navigateTo }: { navigateTo: (v: any) => void }) {
 
   const validate = (data: typeof form) => {
     const e: Record<string, string> = {};
-    if (!data.name.trim()) e.name = "Full name is required";
-    else if (data.name.trim().split(" ").length < 2) e.name = "Please enter your full name";
-    if (!data.guests) e.guests = "Please select number of guests";
-    if (!data.date) e.date = "Please select a date";
-    else if (new Date(data.date) < new Date(new Date().toDateString())) e.date = "Date must be in the future";
-    if (!data.time) e.time = "Please select a time";
-    if (!data.phone.trim()) e.phone = "Phone number is required";
-    else if (!/^\d{6,15}$/.test(data.phone.replace(/\s/g, ""))) e.phone = "Enter a valid phone number";
+    if (!data.name.trim()) e.name = t.errName;
+    else if (data.name.trim().split(" ").length < 2) e.name = t.errFullName;
+    if (!data.guests) e.guests = t.errGuests;
+    if (!data.date) e.date = t.errDate;
+    else if (new Date(data.date) < new Date(new Date().toDateString())) e.date = t.errDateFuture;
+    if (!data.time) e.time = t.errTime;
+    if (!data.phone.trim()) e.phone = t.errPhone;
+    else if (!/^\d{6,15}$/.test(data.phone.replace(/\s/g, ""))) e.phone = t.errPhoneInvalid;
     return e;
   };
 
@@ -811,14 +876,14 @@ function BookingForm({ navigateTo }: { navigateTo: (v: any) => void }) {
     >
       <div className="bg-white p-10 md:p-16 shadow-2xl w-full max-w-4xl border border-zinc-100 relative mx-auto">
         <h3 className="text-4xl font-light text-center mb-16 uppercase tracking-widest">
-          Reservations
+          {t.reservations}
         </h3>
 
         <div className="grid md:grid-cols-2 gap-x-12 gap-y-10">
 
           {/* Full Name */}
           <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">Full Name *</label>
+            <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">{t.fullName} *</label>
             <input
               className={fieldClass("name")}
               placeholder="Johnathan Doe"
@@ -831,27 +896,27 @@ function BookingForm({ navigateTo }: { navigateTo: (v: any) => void }) {
 
           {/* Guests */}
           <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">Guests *</label>
+            <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">{t.guests} *</label>
             <select
               className={fieldClass("guests")}
               value={form.guests}
               onChange={e => handleChange("guests", e.target.value)}
               onBlur={() => handleBlur("guests")}
             >
-              <option value="">Select guests</option>
-              <option value="1">1 Person</option>
-              <option value="2">2 Persons</option>
-              <option value="3">3 Persons</option>
-              <option value="4">4 Persons</option>
-              <option value="5">5 Persons</option>
-              <option value="6+">6+ Persons</option>
+              <option value="">{t.selectGuests}</option>
+              <option value="1">1 {t.person}</option>
+              <option value="2">2 {t.persons}</option>
+              <option value="3">3 {t.persons}</option>
+              <option value="4">4 {t.persons}</option>
+              <option value="5">5 {t.persons}</option>
+              <option value="6+">6+ {t.persons}</option>
             </select>
             {errors.guests && touched.guests && <p className="text-red-500 text-[10px] mt-1">{errors.guests}</p>}
           </div>
 
           {/* Date */}
           <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">Date *</label>
+            <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">{t.date} *</label>
             <input
               type="date"
               className={fieldClass("date")}
@@ -864,14 +929,14 @@ function BookingForm({ navigateTo }: { navigateTo: (v: any) => void }) {
 
           {/* Time */}
           <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">Time *</label>
+            <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">{t.time} *</label>
             <select
               className={fieldClass("time")}
               value={form.time}
               onChange={e => handleChange("time", e.target.value)}
               onBlur={() => handleBlur("time")}
             >
-              <option value="">Select time</option>
+              <option value="">{t.selectTime}</option>
               <option value="19:00">19:00</option>
               <option value="20:30">20:30</option>
               <option value="22:00">22:00</option>
@@ -881,7 +946,7 @@ function BookingForm({ navigateTo }: { navigateTo: (v: any) => void }) {
 
           {/* Phone — full width */}
           <div className="space-y-2 md:col-span-2">
-            <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">Phone Number *</label>
+            <label className="text-[10px] font-black uppercase tracking-widest text-[#c5a059]">{t.phone} *</label>
             <div className={`flex border-b transition-colors ${errors.phone && touched.phone ? "border-red-400" : "border-zinc-200 focus-within:border-[#c5a059]"}`}>
               <select
                 className="bg-transparent outline-none py-4 pr-3 text-sm font-medium text-zinc-600 shrink-0"
@@ -912,7 +977,7 @@ function BookingForm({ navigateTo }: { navigateTo: (v: any) => void }) {
           onClick={handleSubmit}
           className="w-full mt-16 py-6 bg-[#1a1a1a] text-white font-black uppercase text-[10px] tracking-[0.4em] hover:bg-[#c5a059] hover:text-black transition-all"
         >
-          Secure Invitation
+          {t.secureInvitation}
         </button>
       </div>
     </motion.div>
@@ -1005,7 +1070,69 @@ function DishCard3D({ item }: { item: { n: string; p: string; d: string; img: st
 /* -------------------------------------------------------------------------- */
 /* --- 2. SPORTZONE FOOTBALL --- */
 /* -------------------------------------------------------------------------- */
-function ElarisSportApp() {
+function ElarisSportApp({ lang = "en" }: { lang?: string }) {
+  const t = {
+    en: {
+      newSeason: "New Season 2026", heroTitle1: "PLAY AT YOUR", heroTitle2: "PEAK.",
+      heroSub: "Premium football gear for every level. Free shipping on orders over €100.",
+      shopBoots: "Shop Boots", shopKits: "Shop Kits", onBoots: "on boots",
+      products: "products", featured: "Featured", priceLow: "Price: Low → High", priceHigh: "Price: High → Low",
+      noProducts: "No products found for", backToShop: "Back to Shop", reviews: "reviews",
+      selectSize: "Select Size", pleaseSelectSize: "Please select a size",
+      addToCart: "Add to Cart", yourCart: "Your Cart", continueShopping: "Continue Shopping",
+      cartEmpty: "Your cart is empty", cartEmptySub: "Add some gear to get started",
+      browseProducts: "Browse Products", subtotal: "Subtotal", savings: "Savings",
+      shipping: "Shipping", free: "Free", addMore: "Add", moreForFree: "more for free shipping!",
+      total: "Total", checkout: "Checkout",
+      shippingPayment: "Shipping & Payment", fullName: "Full Name", email: "Email Address",
+      address: "Shipping Address", card: "Card Number", placeOrder: "Place Order",
+      order: "Order", items: "items", orderConfirmed: "Order Confirmed",
+      thankYou: "Thank you,", confirmation: "Your order has been confirmed. A confirmation has been sent to",
+      yourEmail: "your email", estDelivery: "Estimated delivery:", deliveryDays: "3–5 business days",
+      backToStore: "Back to Store", size: "Size", each: "each",
+      errName: "Required", errEmail: "Invalid email", errAddress: "Required", errCard: "Enter a valid card number",
+    },
+    pt: {
+      newSeason: "Nova Temporada 2026", heroTitle1: "JOGA NO TEU", heroTitle2: "MELHOR.",
+      heroSub: "Equipamento premium de futebol para todos os níveis. Envio grátis em encomendas acima de €100.",
+      shopBoots: "Ver Chuteiras", shopKits: "Ver Equipamentos", onBoots: "nas chuteiras",
+      products: "produtos", featured: "Destaques", priceLow: "Preço: Mais Baixo", priceHigh: "Preço: Mais Alto",
+      noProducts: "Nenhum produto encontrado para", backToShop: "Voltar à Loja", reviews: "avaliações",
+      selectSize: "Selecionar Tamanho", pleaseSelectSize: "Por favor seleciona um tamanho",
+      addToCart: "Adicionar ao Carrinho", yourCart: "O Teu Carrinho", continueShopping: "Continuar a Comprar",
+      cartEmpty: "O teu carrinho está vazio", cartEmptySub: "Adiciona equipamento para começar",
+      browseProducts: "Ver Produtos", subtotal: "Subtotal", savings: "Poupança",
+      shipping: "Envio", free: "Grátis", addMore: "Adiciona", moreForFree: "mais para envio grátis!",
+      total: "Total", checkout: "Finalizar",
+      shippingPayment: "Envio & Pagamento", fullName: "Nome Completo", email: "Email",
+      address: "Morada de Envio", card: "Número de Cartão", placeOrder: "Fazer Encomenda",
+      order: "Encomenda", items: "artigos", orderConfirmed: "Encomenda Confirmada",
+      thankYou: "Obrigado,", confirmation: "A tua encomenda foi confirmada. Foi enviada confirmação para",
+      yourEmail: "o teu email", estDelivery: "Entrega estimada:", deliveryDays: "3–5 dias úteis",
+      backToStore: "Voltar à Loja", size: "Tamanho", each: "cada",
+      errName: "Obrigatório", errEmail: "Email inválido", errAddress: "Obrigatório", errCard: "Número de cartão inválido",
+    },
+  }[lang as "en" | "pt"] ?? {
+    newSeason: "New Season 2026", heroTitle1: "PLAY AT YOUR", heroTitle2: "PEAK.",
+    heroSub: "Premium football gear for every level. Free shipping on orders over €100.",
+    shopBoots: "Shop Boots", shopKits: "Shop Kits", onBoots: "on boots",
+    products: "products", featured: "Featured", priceLow: "Price: Low → High", priceHigh: "Price: High → Low",
+    noProducts: "No products found for", backToShop: "Back to Shop", reviews: "reviews",
+    selectSize: "Select Size", pleaseSelectSize: "Please select a size",
+    addToCart: "Add to Cart", yourCart: "Your Cart", continueShopping: "Continue Shopping",
+    cartEmpty: "Your cart is empty", cartEmptySub: "Add some gear to get started",
+    browseProducts: "Browse Products", subtotal: "Subtotal", savings: "Savings",
+    shipping: "Shipping", free: "Free", addMore: "Add", moreForFree: "more for free shipping!",
+    total: "Total", checkout: "Checkout",
+    shippingPayment: "Shipping & Payment", fullName: "Full Name", email: "Email Address",
+    address: "Shipping Address", card: "Card Number", placeOrder: "Place Order",
+    order: "Order", items: "items", orderConfirmed: "Order Confirmed",
+    thankYou: "Thank you,", confirmation: "Your order has been confirmed. A confirmation has been sent to",
+    yourEmail: "your email", estDelivery: "Estimated delivery:", deliveryDays: "3–5 business days",
+    backToStore: "Back to Store", size: "Size", each: "each",
+    errName: "Required", errEmail: "Invalid email", errAddress: "Required", errCard: "Enter a valid card number",
+  };
+
   interface Product {
     id: number;
     name: string;
@@ -1132,10 +1259,10 @@ function ElarisSportApp() {
 
   const validateCheckout = () => {
     const e: Record<string,string> = {};
-    if (!checkoutForm.name.trim()) e.name = 'Required';
-    if (!checkoutForm.email.includes('@')) e.email = 'Invalid email';
-    if (!checkoutForm.address.trim()) e.address = 'Required';
-    if (checkoutForm.card.replace(/\s/g,'').length < 16) e.card = 'Enter a valid card number';
+    if (!checkoutForm.name.trim()) e.name = t.errName;
+    if (!checkoutForm.email.includes('@')) e.email = t.errEmail;
+    if (!checkoutForm.address.trim()) e.address = t.errAddress;
+    if (checkoutForm.card.replace(/\s/g,'').length < 16) e.card = t.errCard;
     return e;
   };
 
@@ -1205,25 +1332,25 @@ function ElarisSportApp() {
                   className="absolute inset-0 w-full h-full object-cover opacity-50"/>
                 <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"/>
                 <div className="relative z-10 h-full flex flex-col justify-center px-8 md:px-14 text-white">
-                  <span className="text-[#0066ff] font-black text-[10px] tracking-[0.4em] uppercase mb-3">New Season 2026</span>
+                  <span className="text-[#0066ff] font-black text-[10px] tracking-[0.4em] uppercase mb-3">{t.newSeason}</span>
                   <h2 className="text-4xl md:text-6xl font-black leading-none mb-4">
-                    PLAY AT YOUR<br/>
-                    <span className="text-[#0066ff]">PEAK.</span>
+                    {t.heroTitle1}<br/>
+                    <span className="text-[#0066ff]">{t.heroTitle2}</span>
                   </h2>
-                  <p className="text-zinc-300 text-sm max-w-md mb-6">Premium football gear for every level. Free shipping on orders over €100.</p>
+                  <p className="text-zinc-300 text-sm max-w-md mb-6">{t.heroSub}</p>
                   <div className="flex gap-3">
                     <button onClick={()=>setSelectedCategory('Boots')} className="px-6 py-2.5 bg-[#0066ff] hover:bg-white hover:text-black text-white font-black text-[10px] uppercase tracking-widest rounded-full transition-all">
-                      Shop Boots
+                      {t.shopBoots}
                     </button>
                     <button onClick={()=>setSelectedCategory('Kits')} className="px-6 py-2.5 border border-white/40 hover:bg-white hover:text-black text-white font-black text-[10px] uppercase tracking-widest rounded-full transition-all">
-                      Shop Kits
+                      {t.shopKits}
                     </button>
                   </div>
                 </div>
                 {/* sale badge */}
                 <div className="absolute top-6 right-8 bg-red-600 text-white px-4 py-2 rounded-xl text-center shadow-xl">
                   <div className="text-xl font-black leading-none">-20%</div>
-                  <div className="text-[9px] uppercase tracking-widest font-bold">on boots</div>
+                  <div className="text-[9px] uppercase tracking-widest font-bold">{t.onBoots}</div>
                 </div>
               </div>
 
@@ -1241,12 +1368,12 @@ function ElarisSportApp() {
 
               {/* Toolbar */}
               <div className="px-6 md:px-10 py-4 flex items-center justify-between">
-                <p className="text-xs text-zinc-400 font-bold">{filtered.length} products</p>
+                <p className="text-xs text-zinc-400 font-bold">{filtered.length} {t.products}</p>
                 <select value={sortBy} onChange={e=>setSortBy(e.target.value as any)}
                   className="text-xs bg-white border border-zinc-200 rounded-lg px-3 py-2 outline-none font-bold cursor-pointer">
-                  <option value="featured">Featured</option>
-                  <option value="price-asc">Price: Low → High</option>
-                  <option value="price-desc">Price: High → Low</option>
+                  <option value="featured">{t.featured}</option>
+                  <option value="price-asc">{t.priceLow}</option>
+                  <option value="price-desc">{t.priceHigh}</option>
                 </select>
               </div>
 
@@ -1255,7 +1382,7 @@ function ElarisSportApp() {
                 {filtered.length===0 && (
                   <div className="col-span-4 text-center py-20 text-zinc-400">
                     <Search size={40} className="mx-auto mb-4 opacity-30"/>
-                    <p className="font-bold">No products found for "{search}"</p>
+                    <p className="font-bold">{t.noProducts} "{search}"</p>
                   </div>
                 )}
                 {filtered.map(item => (
@@ -1307,7 +1434,7 @@ function ElarisSportApp() {
           {view==='product' && selectedProduct && (
             <motion.div key="product" initial={{opacity:0,x:20}} animate={{opacity:1,x:0}} exit={{opacity:0}} className="p-6 md:p-10 max-w-5xl mx-auto">
               <button onClick={()=>setView('shop')} className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-zinc-400 hover:text-black mb-8 transition-colors">
-                <ArrowLeft size={16}/> Back to Shop
+                <ArrowLeft size={16}/> {t.backToShop}
               </button>
               <div className="grid md:grid-cols-2 gap-10">
                 {/* Image */}
@@ -1325,7 +1452,7 @@ function ElarisSportApp() {
                   <h2 className="text-3xl font-black mb-3">{selectedProduct.name}</h2>
                   <div className="flex items-center gap-2 mb-4">
                     <Stars rating={selectedProduct.rating}/>
-                    <span className="text-xs text-zinc-500">{selectedProduct.rating} · {selectedProduct.reviews} reviews</span>
+                    <span className="text-xs text-zinc-500">{selectedProduct.rating} · {selectedProduct.reviews} {t.reviews}</span>
                   </div>
                   <p className="text-zinc-500 text-sm leading-relaxed mb-6">{selectedProduct.description}</p>
                   <div className="flex items-center gap-3 mb-6">
@@ -1338,8 +1465,8 @@ function ElarisSportApp() {
                   {/* Size picker */}
                   <div className="mb-6">
                     <p className="text-[10px] font-black uppercase tracking-widest mb-3 flex items-center gap-2">
-                      Select Size
-                      {sizeError && <span className="text-red-500 normal-case font-normal">Please select a size</span>}
+                      {t.selectSize}
+                      {sizeError && <span className="text-red-500 normal-case font-normal">{t.pleaseSelectSize}</span>}
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {selectedProduct.sizes.map(s => (
@@ -1356,7 +1483,7 @@ function ElarisSportApp() {
                       addToCart(selectedProduct, selectedSize);
                       setView('shop');
                     }} className="flex-1 py-4 bg-black hover:bg-[#0066ff] text-white font-black uppercase tracking-widest text-xs rounded-2xl transition-all flex items-center justify-center gap-2">
-                      <ShoppingBag size={16}/> Add to Cart
+                      <ShoppingBag size={16}/> {t.addToCart}
                     </button>
                     <button onClick={()=>toggleWishlist(selectedProduct.id)}
                       className={`w-14 h-14 rounded-2xl border-2 flex items-center justify-center transition-all ${wishlist.includes(selectedProduct.id) ? 'border-rose-500 bg-rose-50' : 'border-zinc-200 hover:border-rose-400'}`}>
@@ -1530,7 +1657,7 @@ function ElarisSportApp() {
 /* -------------------------------------------------------------------------- */
 /* --- 3. BARBEARIA ELARIS — WORLD CLASS EDITION --- */
 /* -------------------------------------------------------------------------- */
-function AsgardBarberApp() {
+function AsgardBarberApp({ lang }: { lang?: string }) {
   const [view, setView] = useState<'intro' | 'services' | 'book' | 'done'>('intro');
   const [user, setUser] = useState("");
   const [activeService, setActiveService] = useState<number | null>(null);
