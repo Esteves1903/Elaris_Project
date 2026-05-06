@@ -5,8 +5,9 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { getUserRole, signOut } from "@/lib/auth";
-import { client, clientNeeds, latestUpdates, progressSteps } from "@/lib/mock-client-data";
+import { supabase } from "@/lib/supabase";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
+import { projectStageOptions } from "@/lib/project-options";
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -17,18 +18,68 @@ const sectionVariants = {
   }),
 };
 
+type ProjectUpdate = {
+  id: string;
+  title: string;
+  message: string;
+  created_at: string;
+};
+
+type Project = {
+  id: string;
+  type: string;
+  plan: string;
+  website_name: string;
+  website_url: string;
+  status: string;
+  stage: string;
+  estimated_delivery: string;
+  last_update: string;
+  next_step: string;
+  project_updates: ProjectUpdate[];
+};
+
+type ClientData = {
+  id: string;
+  name: string;
+  company: string;
+  projects: Project[];
+};
+
+function buildProgressSteps(currentStage: string) {
+  const stageIndex = projectStageOptions.indexOf(currentStage);
+  return projectStageOptions.map((stage, i) => ({
+    title: stage,
+    status: i < stageIndex ? "completed" : i === stageIndex ? "active" : "pending",
+  }));
+}
+
 export default function ClientAreaPage() {
   const router = useRouter();
   const [isCheckingSession, setIsCheckingSession] = useState(true);
+  const [clientData, setClientData] = useState<ClientData | null>(null);
 
   useEffect(() => {
-    getUserRole().then((role) => {
+    async function init() {
+      const role = await getUserRole();
       if (role !== "client") {
         router.push("/client-login");
         return;
       }
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        router.push("/client-login");
+        return;
+      }
+      const { data } = await supabase
+        .from("clients")
+        .select("*, projects(*, project_updates(*))")
+        .eq("auth_user_id", session.user.id)
+        .single();
+      if (data) setClientData(data as ClientData);
       setIsCheckingSession(false);
-    });
+    }
+    init();
   }, [router]);
 
   function handleLogout() {
@@ -36,7 +87,7 @@ export default function ClientAreaPage() {
     router.push("/client-login");
   }
 
-  if (isCheckingSession) {
+  if (isCheckingSession || !clientData) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-[#0B0F19] px-6 text-white">
         <motion.div
@@ -53,12 +104,18 @@ export default function ClientAreaPage() {
     );
   }
 
+  const project = clientData.projects?.[0];
+  const progressSteps = project ? buildProgressSteps(project.stage) : [];
+  const latestUpdates = project?.project_updates
+    ? [...project.project_updates].sort(
+        (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
+      )
+    : [];
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#0B0F19] px-6 pb-24 pt-32 text-white">
-      {/* Subtle background */}
       <div className="pointer-events-none absolute -right-60 top-20 h-[500px] w-[500px] rounded-full bg-cyan-500/[0.04] blur-[140px]" />
 
-      {/* Hero */}
       <motion.section
         custom={0}
         variants={sectionVariants}
@@ -74,7 +131,7 @@ export default function ClientAreaPage() {
             <h1 className="mb-5 text-4xl font-bold tracking-tight sm:text-5xl">
               Welcome back,{" "}
               <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                {client.name}.
+                {clientData.name}.
               </span>
             </h1>
             <p className="max-w-2xl text-base leading-7 text-zinc-300">
@@ -84,9 +141,11 @@ export default function ClientAreaPage() {
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <div className="rounded-full border border-cyan-400/30 bg-cyan-400/10 px-5 py-2 text-sm font-semibold text-cyan-300">
-              {client.websiteStatus}
-            </div>
+            {project && (
+              <div className="rounded-full border border-cyan-400/30 bg-cyan-400/10 px-5 py-2 text-sm font-semibold text-cyan-300">
+                {project.status}
+              </div>
+            )}
             <button
               type="button"
               onClick={handleLogout}
@@ -98,7 +157,6 @@ export default function ClientAreaPage() {
         </div>
       </motion.section>
 
-      {/* Overview */}
       <motion.section
         custom={1}
         variants={sectionVariants}
@@ -111,15 +169,17 @@ export default function ClientAreaPage() {
             <p className="text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
               Project overview
             </p>
-            <h2 className="text-3xl font-bold tracking-tight">{client.websiteName}</h2>
+            <h2 className="text-3xl font-bold tracking-tight">
+              {project?.website_name ?? clientData.company}
+            </h2>
           </div>
           <div className="grid gap-6 sm:grid-cols-2">
             {[
-              { label: "Company", value: client.company },
-              { label: "Project type", value: client.projectType },
-              { label: "Service plan", value: client.plan },
-              { label: "Estimated delivery", value: client.estimatedDelivery },
-              { label: "Current stage", value: client.currentStage },
+              { label: "Company", value: clientData.company },
+              { label: "Project type", value: project?.type ?? "—" },
+              { label: "Service plan", value: project?.plan ?? "—" },
+              { label: "Estimated delivery", value: project?.estimated_delivery ?? "—" },
+              { label: "Current stage", value: project?.stage ?? "—" },
             ].map((item) => (
               <div key={item.label}>
                 <p className="mb-2 text-sm text-zinc-500">{item.label}</p>
@@ -128,7 +188,7 @@ export default function ClientAreaPage() {
             ))}
             <div>
               <p className="mb-2 text-sm text-zinc-500">Website status</p>
-              <p className="font-medium text-cyan-300">{client.websiteStatus}</p>
+              <p className="font-medium text-cyan-300">{project?.status ?? "—"}</p>
             </div>
           </div>
         </div>
@@ -138,7 +198,9 @@ export default function ClientAreaPage() {
             Next step
           </p>
           <h2 className="mb-4 text-2xl font-bold tracking-tight">What happens next?</h2>
-          <p className="mb-8 text-sm leading-6 text-zinc-400">{client.nextStep}</p>
+          <p className="mb-8 text-sm leading-6 text-zinc-400">
+            {project?.next_step ?? "No information yet."}
+          </p>
           <Link
             href="/contact"
             className="inline-block rounded-full bg-white px-6 py-3 text-sm font-semibold text-black shadow-[0_0_24px_rgba(255,255,255,0.08)] transition-all hover:bg-zinc-200"
@@ -148,112 +210,80 @@ export default function ClientAreaPage() {
         </div>
       </motion.section>
 
-      {/* Progress */}
-      <motion.section
-        custom={2}
-        variants={sectionVariants}
-        initial="hidden"
-        animate="show"
-        className="relative z-10 mx-auto mt-6 max-w-6xl rounded-3xl border border-white/10 bg-white/[0.04] p-8"
-      >
-        <div className="mb-10">
-          <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
-            Production progress
-          </p>
-          <h2 className="text-3xl font-bold tracking-tight">
-            Your website is currently in {client.currentStage}.
-          </h2>
-        </div>
+      {project && progressSteps.length > 0 && (
+        <motion.section
+          custom={2}
+          variants={sectionVariants}
+          initial="hidden"
+          animate="show"
+          className="relative z-10 mx-auto mt-6 max-w-6xl rounded-3xl border border-white/10 bg-white/[0.04] p-8"
+        >
+          <div className="mb-10">
+            <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
+              Production progress
+            </p>
+            <h2 className="text-3xl font-bold tracking-tight">
+              Your website is currently in {project.stage}.
+            </h2>
+          </div>
 
-        <div className="grid gap-4">
-          {progressSteps.map((step, index) => {
-            const isCompleted = step.status === "completed";
-            const isActive = step.status === "active";
+          <div className="grid gap-4">
+            {progressSteps.map((step, index) => {
+              const isCompleted = step.status === "completed";
+              const isActive = step.status === "active";
 
-            return (
-              <motion.div
-                key={step.title}
-                initial={{ opacity: 0, x: -16 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 + index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                className="grid gap-5 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:grid-cols-[auto_1fr_auto] sm:items-center"
-              >
+              return (
                 <motion.div
-                  initial={isCompleted ? { scale: 0.5, opacity: 0 } : {}}
-                  animate={isCompleted ? { scale: 1, opacity: 1 } : {}}
-                  transition={{ duration: 0.4, delay: 0.5 + index * 0.08, type: "spring", stiffness: 200 }}
-                  className={`flex h-11 w-11 items-center justify-center rounded-full text-sm font-bold ${
-                    isCompleted
-                      ? "bg-cyan-400 text-black shadow-[0_0_16px_rgba(34,211,238,0.4)]"
-                      : isActive
-                        ? "border border-cyan-400 text-cyan-300 shadow-[0_0_12px_rgba(34,211,238,0.15)]"
-                        : "border border-white/10 text-zinc-500"
-                  }`}
+                  key={step.title}
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 + index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                  className="grid gap-5 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:grid-cols-[auto_1fr_auto] sm:items-center"
                 >
-                  {String(index + 1).padStart(2, "0")}
+                  <motion.div
+                    initial={isCompleted ? { scale: 0.5, opacity: 0 } : {}}
+                    animate={isCompleted ? { scale: 1, opacity: 1 } : {}}
+                    transition={{ duration: 0.4, delay: 0.5 + index * 0.08, type: "spring", stiffness: 200 }}
+                    className={`flex h-11 w-11 items-center justify-center rounded-full text-sm font-bold ${
+                      isCompleted
+                        ? "bg-cyan-400 text-black shadow-[0_0_16px_rgba(34,211,238,0.4)]"
+                        : isActive
+                          ? "border border-cyan-400 text-cyan-300 shadow-[0_0_12px_rgba(34,211,238,0.15)]"
+                          : "border border-white/10 text-zinc-500"
+                    }`}
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </motion.div>
+
+                  <div>
+                    <h3 className="font-semibold text-white">{step.title}</h3>
+                  </div>
+
+                  <span
+                    className={`w-fit rounded-full px-4 py-2 text-xs font-semibold ${
+                      isCompleted
+                        ? "bg-cyan-400/10 text-cyan-300"
+                        : isActive
+                          ? "bg-white/10 text-white"
+                          : "bg-white/[0.03] text-zinc-500"
+                    }`}
+                  >
+                    {isCompleted ? "Completed" : isActive ? "In progress" : "Pending"}
+                  </span>
                 </motion.div>
+              );
+            })}
+          </div>
+        </motion.section>
+      )}
 
-                <div>
-                  <h3 className="font-semibold text-white">{step.title}</h3>
-                  <p className="mt-1 text-sm leading-6 text-zinc-400">{step.description}</p>
-                </div>
-
-                <span
-                  className={`w-fit rounded-full px-4 py-2 text-xs font-semibold ${
-                    isCompleted
-                      ? "bg-cyan-400/10 text-cyan-300"
-                      : isActive
-                        ? "bg-white/10 text-white"
-                        : "bg-white/[0.03] text-zinc-500"
-                  }`}
-                >
-                  {isCompleted ? "Completed" : isActive ? "In progress" : "Pending"}
-                </span>
-              </motion.div>
-            );
-          })}
-        </div>
-      </motion.section>
-
-      {/* Bottom 3 cards */}
       <motion.section
         custom={3}
         variants={sectionVariants}
         initial="hidden"
         animate="show"
-        className="relative z-10 mx-auto mt-6 grid max-w-6xl gap-6 lg:grid-cols-3"
+        className="relative z-10 mx-auto mt-6 grid max-w-6xl gap-6 lg:grid-cols-2"
       >
-        <SpotlightCard className="rounded-3xl border border-white/10 bg-white/[0.04] p-8 transition-colors hover:border-cyan-400/20">
-          <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
-            Needed from you
-          </p>
-          <h2 className="mb-8 text-2xl font-bold tracking-tight">
-            Information we still need
-          </h2>
-          <div className="grid gap-4">
-            {clientNeeds.map((need) => {
-              const isReceived = need.status === "received";
-              return (
-                <div
-                  key={need.item}
-                  className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.03] p-4"
-                >
-                  <span className="text-sm font-medium text-white">{need.item}</span>
-                  <span
-                    className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                      isReceived
-                        ? "bg-cyan-400/10 text-cyan-300"
-                        : "bg-yellow-400/10 text-yellow-300"
-                    }`}
-                  >
-                    {isReceived ? "Received" : "Missing"}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-        </SpotlightCard>
-
         <SpotlightCard className="rounded-3xl border border-white/10 bg-white/[0.04] p-8 transition-colors hover:border-cyan-400/20">
           <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
             Direct contact
@@ -295,7 +325,6 @@ export default function ClientAreaPage() {
         </SpotlightCard>
       </motion.section>
 
-      {/* Latest updates */}
       <motion.section
         custom={4}
         variants={sectionVariants}
@@ -310,23 +339,31 @@ export default function ClientAreaPage() {
           <h2 className="text-2xl font-bold tracking-tight">Recent project activity</h2>
         </div>
 
-        <div className="grid gap-4">
-          {latestUpdates.map((update, index) => (
-            <motion.div
-              key={update.title}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.6 + index * 0.07 }}
-              className="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
-            >
-              <p className="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-zinc-500">
-                {update.date}
-              </p>
-              <h3 className="mb-2 font-semibold text-white">{update.title}</h3>
-              <p className="text-sm leading-6 text-zinc-400">{update.description}</p>
-            </motion.div>
-          ))}
-        </div>
+        {latestUpdates.length === 0 ? (
+          <p className="text-sm text-zinc-500">No updates yet.</p>
+        ) : (
+          <div className="grid gap-4">
+            {latestUpdates.map((update, index) => (
+              <motion.div
+                key={update.id}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.6 + index * 0.07 }}
+                className="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
+              >
+                <p className="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-zinc-500">
+                  {new Date(update.created_at).toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </p>
+                <h3 className="mb-2 font-semibold text-white">{update.title}</h3>
+                <p className="text-sm leading-6 text-zinc-400">{update.message}</p>
+              </motion.div>
+            ))}
+          </div>
+        )}
       </motion.section>
     </main>
   );

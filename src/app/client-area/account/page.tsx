@@ -5,11 +5,14 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { getUser, getUserRole, signIn, updatePassword } from "@/lib/auth";
-import { client } from "@/lib/mock-client-data";
+import { supabase } from "@/lib/supabase";
+
+type ClientProfile = { name: string; company: string; slug: string };
 
 export default function ClientAccountPage() {
   const router = useRouter();
   const [isCheckingSession, setIsCheckingSession] = useState(true);
+  const [profile, setProfile] = useState<ClientProfile | null>(null);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -17,13 +20,24 @@ export default function ClientAccountPage() {
   const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
-    getUserRole().then((role) => {
+    async function init() {
+      const role = await getUserRole();
       if (role !== "client") {
         router.push("/client-login");
         return;
       }
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        const { data } = await supabase
+          .from("clients")
+          .select("name, company, slug")
+          .eq("auth_user_id", session.user.id)
+          .single();
+        if (data) setProfile(data as ClientProfile);
+      }
       setIsCheckingSession(false);
-    });
+    }
+    init();
   }, [router]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -124,9 +138,9 @@ export default function ClientAccountPage() {
             </p>
             <div className="grid gap-6">
               {[
-                { label: "Client name", value: client.name },
-                { label: "Company", value: client.company },
-                { label: "Company access name", value: "silva-cafe" },
+                { label: "Client name", value: profile?.name ?? "—" },
+                { label: "Company", value: profile?.company ?? "—" },
+                { label: "Company access name", value: profile?.slug ?? "—" },
               ].map((item) => (
                 <div key={item.label}>
                   <p className="mb-2 text-sm text-zinc-500">{item.label}</p>
@@ -217,10 +231,6 @@ export default function ClientAccountPage() {
               </button>
             </form>
 
-            <p className="mt-6 text-xs leading-5 text-zinc-500">
-              This is currently a temporary mock password system. Later, this action will
-              update the real client password securely.
-            </p>
           </div>
         </motion.div>
       </section>
