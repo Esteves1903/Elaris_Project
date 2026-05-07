@@ -1897,9 +1897,9 @@ function AsgardBarberApp() {
   ];
 
   const barbers = [
-    { name: "Marcus Elaris", role: "Head Barber • Dubai", exp: "12y", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400" },
-    { name: "André Sousa", role: "Master Cut • Porto", exp: "8y", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400" },
-    { name: "James Whitfield", role: "Razor Specialist • London", exp: "15y", img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400" },
+    { name: "Marcus Elaris", role: "Head Barber • Dubai", exp: "12y", img: "/barber1.png" },
+    { name: "André Sousa", role: "Master Cut • Porto", exp: "8y", img: "/barber2.png" },
+    { name: "James Whitfield", role: "Razor Specialist • London", exp: "15y", img: "/barber3.png" },
   ];
 
   const testimonials = [
@@ -1988,7 +1988,7 @@ function AsgardBarberApp() {
               {/* HERO */}
               <section className="relative h-[82vh] flex items-end overflow-hidden">
                 <img
-                  src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=2000"
+                  src="/barber.png"
                   className="absolute inset-0 w-full h-full object-cover opacity-50"
                   alt=""
                 />
