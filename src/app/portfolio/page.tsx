@@ -1067,8 +1067,7 @@ function ElarisSportApp() {
   const [lang, setLang] = useState<Lang>("en");
   const t = {
     en: {
-      newSeason: "New Season 2026", heroTitle1: "PLAY AT YOUR", heroTitle2: "PEAK.",
-      heroSub: "Premium football gear for every level. Free shipping on orders over €100.",
+      heroTitle1: "PLAY AT YOUR", heroTitle2: "PEAK.",
       shopBoots: "Shop Boots", shopKits: "Shop Kits", onBoots: "on boots",
       products: "products", featured: "Featured", priceLow: "Price: Low → High", priceHigh: "Price: High → Low",
       noProducts: "No products found for", backToShop: "Back to Shop", reviews: "reviews",
@@ -1088,8 +1087,7 @@ function ElarisSportApp() {
       orderSummary: "Order Summary", backToCart: "Back to Cart",
     },
     pt: {
-      newSeason: "Nova Temporada 2026", heroTitle1: "JOGA NO TEU", heroTitle2: "MELHOR.",
-      heroSub: "Equipamento premium de futebol para todos os níveis. Envio grátis em encomendas acima de €100.",
+      heroTitle1: "JOGA NO TEU", heroTitle2: "MELHOR.",
       shopBoots: "Ver Chuteiras", shopKits: "Ver Equipamentos", onBoots: "nas chuteiras",
       products: "produtos", featured: "Destaques", priceLow: "Preço: Mais Baixo", priceHigh: "Preço: Mais Alto",
       noProducts: "Nenhum produto encontrado para", backToShop: "Voltar à Loja", reviews: "avaliações",
@@ -1109,8 +1107,7 @@ function ElarisSportApp() {
       orderSummary: "Resumo da Encomenda", backToCart: "Voltar ao Carrinho",
     },
   }[lang] ?? {
-    newSeason: "New Season 2026", heroTitle1: "PLAY AT YOUR", heroTitle2: "PEAK.",
-    heroSub: "Premium football gear for every level. Free shipping on orders over €100.",
+    heroTitle1: "PLAY AT YOUR", heroTitle2: "PEAK.",
     shopBoots: "Shop Boots", shopKits: "Shop Kits", onBoots: "on boots",
     products: "products", featured: "Featured", priceLow: "Price: Low → High", priceHigh: "Price: High → Low",
     noProducts: "No products found for", backToShop: "Back to Shop", reviews: "reviews",
@@ -1271,7 +1268,7 @@ function ElarisSportApp() {
   );
 
   return (
-    <div className="h-full flex flex-col bg-[#f8f9fb] text-[#111] overflow-hidden relative font-sans">
+    <div className="h-full flex flex-col bg-[#f8f9fb] text-[#111] relative font-sans">
 
       {/* ── NAVBAR ── */}
       <nav className="bg-white border-b border-zinc-200 px-4 md:px-8 py-3 flex items-center gap-4 z-40 shrink-0">
@@ -1321,7 +1318,7 @@ function ElarisSportApp() {
       </nav>
 
       {/* ── MAIN CONTENT ── */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
         <AnimatePresence mode="wait">
 
           {/* SHOP */}
@@ -1329,13 +1326,13 @@ function ElarisSportApp() {
             <motion.div key="shop" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}>
 
               {/* Hero Banner */}
-              <div className="relative h-[260px] bg-black overflow-hidden">
+              <div className="relative h-[200px] bg-black overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1522778526097-ce0a22ceb253?q=80&w=2000"
                   className="absolute inset-0 w-full h-full object-cover opacity-50"/>
                 <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"/>
                 <div className="relative z-10 h-full flex flex-col justify-center px-8 md:px-14 text-white">
                   <span className="text-[#0066ff] font-black text-[10px] tracking-[0.4em] uppercase mb-3">{t.newSeason}</span>
-                  <h2 className="text-4xl md:text-6xl font-black leading-tight mb-5">
+                  <h2 className="text-1xl md:text-2xl font-black leading-tight mb-5">
                     {t.heroTitle1}<br/>
                     <span className="text-[#0066ff]">{t.heroTitle2}</span>
                   </h2>
