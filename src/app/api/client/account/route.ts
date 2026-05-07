@@ -5,16 +5,8 @@ async function verifyClient(req: NextRequest) {
   const token = req.headers.get("authorization")?.replace("Bearer ", "");
   if (!token) return null;
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/auth/v1/user`, {
-    headers: {
-      apikey: process.env.SUPABASE_SERVICE_ROLE_KEY!,
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  if (!res.ok) return null;
-
-  const user = await res.json();
+  const { data: { user }, error } = await supabaseAdmin.auth.getUser(token);
+  if (error || !user) return null;
   if (user.user_metadata?.role !== "client") return null;
 
   return user as { id: string; email: string };

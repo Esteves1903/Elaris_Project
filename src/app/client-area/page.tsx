@@ -48,9 +48,15 @@ type ClientData = {
 
 function buildProgressSteps(currentStage: string) {
   const stageIndex = projectStageOptions.indexOf(currentStage);
+  const isLastStage = stageIndex === projectStageOptions.length - 1;
   return projectStageOptions.map((stage, i) => ({
     title: stage,
-    status: i < stageIndex ? "completed" : i === stageIndex ? "active" : "pending",
+    status:
+      i < stageIndex || (isLastStage && i === stageIndex)
+        ? "completed"
+        : i === stageIndex
+          ? "active"
+          : "pending",
   }));
 }
 
@@ -223,7 +229,9 @@ export default function ClientAreaPage() {
               Production progress
             </p>
             <h2 className="text-3xl font-bold tracking-tight">
-              Your website is currently in {project.stage}.
+              {project.stage === "Launched"
+                ? "Your website has been launched! 🎉"
+                : `Your website is currently in ${project.stage}.`}
             </h2>
           </div>
 
