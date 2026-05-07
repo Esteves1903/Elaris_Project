@@ -1327,7 +1327,7 @@ function ElarisSportApp() {
 
               {/* Hero Banner */}
               <div className="relative h-[200px] bg-black overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1522778526097-ce0a22ceb253?q=80&w=2000"
+                <img src="/lojafundo.png"
                   className="absolute inset-0 w-full h-full object-cover opacity-50"/>
                 <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"/>
                 <div className="relative z-10 h-full flex flex-col justify-center px-8 md:px-14 text-white">

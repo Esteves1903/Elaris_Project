@@ -29,7 +29,7 @@ export const portfolioProjects: PortfolioProject[] = [
       'Review System',
     ],
     // USAR O TEU FICHEIRO DE CAFÉ
-    images: ['/fundocafe.jfif'], 
+    images: ['/ElarisRest1.png'], 
     liveUrl: 'https://example.com/brewhaus',
   },
   {
@@ -49,7 +49,7 @@ export const portfolioProjects: PortfolioProject[] = [
       'Order Tracking',
     ],
     // AQUI: Coloca o nome do teu ficheiro de imagem de futebol que está na pasta public
-    images: ['/fundobola.avif'], 
+    images: ['/lojafundo.png'], 
     liveUrl: 'https://example.com/football-store',
   },
   {
@@ -69,7 +69,7 @@ export const portfolioProjects: PortfolioProject[] = [
       'Customer Reviews',
     ],
     // USAR O TEU FICHEIRO DE BARBEARIA (.avif)
-    images: ['/fundobarber.avif'], 
+    images: ['/barber.png'], 
     liveUrl: 'https://example.com/prime-cuts',
   },
   {
