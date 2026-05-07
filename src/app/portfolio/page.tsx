@@ -1331,12 +1331,12 @@ function ElarisSportApp() {
                   className="absolute inset-0 w-full h-full object-cover opacity-50"/>
                 <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"/>
                 <div className="relative z-10 h-full flex flex-col justify-center px-8 md:px-14 text-white">
-                  <span className="text-[#0066ff] font-black text-[10px] tracking-[0.4em] uppercase mb-3">{t.newSeason}</span>
+                  
                   <h2 className="text-1xl md:text-2xl font-black leading-tight mb-5">
                     {t.heroTitle1}<br/>
                     <span className="text-[#0066ff]">{t.heroTitle2}</span>
                   </h2>
-                  <p className="text-zinc-300 text-sm max-w-md mb-6">{t.heroSub}</p>
+                  
                   <div className="flex gap-3">
                     <button onClick={()=>setSelectedCategory('Boots')} className="px-6 py-2.5 bg-[#0066ff] hover:bg-white hover:text-black text-white font-black text-[10px] uppercase tracking-widest rounded-full transition-all">
                       {t.shopBoots}
@@ -1854,8 +1854,20 @@ function AsgardBarberApp() {
     },
   }[lang];
   const [view, setView] = useState<'intro' | 'services' | 'book' | 'done'>('intro');
+  const [scrollToTeam, setScrollToTeam] = useState(false);
   const [user, setUser] = useState("");
   const [activeService, setActiveService] = useState<number | null>(null);
+  const teamSectionRef = React.useRef<HTMLElement>(null);
+
+  React.useEffect(() => {
+    if (scrollToTeam && view === 'intro') {
+      const timer = setTimeout(() => {
+        teamSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setScrollToTeam(false);
+      }, 80);
+      return () => clearTimeout(timer);
+    }
+  }, [scrollToTeam, view]);
 
   const services = [
     {
@@ -1933,7 +1945,7 @@ function AsgardBarberApp() {
         <div className="hidden md:flex items-center gap-1">
           {[
             { label: tBarber.services, action: () => setView('services') },
-            { label: tBarber.team, action: () => setView('intro') },
+            { label: tBarber.team, action: () => { setView('intro'); setScrollToTeam(true); } },
             { label: tBarber.book, action: () => setView('book'), primary: true },
           ].map((item) => (
             <button
@@ -2034,7 +2046,7 @@ function AsgardBarberApp() {
               </section>
 
               {/* BARBERS */}
-              <section className="py-20 px-8 md:px-16">
+              <section ref={teamSectionRef} className="py-20 px-8 md:px-16">
                 <div className="max-w-6xl mx-auto">
                   <div className="mb-14 flex items-end justify-between">
                     <div>
