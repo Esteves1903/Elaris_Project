@@ -14,7 +14,7 @@ export interface PortfolioProject {
 export const portfolioProjects: PortfolioProject[] = [
   {
     id: '1',
-    title: 'Brewhaus Coffee & Restaurant',
+    title: 'Restaurant',
     description: 'Modern cafe and restaurant website with online ordering and table reservations',
     category: 'cafe-restaurant',
     client: 'Brewhaus Co.',
