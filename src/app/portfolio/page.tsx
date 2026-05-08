@@ -124,7 +124,7 @@ export default function PortfolioPage() {
         {/* 1. RESTAURANTE */}
         <div className="space-y-6">
           <h2 className="text-3xl font-black tracking-tight">1. Elaris Restaurant</h2>
-          <div className="rounded-[2.5rem] overflow-hidden border border-white/10 h-[700px] relative bg-orange-50 shadow-2xl isolate">
+          <div className="rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-white/10 h-[580px] md:h-[700px] relative bg-orange-50 shadow-2xl isolate">
             <ElarisFinalDubai />
           </div>
           <div className="flex justify-end">
@@ -137,7 +137,7 @@ export default function PortfolioPage() {
         {/* 2. SPORT STORE */}
         <div className="space-y-6">
           <h2 className="text-3xl font-black tracking-tight">2. Elaris Football Store</h2>
-          <div className="rounded-[2.5rem] overflow-hidden border border-white/10 h-[700px] relative bg-white shadow-2xl isolate">
+          <div className="rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-white/10 h-[580px] md:h-[700px] relative bg-white shadow-2xl isolate">
             <ElarisSportApp />
           </div>
           <div className="flex justify-end">
@@ -150,7 +150,7 @@ export default function PortfolioPage() {
         {/* 3. BARBER SHOP */}
         <div className="space-y-6">
           <h2 className="text-3xl font-black tracking-tight">3. Elaris Barber Shop</h2>
-          <div className="rounded-[2.5rem] overflow-hidden border border-white/10 h-[700px] relative bg-[#0a0a0a] shadow-2xl isolate">
+          <div className="rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-white/10 h-[580px] md:h-[700px] relative bg-[#0a0a0a] shadow-2xl isolate">
             <AsgardBarberApp />
           </div>
           <div className="flex justify-end">
@@ -191,6 +191,17 @@ function ElarisFinalDubai() {
       privacyP1: "At Elaris Dubai, discretion is our ultimate luxury.",
       privacyP2: "Your personal data is used exclusively for reservation management.",
       acknowledge: "Acknowledge",
+      n_wagyu: "A5 Wagyu Tartare", d_wagyu: "Truffle pearls, 24k gold, quail egg.",
+      n_lobster: "Blue Lobster Salad", d_lobster: "Citrus emulsion, caviar, sea herbs.",
+      n_caviar: "Imperial Beluga Caviar", d_caviar: "30g selection, traditional garnishes, gold leaf blinis.",
+      n_foie: "Seared Foie Gras", d_foie: "Port wine reduction, caramelised figs, toasted brioche.",
+      n_francesinha: "The Elaris Francesinha", d_francesinha: "Wagyu beef, Pata Negra, champagne sauce.",
+      n_seabass: "Sea Bass in Salt", d_seabass: "Mediterranean herbs, flamed tableside.",
+      n_octopus: "Octopus 'Lagareiro'", d_octopus: "Roasted potatoes, garlic confit, premium olive oil.",
+      n_lamb: "Golden Lamb Chops", d_lamb: "Pistachio crust, saffron risotto, mint jus.",
+      n_truffle: "Black Truffle Risotto", d_truffle: "Acquerello rice, fresh winter truffles, 36-month Parmesan.",
+      n_abade: "Abade de Priscos", d_abade: "Traditional bacon pudding, citrus sorbet.",
+      n_chocolate: "Chocolate Decadence", d_chocolate: "70% Valrhona chocolate, hazelnut praline, sea salt.",
     },
     pt: {
       story: "A História", menu: "O Menu", bookNow: "Reservar",
@@ -215,6 +226,17 @@ function ElarisFinalDubai() {
       privacyP1: "No Elaris Dubai, a discrição é o nosso luxo supremo.",
       privacyP2: "Os teus dados pessoais são usados exclusivamente para gestão de reservas.",
       acknowledge: "Reconhecer",
+      n_wagyu: "Tartare de Wagyu A5", d_wagyu: "Pérolas de trufa, ouro 24k, ovo de codorniz.",
+      n_lobster: "Salada de Lagosta Azul", d_lobster: "Emulsão de citrinos, caviar, ervas marinhas.",
+      n_caviar: "Caviar Beluga Imperial", d_caviar: "Seleção de 30g, guarnições tradicionais, blinis de folha de ouro.",
+      n_foie: "Foie Gras Selado", d_foie: "Redução de vinho do Porto, figos caramelizados, brioche tostado.",
+      n_francesinha: "A Elaris Francesinha", d_francesinha: "Carne de Wagyu, Pata Negra, molho de champanhe.",
+      n_seabass: "Robalo no Sal", d_seabass: "Ervas mediterrâneas, flamejado à mesa.",
+      n_octopus: "Polvo à Lagareiro", d_octopus: "Batatas assadas, confit de alho, azeite premium.",
+      n_lamb: "Costeletas de Borrego Douradas", d_lamb: "Crosta de pistácio, risoto de açafrão, jus de hortelã.",
+      n_truffle: "Risoto de Trufa Negra", d_truffle: "Arroz Acquerello, trufas de inverno frescas, Parmesão de 36 meses.",
+      n_abade: "Abade de Priscos", d_abade: "Pudim de toucinho tradicional, sorbet de citrinos.",
+      n_chocolate: "Decadência de Chocolate", d_chocolate: "Chocolate Valrhona 70%, praliné de avelã, flor de sal.",
     },
   }[lang];
   // --- STATE MANAGEMENT ---
@@ -235,27 +257,27 @@ function ElarisFinalDubai() {
       name: t.cat1,
       items: [
         {
-          n: "A5 Wagyu Tartare",
+          n: t.n_wagyu,
           p: "AED 245",
-          d: "Truffle pearls, 24k gold, quail egg.",
+          d: t.d_wagyu,
           img: "/A5Wagyu.png"
         },
         {
-          n: "Blue Lobster Salad",
+          n: t.n_lobster,
           p: "AED 190",
-          d: "Citrus emulsion, caviar, sea herbs.",
+          d: t.d_lobster,
           img: "/LagostaAzul.png"
         },
         {
-          n: "Imperial Beluga Caviar",
+          n: t.n_caviar,
           p: "AED 850",
-          d: "30g selection, traditional garnishes, gold leaf blinis.",
+          d: t.d_caviar,
           img: "/caviar.png"
         },
         {
-          n: "Seared Foie Gras",
+          n: t.n_foie,
           p: "AED 210",
-          d: "Port wine reduction, caramelized figs, toasted brioche.",
+          d: t.d_foie,
           img: "/FoieGras.png"
         }
       ]
@@ -264,33 +286,33 @@ function ElarisFinalDubai() {
       name: t.cat2,
       items: [
         {
-          n: "The Elaris Francesinha",
+          n: t.n_francesinha,
           p: "AED 320",
-          d: "Wagyu beef, Pata Negra, champagne sauce.",
+          d: t.d_francesinha,
           img: "/francesinha.png"
         },
         {
-          n: "Sea Bass in Salt",
+          n: t.n_seabass,
           p: "AED 450",
-          d: "Mediterranean herbs, flamed tableside.",
+          d: t.d_seabass,
           img: "/seabass.png"
         },
         {
-          n: "Octopus 'Lagareiro'",
+          n: t.n_octopus,
           p: "AED 280",
-          d: "Roasted potatoes, garlic confit, premium olive oil.",
+          d: t.d_octopus,
           img: "/octopus.png"
         },
         {
-          n: "Golden Lamb Chops",
+          n: t.n_lamb,
           p: "AED 390",
-          d: "Pistachio crust, saffron risotto, mint jus.",
+          d: t.d_lamb,
           img: "/lambchops.png"
         },
         {
-          n: "Black Truffle Risotto",
+          n: t.n_truffle,
           p: "AED 310",
-          d: "Acquerello rice, fresh winter truffles, 36-month Parmesan.",
+          d: t.d_truffle,
           img: "/truffleRisotto.png"
         }
       ]
@@ -299,15 +321,15 @@ function ElarisFinalDubai() {
       name: t.cat3,
       items: [
         {
-          n: "Abade de Priscos",
+          n: t.n_abade,
           p: "AED 110",
-          d: "Traditional bacon pudding, citrus sorbet.",
+          d: t.d_abade,
           img: "/abade.png"
         },
         {
-          n: "Chocolate Decadence",
+          n: t.n_chocolate,
           p: "AED 135",
-          d: "70% Valrhona chocolate, hazelnut praline, sea salt.",
+          d: t.d_chocolate,
           img: "/chocolate.png"
         }
       ]
@@ -422,7 +444,7 @@ function ElarisFinalDubai() {
                     {t.legacyBadge}
                   </span>
 
-                  <h2 className="text-5xl md:text-8xl font-light italic mb-10">
+                  <h2 className="text-3xl sm:text-5xl md:text-8xl font-light italic mb-10">
                     {slides[currentSlide].title}
                   </h2>
 
@@ -1107,6 +1129,18 @@ function ElarisSportApp() {
       backToStore: "Back to Store", size: "Size", each: "each",
       errName: "Required", errEmail: "Invalid email", errAddress: "Required", errCard: "Enter a valid card number",
       orderSummary: "Order Summary", backToCart: "Back to Cart",
+      prod1_d: "Elite football boots engineered for total control. Laceless design with Primeknit upper for a sock-like fit and explosive first touch.",
+      prod2_d: "Designed for pure speed. The ultra-thin Flyknit upper delivers a barefoot feel while the carbon fibre soleplate maximises energy return.",
+      prod3_d: "The official Portugal 2024 home jersey. Sweat-wicking Dri-FIT ADV technology keeps you cool and dry during the most intense moments.",
+      prod4_d: "The official match ball of the UEFA Champions League. Thermally bonded panels and a butyl bladder for consistent flight and touch.",
+      prod5_d: "Professional-grade goalkeeper gloves with NC Excellent 3mm latex palm. Exceptional grip in all weather conditions.",
+      prod6_d: "The France 2024 away kit featuring a stunning navy gradient design. Official Dri-FIT ADV technology for peak performance.",
+      prod7_d: "Durable 32-panel training ball with a butyl inner tube for consistent bounce and shape retention through thousands of kicks.",
+      prod8_d: "Nike's most precise boot ever. Textured touch zone and split outsole geometry for explosive multi-directional movement.",
+      prod9_d: "Full compression top and shorts set with Dri-FIT technology. Designed to support muscles and enhance recovery during training.",
+      prod10_d: "50-piece set of high-visibility training cones. Lightweight, stackable and perfect for agility drills and pitch marking.",
+      prod11_d: "Lightweight EVA foam shin guards with anatomical shape. Ankle protection straps included for a secure, comfortable fit.",
+      prod12_d: "Professional goalkeeper jersey with padded elbows for diving protection. Ultra-breathable mesh panels for maximum ventilation.",
     },
     pt: {
       performanceStore: "Loja de Performance", searchPlaceholder: "Pesquisar…", cart: "Carrinho",
@@ -1130,6 +1164,18 @@ function ElarisSportApp() {
       backToStore: "Voltar à Loja", size: "Tamanho", each: "cada",
       errName: "Obrigatório", errEmail: "Email inválido", errAddress: "Obrigatório", errCard: "Número de cartão inválido",
       orderSummary: "Resumo da Encomenda", backToCart: "Voltar ao Carrinho",
+      prod1_d: "Chuteiras de elite para controlo total. Design sem atacadores com parte superior Primeknit para um ajuste perfeito e primeiro toque explosivo.",
+      prod2_d: "Concebidas para velocidade pura. A parte superior ultra-fina Flyknit oferece uma sensação descalço enquanto a sola de fibra de carbono maximiza o retorno de energia.",
+      prod3_d: "A camisola oficial de Portugal para o Euro 2024. Tecnologia Dri-FIT ADV com absorção de suor mantém-te fresco durante os momentos mais intensos.",
+      prod4_d: "A bola de jogo oficial da UEFA Champions League. Painéis termicamente colados e bexiga de butilo para voo e toque consistentes.",
+      prod5_d: "Luvas de guarda-redes profissionais com palma de látex NC Excellent 3mm. Aderência excecional em todas as condições climatéricas.",
+      prod6_d: "O equipamento alternativo da França 2024 com um deslumbrante degradê azul-marinho. Tecnologia oficial Dri-FIT ADV para desempenho máximo.",
+      prod7_d: "Bola de treino durável com 32 painéis e câmara de ar de butilo para ressalto consistente e retenção de forma após milhares de remates.",
+      prod8_d: "A bota mais precisa da Nike. Zona de toque texturizada e geometria de sola dividida para movimentos multidirecionais explosivos.",
+      prod9_d: "Kit completo de compressão com calções e camisola com tecnologia Dri-FIT. Concebido para suporte muscular e recuperação durante o treino.",
+      prod10_d: "Conjunto de 50 cones de treino de alta visibilidade. Leves, empilháveis e perfeitos para drills de agilidade e marcação de campo.",
+      prod11_d: "Caneleiras leves de espuma EVA com forma anatómica. Inclui tiras de proteção do tornozelo para um ajuste seguro e confortável.",
+      prod12_d: "Camisola profissional de guarda-redes com cotoveleiras acolchoadas para proteção nas mergulhadas. Painéis de malha ultra-respirável para ventilação máxima.",
     },
   }[lang] ?? {
     performanceStore: "Performance Store", searchPlaceholder: "Search…", cart: "Cart",
@@ -1152,6 +1198,19 @@ function ElarisSportApp() {
     yourEmail: "your email", estDelivery: "Estimated delivery:", deliveryDays: "3–5 business days",
     backToStore: "Back to Store", size: "Size", each: "each",
     errName: "Required", errEmail: "Invalid email", errAddress: "Required", errCard: "Enter a valid card number",
+    orderSummary: "Order Summary", backToCart: "Back to Cart",
+    prod1_d: "Elite football boots engineered for total control. Laceless design with Primeknit upper for a sock-like fit and explosive first touch.",
+    prod2_d: "Designed for pure speed. The ultra-thin Flyknit upper delivers a barefoot feel while the carbon fibre soleplate maximises energy return.",
+    prod3_d: "The official Portugal 2024 home jersey. Sweat-wicking Dri-FIT ADV technology keeps you cool and dry during the most intense moments.",
+    prod4_d: "The official match ball of the UEFA Champions League. Thermally bonded panels and a butyl bladder for consistent flight and touch.",
+    prod5_d: "Professional-grade goalkeeper gloves with NC Excellent 3mm latex palm. Exceptional grip in all weather conditions.",
+    prod6_d: "The France 2024 away kit featuring a stunning navy gradient design. Official Dri-FIT ADV technology for peak performance.",
+    prod7_d: "Durable 32-panel training ball with a butyl inner tube for consistent bounce and shape retention through thousands of kicks.",
+    prod8_d: "Nike's most precise boot ever. Textured touch zone and split outsole geometry for explosive multi-directional movement.",
+    prod9_d: "Full compression top and shorts set with Dri-FIT technology. Designed to support muscles and enhance recovery during training.",
+    prod10_d: "50-piece set of high-visibility training cones. Lightweight, stackable and perfect for agility drills and pitch marking.",
+    prod11_d: "Lightweight EVA foam shin guards with anatomical shape. Ankle protection straps included for a secure, comfortable fit.",
+    prod12_d: "Professional goalkeeper jersey with padded elbows for diving protection. Ultra-breathable mesh panels for maximum ventilation.",
   };
 
   interface Product {
@@ -1187,62 +1246,62 @@ function ElarisSportApp() {
     { id:1, name:"Predator Elite FG", price:250, originalPrice:320, brand:"Adidas", category:"Boots",
       badge:"Sale", rating:4.8, reviews:312,
       sizes:["39","40","41","42","43","44","45"],
-      description:"Elite football boots engineered for total control. Laceless design with Primeknit upper for a sock-like fit and explosive first touch.",
+      description: t.prod1_d,
       image:"/Pedradator.png" },
     { id:2, name:"Mercurial Vapor 16 Elite", price:275, brand:"Nike", category:"Boots",
       badge:"New", rating:4.9, reviews:198,
       sizes:["38","39","40","41","42","43","44"],
-      description:"Designed for pure speed. The ultra-thin Flyknit upper delivers a barefoot feel while the carbon fibre soleplate maximises energy return.",
+      description: t.prod2_d,
       image:"/Mercurial.png" },
     { id:3, name:"Portugal 24 Home Kit", price:140, brand:"Nike", category:"Kits",
       badge:"Hot", rating:4.7, reviews:540,
       sizes:["XS","S","M","L","XL","XXL"],
-      description:"The official Portugal 2024 home jersey. Sweat-wicking Dri-FIT ADV technology keeps you cool and dry during the most intense moments.",
+      description: t.prod3_d,
       image:"/Portugalkit.png" },
     { id:4, name:"UCL Pro Ball", price:165, brand:"Adidas", category:"Balls",
       rating:4.6, reviews:87,
       sizes:["Size 4","Size 5"],
-      description:"The official match ball of the UEFA Champions League. Thermally bonded panels and a butyl bladder for consistent flight and touch.",
+      description: t.prod4_d,
       image:"/UCLBola.png" },
     { id:5, name:"Phantom GK Elite", price:95, brand:"Reusch", category:"Goalkeeper",
       rating:4.5, reviews:63,
       sizes:["7","8","9","10","11"],
-      description:"Professional-grade goalkeeper gloves with NC Excellent 3mm latex palm. Exceptional grip in all weather conditions.",
+      description: t.prod5_d,
       image:"/luvas.png" },
     { id:6, name:"France Away Kit", price:130, originalPrice:150, brand:"Nike", category:"Kits",
       badge:"Sale", rating:4.4, reviews:221,
       sizes:["XS","S","M","L","XL","XXL"],
-      description:"The France 2024 away kit featuring a stunning navy gradient design. Official Dri-FIT ADV technology for peak performance.",
+      description: t.prod6_d,
       image:"/Francefora.png" },
     { id:7, name:"Pro Training Ball", price:45, brand:"Adidas", category:"Balls",
       rating:4.3, reviews:145,
       sizes:["Size 4","Size 5"],
-      description:"Durable 32-panel training ball with a butyl inner tube for consistent bounce and shape retention through thousands of kicks.",
+      description: t.prod7_d,
       image:"/bolatreino.png" },
     { id:8, name:"Phantom Luna Elite FG", price:230, brand:"Nike", category:"Boots",
       badge:"New", rating:4.8, reviews:76,
       sizes:["36","37","38","39","40","41","42"],
-      description:"Nike's most precise boot ever. Textured touch zone and split outsole geometry for explosive multi-directional movement.",
+      description: t.prod8_d,
       image:"/luna.png" },
     { id:9, name:"Training Compression Set", price:75, brand:"Nike", category:"Training",
       rating:4.5, reviews:189,
       sizes:["S","M","L","XL"],
-      description:"Full compression top and shorts set with Dri-FIT technology. Designed to support muscles and enhance recovery during training.",
+      description: t.prod9_d,
       image:"/kittreino.png" },
     { id:10, name:"Speed Training Cones Set", price:25, brand:"Generic", category:"Training",
       rating:4.2, reviews:302,
       sizes:["One Size"],
-      description:"50-piece set of high-visibility training cones. Lightweight, stackable and perfect for agility drills and pitch marking.",
+      description: t.prod10_d,
       image:"/cones.png" },
     { id:11, name:"Elite Shin Guards", price:55, brand:"Adidas", category:"Accessories",
       rating:4.6, reviews:93,
       sizes:["S","M","L","XL"],
-      description:"Lightweight EVA foam shin guards with anatomical shape. Ankle protection straps included for a secure, comfortable fit.",
+      description: t.prod11_d,
       image:"/caneleira.png" },
     { id:12, name:"Goalkeeper Jersey Pro", price:85, brand:"Reusch", category:"Goalkeeper",
       rating:4.3, reviews:41,
       sizes:["S","M","L","XL","XXL"],
-      description:"Professional goalkeeper jersey with padded elbows for diving protection. Ultra-breathable mesh panels for maximum ventilation.",
+      description: t.prod12_d,
       image:"/gredes.png" },
   ];
 
@@ -1315,7 +1374,7 @@ function ElarisSportApp() {
         </div>
 
         {/* Search */}
-        <div className="flex items-center bg-zinc-100 rounded-full px-3 py-2 w-[200px] ml-auto">
+        <div className="flex items-center bg-zinc-100 rounded-full px-3 py-2 w-[120px] md:w-[200px] ml-auto">
           <Search size={14} className="text-zinc-400 shrink-0"/>
           <input value={search} onChange={e=>setSearch(e.target.value)} placeholder={t.searchPlaceholder}
             className="bg-transparent outline-none px-2 text-xs w-full"/>
@@ -2060,7 +2119,7 @@ function AsgardBarberApp() {
                       <div className="h-px w-12 bg-amber-500" />
                       <span className="text-amber-400 text-[9px] uppercase tracking-[0.6em] font-black">Dubai · London · Porto</span>
                     </div>
-                    <h2 className="text-6xl md:text-[7rem] font-black leading-[0.9] tracking-tight mb-8 max-w-3xl">
+                    <h2 className="text-4xl sm:text-6xl md:text-[7rem] font-black leading-[0.9] tracking-tight mb-8 max-w-3xl">
                       {tBarber.heroLine1}
                       <br />
                       <span className="text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.25)' }}>
