@@ -179,6 +179,19 @@ function ElarisFinalDubai() {
       privacy: "Privacy", luxuryDining: "Luxury Dining",
       copyright: "© 2026 Elaris Global Hospitality Group. All rights reserved.",
       location: "Jumeirah Beach Road · Dubai, UAE",
+      legacyBadge: "A Legacy of Excellence",
+      slideTitle1: "The Golden Era", slideTitle2: "Culinary Alchemy", slideTitle3: "Prestige Lounge",
+      cat1: "The Beginning", cat2: "Heritage Mains", cat3: "Grand Finale",
+      storyHeading: "A Journey Across", storyHeadingHL: "Continents",
+      storyPara: "Elaris was born in 1984 as a small family project in Portugal. Today, it stands as a global beacon of culinary innovation.",
+      reserveExp: "Reserve Experience",
+      confirmed: "Confirmed",
+      successMsg: "Your experience at Elaris Dubai is being meticulously prepared.",
+      backToSanctuary: "Back to Sanctuary",
+      privacyTitle: "Privacy Protocol",
+      privacyP1: "At Elaris Dubai, discretion is our ultimate luxury.",
+      privacyP2: "Your personal data is used exclusively for reservation management.",
+      acknowledge: "Acknowledge",
     },
     pt: {
       story: "A História", menu: "O Menu", bookNow: "Reservar",
@@ -190,6 +203,19 @@ function ElarisFinalDubai() {
       privacy: "Privacidade", luxuryDining: "Restaurante de Luxo",
       copyright: "© 2026 Elaris Global Hospitality Group. Todos os direitos reservados.",
       location: "Jumeirah Beach Road · Dubai, EAU",
+      legacyBadge: "Um Legado de Excelência",
+      slideTitle1: "A Era de Ouro", slideTitle2: "Alquimia Culinária", slideTitle3: "Lounge de Prestígio",
+      cat1: "O Início", cat2: "Pratos de Herança", cat3: "Grande Final",
+      storyHeading: "Uma Viagem por", storyHeadingHL: "Continentes",
+      storyPara: "A Elaris nasceu em 1984 como um pequeno projeto familiar em Portugal. Hoje, é um farol global de inovação culinária.",
+      reserveExp: "Reservar Experiência",
+      confirmed: "Confirmado",
+      successMsg: "A tua experiência no Elaris Dubai está a ser meticulosamente preparada.",
+      backToSanctuary: "Voltar ao Início",
+      privacyTitle: "Protocolo de Privacidade",
+      privacyP1: "No Elaris Dubai, a discrição é o nosso luxo supremo.",
+      privacyP2: "Os teus dados pessoais são usados exclusivamente para gestão de reservas.",
+      acknowledge: "Reconhecer",
     },
   }[lang];
   // --- STATE MANAGEMENT ---
@@ -200,23 +226,14 @@ function ElarisFinalDubai() {
 
   // --- CONTENT DATA ---
   const slides = [
-    {
-      url: "/ElarisRest1.png",
-      title: "The Golden Era",
-    },
-    {
-      url: "/ElarisRest2.png",
-      title: "Culinary Alchemy",
-    },
-    {
-      url: "/ElarisRest3.png",
-      title: "Prestige Lounge",
-    }
+    { url: "/ElarisRest1.png", title: t.slideTitle1 },
+    { url: "/ElarisRest2.png", title: t.slideTitle2 },
+    { url: "/ElarisRest3.png", title: t.slideTitle3 },
   ];
 
   const menuCategories = [
     {
-      name: "The Beginning",
+      name: t.cat1,
       items: [
         {
           n: "A5 Wagyu Tartare",
@@ -245,7 +262,7 @@ function ElarisFinalDubai() {
       ]
     },
     {
-      name: "Heritage Mains",
+      name: t.cat2,
       items: [
         {
           n: "The Elaris Francesinha",
@@ -280,7 +297,7 @@ function ElarisFinalDubai() {
       ]
     },
     {
-      name: "Grand Finale",
+      name: t.cat3,
       items: [
         {
           n: "Abade de Priscos",
@@ -327,7 +344,7 @@ function ElarisFinalDubai() {
           </span>
 
           <span className="text-[7px] tracking-[0.3em] text-zinc-400 font-bold">
-            DUBAI • JUMEIRAH
+            {t.location}
           </span>
         </div>
 
@@ -403,7 +420,7 @@ function ElarisFinalDubai() {
 
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6 z-10">
                   <span className="text-[10px] tracking-[0.6em] uppercase mb-4 font-bold">
-                    A Legacy of Excellence
+                    {t.legacyBadge}
                   </span>
 
                   <h2 className="text-5xl md:text-8xl font-light italic mb-10">
@@ -484,23 +501,21 @@ function ElarisFinalDubai() {
               <div className="grid md:grid-cols-2 min-h-full">
                 <div className="bg-[#111] text-white p-10 md:p-24 flex flex-col justify-center">
                   <h2 className="text-4xl md:text-6xl font-light mb-10 leading-none">
-                    A Journey Across{" "}
+                    {t.storyHeading}{" "}
                     <span className="text-[#c5a059]">
-                      Continents
+                      {t.storyHeadingHL}
                     </span>
                   </h2>
 
                   <p className="text-zinc-400 text-lg italic leading-relaxed mb-8">
-                    Elaris was born in 1984 as a small family project in
-                    Portugal. Today, it stands as a global beacon of
-                    culinary innovation.
+                    {t.storyPara}
                   </p>
 
                   <button
                     onClick={() => navigateTo('booking')}
                     className="mt-6 w-fit px-10 py-4 bg-[#c5a059] text-black text-[10px] font-black uppercase tracking-[0.3em] hover:bg-white transition-all"
                   >
-                    Reserve Experience
+                    {t.reserveExp}
                   </button>
                 </div>
 
@@ -566,18 +581,18 @@ function ElarisFinalDubai() {
               />
 
               <h2 className="text-5xl font-light uppercase tracking-widest mb-6">
-                Confirmed
+                {t.confirmed}
               </h2>
 
               <p className="text-zinc-500 italic text-xl max-w-md">
-                Your experience at Elaris Dubai is being meticulously prepared.
+                {t.successMsg}
               </p>
 
               <button
                 onClick={() => navigateTo('home')}
                 className="mt-12 px-12 py-5 border border-black hover:bg-black hover:text-white transition-all text-[10px] font-black uppercase tracking-widest"
               >
-                Back to Sanctuary
+                {t.backToSanctuary}
               </button>
             </motion.div>
           )}
@@ -618,24 +633,19 @@ function ElarisFinalDubai() {
                 />
 
                 <h3 className="text-2xl font-light mb-6 uppercase tracking-[0.2em]">
-                  Privacy Protocol
+                  {t.privacyTitle}
                 </h3>
 
                 <div className="text-sm text-zinc-500 leading-relaxed space-y-4 mb-10">
-                  <p>
-                    At Elaris Dubai, discretion is our ultimate luxury.
-                  </p>
-
-                  <p>
-                    Your personal data is used exclusively for reservation management.
-                  </p>
+                  <p>{t.privacyP1}</p>
+                  <p>{t.privacyP2}</p>
                 </div>
 
                 <button
                   onClick={() => setShowPrivacy(false)}
                   className="w-full py-5 bg-[#1a1a1a] text-[#c5a059] font-black uppercase text-[10px] tracking-[0.4em] hover:bg-[#c5a059] hover:text-black transition-all"
                 >
-                  Acknowledge
+                  {t.acknowledge}
                 </button>
               </motion.div>
             </motion.div>
@@ -697,7 +707,7 @@ function ElarisFinalDubai() {
 
               <div className="mt-auto border-t border-zinc-100 pt-10 flex items-center justify-between">
                 <p className="text-[9px] tracking-widest text-zinc-400 uppercase leading-loose">
-                  Jumeirah Beach Road • Dubai
+                  {t.location}
                 </p>
                 <div className="flex items-center gap-1">
                   <button onClick={() => setLang("en")} className={`px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-full transition-all border ${lang === "en" ? "bg-[#c5a059] text-black border-[#c5a059]" : "border-zinc-300 text-zinc-400"}`}>EN</button>
@@ -1067,6 +1077,9 @@ function ElarisSportApp() {
   const [lang, setLang] = useState<Lang>("en");
   const t = {
     en: {
+      performanceStore: "Performance Store", searchPlaceholder: "Search…", cart: "Cart",
+      catAll: "All", catBoots: "Boots", catKits: "Kits", catBalls: "Balls",
+      catGoalkeeper: "Goalkeeper", catTraining: "Training", catAccessories: "Accessories",
       heroTitle1: "PLAY AT YOUR", heroTitle2: "PEAK.",
       shopBoots: "Shop Boots", shopKits: "Shop Kits", onBoots: "on boots",
       products: "products", featured: "Featured", priceLow: "Price: Low → High", priceHigh: "Price: High → Low",
@@ -1087,6 +1100,9 @@ function ElarisSportApp() {
       orderSummary: "Order Summary", backToCart: "Back to Cart",
     },
     pt: {
+      performanceStore: "Loja de Performance", searchPlaceholder: "Pesquisar…", cart: "Carrinho",
+      catAll: "Todos", catBoots: "Chuteiras", catKits: "Equipamentos", catBalls: "Bolas",
+      catGoalkeeper: "Guarda-Redes", catTraining: "Treino", catAccessories: "Acessórios",
       heroTitle1: "JOGA NO TEU", heroTitle2: "MELHOR.",
       shopBoots: "Ver Chuteiras", shopKits: "Ver Equipamentos", onBoots: "nas chuteiras",
       products: "produtos", featured: "Destaques", priceLow: "Preço: Mais Baixo", priceHigh: "Preço: Mais Alto",
@@ -1107,6 +1123,9 @@ function ElarisSportApp() {
       orderSummary: "Resumo da Encomenda", backToCart: "Voltar ao Carrinho",
     },
   }[lang] ?? {
+    performanceStore: "Performance Store", searchPlaceholder: "Search…", cart: "Cart",
+    catAll: "All", catBoots: "Boots", catKits: "Kits", catBalls: "Balls",
+    catGoalkeeper: "Goalkeeper", catTraining: "Training", catAccessories: "Accessories",
     heroTitle1: "PLAY AT YOUR", heroTitle2: "PEAK.",
     shopBoots: "Shop Boots", shopKits: "Shop Kits", onBoots: "on boots",
     products: "products", featured: "Featured", priceLow: "Price: Low → High", priceHigh: "Price: High → Low",
@@ -1219,6 +1238,10 @@ function ElarisSportApp() {
   ];
 
   const categories = ['All','Boots','Kits','Balls','Goalkeeper','Training','Accessories'];
+  const categoryLabels: Record<string, string> = {
+    All: t.catAll, Boots: t.catBoots, Kits: t.catKits, Balls: t.catBalls,
+    Goalkeeper: t.catGoalkeeper, Training: t.catTraining, Accessories: t.catAccessories,
+  };
 
   const addToCart = (product: Product, size: string) => {
     setCart(prev => {
@@ -1276,7 +1299,7 @@ function ElarisSportApp() {
           <div className="bg-black p-1.5 rounded-lg"><Trophy size={18} className="text-white"/></div>
           <div>
             <h1 className="font-black text-lg tracking-tight leading-none">ELARIS<span className="text-[#0066ff]">SPORT</span></h1>
-            <p className="text-[8px] uppercase tracking-[0.3em] text-zinc-400 font-bold">Performance Store</p>
+            <p className="text-[8px] uppercase tracking-[0.3em] text-zinc-400 font-bold">{t.performanceStore}</p>
           </div>
         </div>
 
@@ -1285,7 +1308,7 @@ function ElarisSportApp() {
           {categories.map(cat => (
             <button key={cat} onClick={()=>setSelectedCategory(cat)}
               className={`px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all ${selectedCategory===cat ? 'bg-black text-white' : 'hover:bg-zinc-100 text-zinc-500'}`}>
-              {cat}
+              {categoryLabels[cat]}
             </button>
           ))}
         </div>
@@ -1293,7 +1316,7 @@ function ElarisSportApp() {
         {/* Search */}
         <div className="flex items-center bg-zinc-100 rounded-full px-3 py-2 w-[200px] ml-auto">
           <Search size={14} className="text-zinc-400 shrink-0"/>
-          <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search…"
+          <input value={search} onChange={e=>setSearch(e.target.value)} placeholder={t.searchPlaceholder}
             className="bg-transparent outline-none px-2 text-xs w-full"/>
         </div>
 
@@ -1312,7 +1335,7 @@ function ElarisSportApp() {
         {/* Cart */}
         <button onClick={()=>setView('cart')} className="relative flex items-center gap-2 bg-black hover:bg-[#0066ff] text-white px-4 py-2 rounded-full transition-all text-xs font-black uppercase tracking-widest shrink-0">
           <ShoppingBag size={16}/>
-          <span className="hidden sm:block">Cart</span>
+          <span className="hidden sm:block">{t.cart}</span>
           {cartCount>0 && <span className="absolute -top-2 -right-2 bg-[#0066ff] text-white text-[9px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">{cartCount}</span>}
         </button>
       </nav>
@@ -1359,7 +1382,7 @@ function ElarisSportApp() {
                   {categories.map(cat => (
                     <button key={cat} onClick={()=>setSelectedCategory(cat)}
                       className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest whitespace-nowrap transition-all shrink-0 ${selectedCategory===cat ? 'bg-black text-white' : 'bg-zinc-100'}`}>
-                      {cat}
+                      {categoryLabels[cat]}
                     </button>
                   ))}
                 </div>
@@ -1830,6 +1853,17 @@ function AsgardBarberApp() {
       sessionBooked: "Your premium session is booked",
       welcomeMsg: "Welcome to the highest international grooming standard.",
       backHome: "Back to Home",
+      barberHouse: "Barber House",
+      role1: "Head Barber • Dubai", role2: "Master Cut • Porto", role3: "Razor Specialist • London",
+      tagBestseller: "Bestseller", tagPremium: "Premium", tagElite: "Elite", tagWellness: "Wellness",
+      testimonial1: "The best barbershop experience I've ever had. Truly international level.",
+      testimonial2: "From the moment you walk in, you know this is different class. World-class precision.",
+      testimonial3: "I've been to barbers in Mayfair, Soho, NYC — Elaris beats them all.",
+      luxuryGroomingHouse: "Luxury Grooming House",
+      copyright: "© 2026 Elaris Group",
+      heroLine1: "THE CRAFT", heroLine2: "OF MEN.",
+      top10: "Top 10 Barbers", gqBadge: "GQ Magazine · 2025",
+      teamHeading: "Master Barbers",
     },
     pt: {
       services: "Serviços", team: "Equipa", book: "Reservar",
@@ -1851,6 +1885,17 @@ function AsgardBarberApp() {
       sessionBooked: "A tua sessão premium está marcada",
       welcomeMsg: "Bem-vindo ao padrão mais alto da barbearia internacional.",
       backHome: "Voltar ao Início",
+      barberHouse: "Barber House",
+      role1: "Chefe de Barbeiros • Dubai", role2: "Master Cut • Porto", role3: "Especialista em Navalha • Londres",
+      tagBestseller: "Mais Vendido", tagPremium: "Premium", tagElite: "Elite", tagWellness: "Bem-Estar",
+      testimonial1: "A melhor experiência de barbearia que já tive. Nível absolutamente internacional.",
+      testimonial2: "Desde o momento em que entras, sabes que isto é outra classe. Precisão de nível mundial.",
+      testimonial3: "Já fui a barbeiros em Mayfair, Soho, Nova York — Elaris supera-os todos.",
+      luxuryGroomingHouse: "Casa de Grooming de Luxo",
+      copyright: "© 2026 Elaris Group",
+      heroLine1: "O OFÍCIO", heroLine2: "DOS HOMENS.",
+      top10: "Top 10 Barbeiros", gqBadge: "GQ Magazine · 2025",
+      teamHeading: "Master Barbeiros",
     },
   }[lang];
   const [view, setView] = useState<'intro' | 'services' | 'book' | 'done'>('intro');
@@ -1896,16 +1941,23 @@ function AsgardBarberApp() {
     },
   ];
 
+  const tagLabel: Record<string, string> = {
+    Bestseller: tBarber.tagBestseller,
+    Premium: tBarber.tagPremium,
+    Elite: tBarber.tagElite,
+    Wellness: tBarber.tagWellness,
+  };
+
   const barbers = [
-    { name: "Marcus Elaris", role: "Head Barber • Dubai", exp: "12y", img: "/barber1.png" },
-    { name: "André Sousa", role: "Master Cut • Porto", exp: "8y", img: "/barber2.png" },
-    { name: "James Whitfield", role: "Razor Specialist • London", exp: "15y", img: "/barber3.png" },
+    { name: "Marcus Elaris", role: tBarber.role1, exp: "12y", img: "/barber1.png" },
+    { name: "André Sousa", role: tBarber.role2, exp: "8y", img: "/barber2.png" },
+    { name: "James Whitfield", role: tBarber.role3, exp: "15y", img: "/barber3.png" },
   ];
 
   const testimonials = [
-    { name: "Rui Teixeira", city: "Porto", text: "A melhor experiência de barbearia que já tive. Nível absolutamente internacional.", stars: 5 },
-    { name: "Ahmad Al-Rashid", city: "Dubai", text: "From the moment you walk in, you know this is different class. World-class precision.", stars: 5 },
-    { name: "George H.", city: "London", text: "I've been to barbers in Mayfair, Soho, NYC — Elaris beats them all.", stars: 5 },
+    { name: "Rui Teixeira", city: "Porto", text: tBarber.testimonial1, stars: 5 },
+    { name: "Ahmad Al-Rashid", city: "Dubai", text: tBarber.testimonial2, stars: 5 },
+    { name: "George H.", city: "London", text: tBarber.testimonial3, stars: 5 },
   ];
 
   return (
@@ -1937,7 +1989,7 @@ function AsgardBarberApp() {
               <span className="text-amber-500 text-xs font-black">®</span>
             </div>
             <span className="text-[8px] uppercase tracking-[0.45em] text-white/30 font-bold block -mt-0.5">
-              Barber House
+              {tBarber.barberHouse}
             </span>
           </div>
         </div>
@@ -1997,8 +2049,8 @@ function AsgardBarberApp() {
                 {/* Floating badge */}
                 <div className="absolute top-8 right-8 border border-amber-500/40 bg-black/60 backdrop-blur-xl px-5 py-3 text-center hidden md:block">
                   <div className="text-amber-400 text-[9px] uppercase tracking-[0.4em] font-black mb-1">{tBarber.recognized}</div>
-                  <div className="text-white text-xs font-bold">Top 10 Barbers</div>
-                  <div className="text-white/40 text-[8px] uppercase tracking-widest mt-0.5">GQ Magazine · 2025</div>
+                  <div className="text-white text-xs font-bold">{tBarber.top10}</div>
+                  <div className="text-white/40 text-[8px] uppercase tracking-widest mt-0.5">{tBarber.gqBadge}</div>
                 </div>
 
                 <div className="relative z-10 px-8 md:px-16 pb-16 w-full">
@@ -2008,10 +2060,10 @@ function AsgardBarberApp() {
                       <span className="text-amber-400 text-[9px] uppercase tracking-[0.6em] font-black">Dubai · London · Porto</span>
                     </div>
                     <h2 className="text-6xl md:text-[7rem] font-black leading-[0.9] tracking-tight mb-8 max-w-3xl">
-                      THE CRAFT
+                      {tBarber.heroLine1}
                       <br />
                       <span className="text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.25)' }}>
-                        OF MEN.
+                        {tBarber.heroLine2}
                       </span>
                     </h2>
                     <div className="flex flex-col sm:flex-row gap-4">
@@ -2052,7 +2104,7 @@ function AsgardBarberApp() {
                     <div>
                       <span className="text-amber-500 text-[9px] uppercase tracking-[0.5em] font-black block mb-3">{tBarber.ourTeam}</span>
                       <h3 className="text-4xl md:text-5xl font-black leading-tight">
-                        Master<br/>Barbers<span className="text-amber-500">.</span>
+                        {tBarber.teamHeading}<span className="text-amber-500">.</span>
                       </h3>
                     </div>
                     <button onClick={() => setView('book')} className="hidden md:flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-amber-400 hover:text-white transition-colors">
@@ -2140,7 +2192,7 @@ function AsgardBarberApp() {
                         s.tag === 'Bestseller' ? 'text-green-400 border-green-500/30 bg-green-500/10' :
                         'text-white/40 border-white/10'
                       }`}>
-                        {s.tag}
+                        {tagLabel[s.tag] ?? s.tag}
                       </span>
                       <span className="text-2xl font-black text-amber-400">{s.price}</span>
                     </div>
@@ -2238,7 +2290,7 @@ function AsgardBarberApp() {
           <h3 className="font-black text-base tracking-widest flex items-baseline gap-0.5">
             ELARIS<span className="text-amber-500 text-lg">®</span>
           </h3>
-          <p className="text-white/20 text-[8px] uppercase tracking-[0.4em] mt-0.5">Luxury Grooming House</p>
+          <p className="text-white/20 text-[8px] uppercase tracking-[0.4em] mt-0.5">{tBarber.luxuryGroomingHouse}</p>
         </div>
 
         <div className="flex items-center gap-6 text-[8px] uppercase tracking-[0.35em] font-bold text-white/20">
@@ -2250,7 +2302,7 @@ function AsgardBarberApp() {
         </div>
 
         <div className="text-[8px] uppercase tracking-widest text-white/15 font-bold">
-          © 2026 Elaris Group
+          {tBarber.copyright}
         </div>
       </footer>
     </div>
