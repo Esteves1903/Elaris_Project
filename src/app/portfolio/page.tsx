@@ -797,7 +797,7 @@ const COUNTRY_CODES = [
   { code: "+60", flag: "🇲🇾", name: "Malaysia" },
 ];
 
-function BookingForm({ navigateTo, lang = "en" }: { navigateTo: (v: any) => void; lang?: Lang }) {
+function BookingForm({ navigateTo, lang = "en" }: { navigateTo: (v: 'home' | 'menu' | 'story' | 'booking' | 'success') => void; lang?: Lang }) {
   const t = {
     en: {
       reservations: "Reservations", fullName: "Full Name", guests: "Guests",
@@ -1072,6 +1072,16 @@ function DishCard3D({ item }: { item: { n: string; p: string; d: string; img: st
 /* -------------------------------------------------------------------------- */
 /* --- 2. SPORTZONE FOOTBALL --- */
 /* -------------------------------------------------------------------------- */
+function Stars({ rating }: { rating: number }) {
+  return (
+    <span className="flex gap-0.5">
+      {[1,2,3,4,5].map(s => (
+        <span key={s} className={`text-xs ${s<=Math.round(rating) ? 'text-amber-400' : 'text-zinc-300'}`}>★</span>
+      ))}
+    </span>
+  );
+}
+
 function ElarisSportApp() {
   const [lang, setLang] = useState<Lang>("en");
   const t = {
@@ -1281,14 +1291,6 @@ function ElarisSportApp() {
     return e;
   };
 
-  const Stars = ({ rating }: { rating: number }) => (
-    <span className="flex gap-0.5">
-      {[1,2,3,4,5].map(s => (
-        <span key={s} className={`text-xs ${s<=Math.round(rating) ? 'text-amber-400' : 'text-zinc-300'}`}>★</span>
-      ))}
-    </span>
-  );
-
   return (
     <div className="h-full flex flex-col bg-[#f8f9fb] text-[#111] relative font-sans">
 
@@ -1390,7 +1392,7 @@ function ElarisSportApp() {
               {/* Toolbar */}
               <div className="px-6 md:px-10 py-4 flex items-center justify-between">
                 <p className="text-xs text-zinc-400 font-bold">{filtered.length} {t.products}</p>
-                <select value={sortBy} onChange={e=>setSortBy(e.target.value as any)}
+                <select value={sortBy} onChange={e=>setSortBy(e.target.value as 'featured' | 'price-asc' | 'price-desc')}
                   className="text-xs bg-white border border-zinc-200 rounded-lg px-3 py-2 outline-none font-bold cursor-pointer">
                   <option value="featured">{t.featured}</option>
                   <option value="price-asc">{t.priceLow}</option>
@@ -1403,7 +1405,7 @@ function ElarisSportApp() {
                 {filtered.length===0 && (
                   <div className="col-span-4 text-center py-20 text-zinc-400">
                     <Search size={40} className="mx-auto mb-4 opacity-30"/>
-                    <p className="font-bold">{t.noProducts} "{search}"</p>
+                    <p className="font-bold">{t.noProducts} &quot;{search}&quot;</p>
                   </div>
                 )}
                 {filtered.map(item => (
@@ -1604,7 +1606,7 @@ function ElarisSportApp() {
                       <div key={field}>
                         <label className="text-[10px] font-black uppercase tracking-widest text-[#0066ff] block mb-2">{label} *</label>
                         <input type={type} placeholder={placeholder}
-                          value={(checkoutForm as any)[field]}
+                          value={checkoutForm[field as keyof typeof checkoutForm]}
                           onChange={e=>{
                             const val = field==='card'
                               ? e.target.value.replace(/\D/g,'').slice(0,16).replace(/(.{4})/g,'$1 ').trim()
@@ -2146,7 +2148,7 @@ function AsgardBarberApp() {
                             <Star key={s} size={12} className="text-amber-400 fill-amber-400" />
                           ))}
                         </div>
-                        <p className="text-white/70 text-sm leading-relaxed italic mb-6">"{t.text}"</p>
+                        <p className="text-white/70 text-sm leading-relaxed italic mb-6">&quot;{t.text}&quot;</p>
                         <div className="border-t border-white/[0.07] pt-5">
                           <div className="font-black text-sm">{t.name}</div>
                           <div className="text-white/30 text-[9px] uppercase tracking-widest mt-0.5">{t.city}</div>
