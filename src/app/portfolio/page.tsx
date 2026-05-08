@@ -673,72 +673,6 @@ function ElarisFinalDubai() {
           )}
         </AnimatePresence>
 
-        {/* MOBILE MENU */}
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="absolute inset-0 z-[300] bg-white flex flex-col p-12"
-            >
-              <div className="flex justify-between items-center mb-20">
-                <span className="text-[10px] tracking-[0.5em] font-bold text-zinc-400 uppercase">
-                  Menu
-                </span>
-
-                <button
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-2"
-                >
-                  <X size={30} strokeWidth={1} />
-                </button>
-              </div>
-
-              <div className="flex flex-col gap-10 text-4xl font-light uppercase tracking-[0.2em]">
-                <button
-                  onClick={() => navigateTo('home')}
-                  className="text-left hover:text-[#c5a059]"
-                >
-                  {t.home}
-                </button>
-
-                <button
-                  onClick={() => navigateTo('story')}
-                  className="text-left hover:text-[#c5a059]"
-                >
-                  {t.heritage}
-                </button>
-
-                <button
-                  onClick={() => navigateTo('menu')}
-                  className="text-left hover:text-[#c5a059]"
-                >
-                  {t.collection}
-                </button>
-
-                <button
-                  onClick={() => navigateTo('booking')}
-                  className="text-left text-[#c5a059]"
-                >
-                  {t.reservations}
-                </button>
-              </div>
-
-              <div className="mt-auto border-t border-zinc-100 pt-10 flex items-center justify-between">
-                <p className="text-[9px] tracking-widest text-zinc-400 uppercase leading-loose">
-                  {t.location}
-                </p>
-                <div className="flex items-center gap-1">
-                  <button onClick={() => setLang("en")} className={`px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-full transition-all border ${lang === "en" ? "bg-[#c5a059] text-black border-[#c5a059]" : "border-zinc-300 text-zinc-400"}`}>EN</button>
-                  <button onClick={() => setLang("pt")} className={`px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-full transition-all border ${lang === "pt" ? "bg-[#c5a059] text-black border-[#c5a059]" : "border-zinc-300 text-zinc-400"}`}>PT</button>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
       </main>
 
       {/* FOOTER FIXO */}
@@ -775,6 +709,43 @@ function ElarisFinalDubai() {
           </p>
         </div>
       </footer>
+
+      {/* MOBILE MENU — positioned over full container including footer */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            className="absolute inset-0 z-[300] bg-white flex flex-col p-10"
+          >
+            <div className="flex justify-between items-center mb-10">
+              <span className="text-[10px] tracking-[0.5em] font-bold text-zinc-400 uppercase">
+                Menu
+              </span>
+              <button onClick={() => setIsMobileMenuOpen(false)} className="p-2">
+                <X size={28} strokeWidth={1} />
+              </button>
+            </div>
+
+            <div className="flex flex-col gap-7 text-3xl font-light uppercase tracking-[0.2em]">
+              <button onClick={() => navigateTo('home')} className="text-left hover:text-[#c5a059]">{t.home}</button>
+              <button onClick={() => navigateTo('story')} className="text-left hover:text-[#c5a059]">{t.heritage}</button>
+              <button onClick={() => navigateTo('menu')} className="text-left hover:text-[#c5a059]">{t.collection}</button>
+              <button onClick={() => navigateTo('booking')} className="text-left text-[#c5a059]">{t.reservations}</button>
+            </div>
+
+            <div className="mt-auto border-t border-zinc-100 pt-6 flex items-center justify-between">
+              <p className="text-[9px] tracking-widest text-zinc-400 uppercase leading-loose">{t.location}</p>
+              <div className="flex items-center gap-1">
+                <button onClick={() => setLang("en")} className={`px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-full transition-all border ${lang === "en" ? "bg-[#c5a059] text-black border-[#c5a059]" : "border-zinc-300 text-zinc-400"}`}>EN</button>
+                <button onClick={() => setLang("pt")} className={`px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-full transition-all border ${lang === "pt" ? "bg-[#c5a059] text-black border-[#c5a059]" : "border-zinc-300 text-zinc-400"}`}>PT</button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </div>
   );
