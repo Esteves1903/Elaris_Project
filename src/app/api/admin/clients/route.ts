@@ -7,11 +7,14 @@ export async function POST(req: NextRequest) {
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const body = await req.json();
-  const {
-    name, email, company, slug, password,
-    type, plan, websiteName, websiteUrl,
-    status, stage, estimatedDelivery, lastUpdate, nextStep,
-  } = body;
+  const { name, email, company, password, type, stage, nextStep } = body;
+
+  const slug = company
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 
   const { data: authData, error: authError } = await supabaseAdmin.auth.admin.createUser({
     email,
@@ -37,13 +40,15 @@ export async function POST(req: NextRequest) {
     .from("projects")
     .insert({
       client_id: clientData.id,
-      type, plan,
-      website_name: websiteName,
-      website_url: websiteUrl,
-      status, stage,
-      estimated_delivery: estimatedDelivery,
-      last_update: lastUpdate,
-      next_step: nextStep,
+      type,
+      plan: "",
+      website_name: company,
+      website_url: "",
+      status: "In production",
+      stage,
+      estimated_delivery: "",
+      last_update: "",
+      next_step: nextStep ?? "",
     });
 
   if (projectError) return NextResponse.json({ error: projectError.message }, { status: 400 });
