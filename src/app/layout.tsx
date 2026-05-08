@@ -3,6 +3,7 @@ import { Geist } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
+import { IntroAnimation } from "@/components/ui/IntroAnimation";
 import "./globals.css";
 
 const geist = Geist({
@@ -29,6 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={geist.className}>
+        <IntroAnimation />
         <ScrollToTop />
         <Header />
         {children}
