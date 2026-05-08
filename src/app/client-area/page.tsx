@@ -168,7 +168,48 @@ export default function ClientAreaPage() {
         variants={sectionVariants}
         initial="hidden"
         animate="show"
-        className="relative z-10 mx-auto grid max-w-6xl gap-6 lg:grid-cols-[1.4fr_0.8fr]"
+        className="relative z-10 mx-auto mt-6 max-w-6xl rounded-3xl border border-white/10 bg-white/[0.04] p-8"
+      >
+        <div className="mb-8">
+          <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
+            Latest updates
+          </p>
+          <h2 className="text-2xl font-bold tracking-tight">Recent project activity</h2>
+        </div>
+
+        {latestUpdates.length === 0 ? (
+          <p className="text-sm text-zinc-500">No updates yet.</p>
+        ) : (
+          <div className="grid gap-4">
+            {latestUpdates.map((update, index) => (
+              <motion.div
+                key={update.id}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.2 + index * 0.07 }}
+                className="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
+              >
+                <p className="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-zinc-500">
+                  {new Date(update.created_at).toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </p>
+                <h3 className="mb-2 font-semibold text-white">{update.title}</h3>
+                <p className="text-sm leading-6 text-zinc-400">{update.message}</p>
+              </motion.div>
+            ))}
+          </div>
+        )}
+      </motion.section>
+
+      <motion.section
+        custom={2}
+        variants={sectionVariants}
+        initial="hidden"
+        animate="show"
+        className="relative z-10 mx-auto mt-6 grid max-w-6xl gap-6 lg:grid-cols-[1.4fr_0.8fr]"
       >
         <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-8">
           <div className="mb-8 flex flex-col gap-2">
@@ -182,20 +223,24 @@ export default function ClientAreaPage() {
           <div className="grid gap-6 sm:grid-cols-2">
             {[
               { label: "Company", value: clientData.company },
-              { label: "Project type", value: project?.type ?? "—" },
-              { label: "Service plan", value: project?.plan ?? "—" },
-              { label: "Estimated delivery", value: project?.estimated_delivery ?? "—" },
-              { label: "Current stage", value: project?.stage ?? "—" },
-            ].map((item) => (
-              <div key={item.label}>
-                <p className="mb-2 text-sm text-zinc-500">{item.label}</p>
-                <p className="font-medium text-white">{item.value}</p>
+              { label: "Project type", value: project?.type },
+              { label: "Service plan", value: project?.plan },
+              { label: "Estimated delivery", value: project?.estimated_delivery },
+              { label: "Current stage", value: project?.stage },
+            ]
+              .filter((item) => item.value && item.value.trim() !== "")
+              .map((item) => (
+                <div key={item.label}>
+                  <p className="mb-2 text-sm text-zinc-500">{item.label}</p>
+                  <p className="font-medium text-white">{item.value}</p>
+                </div>
+              ))}
+            {project?.status && project.status.trim() !== "" && (
+              <div>
+                <p className="mb-2 text-sm text-zinc-500">Status</p>
+                <p className="font-medium text-cyan-300">{project.status}</p>
               </div>
-            ))}
-            <div>
-              <p className="mb-2 text-sm text-zinc-500">Website status</p>
-              <p className="font-medium text-cyan-300">{project?.status ?? "—"}</p>
-            </div>
+            )}
           </div>
         </div>
 
@@ -205,7 +250,7 @@ export default function ClientAreaPage() {
           </p>
           <h2 className="mb-4 text-2xl font-bold tracking-tight">What happens next?</h2>
           <p className="mb-8 text-sm leading-6 text-zinc-400">
-            {project?.next_step ?? "No information yet."}
+            {project?.next_step && project.next_step.trim() !== "" ? project.next_step : "No information yet."}
           </p>
           <Link
             href="/contact"
@@ -218,7 +263,7 @@ export default function ClientAreaPage() {
 
       {project && progressSteps.length > 0 && (
         <motion.section
-          custom={2}
+          custom={3}
           variants={sectionVariants}
           initial="hidden"
           animate="show"
@@ -286,7 +331,7 @@ export default function ClientAreaPage() {
       )}
 
       <motion.section
-        custom={3}
+        custom={4}
         variants={sectionVariants}
         initial="hidden"
         animate="show"
@@ -333,46 +378,6 @@ export default function ClientAreaPage() {
         </SpotlightCard>
       </motion.section>
 
-      <motion.section
-        custom={4}
-        variants={sectionVariants}
-        initial="hidden"
-        animate="show"
-        className="relative z-10 mx-auto mt-6 max-w-6xl rounded-3xl border border-white/10 bg-white/[0.04] p-8"
-      >
-        <div className="mb-8">
-          <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
-            Latest updates
-          </p>
-          <h2 className="text-2xl font-bold tracking-tight">Recent project activity</h2>
-        </div>
-
-        {latestUpdates.length === 0 ? (
-          <p className="text-sm text-zinc-500">No updates yet.</p>
-        ) : (
-          <div className="grid gap-4">
-            {latestUpdates.map((update, index) => (
-              <motion.div
-                key={update.id}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.6 + index * 0.07 }}
-                className="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
-              >
-                <p className="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-zinc-500">
-                  {new Date(update.created_at).toLocaleDateString("en-GB", {
-                    day: "2-digit",
-                    month: "long",
-                    year: "numeric",
-                  })}
-                </p>
-                <h3 className="mb-2 font-semibold text-white">{update.title}</h3>
-                <p className="text-sm leading-6 text-zinc-400">{update.message}</p>
-              </motion.div>
-            ))}
-          </div>
-        )}
-      </motion.section>
     </main>
   );
 }
