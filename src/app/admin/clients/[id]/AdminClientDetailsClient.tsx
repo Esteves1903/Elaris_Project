@@ -77,6 +77,8 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
   const [newUpdateMessage, setNewUpdateMessage] = useState("");
   const [saveLoading, setSaveLoading] = useState(false);
   const [addLoading, setAddLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [updateError, setUpdateError] = useState("");
@@ -123,6 +125,23 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
     } else {
       setSuccessMessage("Changes saved successfully.");
     }
+  }
+
+  async function handleDelete() {
+    setDeleteLoading(true);
+    const headers = await getAuthHeader();
+    const res = await fetch(`/api/admin/clients/${client.id}`, {
+      method: "DELETE",
+      headers,
+    });
+    setDeleteLoading(false);
+    if (!res.ok) {
+      const json = await res.json();
+      setErrorMessage(json.error ?? "Failed to delete client.");
+      setShowDeleteConfirm(false);
+      return;
+    }
+    router.push("/admin");
   }
 
   async function handleAddUpdate(event: FormEvent<HTMLFormElement>) {
@@ -183,14 +202,59 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
           >
             ← Back to admin
           </Link>
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="rounded-full border border-white/10 px-5 py-2 text-sm font-semibold text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]"
-          >
-            Log out
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setShowDeleteConfirm(true)}
+              className="rounded-full border border-red-500/30 px-5 py-2 text-sm font-semibold text-red-400 transition hover:border-red-400/60 hover:bg-red-400/[0.08]"
+            >
+              Delete client
+            </button>
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="rounded-full border border-white/10 px-5 py-2 text-sm font-semibold text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]"
+            >
+              Log out
+            </button>
+          </div>
         </motion.div>
+
+        <AnimatePresence>
+          {showDeleteConfirm && (
+            <motion.div
+              key="delete-confirm"
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.2 }}
+              className="mb-8 rounded-2xl border border-red-500/30 bg-red-500/[0.07] p-6"
+            >
+              <p className="mb-1 text-sm font-semibold text-red-400">Delete client</p>
+              <p className="mb-5 text-sm leading-6 text-zinc-400">
+                This will permanently delete <span className="font-semibold text-white">{client.company}</span>, their project and all associated data. This cannot be undone.
+              </p>
+              <div className="flex gap-3">
+                <button
+                  type="button"
+                  onClick={handleDelete}
+                  disabled={deleteLoading}
+                  className="rounded-full bg-red-500 px-5 py-2 text-sm font-semibold text-white transition hover:bg-red-400 disabled:opacity-60"
+                >
+                  {deleteLoading ? "Deleting..." : "Yes, delete permanently"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowDeleteConfirm(false)}
+                  disabled={deleteLoading}
+                  className="rounded-full border border-white/10 px-5 py-2 text-sm font-semibold text-white transition hover:bg-white/[0.06]"
+                >
+                  Cancel
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
