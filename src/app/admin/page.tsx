@@ -39,6 +39,14 @@ export default function AdminPage() {
   const [isCheckingSession, setIsCheckingSession] = useState(true);
   const [clients, setClients] = useState<Client[]>([]);
 
+  async function fetchClients() {
+    const { data } = await supabase
+      .from("clients")
+      .select("*, projects(*)")
+      .order("created_at", { ascending: false });
+    if (data) setClients(data as Client[]);
+  }
+
   useEffect(() => {
     getUserRole().then((role) => {
       if (role !== "admin") {
@@ -49,14 +57,6 @@ export default function AdminPage() {
       fetchClients();
     });
   }, [router]);
-
-  async function fetchClients() {
-    const { data } = await supabase
-      .from("clients")
-      .select("*, projects(*)")
-      .order("created_at", { ascending: false });
-    if (data) setClients(data as Client[]);
-  }
 
   function handleLogout() {
     signOut().then(() => router.push("/client-login"));
@@ -133,7 +133,7 @@ export default function AdminPage() {
         </div>
 
         {clients.length === 0 ? (
-          <p className="text-sm text-zinc-500">No clients yet. Click "Add client" to create the first one.</p>
+          <p className="text-sm text-zinc-500">No clients yet. Click &quot;Add client&quot; to create the first one.</p>
         ) : (
           <div className="grid gap-4">
             {clients.map((client, index) => {

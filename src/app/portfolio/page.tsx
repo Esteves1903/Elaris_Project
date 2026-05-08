@@ -12,7 +12,6 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { History as HistoryIcon } from "lucide-react";
-import { img } from "framer-motion/client";
 
 // --- ANIMATED COUNTER COMPONENT ---
 function AnimatedCounter({ target, duration = 2000, suffix = "" }: { target: number; duration?: number; suffix?: string }) {
