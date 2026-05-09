@@ -96,6 +96,10 @@ export default function AdminPage() {
             </p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">
+            <Link href="/admin/leads"
+              className="w-fit rounded-full border border-white/10 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]">
+              View leads
+            </Link>
             <button type="button" onClick={handleLogout}
               className="w-fit rounded-full border border-white/10 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]">
               Log out
