@@ -352,12 +352,6 @@ export default function ClientAreaPage() {
             >
               Send message
             </Link>
-            <a
-              href="tel:+351000000000"
-              className="rounded-full border border-white/15 px-6 py-3 text-center text-sm font-semibold text-white transition-all hover:border-cyan-400/40 hover:bg-white/[0.06]"
-            >
-              Call us
-            </a>
           </div>
         </SpotlightCard>
 

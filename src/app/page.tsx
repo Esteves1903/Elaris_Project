@@ -1,18 +1,20 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import { Fragment } from "react";
+import { LayoutDashboard, MessageCircle, Shield, Zap, Monitor, Wrench, Headphones } from "lucide-react";
+import { portfolioProjects } from "@/lib/portfolio-projects";
+import { HeroSection } from "@/components/ui/HeroSection";
+import { SpotlightCard } from "@/components/ui/SpotlightCard";
+import RevealCard from "@/components/ui/RevealCard";
+import { CTASection } from "@/components/ui/CTASection";
+import { TechMarquee } from "@/components/ui/TechMarquee";
+import { FAQ } from "@/components/ui/FAQ";
 
 export const metadata: Metadata = {
   title: "Elaris — Websites for growing businesses",
   description:
     "Elaris helps small businesses grow online with modern websites, digital tools and a clear development process.",
 };
-import { ArrowRight, LayoutDashboard, MessageCircle, Shield, Zap, Monitor, Wrench, Headphones } from "lucide-react";
-import { portfolioProjects } from "@/lib/portfolio-projects";
-import { HeroSection } from "@/components/ui/HeroSection";
-import { SpotlightCard } from "@/components/ui/SpotlightCard";
-import RevealCard from "@/components/ui/RevealCard";
-import { CTASection } from "@/components/ui/CTASection";
 
 const services = [
   {
@@ -32,28 +34,6 @@ const services = [
   },
 ];
 
-const processSteps = [
-  {
-    step: "01",
-    title: "Understand",
-    description: "We start by understanding your business, goals and what your website needs to achieve.",
-  },
-  {
-    step: "02",
-    title: "Plan",
-    description: "We define the structure, features and direction of the project before development starts.",
-  },
-  {
-    step: "03",
-    title: "Build",
-    description: "We design and develop the website with a clean, modern and responsive approach.",
-  },
-  {
-    step: "04",
-    title: "Deliver",
-    description: "We review, adjust and prepare everything so the final result is ready to launch.",
-  },
-];
 
 const whyElaris = [
   {
@@ -84,6 +64,8 @@ export default function Home() {
       {/* Hero */}
       <HeroSection />
 
+      <TechMarquee />
+
       {/* About */}
       <section className="mx-auto max-w-6xl px-6 py-24">
         <div className="grid gap-10 md:grid-cols-[0.8fr_1.2fr] md:items-center">
@@ -92,19 +74,16 @@ export default function Home() {
               About Elaris
             </p>
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Simple, modern and{" "}
-              <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                focused on results.
-              </span>
+              Simple, modern and focused on results.
             </h2>
           </RevealCard>
 
           <RevealCard delay={0.15}>
             <p className="text-base leading-8 text-zinc-300">
-              Elaris helps small businesses build a stronger digital presence
-              through clean websites, useful digital tools and a clear development
-              process. We focus on creating solutions that look professional, work
-              smoothly and are easy for clients to understand.
+              Elaris helps businesses build a stronger digital presence through
+              clean websites, useful digital tools and a clear development process.
+              We focus on solutions that look professional, work smoothly and are
+              easy for clients to understand.
             </p>
           </RevealCard>
         </div>
@@ -194,27 +173,41 @@ export default function Home() {
 
         <RevealCard delay={0.05}>
           <p className="mb-8 max-w-2xl text-base leading-7 text-zinc-300">
-            Custom websites for cafes, restaurants, and barbershops with advanced
-            features like online booking, ordering systems, and customer
-            management tools.
+            Fully interactive layout previews — test every feature as if you were
+            a real customer. Booking systems, ordering flows, and more.
           </p>
         </RevealCard>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {portfolioProjects.slice(0, 3).map((project, index) => (
+          {portfolioProjects.slice(0, 3).map((project, index) => {
+            const sectionMap: Record<string, string> = {
+              "cafe-restaurant": "restaurant",
+              "sports-store": "football-store",
+              "barbershop": "barber",
+            };
+            const section = sectionMap[project.category] ?? "";
+            return (
             <RevealCard key={project.id} delay={index * 0.15} className="h-full">
               <Link
-                href="/portfolio"
+                href={section ? `/portfolio?section=${section}` : "/portfolio"}
                 className="group flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition-colors hover:border-cyan-400/30 hover:bg-white/[0.07]"
               >
                 <div className="relative h-48 w-full overflow-hidden bg-black shrink-0">
-                  <img
+                  <Image
                     src={project.images?.[0] || "/api/placeholder/400/320"}
                     alt={project.title}
-                    className="h-full w-full object-cover opacity-80 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
+                    fill
+                    className="object-cover opacity-80 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
                   />
                   <div className="absolute left-4 top-4 rounded-full bg-black/60 px-3 py-1 text-xs font-semibold uppercase text-cyan-400 backdrop-blur-sm">
                     {project.category.replace("-", " ")}
+                  </div>
+                  <div className="absolute bottom-4 right-4 flex translate-y-1 items-center gap-1.5 rounded-full border border-cyan-400/30 bg-black/70 px-3 py-1 text-xs font-semibold text-cyan-300 opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                    <span className="relative flex h-1.5 w-1.5">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75" />
+                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-cyan-400" />
+                    </span>
+                    Interactive demo
                   </div>
                 </div>
 
@@ -243,57 +236,13 @@ export default function Home() {
                 </div>
               </Link>
             </RevealCard>
-          ))}
+            );
+          })}
         </div>
       </section>
 
-      {/* Process */}
-      <section className="mx-auto max-w-6xl px-6 py-24">
-        <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
-          <RevealCard>
-            <p className="mb-3 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
-              Process
-            </p>
-            <h2 className="max-w-2xl text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              A clear process from first contact to final delivery.
-            </h2>
-          </RevealCard>
-
-          <RevealCard delay={0.1}>
-            <Link
-              href="/process"
-              className="text-sm font-semibold text-cyan-400 transition hover:text-cyan-300"
-            >
-              View full process →
-            </Link>
-          </RevealCard>
-        </div>
-
-        <div className="flex flex-col gap-4 md:flex-row md:items-stretch">
-          {processSteps.map((item, index) => (
-            <Fragment key={item.step}>
-              <SpotlightCard
-                delay={index * 0.1}
-                className="group flex flex-1 cursor-default flex-col rounded-2xl border border-white/10 bg-white/5 p-6 text-white transition-colors hover:border-cyan-400/30 hover:bg-white/[0.07]"
-              >
-                <span className="text-sm font-semibold text-cyan-400">
-                  {item.step}
-                </span>
-                <h3 className="mt-5 text-xl font-semibold">{item.title}</h3>
-                <p className="mt-3 flex-1 text-sm leading-6 text-zinc-400">
-                  {item.description}
-                </p>
-              </SpotlightCard>
-
-              {index < processSteps.length - 1 && (
-                <div className="hidden items-center justify-center text-white/20 md:flex">
-                  <ArrowRight className="h-4 w-4 shrink-0" />
-                </div>
-              )}
-            </Fragment>
-          ))}
-        </div>
-      </section>
+      {/* FAQ */}
+      <FAQ />
 
       {/* CTA */}
       <CTASection />

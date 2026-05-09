@@ -1,0 +1,142 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { CTASection } from "@/components/ui/CTASection";
+import RevealCard from "@/components/ui/RevealCard";
+
+export const metadata: Metadata = {
+  title: "About",
+  description: "Meet the team behind Elaris — a small studio building modern websites for growing businesses.",
+};
+
+const team = [
+  {
+    name: "João Mouta",
+    role: "Co-founder · Development & Design",
+    bio: "Focused on building fast, modern web experiences with clean code and a sharp eye for detail.",
+    initials: "JM",
+  },
+  {
+    name: "José Mário",
+    role: "Co-founder · Development & Design",
+    bio: "Responsible for the visual direction and user experience across every Elaris project.",
+    initials: "JM",
+  },
+];
+
+const values = [
+  {
+    title: "Honest work",
+    description: "We say what we can deliver and deliver what we say. No inflated proposals, no disappearing after launch.",
+  },
+  {
+    title: "Direct communication",
+    description: "You deal directly with the people building your project. No account managers, no ticket queues.",
+  },
+  {
+    title: "Built to last",
+    description: "Every website we build is maintainable, documented and easy to hand over — whether you stay with us or not.",
+  },
+  {
+    title: "Results over aesthetics",
+    description: "Good-looking is not enough. Every design decision is made to serve the visitor and grow the business.",
+  },
+];
+
+export default function AboutPage() {
+  return (
+    <main className="min-h-screen bg-[#0B0F19] px-6 pb-0 pt-32 text-white">
+      {/* Hero */}
+      <section className="mx-auto mb-24 max-w-6xl">
+        <RevealCard className="max-w-3xl">
+          <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
+            About us
+          </p>
+          <h1 className="mb-8 text-4xl font-bold tracking-tight sm:text-5xl">
+            A small studio doing{" "}
+            <span className="text-white">serious work.</span>
+          </h1>
+          <p className="text-base leading-7 text-zinc-300">
+            Elaris is a two-person web studio based in Portugal. We build modern,
+            high-quality websites for businesses that want more than a template —
+            with a client portal, direct communication and support that doesn&apos;t
+            stop after launch.
+          </p>
+        </RevealCard>
+      </section>
+
+      {/* Team */}
+      <section className="mx-auto mb-24 max-w-6xl">
+        <RevealCard>
+          <p className="mb-10 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
+            The team
+          </p>
+        </RevealCard>
+        <div className="grid gap-6 sm:grid-cols-2">
+          {team.map((member, i) => (
+            <RevealCard key={member.name} delay={i * 0.1}>
+              <div className="flex gap-5 rounded-3xl border border-white/10 bg-white/[0.03] p-8 transition-colors hover:border-cyan-400/20">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400/20 to-blue-500/20 text-sm font-bold text-cyan-300">
+                  {member.initials}
+                </div>
+                <div>
+                  <p className="font-semibold text-white">{member.name}</p>
+                  <p className="mb-3 text-xs font-medium text-cyan-400">{member.role}</p>
+                  <p className="text-sm leading-6 text-zinc-400">{member.bio}</p>
+                </div>
+              </div>
+            </RevealCard>
+          ))}
+        </div>
+      </section>
+
+      {/* Values */}
+      <section className="mx-auto mb-24 max-w-6xl">
+        <RevealCard>
+          <p className="mb-10 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
+            How we work
+          </p>
+        </RevealCard>
+        <div className="grid gap-6 sm:grid-cols-2">
+          {values.map((v, i) => (
+            <RevealCard key={v.title} delay={i * 0.08}>
+              <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 transition-colors hover:border-cyan-400/20">
+                <h3 className="mb-3 font-semibold text-white">{v.title}</h3>
+                <p className="text-sm leading-6 text-zinc-400">{v.description}</p>
+              </div>
+            </RevealCard>
+          ))}
+        </div>
+      </section>
+
+      {/* Why we built Elaris */}
+      <section className="mx-auto mb-24 max-w-6xl border-t border-white/10 pt-24">
+        <div className="grid gap-12 lg:grid-cols-2 lg:items-start">
+          <RevealCard>
+            <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
+              Why Elaris
+            </p>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              We got tired of agencies that overpromise and underdeliver.
+            </h2>
+          </RevealCard>
+          <RevealCard delay={0.1}>
+            <p className="text-base leading-7 text-zinc-300">
+              Most small businesses either get a cheap template that looks like
+              everyone else, or an expensive agency project where they never talk
+              to the actual developer. We wanted to offer a third option — real
+              craftsmanship, direct access, and a product you&apos;re proud to show.
+            </p>
+            <Link
+              href="/contact"
+              className="mt-8 inline-flex rounded-full bg-white px-7 py-3 text-sm font-semibold text-black shadow-[0_0_32px_rgba(255,255,255,0.1)] transition hover:bg-zinc-200"
+            >
+              Work with us
+            </Link>
+          </RevealCard>
+        </div>
+      </section>
+
+      <CTASection />
+    </main>
+  );
+}

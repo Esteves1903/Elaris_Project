@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle } from "lucide-react";
 import RevealCard from "@/components/ui/RevealCard";
 import { supabase } from "@/lib/supabase";
 
@@ -22,8 +22,8 @@ export default function ContactPage() {
     type: "New website",
     message: "",
   });
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
 
   function handleChange(
@@ -54,7 +54,7 @@ export default function ContactPage() {
       return;
     }
 
-    setSuccess(true);
+    router.push("/thanks");
   }
 
   const inputClass =
@@ -69,10 +69,7 @@ export default function ContactPage() {
               Get a quote
             </p>
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-              Tell us about{" "}
-              <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                your project.
-              </span>
+              Tell us about your project.
             </h1>
             <p className="mt-6 text-base leading-7 text-zinc-300">
               Send us a few details about your business and what you need. We will
@@ -107,51 +104,11 @@ export default function ContactPage() {
         </RevealCard>
 
         <RevealCard delay={0.15}>
-          <AnimatePresence mode="wait">
-            {success ? (
-              <motion.div
-                key="success"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-col items-center justify-center rounded-3xl border border-cyan-400/20 bg-white/[0.03] px-8 py-20 text-center shadow-2xl shadow-black/20"
-              >
-                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-cyan-400/10">
-                  <CheckCircle className="h-8 w-8 text-cyan-400" />
-                </div>
-                <h2 className="mb-3 text-2xl font-bold text-white">
-                  Request sent!
-                </h2>
-                <p className="max-w-sm text-sm leading-6 text-zinc-400">
-                  Thank you for reaching out. We will review your project details
-                  and get back to you within 24 hours.
-                </p>
-                <button
-                  onClick={() => {
-                    setSuccess(false);
-                    setForm({
-                      name: "",
-                      email: "",
-                      business: "",
-                      type: "New website",
-                      message: "",
-                    });
-                  }}
-                  className="mt-8 rounded-full border border-white/10 px-6 py-2.5 text-sm font-semibold text-white transition hover:border-cyan-400/30 hover:bg-white/[0.06]"
-                >
-                  Send another request
-                </button>
-              </motion.div>
-            ) : (
-              <motion.form
-                key="form"
-                initial={{ opacity: 1 }}
-                exit={{ opacity: 0, scale: 0.97 }}
-                transition={{ duration: 0.25 }}
-                onSubmit={handleSubmit}
-                className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-2xl shadow-black/20 sm:p-8"
-              >
-                <div className="grid gap-5 sm:grid-cols-2">
+          <form
+            onSubmit={handleSubmit}
+            className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-2xl shadow-black/20 sm:p-8"
+          >
+            <div className="grid gap-5 sm:grid-cols-2">
                   <div>
                     <label className="mb-2 block text-sm font-medium">Name</label>
                     <input
@@ -264,9 +221,7 @@ export default function ContactPage() {
                     )}
                   </AnimatePresence>
                 </button>
-              </motion.form>
-            )}
-          </AnimatePresence>
+          </form>
         </RevealCard>
       </section>
     </main>

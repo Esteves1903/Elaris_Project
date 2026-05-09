@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -12,12 +13,6 @@ const fadeUp = {
   hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0 },
 };
-
-const stats = [
-  { value: "10+", label: "Projects delivered" },
-  { value: "100%", label: "Client satisfaction" },
-  { value: "3", label: "Core services" },
-];
 
 export function HeroSection() {
   return (
@@ -71,8 +66,8 @@ export function HeroSection() {
               transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
               className="mt-6 max-w-md text-base leading-7 text-zinc-300 sm:text-lg"
             >
-              We create modern websites and digital tools that help small
-              businesses grow online with clarity, design and performance.
+              We create modern websites and digital tools that help growing
+              businesses stand out online with clarity, design and performance.
             </motion.p>
 
             <motion.div
@@ -94,121 +89,69 @@ export function HeroSection() {
               </Link>
             </motion.div>
 
-            {/* Stats */}
-            <motion.div
+            <motion.p
               variants={fadeUp}
               transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-              className="mt-10 flex flex-wrap items-center justify-center gap-6 lg:justify-start"
+              className="mt-5 text-xs text-zinc-500"
             >
-              {stats.map((stat, i) => (
-                <div key={stat.label} className="flex items-center gap-6">
-                  {i > 0 && <span className="h-5 w-px bg-white/10" />}
-                  <div>
-                    <p className="text-xl font-bold text-white">{stat.value}</p>
-                    <p className="text-xs text-zinc-500">{stat.label}</p>
-                  </div>
-                </div>
-              ))}
-            </motion.div>
+              No commitment · Free quote · Response within 24h
+            </motion.p>
+
           </motion.div>
 
-          {/* Browser mockup */}
+          {/* Browser mockup with real portfolio screenshot */}
           <motion.div
             initial={{ opacity: 0, y: 32, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="hidden w-full max-w-[440px] shrink-0 lg:block"
+            className="hidden w-full max-w-[460px] shrink-0 lg:block"
           >
             <motion.div
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              className="relative"
             >
-              <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0d1117] shadow-[0_0_80px_rgba(34,211,238,0.07),0_40px_80px_rgba(0,0,0,0.5)]">
+              {/* Main browser window */}
+              <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0d1117] shadow-[0_0_80px_rgba(34,211,238,0.08),0_40px_80px_rgba(0,0,0,0.6)]">
                 {/* Browser chrome */}
                 <div className="flex items-center gap-1.5 border-b border-white/[0.06] bg-white/[0.02] px-4 py-3">
                   <span className="h-2.5 w-2.5 rounded-full bg-red-400/40" />
                   <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/40" />
                   <span className="h-2.5 w-2.5 rounded-full bg-green-400/40" />
-                  <div className="mx-auto flex max-w-[180px] flex-1 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.03] px-4 py-1">
-                    <span className="text-[11px] text-zinc-600">elaris.com/client</span>
+                  <div className="mx-auto flex max-w-[200px] flex-1 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.03] px-4 py-1">
+                    <span className="text-[11px] text-zinc-500">elaris.com/portfolio</span>
                   </div>
                 </div>
 
-                {/* Page content */}
-                <div className="space-y-3 p-5">
-                  {/* Mini nav */}
-                  <div className="flex items-center justify-between">
-                    <div className="h-2.5 w-16 rounded bg-white/20" />
-                    <div className="flex items-center gap-3">
-                      <div className="h-1.5 w-10 rounded bg-white/[0.08]" />
-                      <div className="h-1.5 w-10 rounded bg-white/[0.08]" />
-                      <div className="h-5 w-20 rounded-full bg-white/[0.12]" />
-                    </div>
-                  </div>
-
-                  {/* Hero block */}
-                  <div className="rounded-xl border border-white/[0.06] bg-white/[0.03] p-5">
-                    <div className="mb-2 h-1.5 w-14 rounded bg-cyan-400/40" />
-                    <div className="mb-1 h-3.5 w-4/5 rounded bg-white/20" />
-                    <div className="mb-4 h-3.5 w-3/5 rounded bg-white/[0.15]" />
-                    <div className="mb-4 space-y-1.5">
-                      <div className="h-1.5 w-full rounded bg-white/[0.07]" />
-                      <div className="h-1.5 w-3/4 rounded bg-white/[0.07]" />
-                    </div>
-                    <div className="flex gap-2">
-                      <div className="h-7 w-24 rounded-full bg-white/20" />
-                      <div className="h-7 w-20 rounded-full border border-white/[0.12]" />
-                    </div>
-                  </div>
-
-                  {/* Feature cards */}
-                  <div className="grid grid-cols-3 gap-2">
-                    {[true, false, false].map((accent, i) => (
-                      <div
-                        key={i}
-                        className={`space-y-2 rounded-xl border p-3 ${
-                          accent
-                            ? "border-cyan-400/20 bg-cyan-400/[0.04]"
-                            : "border-white/[0.05] bg-white/[0.02]"
-                        }`}
-                      >
-                        <div
-                          className={`h-3 w-3 rounded ${
-                            accent ? "bg-cyan-400/50" : "bg-white/15"
-                          }`}
-                        />
-                        <div className="h-1.5 w-full rounded bg-white/[0.08]" />
-                        <div className="h-1.5 w-2/3 rounded bg-white/[0.06]" />
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Progress bars */}
-                  <div className="space-y-2.5 rounded-xl border border-white/[0.05] bg-white/[0.02] p-4">
-                    {[75, 50, 30].map((w, i) => (
-                      <div key={i} className="flex items-center gap-3">
-                        <div className="h-2 w-2 shrink-0 rounded-full bg-cyan-400/50" />
-                        <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/[0.06]">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: `${w}%` }}
-                            transition={{
-                              duration: 1.2,
-                              delay: 0.8 + i * 0.15,
-                              ease: [0.16, 1, 0.3, 1],
-                            }}
-                            className="h-full rounded-full bg-gradient-to-r from-cyan-400/40 to-blue-400/30"
-                          />
-                        </div>
-                        <div className="h-1.5 w-6 rounded bg-white/[0.08]" />
-                      </div>
-                    ))}
-                  </div>
+                {/* Real screenshot */}
+                <div className="relative h-[300px] overflow-hidden">
+                  <Image
+                    src="/ElarisRest1.png"
+                    alt="Elaris portfolio — restaurant website demo"
+                    fill
+                    className="object-cover object-top"
+                    priority
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0d1117]/50 to-transparent" />
                 </div>
               </div>
 
+              {/* Floating badge */}
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute -bottom-4 -right-4 flex items-center gap-2 rounded-2xl border border-white/10 bg-[#0d1117] px-4 py-2.5 shadow-xl"
+              >
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-60" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-400" />
+                </span>
+                <span className="text-xs font-semibold text-white">3 interactive demos</span>
+              </motion.div>
+
               {/* Reflection glow */}
-              <div className="mx-10 h-3 rounded-b-full bg-cyan-500/[0.08] blur-lg" />
+              <div className="mx-10 mt-6 h-3 rounded-b-full bg-cyan-500/[0.08] blur-lg" />
             </motion.div>
           </motion.div>
         </div>

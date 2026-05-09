@@ -11,8 +11,8 @@ import { signOut } from "@/lib/auth";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
-  { href: "/process", label: "Process" },
   { href: "/portfolio", label: "Portfolio" },
+  { href: "/about", label: "About" },
 ];
 
 type SessionState = {
@@ -71,10 +71,13 @@ export function Header() {
       <header className={`fixed left-0 top-0 z-50 w-full border-b backdrop-blur-xl transition-all duration-300 ${scrolled ? "border-white/10 bg-[#0B0F19]/95 shadow-lg shadow-black/20" : "border-transparent bg-[#0B0F19]/70"}`}>
         <div className="mx-auto grid h-20 max-w-6xl grid-cols-3 items-center px-6">
           <Link href="/" className="flex items-center justify-self-start">
-            <img
+            <motion.img
               src="/brand/logo-horizontal-transparent.svg"
               alt="Elaris"
               className="h-10 w-auto object-contain shrink-0"
+              initial={{ filter: "drop-shadow(0 0 0px rgba(34,211,238,0))" }}
+              whileHover={{ scale: 1.05, filter: "drop-shadow(0 0 10px rgba(34,211,238,0.45))" }}
+              transition={{ type: "spring", stiffness: 350, damping: 22 }}
             />
           </Link>
 

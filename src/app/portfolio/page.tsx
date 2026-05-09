@@ -1,14 +1,15 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import {
-  Menu, Search, Heart, Code2, Cpu, Layers, 
+  Menu, Search, Heart, Code2, Cpu, Layers,
   User, Scissors, Coffee, Crown,
-  Calendar, UtensilsCrossed,Globe, 
+  Calendar, UtensilsCrossed,Globe,
   Phone, Mail, Users, ChevronRight, Lock, Clock,
-  ShoppingBag, Trophy, X, ArrowLeft, CheckCircle2, 
+  ShoppingBag, Trophy, X, ArrowLeft, CheckCircle2,
   Star, Award, ShieldCheck, ShoppingBasket, Plus, Minus, Trash2,
-  Sparkles, MapPin,
+  Sparkles, MapPin, Mouse, Smartphone, Zap,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { History as HistoryIcon } from "lucide-react";
@@ -75,20 +76,59 @@ const technicalDetails: Record<string, ProjectDetails> = {
 
 type Lang = "en" | "pt";
 
+function PortfolioScrollHandler() {
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const section = searchParams.get("section");
+    if (!section) return;
+    let attempts = 0;
+    const tryScroll = () => {
+      const el = document.getElementById(section);
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.scrollY - 104;
+        window.scrollTo({ top, behavior: "smooth" });
+      } else if (attempts < 20) {
+        attempts++;
+        setTimeout(tryScroll, 100);
+      }
+    };
+    setTimeout(tryScroll, 300);
+  }, [searchParams]);
+
+  return null;
+}
+
 export default function PortfolioPage() {
   const [sidebarData, setSidebarData] = useState<ProjectDetails | null>(null);
 
   return (
     <main className="min-h-screen bg-[#0B0F19] px-6 pb-24 pt-32 text-white font-sans">
+      <Suspense><PortfolioScrollHandler /></Suspense>
       {/* Hero Section */}
       <section className="mx-auto max-w-6xl">
         <div className="max-w-3xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
             Portfolio
           </p>
-          <h1 className="mb-8 text-4xl font-bold tracking-tight sm:text-5xl">
-            Interactive Layouts Previews.
+          <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl">
+            Interactive layout previews.
           </h1>
+          <p className="mb-8 text-base leading-7 text-zinc-300">
+            These are real, working demos — not screenshots. Click through every feature as if you were a real customer.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            {[
+              { icon: <Mouse className="h-3.5 w-3.5" />, label: "Click everything" },
+              { icon: <Smartphone className="h-3.5 w-3.5" />, label: "Works on mobile" },
+              { icon: <Zap className="h-3.5 w-3.5" />, label: "Fully interactive" },
+            ].map((hint) => (
+              <span key={hint.label} className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-zinc-300">
+                <span className="text-cyan-400">{hint.icon}</span>
+                {hint.label}
+              </span>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -122,7 +162,7 @@ export default function PortfolioPage() {
       <section className="max-w-6xl mx-auto py-24 space-y-48">
         
         {/* 1. RESTAURANTE */}
-        <div className="space-y-6">
+        <div id="restaurant" className="space-y-6">
           <h2 className="text-3xl font-black tracking-tight">1. Elaris Restaurant</h2>
           <div className="rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-white/10 h-[580px] md:h-[700px] relative bg-orange-50 shadow-2xl isolate">
             <ElarisFinalDubai />
@@ -135,7 +175,7 @@ export default function PortfolioPage() {
         </div>
 
         {/* 2. SPORT STORE */}
-        <div className="space-y-6">
+        <div id="football-store" className="space-y-6">
           <h2 className="text-3xl font-black tracking-tight">2. Elaris Football Store</h2>
           <div className="rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-white/10 h-[580px] md:h-[700px] relative bg-white shadow-2xl isolate">
             <ElarisSportApp />
@@ -148,7 +188,7 @@ export default function PortfolioPage() {
         </div>
 
         {/* 3. BARBER SHOP */}
-        <div className="space-y-6">
+        <div id="barber" className="space-y-6">
           <h2 className="text-3xl font-black tracking-tight">3. Elaris Barber Shop</h2>
           <div className="rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-white/10 h-[580px] md:h-[700px] relative bg-[#0a0a0a] shadow-2xl isolate">
             <AsgardBarberApp />

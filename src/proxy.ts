@@ -29,16 +29,12 @@ export async function proxy(request: NextRequest) {
   const role = user?.app_metadata?.role as "admin" | "client" | undefined;
   const path = request.nextUrl.pathname;
 
-  if (path.startsWith("/admin")) {
-    if (role !== "admin") {
-      return NextResponse.redirect(new URL("/client-login", request.url));
-    }
+  if (path.startsWith("/admin") && role !== "admin") {
+    return NextResponse.redirect(new URL("/client-login", request.url));
   }
 
-  if (path.startsWith("/client-area")) {
-    if (!role) {
-      return NextResponse.redirect(new URL("/client-login", request.url));
-    }
+  if (path.startsWith("/client-area") && !role) {
+    return NextResponse.redirect(new URL("/client-login", request.url));
   }
 
   return response;

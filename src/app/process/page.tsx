@@ -60,10 +60,7 @@ export default function ProcessPage() {
             Process
           </p>
           <h1 className="mb-8 text-4xl font-bold tracking-tight sm:text-5xl">
-            A simple process that keeps every{" "}
-            <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-              project clear.
-            </span>
+            A simple process that keeps every project clear.
           </h1>
           <p className="text-base leading-7 text-zinc-300">
             Our process is built to keep things focused and easy to follow, from
