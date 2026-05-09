@@ -36,7 +36,7 @@ export function Header() {
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session: s } }) => {
       if (!s) return;
-      const role = s.user.user_metadata?.role as "admin" | "client" | null;
+      const role = s.user.app_metadata?.role as "admin" | "client" | null;
       const name = s.user.user_metadata?.name ?? s.user.email ?? null;
       setSession({ role, name });
     });
@@ -46,7 +46,7 @@ export function Header() {
         setSession({ role: null, name: null });
         return;
       }
-      const role = s.user.user_metadata?.role as "admin" | "client" | null;
+      const role = s.user.app_metadata?.role as "admin" | "client" | null;
       const name = s.user.user_metadata?.name ?? s.user.email ?? null;
       setSession({ role, name });
     });

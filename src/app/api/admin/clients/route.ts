@@ -20,7 +20,8 @@ export async function POST(req: NextRequest) {
     email,
     password,
     email_confirm: true,
-    user_metadata: { role: "client", name },
+    user_metadata: { name },
+    app_metadata: { role: "client" },
   });
 
   if (authError) return NextResponse.json({ error: authError.message }, { status: 400 });

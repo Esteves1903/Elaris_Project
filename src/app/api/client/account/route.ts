@@ -16,7 +16,7 @@ async function verifyClient(req: NextRequest) {
   if (!res.ok) return null;
 
   const user = await res.json();
-  if (user.user_metadata?.role !== "client") return null;
+  if (user.app_metadata?.role !== "client") return null;
 
   return user as { id: string; email: string };
 }

@@ -14,7 +14,7 @@ export async function verifyAdmin(req: NextRequest) {
   if (!res.ok) return null;
 
   const user = await res.json();
-  if (user.user_metadata?.role !== "admin") return null;
+  if (user.app_metadata?.role !== "admin") return null;
 
-  return user as { id: string; email: string; user_metadata: Record<string, unknown> };
+  return user as { id: string; email: string; app_metadata: Record<string, unknown> };
 }

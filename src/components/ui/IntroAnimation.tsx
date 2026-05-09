@@ -2,123 +2,18 @@
 
 import { useEffect, useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { usePathname } from "next/navigation";
 
-/* ── Web Audio sounds (generated, no files needed) ─────────────────────── */
-function useIntroSound() {
-  const ctxRef = useRef<AudioContext | null>(null);
-
-  const ctx = useCallback((): AudioContext | null => {
-    if (typeof window === "undefined") return null;
-    if (!ctxRef.current) {
-      ctxRef.current = new (
-        window.AudioContext ||
-        (window as unknown as { webkitAudioContext: typeof AudioContext })
-          .webkitAudioContext
-      )();
-    }
-    if (ctxRef.current.state === "suspended") ctxRef.current.resume();
-    return ctxRef.current;
-  }, []);
-
-  /* Rising sawtooth sweep — plays while bar fills */
-  const playCharge = useCallback(
-    (durationSec: number) => {
-      try {
-        const c = ctx();
-        if (!c) return;
-        const osc = c.createOscillator();
-        const filter = c.createBiquadFilter();
-        const gain = c.createGain();
-
-        osc.type = "sawtooth";
-        osc.frequency.setValueAtTime(70, c.currentTime);
-        osc.frequency.linearRampToValueAtTime(520, c.currentTime + durationSec);
-
-        filter.type = "bandpass";
-        filter.frequency.setValueAtTime(180, c.currentTime);
-        filter.frequency.linearRampToValueAtTime(900, c.currentTime + durationSec);
-        filter.Q.value = 4;
-
-        gain.gain.setValueAtTime(0, c.currentTime);
-        gain.gain.linearRampToValueAtTime(0.07, c.currentTime + 0.35);
-        gain.gain.setValueAtTime(0.07, c.currentTime + durationSec - 0.2);
-        gain.gain.linearRampToValueAtTime(0, c.currentTime + durationSec);
-
-        osc.connect(filter);
-        filter.connect(gain);
-        gain.connect(c.destination);
-        osc.start(c.currentTime);
-        osc.stop(c.currentTime + durationSec);
-      } catch {}
-    },
-    [ctx]
-  );
-
-  /* Short descending ping — plays when READY appears */
-  const playPing = useCallback(() => {
-    try {
-      const c = ctx();
-      if (!c) return;
-      const osc = c.createOscillator();
-      const gain = c.createGain();
-
-      osc.type = "sine";
-      osc.frequency.setValueAtTime(1700, c.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(1050, c.currentTime + 0.3);
-
-      gain.gain.setValueAtTime(0.13, c.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.5);
-
-      osc.connect(gain);
-      gain.connect(c.destination);
-      osc.start(c.currentTime);
-      osc.stop(c.currentTime + 0.5);
-    } catch {}
-  }, [ctx]);
-
-  /* High-pass noise whoosh — plays when curtain rises */
-  const playWhoosh = useCallback(() => {
-    try {
-      const c = ctx();
-      if (!c) return;
-      const size = Math.floor(c.sampleRate * 0.65);
-      const buf = c.createBuffer(1, size, c.sampleRate);
-      const data = buf.getChannelData(0);
-      for (let i = 0; i < size; i++) data[i] = Math.random() * 2 - 1;
-
-      const src = c.createBufferSource();
-      src.buffer = buf;
-
-      const filter = c.createBiquadFilter();
-      filter.type = "highpass";
-      filter.frequency.setValueAtTime(2800, c.currentTime);
-      filter.frequency.linearRampToValueAtTime(9000, c.currentTime + 0.65);
-
-      const gain = c.createGain();
-      gain.gain.setValueAtTime(0.09, c.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.65);
-
-      src.connect(filter);
-      filter.connect(gain);
-      gain.connect(c.destination);
-      src.start(c.currentTime);
-    } catch {}
-  }, [ctx]);
-
-  return { playCharge, playPing, playWhoosh };
-}
+/* Persists across SPA navigation, resets on hard refresh */
+let _introHasRun = false;
+export function introHasRun() { return _introHasRun; }
 
 /* ── Component ─────────────────────────────────────────────────────────── */
 export function IntroAnimation() {
-  const pathname = usePathname();
-  const [visible, setVisible] = useState(pathname === "/");
+  const [visible, setVisible] = useState(true);
   const [progress, setProgress] = useState(0);
   const [phase, setPhase] = useState<"loading" | "hold" | "reveal">("loading");
-  const prevPathRef = useRef<string>(pathname);
   const rafRef = useRef<number | null>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const { playCharge, playPing, playWhoosh } = useIntroSound();
 
   const cleanup = useCallback(() => {
     if (rafRef.current) { cancelAnimationFrame(rafRef.current); rafRef.current = null; }
@@ -134,8 +29,6 @@ export function IntroAnimation() {
     const DURATION = 1900;
     const start = performance.now();
 
-    playCharge(DURATION / 1000);
-
     const tick = (now: number) => {
       const p = Math.min(Math.round(((now - start) / DURATION) * 100), 100);
       setProgress(p);
@@ -143,27 +36,24 @@ export function IntroAnimation() {
         rafRef.current = requestAnimationFrame(tick);
       } else {
         setPhase("hold");
-        playPing();
         timerRef.current = setTimeout(() => {
           setPhase("reveal");
-          playWhoosh();
         }, 550);
       }
     };
 
     rafRef.current = requestAnimationFrame(tick);
-  }, [cleanup, playCharge, playPing, playWhoosh]);
+  }, [cleanup]);
 
   useEffect(() => {
-    if (pathname === "/") startAnimation();
+    if (_introHasRun) {
+      setVisible(false);
+      return;
+    }
+    _introHasRun = true;
+    startAnimation();
     return cleanup;
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    const prev = prevPathRef.current;
-    prevPathRef.current = pathname;
-    if (prev !== pathname && pathname === "/") startAnimation();
-  }, [pathname, startAnimation]);
 
   if (!visible) return null;
 
