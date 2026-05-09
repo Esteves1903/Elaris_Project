@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(npm install *)",
+      "Bash(dir \"c:\\\\ELARIS\\\\Elaris_Project\\\\node_modules\\\\next\\\\dist\\\\docs\")",
+      "Bash(dir \"c:\\\\ELARIS\\\\Elaris_Project\\\\node_modules\\\\next\\\\dist\\\\docs\\\\01-app\")",
+      "Bash(dir \"c:\\\\ELARIS\\\\Elaris_Project\\\\node_modules\\\\next\\\\dist\\\\docs\\\\01-app\\\\03-api-reference\")",
+      "Bash(findstr -i \"proxy\\\\|middleware\")",
+      "Bash(dir \"c:\\\\ELARIS\\\\Elaris_Project\\\\node_modules\\\\next\\\\dist\\\\docs\\\\01-app\\\\03-api-reference\\\\03-file-conventions\")",
+      "Bash(del \"c:\\\\ELARIS\\\\Elaris_Project\\\\src\\\\middleware.ts\")",
+      "PowerShell(taskkill /PID 20392 /F 2>&1)"
+    ]
+  }
+}
