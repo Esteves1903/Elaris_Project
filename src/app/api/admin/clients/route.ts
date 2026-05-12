@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
 
   const { data: clientData, error: clientError } = await supabaseAdmin
     .from("clients")
-    .insert({ name, email, company, slug, auth_user_id: authData.user.id, password_hash: password })
+    .insert({ name, email, company, slug, auth_user_id: authData.user.id })
     .select()
     .single();
 

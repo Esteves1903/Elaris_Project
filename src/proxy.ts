@@ -4,6 +4,13 @@ import { NextRequest, NextResponse } from "next/server";
 function buildCsp(nonce: string): string {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 
+  // NOTE — style-src 'unsafe-inline' is a known accepted risk.
+  // Framer Motion writes animated values directly as inline style attributes
+  // (e.g. style="transform: ...") at runtime, making it impossible to hash or
+  // nonce those values. Removing 'unsafe-inline' would break all animations.
+  // Mitigation: no user-controlled data is ever interpolated into style props;
+  // all style values are either static constants or Framer Motion MotionValues.
+  // Revisit if Framer Motion adds native CSS-variable-based animation support.
   return [
     `default-src 'self'`,
     `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'`,
@@ -29,6 +36,9 @@ export async function proxy(request: NextRequest) {
 
   let response = NextResponse.next({ request: { headers: requestHeaders } });
   response.headers.set("content-security-policy", csp);
+  // Belt-and-suspenders: explicitly strip X-Powered-By in middleware in addition
+  // to poweredByHeader: false in next.config.ts (covers edge-case API responses).
+  response.headers.delete("x-powered-by");
 
   const path = request.nextUrl.pathname;
 
@@ -47,6 +57,7 @@ export async function proxy(request: NextRequest) {
             );
             response = NextResponse.next({ request: { headers: requestHeaders } });
             response.headers.set("content-security-policy", csp);
+            response.headers.delete("x-powered-by");
             cookiesToSet.forEach(({ name, value, options }) =>
               response.cookies.set(name, value, options)
             );

@@ -27,10 +27,8 @@ export async function PATCH(req: NextRequest) {
 
   const { password } = await req.json();
 
-  const { error } = await supabaseAdmin
-    .from("clients")
-    .update({ password_hash: password })
-    .eq("auth_user_id", user.id);
+  // Update the password via Supabase Auth (never store plaintext passwords in the DB)
+  const { error } = await supabaseAdmin.auth.admin.updateUserById(user.id, { password });
 
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
   return NextResponse.json({ success: true });
