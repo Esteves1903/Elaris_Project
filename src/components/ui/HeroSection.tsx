@@ -112,29 +112,46 @@ export function HeroSection() {
               className="relative"
             >
               {/* Main browser window */}
-              <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0d1117] shadow-[0_0_80px_rgba(34,211,238,0.08),0_40px_80px_rgba(0,0,0,0.6)]">
-                {/* Browser chrome */}
-                <div className="flex items-center gap-1.5 border-b border-white/[0.06] bg-white/[0.02] px-4 py-3">
-                  <span className="h-2.5 w-2.5 rounded-full bg-red-400/40" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/40" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-green-400/40" />
-                  <div className="mx-auto flex max-w-[200px] flex-1 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.03] px-4 py-1">
-                    <span className="text-[11px] text-zinc-500">helarys.com/portfolio</span>
+              <Link href="/portfolio" className="group block cursor-pointer">
+                <motion.div
+                  whileHover={{ scale: 1.03, y: -4 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 22 }}
+                  className="overflow-hidden rounded-2xl border border-white/10 bg-[#0d1117] shadow-[0_0_80px_rgba(34,211,238,0.08),0_40px_80px_rgba(0,0,0,0.6)] transition-shadow duration-300 group-hover:border-cyan-400/30 group-hover:shadow-[0_0_80px_rgba(34,211,238,0.18),0_40px_80px_rgba(0,0,0,0.6)]"
+                >
+                  {/* Browser chrome */}
+                  <div className="flex items-center gap-1.5 border-b border-white/[0.06] bg-white/[0.02] px-4 py-3">
+                    <span className="h-2.5 w-2.5 rounded-full bg-red-400/40" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/40" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-green-400/40" />
+                    <div className="mx-auto flex max-w-[200px] flex-1 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.03] px-4 py-1 transition-colors group-hover:border-cyan-400/20 group-hover:bg-cyan-400/[0.04]">
+                      <span className="text-[11px] text-zinc-500 transition-colors group-hover:text-cyan-400">helarys.com/portfolio</span>
+                    </div>
                   </div>
-                </div>
 
-                {/* Real screenshot */}
-                <div className="relative h-[300px] overflow-hidden">
-                  <Image
-                    src="/ElarisRest1.png"
-                    alt="Helarys portfolio — restaurant website demo"
-                    fill
-                    className="object-cover object-top"
-                    priority
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0d1117]/50 to-transparent" />
-                </div>
-              </div>
+                  {/* Real screenshot */}
+                  <div className="relative h-[300px] overflow-hidden">
+                    <Image
+                      src="/ElarisRest1.png"
+                      alt="Helarys portfolio — restaurant website demo"
+                      fill
+                      className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                      priority
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0d1117]/50 to-transparent" />
+
+                    {/* Hover overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 backdrop-blur-[2px] transition-opacity duration-300 group-hover:opacity-100">
+                      <div className="flex items-center gap-2 rounded-full border border-cyan-400/40 bg-black/60 px-6 py-3 text-sm font-semibold text-cyan-300 shadow-[0_0_24px_rgba(34,211,238,0.2)]">
+                        <span className="relative flex h-2 w-2">
+                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75" />
+                          <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-400" />
+                        </span>
+                        Explore portfolio →
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </Link>
 
               {/* Floating badge */}
               <motion.div
