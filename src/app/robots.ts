@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/admin/", "/client-area/", "/client-login/"],
       },
     ],
-    sitemap: "https://elaris.com/sitemap.xml",
+    sitemap: "https://helarys.com/sitemap.xml",
   };
 }

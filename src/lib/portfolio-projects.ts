@@ -29,7 +29,7 @@ export const portfolioProjects: PortfolioProject[] = [
       'Review System',
     ],
     // USAR O TEU FICHEIRO DE CAFÉ
-    images: ['/ElarisRest1.png'], 
+    images: ['/ElarisRest1.png'],
     liveUrl: 'https://example.com/brewhaus',
   },
   {

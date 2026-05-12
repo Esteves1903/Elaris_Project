@@ -10,7 +10,7 @@ type Message = {
   content: string;
 };
 
-const WELCOME = "Olá! Sou o assistente da Elaris. Posso ajudar-te com informações sobre os nossos serviços, processo ou como pedir um orçamento. Em que posso ajudar?";
+const WELCOME = "Olá! Sou o assistente da Helarys. Posso ajudar-te com informações sobre os nossos serviços, processo ou como pedir um orçamento. Em que posso ajudar?";
 
 export function AIAssistant() {
   const [open, setOpen] = useState(false);
@@ -80,10 +80,10 @@ export function AIAssistant() {
             {/* Header */}
             <div className="flex items-center gap-3 border-b border-white/[0.06] bg-white/[0.02] px-4 py-3.5">
               <div className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#0B0F19] border border-white/10">
-                <Image src="/brand/icon.svg" alt="Elaris" width={20} height={20} />
+                <Image src="/brand/icon.svg" alt="Helarys" width={20} height={20} />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-white">Elaris Assistant</p>
+                <p className="text-sm font-semibold text-white">Helarys Assistant</p>
                 <div className="flex items-center gap-1.5">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
                   <span className="text-xs text-zinc-500">Online</span>
@@ -162,7 +162,7 @@ export function AIAssistant() {
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.95 }}
         transition={{ type: "spring", stiffness: 400, damping: 20 }}
-        aria-label="Open Elaris assistant"
+        aria-label="Open Helarys assistant"
       >
         <AnimatePresence mode="wait" initial={false}>
           {open ? (
@@ -184,7 +184,7 @@ export function AIAssistant() {
               exit={{ opacity: 0, scale: 0.7 }}
               transition={{ duration: 0.18 }}
             >
-              <Image src="/brand/icon.svg" alt="Elaris" width={28} height={28} />
+              <Image src="/brand/icon.svg" alt="Helarys" width={28} height={28} />
             </motion.span>
           )}
         </AnimatePresence>

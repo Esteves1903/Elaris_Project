@@ -11,9 +11,9 @@ import { TechMarquee } from "@/components/ui/TechMarquee";
 import { FAQ } from "@/components/ui/FAQ";
 
 export const metadata: Metadata = {
-  title: "Elaris — Websites for growing businesses",
+  title: "Helarys — Websites for growing businesses",
   description:
-    "Elaris helps small businesses grow online with modern websites, digital tools and a clear development process.",
+    "Helarys helps small businesses grow online with modern websites, digital tools and a clear development process.",
 };
 
 const services = [
@@ -35,7 +35,7 @@ const services = [
 ];
 
 
-const whyElaris = [
+const whyHelarys = [
   {
     icon: <LayoutDashboard className="h-5 w-5 text-cyan-400" />,
     title: "Client portal",
@@ -71,7 +71,7 @@ export default function Home() {
         <div className="grid gap-10 md:grid-cols-[0.8fr_1.2fr] md:items-center">
           <RevealCard>
             <p className="mb-3 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
-              About Elaris
+              About Helarys
             </p>
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
               Simple, modern and focused on results.
@@ -80,7 +80,7 @@ export default function Home() {
 
           <RevealCard delay={0.15}>
             <p className="text-base leading-8 text-zinc-300">
-              Elaris helps businesses build a stronger digital presence through
+              Helarys helps businesses build a stronger digital presence through
               clean websites, useful digital tools and a clear development process.
               We focus on solutions that look professional, work smoothly and are
               easy for clients to understand.
@@ -89,10 +89,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Why Elaris */}
+      {/* Why Helarys */}
       <section className="mx-auto max-w-6xl px-6 pb-24">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {whyElaris.map((item, index) => (
+          {whyHelarys.map((item, index) => (
             <SpotlightCard
               key={item.title}
               delay={index * 0.1}

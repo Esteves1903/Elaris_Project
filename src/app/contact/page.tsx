@@ -81,7 +81,7 @@ export default function ContactPage() {
           <div className="space-y-5 rounded-2xl border border-white/10 bg-white/[0.03] p-6">
             <div>
               <p className="text-sm font-semibold text-white">Email</p>
-              <p className="mt-1 text-sm text-zinc-400">contact@elaris.com</p>
+              <p className="mt-1 text-sm text-zinc-400">contact@helarys.com</p>
             </div>
             <div>
               <p className="text-sm font-semibold text-white">What happens next?</p>

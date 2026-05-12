@@ -55,19 +55,19 @@ type ProjectDetails = {
 
 const technicalDetails: Record<string, ProjectDetails> = {
   cafe: {
-    title: "Elaris Restaurant",
+    title: "Helarys Restaurant",
     stack: ["React State", "Framer Motion", "Tailwind CSS"],
     description: "Restaurant application with table booking and digital menu visualization.",
     logic: ["Booking state management", "Menu category navigation", "Customer bill simulation"],
   },
   sport: {
-    title: "Elaris Football Store",
+    title: "Helarys Football Store",
     stack: ["Dynamic Filtering", "Cart Logic", "Lucide Icons"],
     description: "Football e-commerce featuring a simplified checkout flow.",
     logic: ["Global cart counter", "Real-time search filtering", "Dynamic product pages"],
   },
   asgard: {
-    title: "Elaris Barber Shop",
+    title: "Helarys Barber Shop",
     stack: ["Dark UI Design", "Step-by-step Booking", "Animations"],
     description: "Premium barber shop interface with Viking theme and quick scheduling.",
     logic: ["Intuitive booking workflow", "Visual success feedback", "Mock auth system"],
@@ -163,9 +163,9 @@ export default function PortfolioPage() {
         
         {/* 1. RESTAURANTE */}
         <div id="restaurant" className="space-y-6">
-          <h2 className="text-3xl font-black tracking-tight">1. Elaris Restaurant</h2>
+          <h2 className="text-3xl font-black tracking-tight">1. Helarys Restaurant</h2>
           <div className="rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-white/10 h-[580px] md:h-[700px] relative bg-orange-50 shadow-2xl isolate">
-            <ElarisFinalDubai />
+            <HelarysFinalDubai />
           </div>
           <div className="flex justify-end">
             <button onClick={() => setSidebarData(technicalDetails.cafe)} className="px-6 py-3 bg-white/5 border border-white/10 text-white rounded-xl font-bold hover:bg-cyan-400 hover:text-black transition-all flex items-center gap-2 text-xs tracking-widest uppercase">
@@ -176,9 +176,9 @@ export default function PortfolioPage() {
 
         {/* 2. SPORT STORE */}
         <div id="football-store" className="space-y-6">
-          <h2 className="text-3xl font-black tracking-tight">2. Elaris Football Store</h2>
+          <h2 className="text-3xl font-black tracking-tight">2. Helarys Football Store</h2>
           <div className="rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-white/10 h-[580px] md:h-[700px] relative bg-white shadow-2xl isolate">
-            <ElarisSportApp />
+            <HelarysSportApp />
           </div>
           <div className="flex justify-end">
             <button onClick={() => setSidebarData(technicalDetails.sport)} className="px-6 py-3 bg-white/5 border border-white/10 text-white rounded-xl font-bold hover:bg-blue-600 transition-all flex items-center gap-2 text-xs tracking-widest uppercase">
@@ -189,7 +189,7 @@ export default function PortfolioPage() {
 
         {/* 3. BARBER SHOP */}
         <div id="barber" className="space-y-6">
-          <h2 className="text-3xl font-black tracking-tight">3. Elaris Barber Shop</h2>
+          <h2 className="text-3xl font-black tracking-tight">3. Helarys Barber Shop</h2>
           <div className="rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-white/10 h-[580px] md:h-[700px] relative bg-[#0a0a0a] shadow-2xl isolate">
             <AsgardBarberApp />
           </div>
@@ -205,37 +205,37 @@ export default function PortfolioPage() {
   );
 }
 
-function ElarisFinalDubai() {
+function HelarysFinalDubai() {
   const [lang, setLang] = useState<Lang>("en");
   const t = {
     en: {
       story: "The Story", menu: "The Menu", bookNow: "Book Now",
       home: "Home", heritage: "Heritage", collection: "Collection", reservations: "Reservations",
       discover: "Discover the Collection", artTitle: "The Art of Honest Luxury",
-      artQuote: '"At Elaris, we don\'t just serve dishes; we curate moments. From the rustic roots of Portugal to the golden skyline of Dubai."',
+      artQuote: '"At Helarys, we don\'t just serve dishes; we curate moments. From the rustic roots of Portugal to the golden skyline of Dubai."',
       menuTitle: "The Menu", menuSub: "Drag the plates to explore",
       yearsExp: "Years of Experience", intlAwards: "International Awards", worldCapitals: "World Capitals",
       privacy: "Privacy", luxuryDining: "Luxury Dining",
-      copyright: "© 2026 Elaris Global Hospitality Group. All rights reserved.",
+      copyright: "© 2026 Helarys Global Hospitality Group. All rights reserved.",
       location: "Jumeirah Beach Road · Dubai, UAE",
       legacyBadge: "A Legacy of Excellence",
       slideTitle1: "The Golden Era", slideTitle2: "Culinary Alchemy", slideTitle3: "Prestige Lounge",
       cat1: "The Beginning", cat2: "Heritage Mains", cat3: "Grand Finale",
       storyHeading: "A Journey Across", storyHeadingHL: "Continents",
-      storyPara: "Elaris was born in 1984 as a small family project in Portugal. Today, it stands as a global beacon of culinary innovation.",
+      storyPara: "Helarys was born in 1984 as a small family project in Portugal. Today, it stands as a global beacon of culinary innovation.",
       reserveExp: "Reserve Experience",
       confirmed: "Confirmed",
-      successMsg: "Your experience at Elaris Dubai is being meticulously prepared.",
+      successMsg: "Your experience at Helarys Dubai is being meticulously prepared.",
       backToSanctuary: "Back to Sanctuary",
       privacyTitle: "Privacy Protocol",
-      privacyP1: "At Elaris Dubai, discretion is our ultimate luxury.",
+      privacyP1: "At Helarys Dubai, discretion is our ultimate luxury.",
       privacyP2: "Your personal data is used exclusively for reservation management.",
       acknowledge: "Acknowledge",
       n_wagyu: "A5 Wagyu Tartare", d_wagyu: "Truffle pearls, 24k gold, quail egg.",
       n_lobster: "Blue Lobster Salad", d_lobster: "Citrus emulsion, caviar, sea herbs.",
       n_caviar: "Imperial Beluga Caviar", d_caviar: "30g selection, traditional garnishes, gold leaf blinis.",
       n_foie: "Seared Foie Gras", d_foie: "Port wine reduction, caramelised figs, toasted brioche.",
-      n_francesinha: "The Elaris Francesinha", d_francesinha: "Wagyu beef, Pata Negra, champagne sauce.",
+      n_francesinha: "The Helarys Francesinha", d_francesinha: "Wagyu beef, Pata Negra, champagne sauce.",
       n_seabass: "Sea Bass in Salt", d_seabass: "Mediterranean herbs, flamed tableside.",
       n_octopus: "Octopus 'Lagareiro'", d_octopus: "Roasted potatoes, garlic confit, premium olive oil.",
       n_lamb: "Golden Lamb Chops", d_lamb: "Pistachio crust, saffron risotto, mint jus.",
@@ -247,30 +247,30 @@ function ElarisFinalDubai() {
       story: "A História", menu: "O Menu", bookNow: "Reservar",
       home: "Início", heritage: "Herança", collection: "Coleção", reservations: "Reservas",
       discover: "Descobrir a Coleção", artTitle: "A Arte do Luxo Honesto",
-      artQuote: '"Na Elaris, não servimos apenas pratos; criamos momentos. Das raízes rústicas de Portugal ao horizonte dourado do Dubai."',
+      artQuote: '"Na Helarys, não servimos apenas pratos; criamos momentos. Das raízes rústicas de Portugal ao horizonte dourado do Dubai."',
       menuTitle: "O Menu", menuSub: "Arrasta os pratos para os explorar",
       yearsExp: "Anos de Experiência", intlAwards: "Prémios Internacionais", worldCapitals: "Capitais Mundiais",
       privacy: "Privacidade", luxuryDining: "Restaurante de Luxo",
-      copyright: "© 2026 Elaris Global Hospitality Group. Todos os direitos reservados.",
+      copyright: "© 2026 Helarys Global Hospitality Group. Todos os direitos reservados.",
       location: "Jumeirah Beach Road · Dubai, EAU",
       legacyBadge: "Um Legado de Excelência",
       slideTitle1: "A Era de Ouro", slideTitle2: "Alquimia Culinária", slideTitle3: "Lounge de Prestígio",
       cat1: "O Início", cat2: "Pratos de Herança", cat3: "Grande Final",
       storyHeading: "Uma Viagem por", storyHeadingHL: "Continentes",
-      storyPara: "A Elaris nasceu em 1984 como um pequeno projeto familiar em Portugal. Hoje, é um farol global de inovação culinária.",
+      storyPara: "A Helarys nasceu em 1984 como um pequeno projeto familiar em Portugal. Hoje, é um farol global de inovação culinária.",
       reserveExp: "Reservar Experiência",
       confirmed: "Confirmado",
-      successMsg: "A tua experiência no Elaris Dubai está a ser meticulosamente preparada.",
+      successMsg: "A tua experiência no Helarys Dubai está a ser meticulosamente preparada.",
       backToSanctuary: "Voltar ao Início",
       privacyTitle: "Protocolo de Privacidade",
-      privacyP1: "No Elaris Dubai, a discrição é o nosso luxo supremo.",
+      privacyP1: "No Helarys Dubai, a discrição é o nosso luxo supremo.",
       privacyP2: "Os teus dados pessoais são usados exclusivamente para gestão de reservas.",
       acknowledge: "Reconhecer",
       n_wagyu: "Tartare de Wagyu A5", d_wagyu: "Pérolas de trufa, ouro 24k, ovo de codorniz.",
       n_lobster: "Salada de Lagosta Azul", d_lobster: "Emulsão de citrinos, caviar, ervas marinhas.",
       n_caviar: "Caviar Beluga Imperial", d_caviar: "Seleção de 30g, guarnições tradicionais, blinis de folha de ouro.",
       n_foie: "Foie Gras Selado", d_foie: "Redução de vinho do Porto, figos caramelizados, brioche tostado.",
-      n_francesinha: "A Elaris Francesinha", d_francesinha: "Carne de Wagyu, Pata Negra, molho de champanhe.",
+      n_francesinha: "A Helarys Francesinha", d_francesinha: "Carne de Wagyu, Pata Negra, molho de champanhe.",
       n_seabass: "Robalo no Sal", d_seabass: "Ervas mediterrâneas, flamejado à mesa.",
       n_octopus: "Polvo à Lagareiro", d_octopus: "Batatas assadas, confit de alho, azeite premium.",
       n_lamb: "Costeletas de Borrego Douradas", d_lamb: "Crosta de pistácio, risoto de açafrão, jus de hortelã.",
@@ -401,7 +401,7 @@ function ElarisFinalDubai() {
           className="cursor-pointer flex flex-col items-center"
         >
           <span className="text-lg md:text-2xl font-light tracking-[0.5em] uppercase">
-            Elaris
+            Helarys
           </span>
 
           <span className="text-[7px] tracking-[0.3em] text-zinc-400 font-bold">
@@ -722,7 +722,7 @@ function ElarisFinalDubai() {
           {/* LEFT */}
           <div>
             <h4 className="text-lg font-light tracking-[0.4em] uppercase">
-              Elaris
+              Helarys
             </h4>
             <p className="text-zinc-500 text-[9px] leading-loose tracking-widest uppercase">
               {t.location}
@@ -791,7 +791,7 @@ function ElarisFinalDubai() {
   );
 }
 
-ElarisFinalDubai;
+HelarysFinalDubai;
 
  ;
 /* -------------------------------------------------------------------------- */
@@ -1115,7 +1115,7 @@ function Stars({ rating }: { rating: number }) {
   );
 }
 
-function ElarisSportApp() {
+function HelarysSportApp() {
   const [lang, setLang] = useState<Lang>("en");
   const t = {
     en: {
@@ -1369,7 +1369,7 @@ function ElarisSportApp() {
         <div onClick={()=>{setView('shop');setSearch('');}} className="flex items-center gap-2.5 cursor-pointer mr-2 shrink-0">
           <div className="bg-black p-1.5 rounded-lg"><Trophy size={18} className="text-white"/></div>
           <div>
-            <h1 className="font-black text-lg tracking-tight leading-none">ELARIS<span className="text-[#0066ff]">SPORT</span></h1>
+            <h1 className="font-black text-lg tracking-tight leading-none">HELARYS<span className="text-[#0066ff]">SPORT</span></h1>
             <p className="text-[8px] uppercase tracking-[0.3em] text-zinc-400 font-bold">{t.performanceStore}</p>
           </div>
         </div>
@@ -1899,7 +1899,7 @@ function BarberBookingForm({ services, tBarber, setView, setUser }: {
 }
 
 /* -------------------------------------------------------------------------- */
-/* --- 3. BARBEARIA ELARIS — WORLD CLASS EDITION --- */
+/* --- 3. BARBEARIA HELARYS — WORLD CLASS EDITION --- */
 /* -------------------------------------------------------------------------- */
 function AsgardBarberApp() {
   const [lang, setLang] = useState<Lang>("en");
@@ -1929,9 +1929,9 @@ function AsgardBarberApp() {
       tagBestseller: "Bestseller", tagPremium: "Premium", tagElite: "Elite", tagWellness: "Wellness",
       testimonial1: "The best barbershop experience I've ever had. Truly international level.",
       testimonial2: "From the moment you walk in, you know this is different class. World-class precision.",
-      testimonial3: "I've been to barbers in Mayfair, Soho, NYC — Elaris beats them all.",
+      testimonial3: "I've been to barbers in Mayfair, Soho, NYC — Helarys beats them all.",
       luxuryGroomingHouse: "Luxury Grooming House",
-      copyright: "© 2026 Elaris Group",
+      copyright: "© 2026 Helarys Group",
       heroLine1: "THE CRAFT", heroLine2: "OF MEN.",
       top10: "Top 10 Barbers", gqBadge: "GQ Magazine · 2025",
       teamHeading: "Master Barbers",
@@ -1961,9 +1961,9 @@ function AsgardBarberApp() {
       tagBestseller: "Mais Vendido", tagPremium: "Premium", tagElite: "Elite", tagWellness: "Bem-Estar",
       testimonial1: "A melhor experiência de barbearia que já tive. Nível absolutamente internacional.",
       testimonial2: "Desde o momento em que entras, sabes que isto é outra classe. Precisão de nível mundial.",
-      testimonial3: "Já fui a barbeiros em Mayfair, Soho, Nova York — Elaris supera-os todos.",
+      testimonial3: "Já fui a barbeiros em Mayfair, Soho, Nova York — Helarys supera-os todos.",
       luxuryGroomingHouse: "Casa de Grooming de Luxo",
-      copyright: "© 2026 Elaris Group",
+      copyright: "© 2026 Helarys Group",
       heroLine1: "O OFÍCIO", heroLine2: "DOS HOMENS.",
       top10: "Top 10 Barbeiros", gqBadge: "GQ Magazine · 2025",
       teamHeading: "Master Barbeiros",
@@ -2021,7 +2021,7 @@ function AsgardBarberApp() {
   };
 
   const barbers = [
-    { name: "Marcus Elaris", role: tBarber.role1, exp: "12y", img: "/barber1.png" },
+    { name: "Marcus Helarys", role: tBarber.role1, exp: "12y", img: "/barber1.png" },
     { name: "André Sousa", role: tBarber.role2, exp: "8y", img: "/barber2.png" },
     { name: "James Whitfield", role: tBarber.role3, exp: "15y", img: "/barber3.png" },
   ];
@@ -2057,7 +2057,7 @@ function AsgardBarberApp() {
           </div>
           <div>
             <div className="flex items-baseline gap-1">
-              <span className="text-white font-black text-lg tracking-widest">ELARIS</span>
+              <span className="text-white font-black text-lg tracking-widest">HELARYS</span>
               <span className="text-amber-500 text-xs font-black">®</span>
             </div>
             <span className="text-[8px] uppercase tracking-[0.45em] text-white/30 font-bold block -mt-0.5">
@@ -2360,7 +2360,7 @@ function AsgardBarberApp() {
       <footer className="relative z-20 border-t border-white/[0.05] bg-black/50 backdrop-blur-xl px-8 md:px-14 py-5 flex flex-col md:flex-row items-center justify-between gap-4 shrink-0">
         <div>
           <h3 className="font-black text-base tracking-widest flex items-baseline gap-0.5">
-            ELARIS<span className="text-amber-500 text-lg">®</span>
+            HELARYS<span className="text-amber-500 text-lg">®</span>
           </h3>
           <p className="text-white/20 text-[8px] uppercase tracking-[0.4em] mt-0.5">{tBarber.luxuryGroomingHouse}</p>
         </div>

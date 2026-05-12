@@ -136,7 +136,7 @@ export default function ClientAccountPage() {
             </span>
           </h1>
           <p className="text-base leading-7 text-zinc-300">
-            Update the password used to access your private Elaris client dashboard.
+            Update the password used to access your private Helarys client dashboard.
           </p>
         </motion.div>
 

@@ -47,7 +47,7 @@ export function HeroSection() {
               transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
               className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400"
             >
-              Elaris
+              Helarys
             </motion.p>
 
             <motion.h1
@@ -119,7 +119,7 @@ export function HeroSection() {
                   <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/40" />
                   <span className="h-2.5 w-2.5 rounded-full bg-green-400/40" />
                   <div className="mx-auto flex max-w-[200px] flex-1 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.03] px-4 py-1">
-                    <span className="text-[11px] text-zinc-500">elaris.com/portfolio</span>
+                    <span className="text-[11px] text-zinc-500">helarys.com/portfolio</span>
                   </div>
                 </div>
 
@@ -127,7 +127,7 @@ export function HeroSection() {
                 <div className="relative h-[300px] overflow-hidden">
                   <Image
                     src="/ElarisRest1.png"
-                    alt="Elaris portfolio — restaurant website demo"
+                    alt="Helarys portfolio — restaurant website demo"
                     fill
                     className="object-cover object-top"
                     priority

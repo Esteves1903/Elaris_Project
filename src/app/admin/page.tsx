@@ -92,7 +92,7 @@ export default function AdminPage() {
               </span>
             </h1>
             <p className="max-w-2xl text-base leading-7 text-zinc-300">
-              View clients, project stages, website status and the next steps for each active Elaris project.
+              View clients, project stages, website status and the next steps for each active Helarys project.
             </p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">

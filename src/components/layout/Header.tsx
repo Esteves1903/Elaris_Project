@@ -71,14 +71,14 @@ export function Header() {
       <header className={`fixed left-0 top-0 z-50 w-full border-b backdrop-blur-xl transition-all duration-300 ${scrolled ? "border-white/10 bg-[#0B0F19]/95 shadow-lg shadow-black/20" : "border-transparent bg-[#0B0F19]/70"}`}>
         <div className="mx-auto grid h-20 max-w-6xl grid-cols-3 items-center px-6">
           <Link href="/" className="flex items-center justify-self-start">
-            <motion.img
-              src="/brand/logo-horizontal-transparent.svg"
-              alt="Elaris"
-              className="h-10 w-auto object-contain shrink-0"
+            <motion.span
+              className="text-2xl font-bold tracking-tight bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent select-none"
               initial={{ filter: "drop-shadow(0 0 0px rgba(34,211,238,0))" }}
               whileHover={{ scale: 1.05, filter: "drop-shadow(0 0 10px rgba(34,211,238,0.45))" }}
               transition={{ type: "spring", stiffness: 350, damping: 22 }}
-            />
+            >
+              Helarys
+            </motion.span>
           </Link>
 
           <nav className="hidden items-center justify-center gap-8 md:flex">
@@ -164,11 +164,9 @@ export function Header() {
               className="fixed right-0 top-0 z-[70] flex h-full w-72 flex-col bg-[#0B0F19] px-8 py-8 border-l border-white/10"
             >
               <div className="flex items-center justify-between mb-10">
-                <img
-                  src="/brand/logo-horizontal-transparent.svg"
-                  alt="Elaris"
-                  className="h-8 w-auto"
-                />
+                <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent select-none">
+                  Helarys
+                </span>
                 <button
                   onClick={() => setMobileOpen(false)}
                   className="text-zinc-400 hover:text-white"
@@ -234,8 +232,8 @@ export function Header() {
               </div>
 
               <div className="mt-auto border-t border-white/10 pt-6">
-                <p className="text-xs text-zinc-600">contact@elaris.com</p>
-                <p className="mt-1 text-xs text-zinc-700">© 2026 Elaris</p>
+                <p className="text-xs text-zinc-600">contact@helarys.com</p>
+                <p className="mt-1 text-xs text-zinc-700">© 2026 Helarys</p>
               </div>
             </motion.div>
           </>

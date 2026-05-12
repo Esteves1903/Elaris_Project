@@ -5,7 +5,7 @@ import RevealCard from "@/components/ui/RevealCard";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Meet the team behind Elaris — a small studio building modern websites for growing businesses.",
+  description: "Meet the team behind Helarys — a small studio building modern websites for growing businesses.",
 };
 
 const team = [
@@ -18,7 +18,7 @@ const team = [
   {
     name: "José Mário",
     role: "Co-founder · Development & Design",
-    bio: "Responsible for the visual direction and user experience across every Elaris project.",
+    bio: "Responsible for the visual direction and user experience across every Helarys project.",
     initials: "JM",
   },
 ];
@@ -56,7 +56,7 @@ export default function AboutPage() {
             <span className="text-white">serious work.</span>
           </h1>
           <p className="text-base leading-7 text-zinc-300">
-            Elaris is a two-person web studio based in Portugal. We build modern,
+            Helarys is a two-person web studio based in Portugal. We build modern,
             high-quality websites for businesses that want more than a template —
             with a client portal, direct communication and support that doesn&apos;t
             stop after launch.
@@ -108,12 +108,12 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Why we built Elaris */}
+      {/* Why we built Helarys */}
       <section className="mx-auto mb-24 max-w-6xl border-t border-white/10 pt-24">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-start">
           <RevealCard>
             <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
-              Why Elaris
+              Why Helarys
             </p>
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
               We got tired of agencies that overpromise and underdeliver.

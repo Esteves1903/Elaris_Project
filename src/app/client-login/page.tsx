@@ -42,7 +42,7 @@ export default function ClientLoginPage() {
       router.push("/client-area");
     } else {
       setLoading(false);
-      setErrorMessage("Access not configured. Please contact the Elaris team.");
+      setErrorMessage("Access not configured. Please contact the Helarys team.");
     }
   }
 
@@ -79,7 +79,7 @@ export default function ClientLoginPage() {
             </span>
           </h1>
           <p className="max-w-xl text-base leading-7 text-zinc-300">
-            This area is reserved for Elaris clients. Use the email and password
+            This area is reserved for Helarys clients. Use the email and password
             provided after your project has been confirmed.
           </p>
 
@@ -88,7 +88,7 @@ export default function ClientLoginPage() {
               <Mail className="mb-4 h-5 w-5 text-cyan-400" />
               <h2 className="mb-2 font-semibold text-white">Secure access</h2>
               <p className="text-sm leading-6 text-zinc-400">
-                Login with the email and password provided by Elaris.
+                Login with the email and password provided by Helarys.
               </p>
             </SpotlightCard>
 
@@ -112,7 +112,7 @@ export default function ClientLoginPage() {
           <div className="mb-8">
             <h2 className="mb-3 text-2xl font-bold tracking-tight">Sign in</h2>
             <p className="text-sm leading-6 text-zinc-400">
-              Enter the access details provided by the Elaris team.
+              Enter the access details provided by the Helarys team.
             </p>
           </div>
 
@@ -205,7 +205,7 @@ export default function ClientLoginPage() {
 
           <div className="mt-8 space-y-4 border-t border-white/10 pt-6">
             <p className="text-xs leading-5 text-zinc-500">
-              Login details are created and provided directly by Elaris. If you do not
+              Login details are created and provided directly by Helarys. If you do not
               have access yet, please contact our team.
             </p>
           </div>

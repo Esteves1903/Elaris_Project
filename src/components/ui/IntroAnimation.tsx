@@ -134,17 +134,17 @@ export function IntroAnimation() {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.12 }}
         >
-          <img
-            src="/brand/logo-horizontal-transparent.svg"
-            alt="Elaris"
-            className="h-10 w-auto"
+          <span
+            className="text-4xl font-bold tracking-tight bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent select-none"
             style={{
               filter: isHold || isRevealing
                 ? "drop-shadow(0 0 14px rgba(34,211,238,0.55))"
                 : "none",
               transition: "filter 0.4s ease",
             }}
-          />
+          >
+            Helarys
+          </span>
         </motion.div>
 
         {/* Progress bar */}

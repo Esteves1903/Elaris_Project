@@ -14,29 +14,29 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://elaris.com"),
+  metadataBase: new URL("https://helarys.com"),
   title: {
-    default: "Elaris",
-    template: "%s | Elaris",
+    default: "Helarys",
+    template: "%s | Helarys",
   },
   description:
-    "Elaris builds modern, responsive websites for small businesses. Website creation, improvement and ongoing support.",
+    "Helarys builds modern, responsive websites for small businesses. Website creation, improvement and ongoing support.",
   icons: {
     icon: "/brand/icon.svg",
   },
   openGraph: {
     type: "website",
-    siteName: "Elaris",
-    title: "Elaris — Websites for growing businesses",
+    siteName: "Helarys",
+    title: "Helarys — Websites for growing businesses",
     description:
-      "Elaris builds modern, responsive websites for small businesses. Website creation, improvement and ongoing support.",
+      "Helarys builds modern, responsive websites for small businesses. Website creation, improvement and ongoing support.",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Elaris — Websites for growing businesses",
+    title: "Helarys — Websites for growing businesses",
     description:
-      "Elaris builds modern, responsive websites for small businesses. Website creation, improvement and ongoing support.",
+      "Helarys builds modern, responsive websites for small businesses. Website creation, improvement and ongoing support.",
     images: ["/og-image.png"],
   },
 };
@@ -44,10 +44,10 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  name: "Elaris",
-  description: "Elaris builds modern, responsive websites for growing businesses.",
-  url: "https://elaris.com",
-  email: "contact@elaris.com",
+  name: "Helarys",
+  description: "Helarys builds modern, responsive websites for growing businesses.",
+  url: "https://helarys.com",
+  email: "contact@helarys.com",
   areaServed: ["Portugal", "International"],
   serviceType: ["Web Design", "Web Development", "Website Maintenance"],
 };
