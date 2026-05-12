@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { UserCircle, Menu, X, LogOut } from "lucide-react";
 import { useState, useEffect } from "react";
@@ -71,14 +72,17 @@ export function Header() {
       <header className={`fixed left-0 top-0 z-50 w-full border-b backdrop-blur-xl transition-all duration-300 ${scrolled ? "border-white/10 bg-[#0B0F19]/95 shadow-lg shadow-black/20" : "border-transparent bg-[#0B0F19]/70"}`}>
         <div className="mx-auto grid h-20 max-w-6xl grid-cols-3 items-center px-6">
           <Link href="/" className="flex items-center justify-self-start">
-            <motion.span
-              className="text-2xl font-bold tracking-tight bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent select-none"
+            <motion.div
+              className="flex items-center gap-2.5 select-none"
               initial={{ filter: "drop-shadow(0 0 0px rgba(34,211,238,0))" }}
-              whileHover={{ scale: 1.05, filter: "drop-shadow(0 0 10px rgba(34,211,238,0.45))" }}
+              whileHover={{ scale: 1.05, filter: "drop-shadow(0 0 10px rgba(34,211,238,0.35))" }}
               transition={{ type: "spring", stiffness: 350, damping: 22 }}
             >
-              Helarys
-            </motion.span>
+              <Image src="/brand/icon.svg" alt="" width={26} height={26} priority />
+              <span className="text-2xl font-bold tracking-tight bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                Helarys
+              </span>
+            </motion.div>
           </Link>
 
           <nav className="hidden items-center justify-center gap-8 md:flex">
@@ -164,9 +168,12 @@ export function Header() {
               className="fixed right-0 top-0 z-[70] flex h-full w-72 flex-col bg-[#0B0F19] px-8 py-8 border-l border-white/10"
             >
               <div className="flex items-center justify-between mb-10">
-                <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent select-none">
-                  Helarys
-                </span>
+                <div className="flex items-center gap-2 select-none">
+                  <Image src="/brand/icon.svg" alt="" width={22} height={22} />
+                  <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                    Helarys
+                  </span>
+                </div>
                 <button
                   onClick={() => setMobileOpen(false)}
                   className="text-zinc-400 hover:text-white"
