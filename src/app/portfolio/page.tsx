@@ -1987,6 +1987,7 @@ function AsgardBarberApp() {
 
   const services = [
     {
+ 
       id: 1, name: "Signature Cut", time: "45 min", price: "€45", tag: "Bestseller",
       desc: lang === "en"
         ? "Precision cut by master barbers trained in London, Milan and New York. Finished with Baxter of California products."
