@@ -78,7 +78,7 @@ export function Header() {
               whileHover={{ scale: 1.05, filter: "drop-shadow(0 0 10px rgba(34,211,238,0.35))" }}
               transition={{ type: "spring", stiffness: 350, damping: 22 }}
             >
-              <Image src="/brand/icon.svg" alt="" width={48} height={48} priority />
+              <Image src="/brand/icon.svg" alt="" width={48} height={48} priority className="h-12 w-12" />
               <span
                 className="text-2xl font-bold tracking-tight bg-clip-text text-transparent"
                 style={{
@@ -176,7 +176,7 @@ export function Header() {
             >
               <div className="flex items-center justify-between mb-10">
                 <div className="flex items-center gap-2 select-none">
-                  <Image src="/brand/icon.svg" alt="" width={40} height={40} />
+                  <Image src="/brand/icon.svg" alt="" width={40} height={40} className="h-10 w-10" />
                   <span
                     className="text-xl font-bold tracking-tight bg-clip-text text-transparent"
                     style={{
