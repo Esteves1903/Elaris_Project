@@ -9,7 +9,8 @@
       "Bash(findstr -i \"proxy\\\\|middleware\")",
       "Bash(dir \"c:\\\\ELARIS\\\\Elaris_Project\\\\node_modules\\\\next\\\\dist\\\\docs\\\\01-app\\\\03-api-reference\\\\03-file-conventions\")",
       "Bash(del \"c:\\\\ELARIS\\\\Elaris_Project\\\\src\\\\middleware.ts\")",
-      "PowerShell(taskkill /PID 20392 /F 2>&1)"
+      "PowerShell(taskkill /PID 20392 /F 2>&1)",
+      "Bash(dir \"c:\\\\ELARIS\\\\Elaris_Project\\\\src\")"
     ]
   }
 }

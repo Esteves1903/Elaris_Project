@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 function buildCsp(nonce: string): string {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
+  const supabaseWs = supabaseUrl.replace(/^https:/, "wss:");
+  const isDev = process.env.NODE_ENV === "development";
 
   // NOTE — style-src 'unsafe-inline' is a known accepted risk.
   // Framer Motion writes animated values directly as inline style attributes
@@ -13,11 +15,11 @@ function buildCsp(nonce: string): string {
   // Revisit if Framer Motion adds native CSS-variable-based animation support.
   return [
     `default-src 'self'`,
-    `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'`,
+    `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'${isDev ? " 'unsafe-eval'" : ""}`,
     `style-src 'self' 'unsafe-inline'`,
     `img-src 'self' data: blob: https://images.unsplash.com`,
     `font-src 'self'`,
-    `connect-src 'self' ${supabaseUrl}`,
+    `connect-src 'self' ${supabaseUrl} ${supabaseWs}`,
     `frame-ancestors 'none'`,
     `object-src 'none'`,
     `base-uri 'self'`,
