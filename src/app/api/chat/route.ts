@@ -56,7 +56,9 @@ export async function POST(req: NextRequest) {
 
     const text = response.content[0].type === "text" ? response.content[0].text : "";
     return NextResponse.json({ text });
-  } catch {
-    return NextResponse.json({ error: "Something went wrong" }, { status: 500 });
+  } catch (err) {
+    console.error("[chat API error]", err);
+    const message = err instanceof Error ? err.message : String(err);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

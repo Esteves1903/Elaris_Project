@@ -78,8 +78,15 @@ export function Header() {
               whileHover={{ scale: 1.05, filter: "drop-shadow(0 0 10px rgba(34,211,238,0.35))" }}
               transition={{ type: "spring", stiffness: 350, damping: 22 }}
             >
-              <Image src="/brand/icon.svg" alt="" width={26} height={26} priority />
-              <span className="text-2xl font-bold tracking-tight bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+              <Image src="/brand/icon.svg" alt="" width={48} height={48} priority />
+              <span
+                className="text-2xl font-bold tracking-tight bg-clip-text text-transparent"
+                style={{
+                  backgroundImage: "linear-gradient(90deg, #0265F9 0%, #03D3FB 25%, #a5f3fc 50%, #03D3FB 75%, #0265F9 100%)",
+                  backgroundSize: "400% auto",
+                  animation: "logo-sweep 12s linear infinite",
+                }}
+              >
                 Helarys
               </span>
             </motion.div>
@@ -169,8 +176,15 @@ export function Header() {
             >
               <div className="flex items-center justify-between mb-10">
                 <div className="flex items-center gap-2 select-none">
-                  <Image src="/brand/icon.svg" alt="" width={22} height={22} />
-                  <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                  <Image src="/brand/icon.svg" alt="" width={40} height={40} />
+                  <span
+                    className="text-xl font-bold tracking-tight bg-clip-text text-transparent"
+                    style={{
+                      backgroundImage: "linear-gradient(90deg, #03D3FB 0%, #01C9FC 40%, #0265F9 100%)",
+                      backgroundSize: "200% auto",
+                      animation: "shimmer 4s linear infinite",
+                    }}
+                  >
                     Helarys
                   </span>
                 </div>
