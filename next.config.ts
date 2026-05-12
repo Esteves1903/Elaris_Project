@@ -15,6 +15,8 @@ const staticHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ["192.168.1.153"],
+
   // Remove the X-Powered-By: Next.js header
   poweredByHeader: false,
 
@@ -27,8 +29,6 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        // Apply static security headers to every route.
-        // CSP is set dynamically per-request in src/proxy.ts (nonce-based).
         source: "/(.*)",
         headers: staticHeaders,
       },
