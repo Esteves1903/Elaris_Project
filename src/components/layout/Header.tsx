@@ -82,7 +82,7 @@ export function Header() {
               <span
                 className="text-2xl font-bold tracking-tight bg-clip-text text-transparent"
                 style={{
-                  backgroundImage: "linear-gradient(90deg, #0265F9 0%, #03D3FB 25%, #a5f3fc 50%, #03D3FB 75%, #0265F9 100%)",
+                  backgroundImage: "linear-gradient(90deg, #03D3FB 0%, #01C9FC 35%, #0265F9 65%, #03D3FB 100%)",
                   backgroundSize: "400% auto",
                   animation: "logo-sweep 12s linear infinite",
                 }}
