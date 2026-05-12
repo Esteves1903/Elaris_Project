@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { Geist } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
 import { IntroAnimation } from "@/components/ui/IntroAnimation";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
-import { StickyQuoteCTA } from "@/components/ui/StickyQuoteCTA";
 import { AIAssistant } from "@/components/ui/AIAssistant";
 import "./globals.css";
 
@@ -52,22 +52,24 @@ const jsonLd = {
   serviceType: ["Web Design", "Web Development", "Website Maintenance"],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const nonce = (await headers()).get("x-nonce") ?? undefined;
+
   return (
     <html lang="en">
       <head>
         <script
           type="application/ld+json"
+          nonce={nonce}
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body className={geist.className}>
         <ScrollProgress />
-        <StickyQuoteCTA />
         <AIAssistant />
         <IntroAnimation />
         <ScrollToTop />
