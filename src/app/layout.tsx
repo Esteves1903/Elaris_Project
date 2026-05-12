@@ -7,6 +7,7 @@ import { ScrollToTop } from "@/components/ui/ScrollToTop";
 import { IntroAnimation } from "@/components/ui/IntroAnimation";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { AIAssistant } from "@/components/ui/AIAssistant";
+import { Providers } from "@/components/Providers";
 import "./globals.css";
 
 const geist = Geist({
@@ -69,13 +70,15 @@ export default async function RootLayout({
         />
       </head>
       <body className={geist.className}>
-        <ScrollProgress />
-        <AIAssistant />
-        <IntroAnimation />
-        <ScrollToTop />
-        <Header />
-        {children}
-        <Footer />
+        <Providers>
+          <ScrollProgress />
+          <AIAssistant />
+          <IntroAnimation />
+          <ScrollToTop />
+          <Header />
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { getUserRole, signOut } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
+import { useLang } from "@/context/LanguageContext";
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -27,8 +28,32 @@ type Lead = {
   created_at: string;
 };
 
+const copy = {
+  eyebrow: { en: "Leads", pt: "Leads" },
+  checking: { en: "Checking admin access...", pt: "A verificar acesso de admin..." },
+  back: { en: "← Back to admin", pt: "← Voltar ao admin" },
+  logout: { en: "Log out", pt: "Sair" },
+  h1a: { en: "Contact", pt: "Pedidos de" },
+  h1b: { en: "requests.", pt: "contacto." },
+  subtitle: {
+    en: "All enquiries submitted through the contact form, sorted by most recent.",
+    pt: "Todos os pedidos submetidos através do formulário de contacto, ordenados por mais recente.",
+  },
+  statTotal: { en: "Total leads", pt: "Total de leads" },
+  statMonth: { en: "This month", pt: "Este mês" },
+  statNew: { en: "New website", pt: "Novo website" },
+  allLeads: { en: "All leads", pt: "Todos os leads" },
+  contactRequests: { en: "Contact requests", pt: "Pedidos de contacto" },
+  noLeads: { en: "No leads yet.", pt: "Ainda sem leads." },
+  hide: { en: "▲ hide", pt: "▲ ocultar" },
+  show: { en: "▼ show message", pt: "▼ ver mensagem" },
+  message: { en: "Message", pt: "Mensagem" },
+  reply: { en: "Reply by email", pt: "Responder por email" },
+};
+
 export default function AdminLeadsPage() {
   const router = useRouter();
+  const { lang } = useLang();
   const [isCheckingSession, setIsCheckingSession] = useState(true);
   const [leads, setLeads] = useState<Lead[]>([]);
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -39,7 +64,6 @@ export default function AdminLeadsPage() {
         router.push("/client-login");
         return;
       }
-
       const { data: { session } } = await supabase.auth.getSession();
       const res = await fetch("/api/admin/leads", {
         headers: { Authorization: `Bearer ${session?.access_token}` },
@@ -60,8 +84,8 @@ export default function AdminLeadsPage() {
     return (
       <main className="flex min-h-screen items-center justify-center bg-[#0B0F19] px-6 text-white">
         <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="text-center">
-          <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">Leads</p>
-          <p className="text-zinc-400">Checking admin access...</p>
+          <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">{copy.eyebrow[lang]}</p>
+          <p className="text-zinc-400">{copy.checking[lang]}</p>
         </motion.div>
       </main>
     );
@@ -73,7 +97,18 @@ export default function AdminLeadsPage() {
     "Website maintenance": "bg-violet-400/10 text-violet-300 border-violet-400/20",
     "Client area / portal": "bg-emerald-400/10 text-emerald-300 border-emerald-400/20",
     "Not sure yet": "bg-zinc-400/10 text-zinc-400 border-zinc-400/20",
+    "Novo website": "bg-cyan-400/10 text-cyan-300 border-cyan-400/20",
+    "Melhorar website existente": "bg-blue-400/10 text-blue-300 border-blue-400/20",
+    "Manutenção de website": "bg-violet-400/10 text-violet-300 border-violet-400/20",
+    "Área de cliente / portal": "bg-emerald-400/10 text-emerald-300 border-emerald-400/20",
+    "Ainda não tenho a certeza": "bg-zinc-400/10 text-zinc-400 border-zinc-400/20",
   };
+
+  const stats = [
+    { label: copy.statTotal[lang], value: leads.length },
+    { label: copy.statMonth[lang], value: leads.filter(l => new Date(l.created_at).getMonth() === new Date().getMonth()).length },
+    { label: copy.statNew[lang], value: leads.filter(l => l.type === "New website" || l.type === "Novo website").length },
+  ];
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#0B0F19] px-6 pb-24 pt-32 text-white">
@@ -83,33 +118,27 @@ export default function AdminLeadsPage() {
         className="relative z-10 mx-auto mb-10 max-w-6xl">
         <div className="mb-8 flex items-center justify-between gap-4">
           <Link href="/admin" className="text-sm font-medium text-zinc-400 transition hover:text-cyan-300">
-            ← Back to admin
+            {copy.back[lang]}
           </Link>
           <button type="button" onClick={handleLogout}
             className="rounded-full border border-white/10 px-5 py-2 text-sm font-semibold text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]">
-            Log out
+            {copy.logout[lang]}
           </button>
         </div>
 
-        <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">Leads</p>
+        <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">{copy.eyebrow[lang]}</p>
         <h1 className="mb-5 text-4xl font-bold tracking-tight sm:text-5xl">
-          Contact{" "}
+          {copy.h1a[lang]}{" "}
           <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-            requests.
+            {copy.h1b[lang]}
           </span>
         </h1>
-        <p className="max-w-2xl text-base leading-7 text-zinc-300">
-          All enquiries submitted through the contact form, sorted by most recent.
-        </p>
+        <p className="max-w-2xl text-base leading-7 text-zinc-300">{copy.subtitle[lang]}</p>
       </motion.section>
 
       <motion.section custom={1} variants={sectionVariants} initial="hidden" animate="show"
         className="relative z-10 mx-auto mb-6 grid max-w-6xl gap-6 md:grid-cols-3">
-        {[
-          { label: "Total leads", value: leads.length },
-          { label: "This month", value: leads.filter(l => new Date(l.created_at).getMonth() === new Date().getMonth()).length },
-          { label: "New website", value: leads.filter(l => l.type === "New website").length },
-        ].map((stat, i) => (
+        {stats.map((stat, i) => (
           <SpotlightCard key={stat.label} delay={i * 0.05}
             className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 transition-colors hover:border-cyan-400/20">
             <p className="mb-3 text-sm text-zinc-500">{stat.label}</p>
@@ -121,12 +150,12 @@ export default function AdminLeadsPage() {
       <motion.section custom={2} variants={sectionVariants} initial="hidden" animate="show"
         className="relative z-10 mx-auto max-w-6xl rounded-3xl border border-white/10 bg-white/[0.04] p-8">
         <div className="mb-8">
-          <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">All leads</p>
-          <h2 className="text-2xl font-bold tracking-tight">Contact requests</h2>
+          <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">{copy.allLeads[lang]}</p>
+          <h2 className="text-2xl font-bold tracking-tight">{copy.contactRequests[lang]}</h2>
         </div>
 
         {leads.length === 0 ? (
-          <p className="text-sm text-zinc-500">No leads yet.</p>
+          <p className="text-sm text-zinc-500">{copy.noLeads[lang]}</p>
         ) : (
           <div className="grid gap-4">
             {leads.map((lead, index) => {
@@ -147,7 +176,7 @@ export default function AdminLeadsPage() {
                             {lead.type}
                           </span>
                           <span className="text-xs text-zinc-500">
-                            {new Date(lead.created_at).toLocaleDateString("en-GB", {
+                            {new Date(lead.created_at).toLocaleDateString(lang === "pt" ? "pt-PT" : "en-GB", {
                               day: "2-digit",
                               month: "long",
                               year: "numeric",
@@ -161,7 +190,7 @@ export default function AdminLeadsPage() {
                         )}
                       </div>
                       <span className="text-xs text-zinc-600 transition-transform sm:mt-1">
-                        {isExpanded ? "▲ hide" : "▼ show message"}
+                        {isExpanded ? copy.hide[lang] : copy.show[lang]}
                       </span>
                     </div>
 
@@ -172,14 +201,14 @@ export default function AdminLeadsPage() {
                         transition={{ duration: 0.25 }}
                         className="mt-4 border-t border-white/10 pt-4"
                       >
-                        <p className="text-sm font-medium text-zinc-400 mb-2">Message</p>
+                        <p className="text-sm font-medium text-zinc-400 mb-2">{copy.message[lang]}</p>
                         <p className="text-sm leading-6 text-white whitespace-pre-wrap">{lead.message}</p>
                         <a
                           href={`mailto:${lead.email}`}
                           onClick={(e) => e.stopPropagation()}
                           className="mt-5 inline-block rounded-full bg-white px-5 py-2 text-sm font-semibold text-black transition hover:bg-zinc-200"
                         >
-                          Reply by email
+                          {copy.reply[lang]}
                         </a>
                       </motion.div>
                     )}

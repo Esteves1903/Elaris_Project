@@ -10,6 +10,56 @@ import {
   projectStageOptions,
   websiteStatusOptions,
 } from "@/lib/project-options";
+import { useLang } from "@/context/LanguageContext";
+
+const copy = {
+  eyebrow: { en: "Admin dashboard", pt: "Painel de admin" },
+  checking: { en: "Checking admin access...", pt: "A verificar acesso de admin..." },
+  back: { en: "← Back to admin", pt: "← Voltar ao admin" },
+  deleteClient: { en: "Delete client", pt: "Eliminar cliente" },
+  logout: { en: "Log out", pt: "Sair" },
+  deleteTitle: { en: "Delete client", pt: "Eliminar cliente" },
+  deleteWarning: { en: "This will permanently delete", pt: "Isto irá eliminar permanentemente" },
+  deleteWarning2: { en: ", their project and all associated data. This cannot be undone.", pt: ", o respetivo projeto e todos os dados associados. Esta ação não pode ser revertida." },
+  deleting: { en: "Deleting...", pt: "A eliminar..." },
+  deleteConfirm: { en: "Yes, delete permanently", pt: "Sim, eliminar permanentemente" },
+  cancel: { en: "Cancel", pt: "Cancelar" },
+  detailsEyebrow: { en: "Client details", pt: "Detalhes do cliente" },
+  subtitle: { en: "Manage project information, website status and recent updates for this client.", pt: "Gere a informação do projeto, estado do website e atualizações recentes deste cliente." },
+  profileEyebrow: { en: "Client profile", pt: "Perfil do cliente" },
+  labelName: { en: "Client name", pt: "Nome do cliente" },
+  labelEmail: { en: "Email", pt: "Email" },
+  labelCompany: { en: "Company", pt: "Empresa" },
+  labelSlug: { en: "Access slug", pt: "Slug de acesso" },
+  labelType: { en: "Project type", pt: "Tipo de projeto" },
+  labelPlan: { en: "Service plan", pt: "Plano de serviço" },
+  projectEyebrow: { en: "Project details", pt: "Detalhes do projeto" },
+  projectTitle: { en: "Website information", pt: "Informação do website" },
+  saving: { en: "Saving...", pt: "A guardar..." },
+  saveBtn: { en: "Save changes", pt: "Guardar alterações" },
+  errSave: { en: "Failed to save changes.", pt: "Não foi possível guardar as alterações." },
+  successSave: { en: "Changes saved successfully.", pt: "Alterações guardadas com sucesso." },
+  errDelete: { en: "Failed to delete client.", pt: "Não foi possível eliminar o cliente." },
+  labelWebsiteName: { en: "Website name", pt: "Nome do website" },
+  labelWebsiteUrl: { en: "Website URL", pt: "URL do website" },
+  labelStatus: { en: "Website status", pt: "Estado do website" },
+  labelStage: { en: "Current stage", pt: "Fase atual" },
+  labelDelivery: { en: "Estimated delivery", pt: "Entrega estimada" },
+  labelLastUpdate: { en: "Last update", pt: "Última atualização" },
+  labelNext: { en: "Next step", pt: "Próxima etapa" },
+  updatesEyebrow: { en: "Latest updates", pt: "Últimas atualizações" },
+  updatesTitle: { en: "Project activity", pt: "Atividade do projeto" },
+  cancelUpdate: { en: "Cancel", pt: "Cancelar" },
+  addUpdate: { en: "Add update", pt: "Adicionar atualização" },
+  labelTitle: { en: "Title", pt: "Título" },
+  placeholderTitle: { en: "Homepage review completed", pt: "Revisão da homepage concluída" },
+  labelMessage: { en: "Message", pt: "Mensagem" },
+  placeholderMessage: { en: "Describe what changed or what was completed.", pt: "Descreve o que mudou ou o que foi concluído." },
+  errUpdate: { en: "Failed to add update.", pt: "Não foi possível adicionar a atualização." },
+  savingUpdate: { en: "Saving...", pt: "A guardar..." },
+  saveUpdate: { en: "Save update", pt: "Guardar atualização" },
+  noUpdates: { en: "No updates yet.", pt: "Ainda sem atualizações." },
+};
 
 type ProjectUpdate = {
   id: string;
@@ -52,6 +102,7 @@ const selectClass =
 
 export default function AdminClientDetailsClient({ client }: AdminClientDetailsClientProps) {
   const router = useRouter();
+  const { lang } = useLang();
   const [isCheckingSession, setIsCheckingSession] = useState(true);
 
   const project = client.projects?.[0];
@@ -121,9 +172,9 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
     setSaveLoading(false);
     if (!res.ok) {
       const json = await res.json();
-      setErrorMessage(json.error ?? "Failed to save changes.");
+      setErrorMessage(json.error ?? copy.errSave[lang]);
     } else {
-      setSuccessMessage("Changes saved successfully.");
+      setSuccessMessage(copy.successSave[lang]);
     }
   }
 
@@ -137,7 +188,7 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
     setDeleteLoading(false);
     if (!res.ok) {
       const json = await res.json();
-      setErrorMessage(json.error ?? "Failed to delete client.");
+      setErrorMessage(json.error ?? copy.errDelete[lang]);
       setShowDeleteConfirm(false);
       return;
     }
@@ -160,7 +211,7 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
     setAddLoading(false);
     if (!res.ok) {
       const json = await res.json();
-      setUpdateError(json.error ?? "Failed to add update.");
+      setUpdateError(json.error ?? copy.errUpdate[lang]);
       return;
     }
 
@@ -177,9 +228,9 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
       <main className="flex min-h-screen items-center justify-center bg-[#0B0F19] px-6 text-white">
         <div className="text-center">
           <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
-            Admin dashboard
+            {copy.eyebrow[lang]}
           </p>
-          <p className="text-zinc-400">Checking admin access...</p>
+          <p className="text-zinc-400">{copy.checking[lang]}</p>
         </div>
       </main>
     );
@@ -200,7 +251,7 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
             href="/admin"
             className="inline-flex text-sm font-medium text-zinc-400 transition hover:text-cyan-300"
           >
-            ← Back to admin
+            {copy.back[lang]}
           </Link>
           <div className="flex items-center gap-3">
             <button
@@ -208,14 +259,14 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
               onClick={() => setShowDeleteConfirm(true)}
               className="rounded-full border border-red-500/30 px-5 py-2 text-sm font-semibold text-red-400 transition hover:border-red-400/60 hover:bg-red-400/[0.08]"
             >
-              Delete client
+              {copy.deleteClient[lang]}
             </button>
             <button
               type="button"
               onClick={handleLogout}
               className="rounded-full border border-white/10 px-5 py-2 text-sm font-semibold text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]"
             >
-              Log out
+              {copy.logout[lang]}
             </button>
           </div>
         </motion.div>
@@ -230,9 +281,9 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
               transition={{ duration: 0.2 }}
               className="mb-8 rounded-2xl border border-red-500/30 bg-red-500/[0.07] p-6"
             >
-              <p className="mb-1 text-sm font-semibold text-red-400">Delete client</p>
+              <p className="mb-1 text-sm font-semibold text-red-400">{copy.deleteTitle[lang]}</p>
               <p className="mb-5 text-sm leading-6 text-zinc-400">
-                This will permanently delete <span className="font-semibold text-white">{client.company}</span>, their project and all associated data. This cannot be undone.
+                {copy.deleteWarning[lang]} <span className="font-semibold text-white">{client.company}</span>{copy.deleteWarning2[lang]}
               </p>
               <div className="flex gap-3">
                 <button
@@ -241,7 +292,7 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
                   disabled={deleteLoading}
                   className="rounded-full bg-red-500 px-5 py-2 text-sm font-semibold text-white transition hover:bg-red-400 disabled:opacity-60"
                 >
-                  {deleteLoading ? "Deleting..." : "Yes, delete permanently"}
+                  {deleteLoading ? copy.deleting[lang] : copy.deleteConfirm[lang]}
                 </button>
                 <button
                   type="button"
@@ -249,7 +300,7 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
                   disabled={deleteLoading}
                   className="rounded-full border border-white/10 px-5 py-2 text-sm font-semibold text-white transition hover:bg-white/[0.06]"
                 >
-                  Cancel
+                  {copy.cancel[lang]}
                 </button>
               </div>
             </motion.div>
@@ -264,7 +315,7 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
         >
           <div>
             <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
-              Client details
+              {copy.detailsEyebrow[lang]}
             </p>
             <h1 className="mb-5 text-4xl font-bold tracking-tight sm:text-5xl">
               <span className="bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">
@@ -272,7 +323,7 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
               </span>
             </h1>
             <p className="max-w-2xl text-base leading-7 text-zinc-300">
-              Manage project information, website status and recent updates for this client.
+              {copy.subtitle[lang]}
             </p>
           </div>
 
@@ -291,16 +342,16 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
         >
           <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-8">
             <p className="mb-6 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
-              Client profile
+              {copy.profileEyebrow[lang]}
             </p>
             <div className="grid gap-6">
               {[
-                { label: "Client name", value: client.name },
-                { label: "Email", value: client.email },
-                { label: "Company", value: client.company },
-                { label: "Access slug", value: client.slug },
-                { label: "Project type", value: project?.type ?? "—" },
-                { label: "Service plan", value: project?.plan ?? "—" },
+                { label: copy.labelName[lang], value: client.name },
+                { label: copy.labelEmail[lang], value: client.email },
+                { label: copy.labelCompany[lang], value: client.company },
+                { label: copy.labelSlug[lang], value: client.slug },
+                { label: copy.labelType[lang], value: project?.type ?? "—" },
+                { label: copy.labelPlan[lang], value: project?.plan ?? "—" },
               ].map(({ label, value }) => (
                 <div key={label}>
                   <p className="mb-2 text-sm text-zinc-500">{label}</p>
@@ -315,16 +366,16 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
               <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                 <div>
                   <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
-                    Project details
+                    {copy.projectEyebrow[lang]}
                   </p>
-                  <h2 className="text-2xl font-bold tracking-tight">Website information</h2>
+                  <h2 className="text-2xl font-bold tracking-tight">{copy.projectTitle[lang]}</h2>
                 </div>
                 <button
                   type="submit"
                   disabled={saveLoading}
                   className="w-fit rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-zinc-200 disabled:opacity-60"
                 >
-                  {saveLoading ? "Saving..." : "Save changes"}
+                  {saveLoading ? copy.saving[lang] : copy.saveBtn[lang]}
                 </button>
               </div>
 
@@ -355,35 +406,35 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
 
               <div className="grid gap-5 sm:grid-cols-2">
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-zinc-300">Website name</label>
+                  <label className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelWebsiteName[lang]}</label>
                   <input value={websiteName} onChange={(e) => setWebsiteName(e.target.value)} className={inputClass} />
                 </div>
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-zinc-300">Website URL</label>
+                  <label className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelWebsiteUrl[lang]}</label>
                   <input value={websiteUrl} onChange={(e) => setWebsiteUrl(e.target.value)} placeholder="https://" className={inputClass} />
                 </div>
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-zinc-300">Website status</label>
+                  <label className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelStatus[lang]}</label>
                   <select value={websiteStatus} onChange={(e) => setWebsiteStatus(e.target.value)} className={selectClass}>
                     {websiteStatusOptions.map((s) => <option key={s}>{s}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-zinc-300">Current stage</label>
+                  <label className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelStage[lang]}</label>
                   <select value={currentStage} onChange={(e) => setCurrentStage(e.target.value)} className={selectClass}>
                     {projectStageOptions.map((s) => <option key={s}>{s}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-zinc-300">Estimated delivery</label>
+                  <label className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelDelivery[lang]}</label>
                   <input value={estimatedDelivery} onChange={(e) => setEstimatedDelivery(e.target.value)} placeholder="12 June 2026" className={inputClass} />
                 </div>
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-zinc-300">Last update</label>
+                  <label className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelLastUpdate[lang]}</label>
                   <input value={lastUpdate} onChange={(e) => setLastUpdate(e.target.value)} placeholder="05 May 2026" className={inputClass} />
                 </div>
                 <div className="sm:col-span-2">
-                  <label className="mb-2 block text-sm font-medium text-zinc-300">Next step</label>
+                  <label className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelNext[lang]}</label>
                   <textarea
                     value={nextStep}
                     onChange={(e) => setNextStep(e.target.value)}
@@ -405,16 +456,16 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
           <div className="mb-8 flex items-end justify-between gap-4">
             <div>
               <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
-                Latest updates
+                {copy.updatesEyebrow[lang]}
               </p>
-              <h2 className="text-2xl font-bold tracking-tight">Project activity</h2>
+              <h2 className="text-2xl font-bold tracking-tight">{copy.updatesTitle[lang]}</h2>
             </div>
             <button
               type="button"
               onClick={() => setIsAddingUpdate((v) => !v)}
               className="rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]"
             >
-              {isAddingUpdate ? "Cancel" : "Add update"}
+              {isAddingUpdate ? copy.cancelUpdate[lang] : copy.addUpdate[lang]}
             </button>
           </div>
 
@@ -429,21 +480,21 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
                 className="mb-6 grid gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5"
               >
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-zinc-300">Title</label>
+                  <label className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelTitle[lang]}</label>
                   <input
                     value={newUpdateTitle}
                     onChange={(e) => setNewUpdateTitle(e.target.value)}
-                    placeholder="Homepage review completed"
+                    placeholder={copy.placeholderTitle[lang]}
                     required
                     className={inputClass}
                   />
                 </div>
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-zinc-300">Message</label>
+                  <label className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelMessage[lang]}</label>
                   <textarea
                     value={newUpdateMessage}
                     onChange={(e) => setNewUpdateMessage(e.target.value)}
-                    placeholder="Describe what changed or what was completed."
+                    placeholder={copy.placeholderMessage[lang]}
                     rows={4}
                     required
                     className={`${inputClass} resize-none`}
@@ -459,14 +510,14 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
                   disabled={addLoading}
                   className="w-fit rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-zinc-200 disabled:opacity-60"
                 >
-                  {addLoading ? "Saving..." : "Save update"}
+                  {addLoading ? copy.savingUpdate[lang] : copy.saveUpdate[lang]}
                 </button>
               </motion.form>
             )}
           </AnimatePresence>
 
           {latestUpdates.length === 0 ? (
-            <p className="text-sm text-zinc-500">No updates yet.</p>
+            <p className="text-sm text-zinc-500">{copy.noUpdates[lang]}</p>
           ) : (
             <div className="grid gap-4">
               {latestUpdates.map((update) => (
@@ -475,7 +526,7 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
                   className="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
                 >
                   <p className="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-zinc-500">
-                    {new Date(update.created_at).toLocaleDateString("en-GB", {
+                    {new Date(update.created_at).toLocaleDateString(lang === "pt" ? "pt-PT" : "en-GB", {
                       day: "2-digit",
                       month: "long",
                       year: "numeric",

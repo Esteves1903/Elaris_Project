@@ -8,6 +8,7 @@ import { getUserRole, signOut } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { projectStageOptions } from "@/lib/project-options";
+import { useLang } from "@/context/LanguageContext";
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -60,8 +61,54 @@ function buildProgressSteps(currentStage: string) {
   }));
 }
 
+const copy = {
+  eyebrow: { en: "Client area", pt: "Área de cliente" },
+  checking: { en: "Checking access...", pt: "A verificar acesso..." },
+  welcome: { en: "Welcome back,", pt: "Bem-vindo," },
+  subtitle: {
+    en: "Track your website progress, check what stage your project is in and contact us whenever you need support.",
+    pt: "Acompanha o progresso do teu website, verifica em que fase está o teu projeto e contacta-nos sempre que precisares de apoio.",
+  },
+  logout: { en: "Log out", pt: "Sair" },
+  latestUpdates: { en: "Latest updates", pt: "Últimas atualizações" },
+  recentActivity: { en: "Recent project activity", pt: "Atividade recente do projeto" },
+  noUpdates: { en: "No updates yet.", pt: "Ainda sem atualizações." },
+  projectOverview: { en: "Project overview", pt: "Visão geral do projeto" },
+  labelCompany: { en: "Company", pt: "Empresa" },
+  labelType: { en: "Project type", pt: "Tipo de projeto" },
+  labelPlan: { en: "Service plan", pt: "Plano de serviço" },
+  labelDelivery: { en: "Estimated delivery", pt: "Entrega estimada" },
+  labelStage: { en: "Current stage", pt: "Fase atual" },
+  labelStatus: { en: "Status", pt: "Estado" },
+  nextStep: { en: "Next step", pt: "Próxima etapa" },
+  whatNext: { en: "What happens next?", pt: "O que acontece a seguir?" },
+  noInfo: { en: "No information yet.", pt: "Sem informação ainda." },
+  contactUs: { en: "Contact us", pt: "Contactar" },
+  productionProgress: { en: "Production progress", pt: "Progresso da produção" },
+  launched: { en: "Your website has been launched! 🎉", pt: "O teu website foi lançado! 🎉" },
+  inStage: { en: "Your website is currently in", pt: "O teu website está atualmente em" },
+  completed: { en: "Completed", pt: "Concluído" },
+  inProgress: { en: "In progress", pt: "Em curso" },
+  pending: { en: "Pending", pt: "Pendente" },
+  directContact: { en: "Direct contact", pt: "Contacto direto" },
+  talkToUs: { en: "Need to talk to us?", pt: "Precisas de falar connosco?" },
+  talkDesc: {
+    en: "Send us a message, request an update or call directly if something is urgent.",
+    pt: "Envia-nos uma mensagem, pede uma atualização ou liga diretamente se algo for urgente.",
+  },
+  sendMessage: { en: "Send message", pt: "Enviar mensagem" },
+  accountAccess: { en: "Account access", pt: "Acesso à conta" },
+  manageLogin: { en: "Manage your login", pt: "Gere o teu login" },
+  manageDesc: {
+    en: "Update the password used to access your private project dashboard.",
+    pt: "Atualiza a password usada para aceder ao teu dashboard privado do projeto.",
+  },
+  changePassword: { en: "Change password", pt: "Alterar password" },
+};
+
 export default function ClientAreaPage() {
   const router = useRouter();
+  const { lang } = useLang();
   const [isCheckingSession, setIsCheckingSession] = useState(true);
   const [clientData, setClientData] = useState<ClientData | null>(null);
 
@@ -102,9 +149,9 @@ export default function ClientAreaPage() {
           className="text-center"
         >
           <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
-            Client area
+            {copy.eyebrow[lang]}
           </p>
-          <p className="text-zinc-400">Checking access...</p>
+          <p className="text-zinc-400">{copy.checking[lang]}</p>
         </motion.div>
       </main>
     );
@@ -117,6 +164,14 @@ export default function ClientAreaPage() {
         (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
       )
     : [];
+
+  const overviewItems = [
+    { label: copy.labelCompany[lang], value: clientData.company },
+    { label: copy.labelType[lang], value: project?.type },
+    { label: copy.labelPlan[lang], value: project?.plan },
+    { label: copy.labelDelivery[lang], value: project?.estimated_delivery },
+    { label: copy.labelStage[lang], value: project?.stage },
+  ];
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#0B0F19] px-6 pb-24 pt-32 text-white">
@@ -132,17 +187,16 @@ export default function ClientAreaPage() {
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">
-              Client area
+              {copy.eyebrow[lang]}
             </p>
             <h1 className="mb-5 text-4xl font-bold tracking-tight sm:text-5xl">
-              Welcome back,{" "}
+              {copy.welcome[lang]}{" "}
               <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
                 {clientData.name}.
               </span>
             </h1>
             <p className="max-w-2xl text-base leading-7 text-zinc-300">
-              Track your website progress, check what stage your project is in
-              and contact us whenever you need support.
+              {copy.subtitle[lang]}
             </p>
           </div>
 
@@ -157,7 +211,7 @@ export default function ClientAreaPage() {
               onClick={handleLogout}
               className="rounded-full border border-white/10 px-5 py-2 text-sm font-semibold text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]"
             >
-              Log out
+              {copy.logout[lang]}
             </button>
           </div>
         </div>
@@ -172,13 +226,13 @@ export default function ClientAreaPage() {
       >
         <div className="mb-8">
           <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
-            Latest updates
+            {copy.latestUpdates[lang]}
           </p>
-          <h2 className="text-2xl font-bold tracking-tight">Recent project activity</h2>
+          <h2 className="text-2xl font-bold tracking-tight">{copy.recentActivity[lang]}</h2>
         </div>
 
         {latestUpdates.length === 0 ? (
-          <p className="text-sm text-zinc-500">No updates yet.</p>
+          <p className="text-sm text-zinc-500">{copy.noUpdates[lang]}</p>
         ) : (
           <div className="grid gap-4">
             {latestUpdates.map((update, index) => (
@@ -190,7 +244,7 @@ export default function ClientAreaPage() {
                 className="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
               >
                 <p className="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-zinc-500">
-                  {new Date(update.created_at).toLocaleDateString("en-GB", {
+                  {new Date(update.created_at).toLocaleDateString(lang === "pt" ? "pt-PT" : "en-GB", {
                     day: "2-digit",
                     month: "long",
                     year: "numeric",
@@ -214,20 +268,14 @@ export default function ClientAreaPage() {
         <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-8">
           <div className="mb-8 flex flex-col gap-2">
             <p className="text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
-              Project overview
+              {copy.projectOverview[lang]}
             </p>
             <h2 className="text-3xl font-bold tracking-tight">
               {project?.website_name ?? clientData.company}
             </h2>
           </div>
           <div className="grid gap-6 sm:grid-cols-2">
-            {[
-              { label: "Company", value: clientData.company },
-              { label: "Project type", value: project?.type },
-              { label: "Service plan", value: project?.plan },
-              { label: "Estimated delivery", value: project?.estimated_delivery },
-              { label: "Current stage", value: project?.stage },
-            ]
+            {overviewItems
               .filter((item) => item.value && item.value.trim() !== "")
               .map((item) => (
                 <div key={item.label}>
@@ -237,7 +285,7 @@ export default function ClientAreaPage() {
               ))}
             {project?.status && project.status.trim() !== "" && (
               <div>
-                <p className="mb-2 text-sm text-zinc-500">Status</p>
+                <p className="mb-2 text-sm text-zinc-500">{copy.labelStatus[lang]}</p>
                 <p className="font-medium text-cyan-300">{project.status}</p>
               </div>
             )}
@@ -246,17 +294,17 @@ export default function ClientAreaPage() {
 
         <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-8">
           <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
-            Next step
+            {copy.nextStep[lang]}
           </p>
-          <h2 className="mb-4 text-2xl font-bold tracking-tight">What happens next?</h2>
+          <h2 className="mb-4 text-2xl font-bold tracking-tight">{copy.whatNext[lang]}</h2>
           <p className="mb-8 text-sm leading-6 text-zinc-400">
-            {project?.next_step && project.next_step.trim() !== "" ? project.next_step : "No information yet."}
+            {project?.next_step && project.next_step.trim() !== "" ? project.next_step : copy.noInfo[lang]}
           </p>
           <Link
             href="/contact"
             className="inline-block rounded-full bg-white px-6 py-3 text-sm font-semibold text-black shadow-[0_0_24px_rgba(255,255,255,0.08)] transition-all hover:bg-zinc-200"
           >
-            Contact us
+            {copy.contactUs[lang]}
           </Link>
         </div>
       </motion.section>
@@ -271,12 +319,12 @@ export default function ClientAreaPage() {
         >
           <div className="mb-10">
             <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
-              Production progress
+              {copy.productionProgress[lang]}
             </p>
             <h2 className="text-3xl font-bold tracking-tight">
               {project.stage === "Launched"
-                ? "Your website has been launched! 🎉"
-                : `Your website is currently in ${project.stage}.`}
+                ? copy.launched[lang]
+                : `${copy.inStage[lang]} ${project.stage}.`}
             </h2>
           </div>
 
@@ -321,7 +369,7 @@ export default function ClientAreaPage() {
                           : "bg-white/[0.03] text-zinc-500"
                     }`}
                   >
-                    {isCompleted ? "Completed" : isActive ? "In progress" : "Pending"}
+                    {isCompleted ? copy.completed[lang] : isActive ? copy.inProgress[lang] : copy.pending[lang]}
                   </span>
                 </motion.div>
               );
@@ -339,39 +387,38 @@ export default function ClientAreaPage() {
       >
         <SpotlightCard className="rounded-3xl border border-white/10 bg-white/[0.04] p-8 transition-colors hover:border-cyan-400/20">
           <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
-            Direct contact
+            {copy.directContact[lang]}
           </p>
-          <h2 className="mb-4 text-2xl font-bold tracking-tight">Need to talk to us?</h2>
+          <h2 className="mb-4 text-2xl font-bold tracking-tight">{copy.talkToUs[lang]}</h2>
           <p className="mb-8 text-sm leading-6 text-zinc-400">
-            Send us a message, request an update or call directly if something is urgent.
+            {copy.talkDesc[lang]}
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Link
               href="/contact"
               className="rounded-full bg-white px-6 py-3 text-center text-sm font-semibold text-black shadow-[0_0_24px_rgba(255,255,255,0.08)] transition-all hover:bg-zinc-200"
             >
-              Send message
+              {copy.sendMessage[lang]}
             </Link>
           </div>
         </SpotlightCard>
 
         <SpotlightCard className="rounded-3xl border border-white/10 bg-white/[0.04] p-8 transition-colors hover:border-cyan-400/20">
           <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
-            Account access
+            {copy.accountAccess[lang]}
           </p>
-          <h2 className="mb-4 text-2xl font-bold tracking-tight">Manage your login</h2>
+          <h2 className="mb-4 text-2xl font-bold tracking-tight">{copy.manageLogin[lang]}</h2>
           <p className="mb-8 text-sm leading-6 text-zinc-400">
-            Update the password used to access your private project dashboard.
+            {copy.manageDesc[lang]}
           </p>
           <Link
             href="/client-area/account"
             className="inline-flex rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]"
           >
-            Change password
+            {copy.changePassword[lang]}
           </Link>
         </SpotlightCard>
       </motion.section>
-
     </main>
   );
 }

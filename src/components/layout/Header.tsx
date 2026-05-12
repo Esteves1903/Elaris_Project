@@ -8,22 +8,55 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/lib/supabase";
 import { signOut } from "@/lib/auth";
+import { useLang } from "@/context/LanguageContext";
 
 const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/services", label: "Services" },
-  { href: "/portfolio", label: "Portfolio" },
-  { href: "/about", label: "About" },
+  { href: "/", en: "Home", pt: "Início" },
+  { href: "/services", en: "Services", pt: "Serviços" },
+  { href: "/portfolio", en: "Portfolio", pt: "Portfólio" },
+  { href: "/about", en: "About", pt: "Sobre" },
 ];
+
+const t = {
+  clientArea: { en: "Client Area", pt: "Área de Cliente" },
+  requestQuote: { en: "Request a quote", pt: "Pedir orçamento" },
+  logOut: { en: "Log out", pt: "Sair" },
+};
 
 type SessionState = {
   role: "admin" | "client" | null;
   name: string | null;
 };
 
+function LangSwitch({ lang, setLang }: { lang: "en" | "pt"; setLang: (l: "en" | "pt") => void }) {
+  return (
+    <div
+      role="switch"
+      aria-checked={lang === "pt"}
+      aria-label="Toggle language"
+      onClick={() => setLang(lang === "en" ? "pt" : "en")}
+      className="relative flex cursor-pointer select-none items-center rounded-full border border-white/10 bg-white/[0.03] p-0.5"
+    >
+      <motion.div
+        className="absolute top-0.5 bottom-0.5 rounded-full bg-white/[0.13]"
+        animate={{ left: lang === "en" ? "2px" : "calc(50%)" }}
+        style={{ width: "calc(50% - 2px)" }}
+        transition={{ type: "spring", stiffness: 500, damping: 38 }}
+      />
+      <span className={`relative z-10 w-8 py-1 text-center text-xs font-semibold transition-colors duration-150 ${lang === "en" ? "text-white" : "text-zinc-500"}`}>
+        EN
+      </span>
+      <span className={`relative z-10 w-8 py-1 text-center text-xs font-semibold transition-colors duration-150 ${lang === "pt" ? "text-white" : "text-zinc-500"}`}>
+        PT
+      </span>
+    </div>
+  );
+}
+
 export function Header() {
   const pathname = usePathname();
   const router = useRouter();
+  const { lang, setLang } = useLang();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [session, setSession] = useState<SessionState>({ role: null, name: null });
@@ -70,7 +103,7 @@ export function Header() {
   return (
     <>
       <header className={`fixed left-0 top-0 z-50 w-full border-b backdrop-blur-xl transition-all duration-300 ${scrolled ? "border-white/10 bg-[#0B0F19]/95 shadow-lg shadow-black/20" : "border-transparent bg-[#0B0F19]/70"}`}>
-        <div className="mx-auto grid h-20 max-w-6xl grid-cols-3 items-center px-6">
+        <div className="mx-auto grid h-20 max-w-6xl grid-cols-[1fr_auto_1fr] items-center gap-x-6 px-6">
           <Link href="/" className="flex items-center justify-self-start">
             <motion.div
               className="flex items-center gap-2.5 select-none"
@@ -101,7 +134,7 @@ export function Header() {
                   isActive(link.href) ? "text-white" : "text-zinc-400 hover:text-white"
                 }`}
               >
-                {link.label}
+                {link[lang]}
                 {isActive(link.href) && (
                   <motion.span
                     layoutId="nav-underline"
@@ -117,7 +150,7 @@ export function Header() {
               <div className="flex items-center gap-2">
                 <Link
                   href={dashboardHref}
-                  className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-400/[0.06] px-4 py-2.5 text-sm font-semibold text-cyan-300 transition hover:bg-cyan-400/10"
+                  className="inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-cyan-400/30 bg-cyan-400/[0.06] px-4 py-2.5 text-sm font-semibold text-cyan-300 transition hover:bg-cyan-400/10"
                 >
                   <UserCircle className="h-4 w-4" />
                   {displayName}
@@ -133,18 +166,19 @@ export function Header() {
             ) : (
               <Link
                 href="/client-login"
-                className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2.5 text-sm font-semibold text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]"
+                className="inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-white/10 px-4 py-2.5 text-sm font-semibold text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]"
               >
                 <UserCircle className="h-4 w-4 text-cyan-400" />
-                Client Area
+                {t.clientArea[lang]}
               </Link>
             )}
             <Link
               href="/contact"
-              className="inline-flex rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-zinc-200"
+              className="inline-flex whitespace-nowrap rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-zinc-200"
             >
-              Request a quote
+              {t.requestQuote[lang]}
             </Link>
+            <LangSwitch lang={lang} setLang={setLang} />
           </div>
 
           <button
@@ -209,7 +243,7 @@ export function Header() {
                         : "text-zinc-400 hover:bg-white/5 hover:text-white"
                     }`}
                   >
-                    {link.label}
+                    {link[lang]}
                   </Link>
                 ))}
               </nav>
@@ -230,7 +264,7 @@ export function Header() {
                       className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 px-4 py-2.5 text-sm font-semibold text-zinc-400 transition hover:text-red-400"
                     >
                       <LogOut className="h-4 w-4" />
-                      Log out
+                      {t.logOut[lang]}
                     </button>
                   </>
                 ) : (
@@ -240,7 +274,7 @@ export function Header() {
                     className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 px-4 py-2.5 text-sm font-semibold text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]"
                   >
                     <UserCircle className="h-4 w-4 text-cyan-400" />
-                    Client Area
+                    {t.clientArea[lang]}
                   </Link>
                 )}
                 <Link
@@ -248,8 +282,11 @@ export function Header() {
                   onClick={() => setMobileOpen(false)}
                   className="inline-flex justify-center rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-zinc-200"
                 >
-                  Request a quote
+                  {t.requestQuote[lang]}
                 </Link>
+                <div className="flex justify-center">
+                  <LangSwitch lang={lang} setLang={setLang} />
+                </div>
               </div>
 
               <div className="mt-auto border-t border-white/10 pt-6">

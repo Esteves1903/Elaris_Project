@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useLang } from "@/context/LanguageContext";
 
 const stagger = {
   hidden: {},
@@ -14,7 +15,23 @@ const fadeUp = {
   show: { opacity: 1, y: 0 },
 };
 
+const copy = {
+  headline1: { en: "Websites that make small businesses", pt: "Websites que tornam os pequenos negócios" },
+  headline2: { en: "impossible to ignore.", pt: "impossíveis de ignorar." },
+  sub: {
+    en: "We create modern websites and digital tools that help growing businesses stand out online with clarity, design and performance.",
+    pt: "Criamos websites modernos e ferramentas digitais que ajudam negócios em crescimento a destacar-se online com clareza, design e performance.",
+  },
+  cta1: { en: "Request a quote", pt: "Pedir orçamento" },
+  cta2: { en: "View services", pt: "Ver serviços" },
+  badge: { en: "No commitment · Free quote · Response within 24h", pt: "Sem compromisso · Orçamento gratuito · Resposta em 24h" },
+  explore: { en: "Explore portfolio →", pt: "Explorar portfólio →" },
+  demos: { en: "3 interactive demos", pt: "3 demos interativos" },
+};
+
 export function HeroSection() {
+  const { lang } = useLang();
+
   return (
     <section className="relative min-h-[calc(100vh-5rem)] overflow-hidden">
       {/* Dot grid */}
@@ -55,9 +72,9 @@ export function HeroSection() {
               transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
               className="text-4xl font-bold tracking-tight text-white sm:text-5xl xl:text-6xl"
             >
-              Websites that make small businesses{" "}
+              {copy.headline1[lang]}{" "}
               <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                impossible to ignore.
+                {copy.headline2[lang]}
               </span>
             </motion.h1>
 
@@ -66,8 +83,7 @@ export function HeroSection() {
               transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
               className="mt-6 max-w-md text-base leading-7 text-zinc-300 sm:text-lg"
             >
-              We create modern websites and digital tools that help growing
-              businesses stand out online with clarity, design and performance.
+              {copy.sub[lang]}
             </motion.p>
 
             <motion.div
@@ -79,13 +95,13 @@ export function HeroSection() {
                 href="/contact"
                 className="rounded-full bg-white px-7 py-3 text-sm font-semibold text-black shadow-[0_0_32px_rgba(255,255,255,0.12)] transition hover:bg-zinc-200"
               >
-                Request a quote
+                {copy.cta1[lang]}
               </Link>
               <Link
                 href="/services"
                 className="rounded-full border border-white/20 px-7 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
               >
-                View services
+                {copy.cta2[lang]}
               </Link>
             </motion.div>
 
@@ -94,7 +110,7 @@ export function HeroSection() {
               transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
               className="mt-5 text-xs text-zinc-500"
             >
-              No commitment · Free quote · Response within 24h
+              {copy.badge[lang]}
             </motion.p>
 
           </motion.div>
@@ -146,7 +162,7 @@ export function HeroSection() {
                           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75" />
                           <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-400" />
                         </span>
-                        Explore portfolio →
+                        {copy.explore[lang]}
                       </div>
                     </div>
                   </div>
@@ -164,7 +180,7 @@ export function HeroSection() {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-60" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-400" />
                 </span>
-                <span className="text-xs font-semibold text-white">3 interactive demos</span>
+                <span className="text-xs font-semibold text-white">{copy.demos[lang]}</span>
               </motion.div>
 
               {/* Reflection glow */}
