@@ -219,6 +219,7 @@ export function HomeContent() {
                       src={project.images?.[0] || "/api/placeholder/400/320"}
                       alt={project.title}
                       fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
                       className="object-cover opacity-80 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
                     />
                     <div className="absolute left-4 top-4 rounded-full bg-black/60 px-3 py-1 text-xs font-semibold uppercase text-cyan-400 backdrop-blur-sm">

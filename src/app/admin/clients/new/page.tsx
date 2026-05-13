@@ -153,7 +153,7 @@ export default function NewAdminClientPage() {
               {copy.h1b[lang]}
             </span>
           </h1>
-          <p className="text-sm leading-6 text-zinc-500">
+          <p className="text-sm leading-6 text-zinc-400">
             {copy.subtitle[lang]}
           </p>
         </motion.div>
@@ -196,20 +196,20 @@ export default function NewAdminClientPage() {
 
           <div className="grid gap-5 sm:grid-cols-2">
             <div>
-              <label className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelName[lang]}</label>
-              <input value={name} onChange={e => setName(e.target.value)} required placeholder="João Silva" className={inputClass} />
+              <label htmlFor="nc-name" className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelName[lang]}</label>
+              <input id="nc-name" value={name} onChange={e => setName(e.target.value)} required placeholder="João Silva" className={inputClass} />
             </div>
             <div>
-              <label className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelEmail[lang]}</label>
-              <input type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="joao@silvacafe.com" className={inputClass} />
+              <label htmlFor="nc-email" className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelEmail[lang]}</label>
+              <input id="nc-email" type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="joao@silvacafe.com" className={inputClass} />
             </div>
             <div>
-              <label className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelCompany[lang]}</label>
-              <input value={company} onChange={e => setCompany(e.target.value)} required placeholder="Silva Café" className={inputClass} />
+              <label htmlFor="nc-company" className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelCompany[lang]}</label>
+              <input id="nc-company" value={company} onChange={e => setCompany(e.target.value)} required placeholder="Silva Café" className={inputClass} />
             </div>
             <div>
-              <label className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelPassword[lang]}</label>
-              <input type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder={copy.placeholderPassword[lang]} className={inputClass} />
+              <label htmlFor="nc-password" className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelPassword[lang]}</label>
+              <input id="nc-password" type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder={copy.placeholderPassword[lang]} className={inputClass} />
             </div>
             <div>
               <label className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelType[lang]}</label>

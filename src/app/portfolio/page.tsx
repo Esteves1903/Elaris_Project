@@ -182,7 +182,7 @@ export default function PortfolioPage() {
           <>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSidebarData(null)} className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100]" />
             <motion.div initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} className="fixed right-0 top-0 h-full w-full max-w-md bg-[#0d1117] border-l border-white/10 z-[101] p-8 overflow-y-auto">
-              <button onClick={() => setSidebarData(null)} className="mb-8 p-2 hover:bg-white/10 rounded-full transition"><X size={24} /></button>
+              <button onClick={() => setSidebarData(null)} aria-label="Close project details" className="mb-8 p-2 hover:bg-white/10 rounded-full transition"><X size={24} /></button>
               <div className="space-y-8">
                 <div>
                   <h3 className="text-cyan-400 text-xs font-black uppercase tracking-widest mb-2 flex items-center gap-2"><Code2 size={14} /> {portfolioCopy.sidebarDevCase[lang]}</h3>
@@ -331,9 +331,9 @@ function HelarysFinalDubai() {
 
   // --- CONTENT DATA ---
   const slides = [
-    { url: "/ElarisRest1.png", title: t.slideTitle1 },
-    { url: "/ElarisRest2.png", title: t.slideTitle2 },
-    { url: "/ElarisRest3.png", title: t.slideTitle3 },
+    { url: "/ElarisRest1.webp", title: t.slideTitle1 },
+    { url: "/ElarisRest2.webp", title: t.slideTitle2 },
+    { url: "/ElarisRest3.webp", title: t.slideTitle3 },
   ];
 
   const menuCategories = [
@@ -344,25 +344,25 @@ function HelarysFinalDubai() {
           n: t.n_wagyu,
           p: "AED 245",
           d: t.d_wagyu,
-          img: "/A5Wagyu.png"
+          img: "/A5Wagyu.webp"
         },
         {
           n: t.n_lobster,
           p: "AED 190",
           d: t.d_lobster,
-          img: "/LagostaAzul.png"
+          img: "/LagostaAzul.webp"
         },
         {
           n: t.n_caviar,
           p: "AED 850",
           d: t.d_caviar,
-          img: "/caviar.png"
+          img: "/caviar.webp"
         },
         {
           n: t.n_foie,
           p: "AED 210",
           d: t.d_foie,
-          img: "/FoieGras.png"
+          img: "/FoieGras.webp"
         }
       ]
     },
@@ -373,31 +373,31 @@ function HelarysFinalDubai() {
           n: t.n_francesinha,
           p: "AED 320",
           d: t.d_francesinha,
-          img: "/francesinha.png"
+          img: "/francesinha.webp"
         },
         {
           n: t.n_seabass,
           p: "AED 450",
           d: t.d_seabass,
-          img: "/seabass.png"
+          img: "/seabass.webp"
         },
         {
           n: t.n_octopus,
           p: "AED 280",
           d: t.d_octopus,
-          img: "/octopus.png"
+          img: "/octopus.webp"
         },
         {
           n: t.n_lamb,
           p: "AED 390",
           d: t.d_lamb,
-          img: "/lambchops.png"
+          img: "/lambchops.webp"
         },
         {
           n: t.n_truffle,
           p: "AED 310",
           d: t.d_truffle,
-          img: "/truffleRisotto.png"
+          img: "/truffleRisotto.webp"
         }
       ]
     },
@@ -408,13 +408,13 @@ function HelarysFinalDubai() {
           n: t.n_abade,
           p: "AED 110",
           d: t.d_abade,
-          img: "/abade.png"
+          img: "/abade.webp"
         },
         {
           n: t.n_chocolate,
           p: "AED 135",
           d: t.d_chocolate,
-          img: "/chocolate.png"
+          img: "/chocolate.webp"
         }
       ]
     }
@@ -1302,62 +1302,62 @@ function HelarysSportApp() {
       badge:"Sale", rating:4.8, reviews:312,
       sizes:["39","40","41","42","43","44","45"],
       description: t.prod1_d,
-      image:"/Pedradator.png" },
+      image:"/Pedradator.webp" },
     { id:2, name:"Mercurial Vapor 16 Elite", price:275, brand:"Nike", category:"Boots",
       badge:"New", rating:4.9, reviews:198,
       sizes:["38","39","40","41","42","43","44"],
       description: t.prod2_d,
-      image:"/Mercurial.png" },
+      image:"/Mercurial.webp" },
     { id:3, name:"Portugal 24 Home Kit", price:140, brand:"Nike", category:"Kits",
       badge:"Hot", rating:4.7, reviews:540,
       sizes:["XS","S","M","L","XL","XXL"],
       description: t.prod3_d,
-      image:"/Portugalkit.png" },
+      image:"/Portugalkit.webp" },
     { id:4, name:"UCL Pro Ball", price:165, brand:"Adidas", category:"Balls",
       rating:4.6, reviews:87,
       sizes:["Size 4","Size 5"],
       description: t.prod4_d,
-      image:"/UCLBola.png" },
+      image:"/UCLBola.webp" },
     { id:5, name:"Phantom GK Elite", price:95, brand:"Reusch", category:"Goalkeeper",
       rating:4.5, reviews:63,
       sizes:["7","8","9","10","11"],
       description: t.prod5_d,
-      image:"/luvas.png" },
+      image:"/luvas.webp" },
     { id:6, name:"France Away Kit", price:130, originalPrice:150, brand:"Nike", category:"Kits",
       badge:"Sale", rating:4.4, reviews:221,
       sizes:["XS","S","M","L","XL","XXL"],
       description: t.prod6_d,
-      image:"/Francefora.png" },
+      image:"/Francefora.webp" },
     { id:7, name:"Pro Training Ball", price:45, brand:"Adidas", category:"Balls",
       rating:4.3, reviews:145,
       sizes:["Size 4","Size 5"],
       description: t.prod7_d,
-      image:"/bolatreino.png" },
+      image:"/bolatreino.webp" },
     { id:8, name:"Phantom Luna Elite FG", price:230, brand:"Nike", category:"Boots",
       badge:"New", rating:4.8, reviews:76,
       sizes:["36","37","38","39","40","41","42"],
       description: t.prod8_d,
-      image:"/luna.png" },
+      image:"/luna.webp" },
     { id:9, name:"Training Compression Set", price:75, brand:"Nike", category:"Training",
       rating:4.5, reviews:189,
       sizes:["S","M","L","XL"],
       description: t.prod9_d,
-      image:"/kittreino.png" },
+      image:"/kittreino.webp" },
     { id:10, name:"Speed Training Cones Set", price:25, brand:"Generic", category:"Training",
       rating:4.2, reviews:302,
       sizes:["One Size"],
       description: t.prod10_d,
-      image:"/cones.png" },
+      image:"/cones.webp" },
     { id:11, name:"Elite Shin Guards", price:55, brand:"Adidas", category:"Accessories",
       rating:4.6, reviews:93,
       sizes:["S","M","L","XL"],
       description: t.prod11_d,
-      image:"/caneleira.png" },
+      image:"/caneleira.webp" },
     { id:12, name:"Goalkeeper Jersey Pro", price:85, brand:"Reusch", category:"Goalkeeper",
       rating:4.3, reviews:41,
       sizes:["S","M","L","XL","XXL"],
       description: t.prod12_d,
-      image:"/gredes.png" },
+      image:"/gredes.webp" },
   ];
 
   const categories = ['All','Boots','Kits','Balls','Goalkeeper','Training','Accessories'];
@@ -1465,7 +1465,7 @@ function HelarysSportApp() {
 
               {/* Hero Banner */}
               <div className="relative h-[200px] bg-black overflow-hidden">
-                <img src="/lojafundo.png"
+                <img src="/lojafundo.webp"
                   className="absolute inset-0 w-full h-full object-cover opacity-50"/>
                 <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"/>
                 <div className="relative z-10 h-full flex flex-col justify-center px-8 md:px-14 text-white">
@@ -1534,6 +1534,7 @@ function HelarysSportApp() {
                         </span>
                       )}
                       <button onClick={e=>{e.stopPropagation();toggleWishlist(item.id);}}
+                        aria-label={wishlist.includes(item.id) ? "Remove from wishlist" : "Add to wishlist"}
                         className="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center shadow transition-all hover:scale-110">
                         <Heart size={14} className={wishlist.includes(item.id) ? 'text-rose-500 fill-rose-500' : 'text-zinc-400'}/>
                       </button>
@@ -1576,7 +1577,7 @@ function HelarysSportApp() {
               <div className="grid md:grid-cols-2 gap-10">
                 {/* Image */}
                 <div className="bg-zinc-100 rounded-3xl overflow-hidden h-[380px]">
-                  <img src={selectedProduct.image} className="w-full h-full object-cover"/>
+                  <img src={selectedProduct.image} alt={selectedProduct.name} className="w-full h-full object-cover"/>
                 </div>
                 {/* Info */}
                 <div className="flex flex-col justify-center">
@@ -1623,6 +1624,7 @@ function HelarysSportApp() {
                       <ShoppingBag size={16}/> {t.addToCart}
                     </button>
                     <button onClick={()=>toggleWishlist(selectedProduct.id)}
+                      aria-label={wishlist.includes(selectedProduct.id) ? "Remove from wishlist" : "Add to wishlist"}
                       className={`w-14 h-14 rounded-2xl border-2 flex items-center justify-center transition-all ${wishlist.includes(selectedProduct.id) ? 'border-rose-500 bg-rose-50' : 'border-zinc-200 hover:border-rose-400'}`}>
                       <Heart size={20} className={wishlist.includes(selectedProduct.id) ? 'text-rose-500 fill-rose-500' : 'text-zinc-400'}/>
                     </button>
@@ -1655,18 +1657,18 @@ function HelarysSportApp() {
                   <div className="space-y-4">
                     {cart.map(item => (
                       <div key={`${item.id}-${item.selectedSize}`} className="bg-white rounded-2xl p-4 flex gap-4 border border-zinc-200">
-                        <img src={item.image} className="w-24 h-24 rounded-xl object-cover shrink-0"/>
+                        <img src={item.image} alt={item.name} className="w-24 h-24 rounded-xl object-cover shrink-0"/>
                         <div className="flex-1 min-w-0">
                           <p className="text-[9px] font-black uppercase tracking-widest text-[#0066ff]">{item.brand}</p>
                           <h4 className="font-black text-sm mt-0.5 truncate">{item.name}</h4>
                           <p className="text-xs text-zinc-400 mt-0.5">{t.size}: <span className="font-bold text-zinc-600">{item.selectedSize}</span></p>
                           <div className="flex items-center gap-3 mt-3">
                             <div className="flex items-center bg-zinc-100 rounded-full overflow-hidden">
-                              <button onClick={()=>updateQuantity(item.id,item.selectedSize,-1)} className="px-3 py-1.5 hover:bg-zinc-200 transition-all"><Minus size={12}/></button>
+                              <button onClick={()=>updateQuantity(item.id,item.selectedSize,-1)} aria-label="Decrease quantity" className="px-3 py-1.5 hover:bg-zinc-200 transition-all"><Minus size={12}/></button>
                               <span className="px-3 text-sm font-black">{item.quantity}</span>
-                              <button onClick={()=>updateQuantity(item.id,item.selectedSize,1)} className="px-3 py-1.5 hover:bg-zinc-200 transition-all"><Plus size={12}/></button>
+                              <button onClick={()=>updateQuantity(item.id,item.selectedSize,1)} aria-label="Increase quantity" className="px-3 py-1.5 hover:bg-zinc-200 transition-all"><Plus size={12}/></button>
                             </div>
-                            <button onClick={()=>removeFromCart(item.id,item.selectedSize)} className="text-zinc-300 hover:text-red-500 transition-colors"><Trash2 size={16}/></button>
+                            <button onClick={()=>removeFromCart(item.id,item.selectedSize)} aria-label="Remove from cart" className="text-zinc-300 hover:text-red-500 transition-colors"><Trash2 size={16}/></button>
                           </div>
                         </div>
                         <div className="text-right shrink-0">
@@ -1748,7 +1750,7 @@ function HelarysSportApp() {
                   <div className="space-y-3 max-h-64 overflow-y-auto">
                     {cart.map(item => (
                       <div key={`${item.id}-${item.selectedSize}`} className="flex gap-3">
-                        <img src={item.image} className="w-12 h-12 rounded-lg object-cover shrink-0"/>
+                        <img src={item.image} alt={item.name} className="w-12 h-12 rounded-lg object-cover shrink-0"/>
                         <div className="flex-1 min-w-0">
                           <p className="text-xs font-bold truncate">{item.name}</p>
                           <p className="text-[10px] text-zinc-400">×{item.quantity} · {item.selectedSize}</p>
@@ -2065,9 +2067,9 @@ function AsgardBarberApp() {
   };
 
   const barbers = [
-    { name: "Marcus Helarys", role: tBarber.role1, exp: "12y", img: "/barber1.png" },
-    { name: "André Sousa", role: tBarber.role2, exp: "8y", img: "/barber2.png" },
-    { name: "James Whitfield", role: tBarber.role3, exp: "15y", img: "/barber3.png" },
+    { name: "Marcus Helarys", role: tBarber.role1, exp: "12y", img: "/barber1.webp" },
+    { name: "André Sousa", role: tBarber.role2, exp: "8y", img: "/barber2.webp" },
+    { name: "James Whitfield", role: tBarber.role3, exp: "15y", img: "/barber3.webp" },
   ];
 
   const testimonials = [
@@ -2156,7 +2158,7 @@ function AsgardBarberApp() {
               {/* HERO */}
               <section className="relative h-[82vh] flex items-end overflow-hidden">
                 <img
-                  src="/barber.png"
+                  src="/barber.webp"
                   className="absolute inset-0 w-full h-full object-cover opacity-50"
                   alt=""
                 />

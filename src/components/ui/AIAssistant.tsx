@@ -141,6 +141,7 @@ export function AIAssistant() {
                 <button
                   onClick={send}
                   disabled={!input.trim() || loading}
+                  aria-label="Send message"
                   className="shrink-0 rounded-lg p-1.5 text-zinc-500 transition hover:text-cyan-400 disabled:opacity-30"
                 >
                   {loading ? (

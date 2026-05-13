@@ -181,7 +181,7 @@ export default function ClientAccountPage() {
                 { label: copy.labelSlug[lang], value: profile?.slug ?? "—" },
               ].map((item) => (
                 <div key={item.label}>
-                  <p className="mb-2 text-sm text-zinc-500">{item.label}</p>
+                  <p className="mb-2 text-sm text-zinc-400">{item.label}</p>
                   <p className="font-medium text-white">{item.value}</p>
                 </div>
               ))}

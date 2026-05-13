@@ -147,8 +147,9 @@ export default function ContactPage() {
           >
             <div className="grid gap-5 sm:grid-cols-2">
               <div>
-                <label className="mb-2 block text-sm font-medium">{copy.labelName[lang]}</label>
+                <label htmlFor="contact-name" className="mb-2 block text-sm font-medium">{copy.labelName[lang]}</label>
                 <input
+                  id="contact-name"
                   type="text"
                   name="name"
                   value={form.name}
@@ -159,8 +160,9 @@ export default function ContactPage() {
                 />
               </div>
               <div>
-                <label className="mb-2 block text-sm font-medium">{copy.labelEmail[lang]}</label>
+                <label htmlFor="contact-email" className="mb-2 block text-sm font-medium">{copy.labelEmail[lang]}</label>
                 <input
+                  id="contact-email"
                   type="email"
                   name="email"
                   value={form.email}
@@ -173,10 +175,11 @@ export default function ContactPage() {
             </div>
 
             <div className="mt-5">
-              <label className="mb-2 block text-sm font-medium">
+              <label htmlFor="contact-business" className="mb-2 block text-sm font-medium">
                 {copy.labelBusiness[lang]}
               </label>
               <input
+                id="contact-business"
                 type="text"
                 name="business"
                 value={form.business}
@@ -187,10 +190,11 @@ export default function ContactPage() {
             </div>
 
             <div className="mt-5">
-              <label className="mb-2 block text-sm font-medium">
+              <label htmlFor="contact-type" className="mb-2 block text-sm font-medium">
                 {copy.labelType[lang]}
               </label>
               <select
+                id="contact-type"
                 name="type"
                 value={form.type}
                 onChange={handleChange}
@@ -203,10 +207,11 @@ export default function ContactPage() {
             </div>
 
             <div className="mt-5">
-              <label className="mb-2 block text-sm font-medium">
+              <label htmlFor="contact-message" className="mb-2 block text-sm font-medium">
                 {copy.labelMessage[lang]}
               </label>
               <textarea
+                id="contact-message"
                 name="message"
                 value={form.message}
                 onChange={handleChange}

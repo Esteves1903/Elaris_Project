@@ -232,7 +232,7 @@ export default function ClientAreaPage() {
         </div>
 
         {latestUpdates.length === 0 ? (
-          <p className="text-sm text-zinc-500">{copy.noUpdates[lang]}</p>
+          <p className="text-sm text-zinc-400">{copy.noUpdates[lang]}</p>
         ) : (
           <div className="grid gap-4">
             {latestUpdates.map((update, index) => (
@@ -243,7 +243,7 @@ export default function ClientAreaPage() {
                 transition={{ duration: 0.4, delay: 0.2 + index * 0.07 }}
                 className="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
               >
-                <p className="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-zinc-500">
+                <p className="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-zinc-400">
                   {new Date(update.created_at).toLocaleDateString(lang === "pt" ? "pt-PT" : "en-GB", {
                     day: "2-digit",
                     month: "long",
@@ -279,13 +279,13 @@ export default function ClientAreaPage() {
               .filter((item) => item.value && item.value.trim() !== "")
               .map((item) => (
                 <div key={item.label}>
-                  <p className="mb-2 text-sm text-zinc-500">{item.label}</p>
+                  <p className="mb-2 text-sm text-zinc-400">{item.label}</p>
                   <p className="font-medium text-white">{item.value}</p>
                 </div>
               ))}
             {project?.status && project.status.trim() !== "" && (
               <div>
-                <p className="mb-2 text-sm text-zinc-500">{copy.labelStatus[lang]}</p>
+                <p className="mb-2 text-sm text-zinc-400">{copy.labelStatus[lang]}</p>
                 <p className="font-medium text-cyan-300">{project.status}</p>
               </div>
             )}
@@ -350,7 +350,7 @@ export default function ClientAreaPage() {
                         ? "bg-cyan-400 text-black shadow-[0_0_16px_rgba(34,211,238,0.4)]"
                         : isActive
                           ? "border border-cyan-400 text-cyan-300 shadow-[0_0_12px_rgba(34,211,238,0.15)]"
-                          : "border border-white/10 text-zinc-500"
+                          : "border border-white/10 text-zinc-400"
                     }`}
                   >
                     {String(index + 1).padStart(2, "0")}
@@ -366,7 +366,7 @@ export default function ClientAreaPage() {
                         ? "bg-cyan-400/10 text-cyan-300"
                         : isActive
                           ? "bg-white/10 text-white"
-                          : "bg-white/[0.03] text-zinc-500"
+                          : "bg-white/[0.03] text-zinc-400"
                     }`}
                   >
                     {isCompleted ? copy.completed[lang] : isActive ? copy.inProgress[lang] : copy.pending[lang]}
