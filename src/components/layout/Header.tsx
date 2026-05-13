@@ -13,6 +13,7 @@ import { useLang } from "@/context/LanguageContext";
 const navLinks = [
   { href: "/", en: "Home", pt: "Início" },
   { href: "/services", en: "Services", pt: "Serviços" },
+  { href: "/process", en: "Process", pt: "Processo" },
   { href: "/portfolio", en: "Portfolio", pt: "Portfólio" },
   { href: "/about", en: "About", pt: "Sobre" },
 ];
