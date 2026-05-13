@@ -5,7 +5,8 @@ import RevealCard from "@/components/ui/RevealCard";
 export const metadata: Metadata = {
   title: "Process",
   description:
-    "A clear four-step process from first contact to final delivery. Understand, Plan, Build and Deliver.",
+    "Helarys follows a clear four-step process: discovery, planning, build and delivery. Transparent, collaborative and focused on results.",
+  alternates: { canonical: "https://helarys.com/process" },
 };
 
 export default function ProcessPage() {

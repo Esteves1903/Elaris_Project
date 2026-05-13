@@ -21,7 +21,8 @@ export const metadata: Metadata = {
     template: "%s | Helarys",
   },
   description:
-    "Helarys builds modern, responsive websites for small businesses. Website creation, improvement and ongoing support.",
+    "Helarys is a web studio building fast, modern websites for small businesses in Portugal and beyond. New websites, redesigns and ongoing maintenance.",
+  keywords: ["web design", "web development", "small business website", "website Portugal", "responsive website", "Helarys"],
   icons: {
     icon: "/brand/icon.svg",
   },
@@ -30,15 +31,15 @@ export const metadata: Metadata = {
     siteName: "Helarys",
     title: "Helarys — Websites for growing businesses",
     description:
-      "Helarys builds modern, responsive websites for small businesses. Website creation, improvement and ongoing support.",
-    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+      "Helarys is a web studio building fast, modern websites for small businesses in Portugal and beyond. New websites, redesigns and ongoing maintenance.",
+    images: [{ url: "/brand/logo-horizontal.png", width: 1200, height: 400, alt: "Helarys logo" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Helarys — Websites for growing businesses",
     description:
-      "Helarys builds modern, responsive websites for small businesses. Website creation, improvement and ongoing support.",
-    images: ["/og-image.png"],
+      "Helarys is a web studio building fast, modern websites for small businesses in Portugal and beyond. New websites, redesigns and ongoing maintenance.",
+    images: ["/brand/logo-horizontal.png"],
   },
 };
 

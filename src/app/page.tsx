@@ -4,7 +4,8 @@ import { HomeContent } from "./HomeContent";
 export const metadata: Metadata = {
   title: "Helarys — Websites for growing businesses",
   description:
-    "Helarys helps small businesses grow online with modern websites, digital tools and a clear development process.",
+    "Helarys builds custom websites for small businesses. Modern design, fast delivery and ongoing support — helping your business grow online.",
+  alternates: { canonical: "https://helarys.com" },
 };
 
 export default function Home() {

@@ -2,7 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CheckCircle } from "lucide-react";
 
-export const metadata: Metadata = { title: "Request sent" };
+export const metadata: Metadata = {
+  title: "Request sent",
+  description: "Your request has been received. The Helarys team will get back to you within 24 hours.",
+  robots: { index: false },
+};
 
 export default function ThanksPage() {
   return (
