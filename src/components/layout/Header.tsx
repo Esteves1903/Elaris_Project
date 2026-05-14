@@ -46,7 +46,7 @@ function LangSwitch({ lang, setLang }: { lang: "en" | "pt"; setLang: (l: "en" | 
         style={{ zIndex: 1 }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={`https://flagcdn.com/w40/${inactiveCode}.png`} width={32} height={22} alt="" className="rounded-sm block" />
+        <img src={`/flags/${inactiveCode}.png`} width={32} height={22} alt="" className="rounded-sm block" />
       </motion.div>
       {/* Front flag (active) */}
       <motion.div
@@ -55,7 +55,7 @@ function LangSwitch({ lang, setLang }: { lang: "en" | "pt"; setLang: (l: "en" | 
         style={{ zIndex: 2 }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={`https://flagcdn.com/w40/${activeCode}.png`} width={32} height={22} alt="" className="rounded-sm block" />
+        <img src={`/flags/${activeCode}.png`} width={32} height={22} alt="" className="rounded-sm block" />
       </motion.div>
     </button>
   );
