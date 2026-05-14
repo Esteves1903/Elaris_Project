@@ -30,27 +30,30 @@ type SessionState = {
 };
 
 function LangSwitch({ lang, setLang }: { lang: "en" | "pt"; setLang: (l: "en" | "pt") => void }) {
+  const isEn = lang === "en";
   return (
-    <div
-      role="switch"
-      aria-checked={lang === "pt"}
+    <button
+      onClick={() => setLang(isEn ? "pt" : "en")}
       aria-label="Toggle language"
-      onClick={() => setLang(lang === "en" ? "pt" : "en")}
-      className="relative flex cursor-pointer select-none items-center rounded-full border border-white/10 bg-white/[0.03] p-0.5"
+      className="relative h-8 w-10 cursor-pointer select-none"
     >
-      <motion.div
-        className="absolute top-0.5 bottom-0.5 rounded-full bg-white/[0.13]"
-        animate={{ left: lang === "en" ? "2px" : "calc(50%)" }}
-        style={{ width: "calc(50% - 2px)" }}
-        transition={{ type: "spring", stiffness: 500, damping: 38 }}
-      />
-      <span className={`relative z-10 w-8 py-1 text-center text-xs font-semibold transition-colors duration-150 ${lang === "en" ? "text-white" : "text-zinc-500"}`}>
-        EN
-      </span>
-      <span className={`relative z-10 w-8 py-1 text-center text-xs font-semibold transition-colors duration-150 ${lang === "pt" ? "text-white" : "text-zinc-500"}`}>
-        PT
-      </span>
-    </div>
+      {/* Back flag (inactive) */}
+      <motion.span
+        animate={{ scale: 0.78, opacity: 0.45 }}
+        className="absolute right-0 top-0 text-2xl leading-none"
+        style={{ zIndex: 1 }}
+      >
+        {isEn ? "🇵🇹" : "🇬🇧"}
+      </motion.span>
+      {/* Front flag (active) */}
+      <motion.span
+        animate={{ scale: 1, opacity: 1 }}
+        className="absolute left-0 top-0 text-2xl leading-none drop-shadow-sm"
+        style={{ zIndex: 2 }}
+      >
+        {isEn ? "🇬🇧" : "🇵🇹"}
+      </motion.span>
+    </button>
   );
 }
 
