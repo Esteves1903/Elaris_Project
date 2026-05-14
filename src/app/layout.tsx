@@ -34,14 +34,12 @@ export const metadata: Metadata = {
     title: "Helarys — Websites for growing businesses",
     description:
       "Helarys is a web studio building fast, modern websites for small businesses in Portugal and beyond. New websites, redesigns and ongoing maintenance.",
-    images: [{ url: "/brand/logo-horizontal.png", width: 1200, height: 400, alt: "Helarys logo" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Helarys — Websites for growing businesses",
     description:
       "Helarys is a web studio building fast, modern websites for small businesses in Portugal and beyond. New websites, redesigns and ongoing maintenance.",
-    images: ["/brand/logo-horizontal.png"],
   },
 };
 
