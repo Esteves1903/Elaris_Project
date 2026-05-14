@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -13,7 +13,7 @@ function Stars({ rating }: { rating: number }) {
   return (
     <span className="flex gap-0.5">
       {[1,2,3,4,5].map(s => (
-        <span key={s} className={`text-xs ${s<=Math.round(rating) ? 'text-amber-400' : 'text-zinc-300'}`}>★</span>
+        <span key={s} className={`text-xs ${s<=Math.round(rating) ? 'text-amber-400' : 'text-zinc-300'}`}>â˜…</span>
       ))}
     </span>
   );
@@ -39,12 +39,12 @@ export function FootballStoreDemo() {
   const [lang, setLang] = useState<Lang>("en");
   const t = {
     en: {
-      performanceStore: "Performance Store", searchPlaceholder: "Search…", cart: "Cart",
+      performanceStore: "Performance Store", searchPlaceholder: "Searchâ€¦", cart: "Cart",
       catAll: "All", catBoots: "Boots", catKits: "Kits", catBalls: "Balls",
       catGoalkeeper: "Goalkeeper", catTraining: "Training", catAccessories: "Accessories",
       heroTitle1: "PLAY AT YOUR", heroTitle2: "PEAK.",
       shopBoots: "Shop Boots", shopKits: "Shop Kits", onBoots: "on boots",
-      products: "products", featured: "Featured", priceLow: "Price: Low → High", priceHigh: "Price: High → Low",
+      products: "products", featured: "Featured", priceLow: "Price: Low â†’ High", priceHigh: "Price: High â†’ Low",
       noProducts: "No products found for", backToShop: "Back to Shop", reviews: "reviews",
       selectSize: "Select Size", pleaseSelectSize: "Please select a size",
       addToCart: "Add to Cart", yourCart: "Your Cart", continueShopping: "Continue Shopping",
@@ -56,7 +56,7 @@ export function FootballStoreDemo() {
       address: "Shipping Address", card: "Card Number", placeOrder: "Place Order",
       order: "Order", items: "items", orderConfirmed: "Order Confirmed",
       thankYou: "Thank you,", confirmation: "Your order has been confirmed. A confirmation has been sent to",
-      yourEmail: "your email", estDelivery: "Estimated delivery:", deliveryDays: "3–5 business days",
+      yourEmail: "your email", estDelivery: "Estimated delivery:", deliveryDays: "3â€“5 business days",
       backToStore: "Back to Store", size: "Size", each: "each",
       errName: "Required", errEmail: "Invalid email", errAddress: "Required", errCard: "Enter a valid card number",
       orderSummary: "Order Summary", backToCart: "Back to Cart",
@@ -74,47 +74,47 @@ export function FootballStoreDemo() {
       prod12_d: "Professional goalkeeper jersey with padded elbows for diving protection. Ultra-breathable mesh panels for maximum ventilation.",
     },
     pt: {
-      performanceStore: "Loja de Performance", searchPlaceholder: "Pesquisar…", cart: "Carrinho",
+      performanceStore: "Loja de Performance", searchPlaceholder: "Pesquisarâ€¦", cart: "Carrinho",
       catAll: "Todos", catBoots: "Chuteiras", catKits: "Equipamentos", catBalls: "Bolas",
-      catGoalkeeper: "Guarda-Redes", catTraining: "Treino", catAccessories: "Acessórios",
+      catGoalkeeper: "Guarda-Redes", catTraining: "Treino", catAccessories: "AcessÃ³rios",
       heroTitle1: "JOGA NO TEU", heroTitle2: "MELHOR.",
       shopBoots: "Ver Chuteiras", shopKits: "Ver Equipamentos", onBoots: "nas chuteiras",
-      products: "produtos", featured: "Destaques", priceLow: "Preço: Mais Baixo", priceHigh: "Preço: Mais Alto",
-      noProducts: "Nenhum produto encontrado para", backToShop: "Voltar à Loja", reviews: "avaliações",
+      products: "produtos", featured: "Destaques", priceLow: "PreÃ§o: Mais Baixo", priceHigh: "PreÃ§o: Mais Alto",
+      noProducts: "Nenhum produto encontrado para", backToShop: "Voltar Ã  Loja", reviews: "avaliaÃ§Ãµes",
       selectSize: "Selecionar Tamanho", pleaseSelectSize: "Por favor seleciona um tamanho",
       addToCart: "Adicionar ao Carrinho", yourCart: "O Teu Carrinho", continueShopping: "Continuar a Comprar",
-      cartEmpty: "O teu carrinho está vazio", cartEmptySub: "Adiciona equipamento para começar",
-      browseProducts: "Ver Produtos", subtotal: "Subtotal", savings: "Poupança",
-      shipping: "Envio", free: "Grátis", addMore: "Adiciona", moreForFree: "mais para envio grátis!",
+      cartEmpty: "O teu carrinho estÃ¡ vazio", cartEmptySub: "Adiciona equipamento para comeÃ§ar",
+      browseProducts: "Ver Produtos", subtotal: "Subtotal", savings: "PoupanÃ§a",
+      shipping: "Envio", free: "GrÃ¡tis", addMore: "Adiciona", moreForFree: "mais para envio grÃ¡tis!",
       total: "Total", checkout: "Finalizar",
       shippingPayment: "Envio & Pagamento", fullName: "Nome Completo", email: "Email",
-      address: "Morada de Envio", card: "Número de Cartão", placeOrder: "Fazer Encomenda",
+      address: "Morada de Envio", card: "NÃºmero de CartÃ£o", placeOrder: "Fazer Encomenda",
       order: "Encomenda", items: "artigos", orderConfirmed: "Encomenda Confirmada",
-      thankYou: "Obrigado,", confirmation: "A tua encomenda foi confirmada. Foi enviada confirmação para",
-      yourEmail: "o teu email", estDelivery: "Entrega estimada:", deliveryDays: "3–5 dias úteis",
-      backToStore: "Voltar à Loja", size: "Tamanho", each: "cada",
-      errName: "Obrigatório", errEmail: "Email inválido", errAddress: "Obrigatório", errCard: "Número de cartão inválido",
+      thankYou: "Obrigado,", confirmation: "A tua encomenda foi confirmada. Foi enviada confirmaÃ§Ã£o para",
+      yourEmail: "o teu email", estDelivery: "Entrega estimada:", deliveryDays: "3â€“5 dias Ãºteis",
+      backToStore: "Voltar Ã  Loja", size: "Tamanho", each: "cada",
+      errName: "ObrigatÃ³rio", errEmail: "Email invÃ¡lido", errAddress: "ObrigatÃ³rio", errCard: "NÃºmero de cartÃ£o invÃ¡lido",
       orderSummary: "Resumo da Encomenda", backToCart: "Voltar ao Carrinho",
       prod1_d: "Chuteiras de elite para controlo total. Design sem atacadores com parte superior Primeknit para um ajuste perfeito e primeiro toque explosivo.",
-      prod2_d: "Concebidas para velocidade pura. A parte superior ultra-fina Flyknit oferece uma sensação descalço enquanto a sola de fibra de carbono maximiza o retorno de energia.",
-      prod3_d: "A camisola oficial de Portugal para o Euro 2024. Tecnologia Dri-FIT ADV com absorção de suor mantém-te fresco durante os momentos mais intensos.",
-      prod4_d: "A bola de jogo oficial da UEFA Champions League. Painéis termicamente colados e bexiga de butilo para voo e toque consistentes.",
-      prod5_d: "Luvas de guarda-redes profissionais com palma de látex NC Excellent 3mm. Aderência excecional em todas as condições climatéricas.",
-      prod6_d: "O equipamento alternativo da França 2024 com um deslumbrante degradê azul-marinho. Tecnologia oficial Dri-FIT ADV para desempenho máximo.",
-      prod7_d: "Bola de treino durável com 32 painéis e câmara de ar de butilo para ressalto consistente e retenção de forma após milhares de remates.",
+      prod2_d: "Concebidas para velocidade pura. A parte superior ultra-fina Flyknit oferece uma sensaÃ§Ã£o descalÃ§o enquanto a sola de fibra de carbono maximiza o retorno de energia.",
+      prod3_d: "A camisola oficial de Portugal para o Euro 2024. Tecnologia Dri-FIT ADV com absorÃ§Ã£o de suor mantÃ©m-te fresco durante os momentos mais intensos.",
+      prod4_d: "A bola de jogo oficial da UEFA Champions League. PainÃ©is termicamente colados e bexiga de butilo para voo e toque consistentes.",
+      prod5_d: "Luvas de guarda-redes profissionais com palma de lÃ¡tex NC Excellent 3mm. AderÃªncia excecional em todas as condiÃ§Ãµes climatÃ©ricas.",
+      prod6_d: "O equipamento alternativo da FranÃ§a 2024 com um deslumbrante degradÃª azul-marinho. Tecnologia oficial Dri-FIT ADV para desempenho mÃ¡ximo.",
+      prod7_d: "Bola de treino durÃ¡vel com 32 painÃ©is e cÃ¢mara de ar de butilo para ressalto consistente e retenÃ§Ã£o de forma apÃ³s milhares de remates.",
       prod8_d: "A bota mais precisa da Nike. Zona de toque texturizada e geometria de sola dividida para movimentos multidirecionais explosivos.",
-      prod9_d: "Kit completo de compressão com calções e camisola com tecnologia Dri-FIT. Concebido para suporte muscular e recuperação durante o treino.",
-      prod10_d: "Conjunto de 50 cones de treino de alta visibilidade. Leves, empilháveis e perfeitos para drills de agilidade e marcação de campo.",
-      prod11_d: "Caneleiras leves de espuma EVA com forma anatómica. Inclui tiras de proteção do tornozelo para um ajuste seguro e confortável.",
-      prod12_d: "Camisola profissional de guarda-redes com cotoveleiras acolchoadas para proteção nas mergulhadas. Painéis de malha ultra-respirável para ventilação máxima.",
+      prod9_d: "Kit completo de compressÃ£o com calÃ§Ãµes e camisola com tecnologia Dri-FIT. Concebido para suporte muscular e recuperaÃ§Ã£o durante o treino.",
+      prod10_d: "Conjunto de 50 cones de treino de alta visibilidade. Leves, empilhÃ¡veis e perfeitos para drills de agilidade e marcaÃ§Ã£o de campo.",
+      prod11_d: "Caneleiras leves de espuma EVA com forma anatÃ³mica. Inclui tiras de proteÃ§Ã£o do tornozelo para um ajuste seguro e confortÃ¡vel.",
+      prod12_d: "Camisola profissional de guarda-redes com cotoveleiras acolchoadas para proteÃ§Ã£o nas mergulhadas. PainÃ©is de malha ultra-respirÃ¡vel para ventilaÃ§Ã£o mÃ¡xima.",
     },
   }[lang] ?? {
-    performanceStore: "Performance Store", searchPlaceholder: "Search…", cart: "Cart",
+    performanceStore: "Performance Store", searchPlaceholder: "Searchâ€¦", cart: "Cart",
     catAll: "All", catBoots: "Boots", catKits: "Kits", catBalls: "Balls",
     catGoalkeeper: "Goalkeeper", catTraining: "Training", catAccessories: "Accessories",
     heroTitle1: "PLAY AT YOUR", heroTitle2: "PEAK.",
     shopBoots: "Shop Boots", shopKits: "Shop Kits", onBoots: "on boots",
-    products: "products", featured: "Featured", priceLow: "Price: Low → High", priceHigh: "Price: High → Low",
+    products: "products", featured: "Featured", priceLow: "Price: Low â†’ High", priceHigh: "Price: High â†’ Low",
     noProducts: "No products found for", backToShop: "Back to Shop", reviews: "reviews",
     selectSize: "Select Size", pleaseSelectSize: "Please select a size",
     addToCart: "Add to Cart", yourCart: "Your Cart", continueShopping: "Continue Shopping",
@@ -126,7 +126,7 @@ export function FootballStoreDemo() {
     address: "Shipping Address", card: "Card Number", placeOrder: "Place Order",
     order: "Order", items: "items", orderConfirmed: "Order Confirmed",
     thankYou: "Thank you,", confirmation: "Your order has been confirmed. A confirmation has been sent to",
-    yourEmail: "your email", estDelivery: "Estimated delivery:", deliveryDays: "3–5 business days",
+    yourEmail: "your email", estDelivery: "Estimated delivery:", deliveryDays: "3â€“5 business days",
     backToStore: "Back to Store", size: "Size", each: "each",
     errName: "Required", errEmail: "Invalid email", errAddress: "Required", errCard: "Enter a valid card number",
     orderSummary: "Order Summary", backToCart: "Back to Cart",
@@ -159,29 +159,29 @@ export function FootballStoreDemo() {
 
   const products: Product[] = [
     { id:1, name:"Predator Elite FG", price:250, originalPrice:320, brand:"Adidas", category:"Boots",
-      badge:"Sale", rating:4.8, reviews:312, sizes:["39","40","41","42","43","44","45"], description: t.prod1_d, image:"/Pedradator.png" },
+      badge:"Sale", rating:4.8, reviews:312, sizes:["39","40","41","42","43","44","45"], description: t.prod1_d, image:"/Pedradator.webp" },
     { id:2, name:"Mercurial Vapor 16 Elite", price:275, brand:"Nike", category:"Boots",
-      badge:"New", rating:4.9, reviews:198, sizes:["38","39","40","41","42","43","44"], description: t.prod2_d, image:"/Mercurial.png" },
+      badge:"New", rating:4.9, reviews:198, sizes:["38","39","40","41","42","43","44"], description: t.prod2_d, image:"/Mercurial.webp" },
     { id:3, name:"Portugal 24 Home Kit", price:140, brand:"Nike", category:"Kits",
-      badge:"Hot", rating:4.7, reviews:540, sizes:["XS","S","M","L","XL","XXL"], description: t.prod3_d, image:"/Portugalkit.png" },
+      badge:"Hot", rating:4.7, reviews:540, sizes:["XS","S","M","L","XL","XXL"], description: t.prod3_d, image:"/Portugalkit.webp" },
     { id:4, name:"UCL Pro Ball", price:165, brand:"Adidas", category:"Balls",
-      rating:4.6, reviews:87, sizes:["Size 4","Size 5"], description: t.prod4_d, image:"/UCLBola.png" },
+      rating:4.6, reviews:87, sizes:["Size 4","Size 5"], description: t.prod4_d, image:"/UCLBola.webp" },
     { id:5, name:"Phantom GK Elite", price:95, brand:"Reusch", category:"Goalkeeper",
-      rating:4.5, reviews:63, sizes:["7","8","9","10","11"], description: t.prod5_d, image:"/luvas.png" },
+      rating:4.5, reviews:63, sizes:["7","8","9","10","11"], description: t.prod5_d, image:"/luvas.webp" },
     { id:6, name:"France Away Kit", price:130, originalPrice:150, brand:"Nike", category:"Kits",
-      badge:"Sale", rating:4.4, reviews:221, sizes:["XS","S","M","L","XL","XXL"], description: t.prod6_d, image:"/Francefora.png" },
+      badge:"Sale", rating:4.4, reviews:221, sizes:["XS","S","M","L","XL","XXL"], description: t.prod6_d, image:"/Francefora.webp" },
     { id:7, name:"Pro Training Ball", price:45, brand:"Adidas", category:"Balls",
-      rating:4.3, reviews:145, sizes:["Size 4","Size 5"], description: t.prod7_d, image:"/bolatreino.png" },
+      rating:4.3, reviews:145, sizes:["Size 4","Size 5"], description: t.prod7_d, image:"/bolatreino.webp" },
     { id:8, name:"Phantom Luna Elite FG", price:230, brand:"Nike", category:"Boots",
-      badge:"New", rating:4.8, reviews:76, sizes:["36","37","38","39","40","41","42"], description: t.prod8_d, image:"/luna.png" },
+      badge:"New", rating:4.8, reviews:76, sizes:["36","37","38","39","40","41","42"], description: t.prod8_d, image:"/luna.webp" },
     { id:9, name:"Training Compression Set", price:75, brand:"Nike", category:"Training",
-      rating:4.5, reviews:189, sizes:["S","M","L","XL"], description: t.prod9_d, image:"/kittreino.png" },
+      rating:4.5, reviews:189, sizes:["S","M","L","XL"], description: t.prod9_d, image:"/kittreino.webp" },
     { id:10, name:"Speed Training Cones Set", price:25, brand:"Generic", category:"Training",
-      rating:4.2, reviews:302, sizes:["One Size"], description: t.prod10_d, image:"/cones.png" },
+      rating:4.2, reviews:302, sizes:["One Size"], description: t.prod10_d, image:"/cones.webp" },
     { id:11, name:"Elite Shin Guards", price:55, brand:"Adidas", category:"Accessories",
-      rating:4.6, reviews:93, sizes:["S","M","L","XL"], description: t.prod11_d, image:"/caneleira.png" },
+      rating:4.6, reviews:93, sizes:["S","M","L","XL"], description: t.prod11_d, image:"/caneleira.webp" },
     { id:12, name:"Goalkeeper Jersey Pro", price:85, brand:"Reusch", category:"Goalkeeper",
-      rating:4.3, reviews:41, sizes:["S","M","L","XL","XXL"], description: t.prod12_d, image:"/gredes.png" },
+      rating:4.3, reviews:41, sizes:["S","M","L","XL","XXL"], description: t.prod12_d, image:"/gredes.webp" },
   ];
 
   const categories = ['All','Boots','Kits','Balls','Goalkeeper','Training','Accessories'];
@@ -232,7 +232,7 @@ export function FootballStoreDemo() {
   return (
     <div className="h-full flex flex-col bg-[#f8f9fb] text-[#111] relative font-sans">
 
-      {/* ── NAVBAR ── */}
+      {/* â”€â”€ NAVBAR â”€â”€ */}
       <nav className="bg-white border-b border-zinc-200 px-4 md:px-8 py-3 flex items-center gap-4 z-40 shrink-0">
         <div onClick={()=>{setView('shop');setSearch('');}} className="flex items-center gap-2.5 cursor-pointer mr-2 shrink-0">
           <div className="bg-black p-1.5 rounded-lg"><Trophy size={18} className="text-white"/></div>
@@ -274,7 +274,7 @@ export function FootballStoreDemo() {
         </button>
       </nav>
 
-      {/* ── MAIN CONTENT ── */}
+      {/* â”€â”€ MAIN CONTENT â”€â”€ */}
       <div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
         <AnimatePresence mode="wait">
 
@@ -283,7 +283,7 @@ export function FootballStoreDemo() {
             <motion.div key="shop" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}>
 
               <div className="relative h-[200px] bg-black overflow-hidden">
-                <img src="/lojafundo.png" className="absolute inset-0 w-full h-full object-cover opacity-50"/>
+                <img src="/lojafundo.webp" className="absolute inset-0 w-full h-full object-cover opacity-50"/>
                 <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"/>
                 <div className="relative z-10 h-full flex flex-col justify-center px-8 md:px-14 text-white">
                   <h2 className="text-1xl md:text-2xl font-black leading-tight mb-5">
@@ -355,7 +355,7 @@ export function FootballStoreDemo() {
                       )}
                     </div>
                     <div className="p-4">
-                      <p className="text-[9px] font-black uppercase tracking-widest text-[#0066ff] mb-2">{item.brand} · {item.category}</p>
+                      <p className="text-[9px] font-black uppercase tracking-widest text-[#0066ff] mb-2">{item.brand} Â· {item.category}</p>
                       <h4 className="font-black text-sm leading-snug mb-3 min-h-[36px]">{item.name}</h4>
                       <div className="flex items-center gap-1.5 mb-3">
                         <Stars rating={item.rating}/>
@@ -363,8 +363,8 @@ export function FootballStoreDemo() {
                       </div>
                       <div className="flex items-center justify-between">
                         <div>
-                          <span className="text-lg font-black">€{item.price}</span>
-                          {item.originalPrice && <span className="text-xs text-zinc-400 line-through ml-1">€{item.originalPrice}</span>}
+                          <span className="text-lg font-black">â‚¬{item.price}</span>
+                          {item.originalPrice && <span className="text-xs text-zinc-400 line-through ml-1">â‚¬{item.originalPrice}</span>}
                         </div>
                         <button onClick={e=>{e.stopPropagation();if(item.sizes.length===1){addToCart(item,item.sizes[0]);}else{setSelectedProduct(item);setSelectedSize('');setSizeError(false);setView('product');}}}
                           className="w-8 h-8 bg-black hover:bg-[#0066ff] text-white rounded-xl flex items-center justify-center transition-all">
@@ -394,17 +394,17 @@ export function FootballStoreDemo() {
                       {selectedProduct.badge}
                     </span>
                   )}
-                  <p className="text-[10px] font-black uppercase tracking-widest text-[#0066ff] mb-2">{selectedProduct.brand} · {selectedProduct.category}</p>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-[#0066ff] mb-2">{selectedProduct.brand} Â· {selectedProduct.category}</p>
                   <h2 className="text-3xl font-black mb-3">{selectedProduct.name}</h2>
                   <div className="flex items-center gap-2 mb-4">
                     <Stars rating={selectedProduct.rating}/>
-                    <span className="text-xs text-zinc-500">{selectedProduct.rating} · {selectedProduct.reviews} {t.reviews}</span>
+                    <span className="text-xs text-zinc-500">{selectedProduct.rating} Â· {selectedProduct.reviews} {t.reviews}</span>
                   </div>
                   <p className="text-zinc-500 text-sm leading-relaxed mb-6">{selectedProduct.description}</p>
                   <div className="flex items-center gap-3 mb-6">
-                    <span className="text-3xl font-black">€{selectedProduct.price}</span>
+                    <span className="text-3xl font-black">â‚¬{selectedProduct.price}</span>
                     {selectedProduct.originalPrice && <>
-                      <span className="text-lg text-zinc-400 line-through">€{selectedProduct.originalPrice}</span>
+                      <span className="text-lg text-zinc-400 line-through">â‚¬{selectedProduct.originalPrice}</span>
                       <span className="bg-red-100 text-red-600 text-xs font-black px-2 py-0.5 rounded-full">-{Math.round((1-selectedProduct.price/selectedProduct.originalPrice)*100)}%</span>
                     </>}
                   </div>
@@ -478,8 +478,8 @@ export function FootballStoreDemo() {
                           </div>
                         </div>
                         <div className="text-right shrink-0">
-                          <p className="font-black text-lg">€{item.price*item.quantity}</p>
-                          {item.quantity>1 && <p className="text-xs text-zinc-400">€{item.price} {t.each}</p>}
+                          <p className="font-black text-lg">â‚¬{item.price*item.quantity}</p>
+                          {item.quantity>1 && <p className="text-xs text-zinc-400">â‚¬{item.price} {t.each}</p>}
                         </div>
                       </div>
                     ))}
@@ -487,14 +487,14 @@ export function FootballStoreDemo() {
                   <div className="bg-white rounded-3xl border border-zinc-200 p-6 h-fit sticky top-4">
                     <h3 className="font-black text-xl mb-6">{t.orderSummary}</h3>
                     <div className="space-y-3 mb-4">
-                      <div className="flex justify-between text-sm"><span className="text-zinc-500">{t.subtotal}</span><span className="font-bold">€{total}</span></div>
-                      {savings>0 && <div className="flex justify-between text-sm"><span className="text-zinc-500">{t.savings}</span><span className="font-bold text-green-600">-€{savings}</span></div>}
-                      <div className="flex justify-between text-sm"><span className="text-zinc-500">{t.shipping}</span><span className="font-bold text-green-600">{total>=100?t.free:'€5.99'}</span></div>
+                      <div className="flex justify-between text-sm"><span className="text-zinc-500">{t.subtotal}</span><span className="font-bold">â‚¬{total}</span></div>
+                      {savings>0 && <div className="flex justify-between text-sm"><span className="text-zinc-500">{t.savings}</span><span className="font-bold text-green-600">-â‚¬{savings}</span></div>}
+                      <div className="flex justify-between text-sm"><span className="text-zinc-500">{t.shipping}</span><span className="font-bold text-green-600">{total>=100?t.free:'â‚¬5.99'}</span></div>
                     </div>
-                    {total<100 && <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 mb-4 text-xs text-blue-700 font-bold">{t.addMore} €{(100-total).toFixed(0)} {t.moreForFree}</div>}
+                    {total<100 && <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 mb-4 text-xs text-blue-700 font-bold">{t.addMore} â‚¬{(100-total).toFixed(0)} {t.moreForFree}</div>}
                     <div className="border-t pt-4 flex justify-between items-center mb-6">
                       <span className="font-black text-lg">{t.total}</span>
-                      <span className="text-2xl font-black">€{total<100?(total+5.99).toFixed(2):total}</span>
+                      <span className="text-2xl font-black">â‚¬{total<100?(total+5.99).toFixed(2):total}</span>
                     </div>
                     <button onClick={()=>setView('checkout')} className="w-full py-4 bg-black hover:bg-[#0066ff] text-white font-black uppercase tracking-widest text-xs rounded-2xl transition-all">
                       {t.checkout}
@@ -545,7 +545,7 @@ export function FootballStoreDemo() {
                       setCheckoutErrors(errs);
                       if(Object.keys(errs).length===0) setView('success');
                     }} className="w-full py-4 bg-black hover:bg-[#0066ff] text-white font-black uppercase tracking-widest text-xs rounded-2xl transition-all mt-4">
-                      {t.placeOrder} · €{total<100?(total+5.99).toFixed(2):total}
+                      {t.placeOrder} Â· â‚¬{total<100?(total+5.99).toFixed(2):total}
                     </button>
                   </div>
                 </div>
@@ -557,15 +557,15 @@ export function FootballStoreDemo() {
                         <img src={item.image} className="w-12 h-12 rounded-lg object-cover shrink-0"/>
                         <div className="flex-1 min-w-0">
                           <p className="text-xs font-bold truncate">{item.name}</p>
-                          <p className="text-[10px] text-zinc-400">×{item.quantity} · {item.selectedSize}</p>
+                          <p className="text-[10px] text-zinc-400">Ã—{item.quantity} Â· {item.selectedSize}</p>
                         </div>
-                        <p className="text-sm font-black shrink-0">€{item.price*item.quantity}</p>
+                        <p className="text-sm font-black shrink-0">â‚¬{item.price*item.quantity}</p>
                       </div>
                     ))}
                   </div>
                   <div className="border-t mt-4 pt-4 flex justify-between font-black">
                     <span>{t.total}</span>
-                    <span>€{total<100?(total+5.99).toFixed(2):total}</span>
+                    <span>â‚¬{total<100?(total+5.99).toFixed(2):total}</span>
                   </div>
                 </div>
               </div>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -120,7 +120,7 @@ function BarberBookingForm({ services, tBarber, setView, setUser }: {
             >
               <option value="" className="bg-[#111]">{tBarber.selectService}</option>
               {services.map((s) => (
-                <option key={s.id} value={s.name} className="bg-[#111]">{s.name} — {s.price}</option>
+                <option key={s.id} value={s.name} className="bg-[#111]">{s.name} â€” {s.price}</option>
               ))}
             </select>
             {bErrors.service && bTouched.service && <p className="text-red-400 text-[9px] mt-1">{bErrors.service}</p>}
@@ -179,47 +179,47 @@ export function BarberDemo() {
       welcomeMsg: "Welcome to the highest international grooming standard.",
       backHome: "Back to Home",
       barberHouse: "Barber House",
-      role1: "Head Barber • Dubai", role2: "Master Cut • Porto", role3: "Razor Specialist • London",
+      role1: "Head Barber â€¢ Dubai", role2: "Master Cut â€¢ Porto", role3: "Razor Specialist â€¢ London",
       tagBestseller: "Bestseller", tagPremium: "Premium", tagElite: "Elite", tagWellness: "Wellness",
       testimonial1: "The best barbershop experience I've ever had. Truly international level.",
       testimonial2: "From the moment you walk in, you know this is different class. World-class precision.",
-      testimonial3: "I've been to barbers in Mayfair, Soho, NYC — Helarys beats them all.",
+      testimonial3: "I've been to barbers in Mayfair, Soho, NYC â€” Helarys beats them all.",
       luxuryGroomingHouse: "Luxury Grooming House",
-      copyright: "© 2026 Helarys Group",
+      copyright: "Â© 2026 Helarys Group",
       heroLine1: "THE CRAFT", heroLine2: "OF MEN.",
-      top10: "Top 10 Barbers", gqBadge: "GQ Magazine · 2025",
+      top10: "Top 10 Barbers", gqBadge: "GQ Magazine Â· 2025",
       teamHeading: "Master Barbers",
     },
     pt: {
-      services: "Serviços", team: "Equipa", book: "Reservar",
+      services: "ServiÃ§os", team: "Equipa", book: "Reservar",
       fullName: "Nome Completo", phone: "Telefone", date: "Data",
-      service: "Serviço", schedule: "Horário", confirm: "Confirmar Reserva",
-      selectService: "Selecionar serviço", namePlaceholder: "O teu nome",
-      errName: "Nome completo obrigatório", errPhone: "Telefone obrigatório",
-      errDate: "Data obrigatória", errService: "Seleciona um serviço",
-      errTime: "Seleciona um horário",
-      back: "Voltar", bookSession: "Marcar Sessão",
-      bookNow: "Marcar Sessão", viewServices: "Ver Serviços", recognized: "Reconhecido",
-      yearsExc: "Anos de Excelência", intlCities: "Cidades Internacionais",
+      service: "ServiÃ§o", schedule: "HorÃ¡rio", confirm: "Confirmar Reserva",
+      selectService: "Selecionar serviÃ§o", namePlaceholder: "O teu nome",
+      errName: "Nome completo obrigatÃ³rio", errPhone: "Telefone obrigatÃ³rio",
+      errDate: "Data obrigatÃ³ria", errService: "Seleciona um serviÃ§o",
+      errTime: "Seleciona um horÃ¡rio",
+      back: "Voltar", bookSession: "Marcar SessÃ£o",
+      bookNow: "Marcar SessÃ£o", viewServices: "Ver ServiÃ§os", recognized: "Reconhecido",
+      yearsExc: "Anos de ExcelÃªncia", intlCities: "Cidades Internacionais",
       happyClients: "Clientes Satisfeitos", masterBarbers: "Master Barbers",
-      ourTeam: "A Nossa Equipa", experience: "experiência",
+      ourTeam: "A Nossa Equipa", experience: "experiÃªncia",
       testimonials: "Testemunhos", clientsSay: "O que dizem os clientes",
-      premiumServices: "Serviços Premium", theExperience: "A Experiência",
-      bookThisService: "Reservar Este Serviço",
-      bookingConfirmed: "Reserva Confirmada", seeYou: "ATÉ JÁ",
-      sessionBooked: "A tua sessão premium está marcada",
-      welcomeMsg: "Bem-vindo ao padrão mais alto da barbearia internacional.",
-      backHome: "Voltar ao Início",
+      premiumServices: "ServiÃ§os Premium", theExperience: "A ExperiÃªncia",
+      bookThisService: "Reservar Este ServiÃ§o",
+      bookingConfirmed: "Reserva Confirmada", seeYou: "ATÃ‰ JÃ",
+      sessionBooked: "A tua sessÃ£o premium estÃ¡ marcada",
+      welcomeMsg: "Bem-vindo ao padrÃ£o mais alto da barbearia internacional.",
+      backHome: "Voltar ao InÃ­cio",
       barberHouse: "Barber House",
-      role1: "Chefe de Barbeiros • Dubai", role2: "Master Cut • Porto", role3: "Especialista em Navalha • Londres",
+      role1: "Chefe de Barbeiros â€¢ Dubai", role2: "Master Cut â€¢ Porto", role3: "Especialista em Navalha â€¢ Londres",
       tagBestseller: "Mais Vendido", tagPremium: "Premium", tagElite: "Elite", tagWellness: "Bem-Estar",
-      testimonial1: "A melhor experiência de barbearia que já tive. Nível absolutamente internacional.",
-      testimonial2: "Desde o momento em que entras, sabes que isto é outra classe. Precisão de nível mundial.",
-      testimonial3: "Já fui a barbeiros em Mayfair, Soho, Nova York — Helarys supera-os todos.",
+      testimonial1: "A melhor experiÃªncia de barbearia que jÃ¡ tive. NÃ­vel absolutamente internacional.",
+      testimonial2: "Desde o momento em que entras, sabes que isto Ã© outra classe. PrecisÃ£o de nÃ­vel mundial.",
+      testimonial3: "JÃ¡ fui a barbeiros em Mayfair, Soho, Nova York â€” Helarys supera-os todos.",
       luxuryGroomingHouse: "Casa de Grooming de Luxo",
-      copyright: "© 2026 Helarys Group",
-      heroLine1: "O OFÍCIO", heroLine2: "DOS HOMENS.",
-      top10: "Top 10 Barbeiros", gqBadge: "GQ Magazine · 2025",
+      copyright: "Â© 2026 Helarys Group",
+      heroLine1: "O OFÃCIO", heroLine2: "DOS HOMENS.",
+      top10: "Top 10 Barbeiros", gqBadge: "GQ Magazine Â· 2025",
       teamHeading: "Master Barbeiros",
     },
   }[lang];
@@ -242,28 +242,28 @@ export function BarberDemo() {
 
   const services: BarberService[] = [
     {
-      id: 1, name: "Signature Cut", time: "45 min", price: "€45", tag: "Bestseller",
+      id: 1, name: "Signature Cut", time: "45 min", price: "â‚¬45", tag: "Bestseller",
       desc: lang === "en"
         ? "Precision cut by master barbers trained in London, Milan and New York. Finished with Baxter of California products."
-        : "Corte de precisão executado por master barbers treinados em Londres, Milano e Nova York. Acabamento com produtos Baxter of California.",
+        : "Corte de precisÃ£o executado por master barbers treinados em Londres, Milano e Nova York. Acabamento com produtos Baxter of California.",
     },
     {
-      id: 2, name: "Royal Beard Ritual", time: "35 min", price: "€35", tag: "Premium",
+      id: 2, name: "Royal Beard Ritual", time: "35 min", price: "â‚¬35", tag: "Premium",
       desc: lang === "en"
         ? "Complete beard ritual with traditional straight razor, hot eucalyptus towel, premium balms and high-detail contouring."
-        : "Ritual completo de barba com navalha tradicional, toalha quente de eucalipto, bálsamos premium e contorno de alto detalhe.",
+        : "Ritual completo de barba com navalha tradicional, toalha quente de eucalipto, bÃ¡lsamos premium e contorno de alto detalhe.",
     },
     {
-      id: 3, name: "Executive Package", time: "90 min", price: "€90", tag: "Elite",
+      id: 3, name: "Executive Package", time: "90 min", price: "â‚¬90", tag: "Elite",
       desc: lang === "en"
         ? "Full experience: cut, beard, men's facial treatment, scalp massage and styling with luxury products. The ultimate standard."
-        : "Experiência total: corte, barba, tratamento facial masculino, scalp massage e styling com produtos de luxo. O standard máximo.",
+        : "ExperiÃªncia total: corte, barba, tratamento facial masculino, scalp massage e styling com produtos de luxo. O standard mÃ¡ximo.",
     },
     {
-      id: 4, name: "Scalp Ritual", time: "30 min", price: "€55", tag: "Wellness",
+      id: 4, name: "Scalp Ritual", time: "30 min", price: "â‚¬55", tag: "Wellness",
       desc: lang === "en"
         ? "Deep scalp treatment with imported essential oils, relaxation massage and revitalising tonic."
-        : "Tratamento profundo do couro cabeludo com óleos essenciais importados, massagem de relaxamento e tónico revitalizante.",
+        : "Tratamento profundo do couro cabeludo com Ã³leos essenciais importados, massagem de relaxamento e tÃ³nico revitalizante.",
     },
   ];
 
@@ -275,9 +275,9 @@ export function BarberDemo() {
   };
 
   const barbers = [
-    { name: "Marcus Helarys", role: tBarber.role1, exp: "12y", img: "/barber1.png" },
-    { name: "André Sousa", role: tBarber.role2, exp: "8y", img: "/barber2.png" },
-    { name: "James Whitfield", role: tBarber.role3, exp: "15y", img: "/barber3.png" },
+    { name: "Marcus Helarys", role: tBarber.role1, exp: "12y", img: "/barber1.webp" },
+    { name: "AndrÃ© Sousa", role: tBarber.role2, exp: "8y", img: "/barber2.webp" },
+    { name: "James Whitfield", role: tBarber.role3, exp: "15y", img: "/barber3.webp" },
   ];
 
   const testimonials = [
@@ -309,7 +309,7 @@ export function BarberDemo() {
           <div>
             <div className="flex items-baseline gap-1">
               <span className="text-white font-black text-lg tracking-widest">HELARYS</span>
-              <span className="text-amber-500 text-xs font-black">®</span>
+              <span className="text-amber-500 text-xs font-black">Â®</span>
             </div>
             <span className="text-[8px] uppercase tracking-[0.45em] text-white/30 font-bold block -mt-0.5">
               {tBarber.barberHouse}
@@ -356,12 +356,12 @@ export function BarberDemo() {
       <div className="flex-1 overflow-y-auto relative z-10 scrollbar-hide">
         <AnimatePresence mode="wait">
 
-          {/* ── INTRO / HOME ── */}
+          {/* â”€â”€ INTRO / HOME â”€â”€ */}
           {view === 'intro' && (
             <motion.div key="intro" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="min-h-full">
 
               <section className="relative h-[82vh] flex items-end overflow-hidden">
-                <img src="/barber.png" className="absolute inset-0 w-full h-full object-cover opacity-50" alt="" />
+                <img src="/barber.webp" className="absolute inset-0 w-full h-full object-cover opacity-50" alt="" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/40 to-transparent" />
 
                 <div className="absolute top-8 right-8 border border-amber-500/40 bg-black/60 backdrop-blur-xl px-5 py-3 text-center hidden md:block">
@@ -374,7 +374,7 @@ export function BarberDemo() {
                   <motion.div initial={{ y: 40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.1, duration: 0.8 }}>
                     <div className="flex items-center gap-4 mb-6">
                       <div className="h-px w-12 bg-amber-500" />
-                      <span className="text-amber-400 text-[9px] uppercase tracking-[0.6em] font-black">Dubai · London · Porto</span>
+                      <span className="text-amber-400 text-[9px] uppercase tracking-[0.6em] font-black">Dubai Â· London Â· Porto</span>
                     </div>
                     <h2 className="text-4xl sm:text-6xl md:text-[7rem] font-black leading-[0.9] tracking-tight mb-8 max-w-3xl">
                       {tBarber.heroLine1}
@@ -475,7 +475,7 @@ export function BarberDemo() {
             </motion.div>
           )}
 
-          {/* ── SERVICES ── */}
+          {/* â”€â”€ SERVICES â”€â”€ */}
           {view === 'services' && (
             <motion.div key="services" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="p-8 md:p-16 max-w-7xl mx-auto">
               <div className="mb-16">
@@ -540,7 +540,7 @@ export function BarberDemo() {
             </motion.div>
           )}
 
-          {/* ── BOOK ── */}
+          {/* â”€â”€ BOOK â”€â”€ */}
           {view === 'book' && (
             <BarberBookingForm
               services={services}
@@ -550,7 +550,7 @@ export function BarberDemo() {
             />
           )}
 
-          {/* ── DONE ── */}
+          {/* â”€â”€ DONE â”€â”€ */}
           {view === 'done' && (
             <motion.div
               key="done"
@@ -583,7 +583,7 @@ export function BarberDemo() {
 
               <div className="flex items-center gap-3 mt-10 text-[9px] uppercase tracking-widest text-white/20 font-black">
                 <MapPin size={10} className="text-amber-500/60" />
-                <span>Dubai · London · Porto</span>
+                <span>Dubai Â· London Â· Porto</span>
               </div>
 
               <button
@@ -601,16 +601,16 @@ export function BarberDemo() {
       <footer className="relative z-20 border-t border-white/[0.05] bg-black/50 backdrop-blur-xl px-8 md:px-14 py-5 flex flex-col md:flex-row items-center justify-between gap-4 shrink-0">
         <div>
           <h3 className="font-black text-base tracking-widest flex items-baseline gap-0.5">
-            HELARYS<span className="text-amber-500 text-lg">®</span>
+            HELARYS<span className="text-amber-500 text-lg">Â®</span>
           </h3>
           <p className="text-white/20 text-[8px] uppercase tracking-[0.4em] mt-0.5">{tBarber.luxuryGroomingHouse}</p>
         </div>
 
         <div className="flex items-center gap-6 text-[8px] uppercase tracking-[0.35em] font-bold text-white/20">
           <span>Dubai</span>
-          <span className="text-amber-500/30">·</span>
+          <span className="text-amber-500/30">Â·</span>
           <span>London</span>
-          <span className="text-amber-500/30">·</span>
+          <span className="text-amber-500/30">Â·</span>
           <span>Porto</span>
         </div>
 
