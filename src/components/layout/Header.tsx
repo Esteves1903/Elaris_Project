@@ -29,29 +29,42 @@ type SessionState = {
   name: string | null;
 };
 
+function FlagImg({ code }: { code: "pt" | "gb" }) {
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={`https://flagcdn.com/w40/${code}.png`}
+      width={26}
+      height={18}
+      alt=""
+      className="rounded-sm"
+    />
+  );
+}
+
 function LangSwitch({ lang, setLang }: { lang: "en" | "pt"; setLang: (l: "en" | "pt") => void }) {
   const isEn = lang === "en";
   return (
     <button
       onClick={() => setLang(isEn ? "pt" : "en")}
       aria-label="Toggle language"
-      className="relative h-8 w-10 cursor-pointer select-none"
+      className="relative h-7 w-11 cursor-pointer select-none"
     >
       {/* Back flag (inactive) */}
       <motion.span
         animate={{ scale: 0.78, opacity: 0.45 }}
-        className="absolute right-0 top-0 text-2xl leading-none"
+        className="absolute right-0 top-0.5"
         style={{ zIndex: 1 }}
       >
-        {isEn ? "🇵🇹" : "🇬🇧"}
+        <FlagImg code={isEn ? "pt" : "gb"} />
       </motion.span>
       {/* Front flag (active) */}
       <motion.span
         animate={{ scale: 1, opacity: 1 }}
-        className="absolute left-0 top-0 text-2xl leading-none drop-shadow-sm"
+        className="absolute left-0 top-0.5 drop-shadow-sm"
         style={{ zIndex: 2 }}
       >
-        {isEn ? "🇬🇧" : "🇵🇹"}
+        <FlagImg code={isEn ? "gb" : "pt"} />
       </motion.span>
     </button>
   );
@@ -180,12 +193,6 @@ export function Header() {
                 <UserCircle className="h-4 w-4 text-cyan-400" />
               </Link>
             )}
-            <Link
-              href="/contact"
-              className="inline-flex whitespace-nowrap rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-zinc-200"
-            >
-              {t.requestQuote[lang]}
-            </Link>
             <LangSwitch lang={lang} setLang={setLang} />
           </div>
 
@@ -285,13 +292,6 @@ export function Header() {
                     {t.clientArea[lang]}
                   </Link>
                 )}
-                <Link
-                  href="/contact"
-                  onClick={() => setMobileOpen(false)}
-                  className="inline-flex justify-center rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-zinc-200"
-                >
-                  {t.requestQuote[lang]}
-                </Link>
                 <div className="flex justify-center">
                   <LangSwitch lang={lang} setLang={setLang} />
                 </div>
