@@ -171,10 +171,10 @@ export function Header() {
             ) : (
               <Link
                 href="/client-login"
-                className="inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-white/10 px-4 py-2.5 text-sm font-semibold text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]"
+                className="inline-flex items-center justify-center rounded-full border border-white/10 p-2.5 text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]"
+                aria-label={t.clientArea[lang]}
               >
                 <UserCircle className="h-4 w-4 text-cyan-400" />
-                {t.clientArea[lang]}
               </Link>
             )}
             <Link
