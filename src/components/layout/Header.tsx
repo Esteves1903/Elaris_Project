@@ -29,35 +29,26 @@ type SessionState = {
   name: string | null;
 };
 
+function FlagCircle({ code, active }: { code: "pt" | "gb"; active: boolean }) {
+  return (
+    <div className={`h-5 w-5 overflow-hidden rounded-full transition-all duration-200 ${active ? "ring-1 ring-cyan-400 ring-offset-1 ring-offset-[#0B0F19] opacity-100" : "opacity-40"}`}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={`/flags/${code}.png`} alt={code === "pt" ? "PT" : "EN"} className="h-full w-full object-cover" style={{ imageRendering: "auto" }} />
+    </div>
+  );
+}
+
 function LangSwitch({ lang, setLang }: { lang: "en" | "pt"; setLang: (l: "en" | "pt") => void }) {
   const isEn = lang === "en";
-  const activeCode = isEn ? "gb" : "pt";
-  const inactiveCode = isEn ? "pt" : "gb";
   return (
-    <motion.button
+    <button
       onClick={() => setLang(isEn ? "pt" : "en")}
       aria-label="Toggle language"
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      className="relative h-7 w-[2.75rem] cursor-pointer select-none"
+      className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1.5 transition hover:border-white/20 hover:bg-white/[0.06]"
     >
-      {/* Back flag (inactive) */}
-      <div
-        className="absolute right-0 top-0 h-7 w-7 overflow-hidden rounded-full border border-white/15 opacity-50"
-        style={{ zIndex: 1 }}
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={`/flags/${inactiveCode}.png`} alt="" className="h-full w-full object-cover scale-[1.3]" />
-      </div>
-      {/* Front flag (active) */}
-      <div
-        className="absolute left-0 top-0 h-7 w-7 overflow-hidden rounded-full border border-white/30 shadow-md"
-        style={{ zIndex: 2 }}
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={`/flags/${activeCode}.png`} alt="" className="h-full w-full object-cover scale-[1.3]" />
-      </div>
-    </motion.button>
+      <FlagCircle code="pt" active={!isEn} />
+      <FlagCircle code="gb" active={isEn} />
+    </button>
   );
 }
 
@@ -178,10 +169,10 @@ export function Header() {
             ) : (
               <Link
                 href="/client-login"
-                className="inline-flex items-center justify-center rounded-full border border-white/10 p-2.5 text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]"
-                aria-label={t.clientArea[lang]}
+                className="inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-white/10 px-4 py-2.5 text-sm font-medium text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]"
               >
                 <UserCircle className="h-4 w-4 text-cyan-400" />
+                {t.clientArea[lang]}
               </Link>
             )}
             <LangSwitch lang={lang} setLang={setLang} />
