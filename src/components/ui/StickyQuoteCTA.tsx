@@ -4,11 +4,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useLang } from "@/context/LanguageContext";
 
 const HIDDEN_PATHS = ["/contact", "/client-login", "/client-area", "/admin", "/forgot-password", "/reset-password"];
 
+const label = { en: "Get a free quote", pt: "Pedir orçamento grátis" };
+
 export function StickyQuoteCTA() {
   const pathname = usePathname();
+  const { lang } = useLang();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -38,7 +42,7 @@ export function StickyQuoteCTA() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-500 opacity-60" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-500" />
             </span>
-            Get a free quote
+            {label[lang]}
           </Link>
         </motion.div>
       )}

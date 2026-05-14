@@ -11,7 +11,9 @@
       "Bash(del \"c:\\\\ELARIS\\\\Elaris_Project\\\\src\\\\middleware.ts\")",
       "PowerShell(taskkill /PID 20392 /F 2>&1)",
       "Bash(dir \"c:\\\\ELARIS\\\\Elaris_Project\\\\src\")",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(dir /s /b src\\\\app\\\\*.tsx)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }
