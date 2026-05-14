@@ -2,7 +2,7 @@ export interface PortfolioProject {
   id: string;
   title: string;
   description: string;
-  category: 'cafe-restaurant' | 'barbershop' | 'sports-store';
+  category: 'restaurant' | 'barbershop' | 'sports-store';
   client: string;
   year: number;
   technologies: string[];
@@ -14,10 +14,10 @@ export interface PortfolioProject {
 export const portfolioProjects: PortfolioProject[] = [
   {
     id: '1',
-    title: 'Brewhaus Coffee & Restaurant',
-    description: 'Modern cafe and restaurant website with online ordering and table reservations',
-    category: 'cafe-restaurant',
-    client: 'Brewhaus Co.',
+    title: 'Restaurant',
+    description: 'Modern restaurant website with table reservations',
+    category: 'restaurant',
+    client: 'Helarys Restaurant',
     year: 2024,
     technologies: ['Next.js', 'React', 'Tailwind CSS', 'Stripe', 'TypeScript'],
     features: [
@@ -92,7 +92,7 @@ export const portfolioProjects: PortfolioProject[] = [
     id: '5',
     title: 'Urban Grill Restaurant',
     description: 'Fine dining restaurant website with wine pairing recommendations and chef profiles',
-    category: 'cafe-restaurant',
+    category: 'restaurant',
     client: 'Urban Grill',
     year: 2024,
     technologies: ['Next.js', 'React', 'CMS', 'Tailwind CSS', 'TypeScript'],
