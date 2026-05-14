@@ -105,7 +105,11 @@ export function Header() {
     <>
       <header className={`fixed left-0 top-0 z-50 w-full border-b backdrop-blur-xl transition-all duration-300 ${scrolled ? "border-white/10 bg-[#0B0F19]/95 shadow-lg shadow-black/20" : "border-transparent bg-[#0B0F19]/70"}`}>
         <div className="mx-auto grid h-20 max-w-6xl grid-cols-[1fr_auto_1fr] items-center gap-x-6 px-6">
-          <Link href="/" className="flex items-center justify-self-start">
+          <Link
+            href="/"
+            className="flex items-center justify-self-start"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          >
             <motion.div
               className="flex items-center gap-2.5 select-none"
               initial={{ filter: "drop-shadow(0 0 0px rgba(34,211,238,0))" }}
