@@ -29,7 +29,7 @@ export function Footer() {
         </div>
 
         <nav className="flex flex-col gap-3">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">
             {lang === "en" ? "Navigation" : "Navegação"}
           </p>
           {footerLinks.map((link) => (
@@ -44,7 +44,7 @@ export function Footer() {
         </nav>
 
         <div className="flex flex-col gap-4">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">
             {lang === "en" ? "Contact" : "Contacto"}
           </p>
           <a
@@ -58,7 +58,7 @@ export function Footer() {
       </div>
 
       <div className="border-t border-white/10 px-6 py-5">
-        <p className="text-center text-xs text-zinc-500">
+        <p className="text-center text-xs text-zinc-400">
           © {new Date().getFullYear()} Helarys.{" "}
           {lang === "en" ? "All rights reserved." : "Todos os direitos reservados."}
         </p>

@@ -28,8 +28,7 @@ export const portfolioProjects: PortfolioProject[] = [
       'Photo Gallery',
       'Review System',
     ],
-    // USAR O TEU FICHEIRO DE CAFÉ
-    images: ['/ElarisRest1.png'],
+    images: ['/ElarisRest1.webp'],
     liveUrl: 'https://example.com/brewhaus',
   },
   {
@@ -48,8 +47,7 @@ export const portfolioProjects: PortfolioProject[] = [
       'Member Discounts',
       'Order Tracking',
     ],
-    // AQUI: Coloca o nome do teu ficheiro de imagem de futebol que está na pasta public
-    images: ['/lojafundo.png'], 
+    images: ['/lojafundo.webp'],
     liveUrl: 'https://example.com/football-store',
   },
   {
@@ -68,8 +66,7 @@ export const portfolioProjects: PortfolioProject[] = [
       'Pricing System',
       'Customer Reviews',
     ],
-    // USAR O TEU FICHEIRO DE BARBEARIA (.avif)
-    images: ['/barber.png'], 
+    images: ['/barber.webp'],
     liveUrl: 'https://example.com/prime-cuts',
   },
   {
@@ -88,8 +85,7 @@ export const portfolioProjects: PortfolioProject[] = [
       'Analytics Dashboard',
       'Promotional Offers',
     ],
-    // USAR AS FOTOS DOS BARBEIROS QUE BAIXASTE
-    images: ['/Barbeiro1.jfif', '/barbeiro2.jfif'], 
+    images: ['/barber1.webp', '/barber2.webp'],
     liveUrl: 'https://example.com/stylemasters',
   },
   {
@@ -108,7 +104,7 @@ export const portfolioProjects: PortfolioProject[] = [
       'Reservation System',
       'Blog Section',
     ],
-    images: ['/fundocafe.jfif'],
+    images: ['/ElarisRest2.webp'],
     liveUrl: 'https://example.com/urban-grill',
   },
   {
@@ -127,7 +123,7 @@ export const portfolioProjects: PortfolioProject[] = [
       'Team Scheduling',
       'Push Notifications',
     ],
-    images: ['/fundobarber.avif', '/barbeiro3.jfif'],
+    images: ['/barber.webp', '/barber3.webp'],
     liveUrl: 'https://example.com/barber-elite',
   },
 

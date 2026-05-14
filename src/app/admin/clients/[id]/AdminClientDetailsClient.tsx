@@ -354,7 +354,7 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
                 { label: copy.labelPlan[lang], value: project?.plan ?? "—" },
               ].map(({ label, value }) => (
                 <div key={label}>
-                  <p className="mb-2 text-sm text-zinc-500">{label}</p>
+                  <p className="mb-2 text-sm text-zinc-400">{label}</p>
                   <p className="font-medium text-white">{value}</p>
                 </div>
               ))}
@@ -517,7 +517,7 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
           </AnimatePresence>
 
           {latestUpdates.length === 0 ? (
-            <p className="text-sm text-zinc-500">{copy.noUpdates[lang]}</p>
+            <p className="text-sm text-zinc-400">{copy.noUpdates[lang]}</p>
           ) : (
             <div className="grid gap-4">
               {latestUpdates.map((update) => (
@@ -525,7 +525,7 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
                   key={update.id}
                   className="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
                 >
-                  <p className="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-zinc-500">
+                  <p className="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-zinc-400">
                     {new Date(update.created_at).toLocaleDateString(lang === "pt" ? "pt-PT" : "en-GB", {
                       day: "2-digit",
                       month: "long",

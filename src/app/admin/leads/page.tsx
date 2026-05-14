@@ -141,7 +141,7 @@ export default function AdminLeadsPage() {
         {stats.map((stat, i) => (
           <SpotlightCard key={stat.label} delay={i * 0.05}
             className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 transition-colors hover:border-cyan-400/20">
-            <p className="mb-3 text-sm text-zinc-500">{stat.label}</p>
+            <p className="mb-3 text-sm text-zinc-400">{stat.label}</p>
             <p className="text-4xl font-bold text-white">{stat.value}</p>
           </SpotlightCard>
         ))}
@@ -155,7 +155,7 @@ export default function AdminLeadsPage() {
         </div>
 
         {leads.length === 0 ? (
-          <p className="text-sm text-zinc-500">{copy.noLeads[lang]}</p>
+          <p className="text-sm text-zinc-400">{copy.noLeads[lang]}</p>
         ) : (
           <div className="grid gap-4">
             {leads.map((lead, index) => {
@@ -175,7 +175,7 @@ export default function AdminLeadsPage() {
                           <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${colorClass}`}>
                             {lead.type}
                           </span>
-                          <span className="text-xs text-zinc-500">
+                          <span className="text-xs text-zinc-400">
                             {new Date(lead.created_at).toLocaleDateString(lang === "pt" ? "pt-PT" : "en-GB", {
                               day: "2-digit",
                               month: "long",
@@ -186,7 +186,7 @@ export default function AdminLeadsPage() {
                         <h3 className="mb-1 text-lg font-bold text-white">{lead.name}</h3>
                         <p className="text-sm text-zinc-400">{lead.email}</p>
                         {lead.business && (
-                          <p className="mt-1 text-sm text-zinc-500">{lead.business}</p>
+                          <p className="mt-1 text-sm text-zinc-400">{lead.business}</p>
                         )}
                       </div>
                       <span className="text-xs text-zinc-600 transition-transform sm:mt-1">

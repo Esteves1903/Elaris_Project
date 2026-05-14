@@ -145,7 +145,7 @@ export default function AdminPage() {
         {stats.map((stat, i) => (
           <SpotlightCard key={stat.label} delay={i * 0.05}
             className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 transition-colors hover:border-cyan-400/20">
-            <p className="mb-3 text-sm text-zinc-500">{stat.label}</p>
+            <p className="mb-3 text-sm text-zinc-400">{stat.label}</p>
             <p className="text-4xl font-bold text-white">{stat.value}</p>
           </SpotlightCard>
         ))}
@@ -165,7 +165,7 @@ export default function AdminPage() {
         </div>
 
         {clients.length === 0 ? (
-          <p className="text-sm text-zinc-500">{copy.noClients[lang]}</p>
+          <p className="text-sm text-zinc-400">{copy.noClients[lang]}</p>
         ) : (
           <div className="grid gap-4">
             {clients.map((client, index) => {
@@ -183,19 +183,19 @@ export default function AdminPage() {
                     </div>
                     <div className="grid gap-3 sm:grid-cols-2">
                       <div>
-                        <p className="mb-1 text-xs text-zinc-500">{copy.labelStatus[lang]}</p>
+                        <p className="mb-1 text-xs text-zinc-400">{copy.labelStatus[lang]}</p>
                         <p className="text-sm font-medium text-white">{project?.status ?? "—"}</p>
                       </div>
                       <div>
-                        <p className="mb-1 text-xs text-zinc-500">{copy.labelStage[lang]}</p>
+                        <p className="mb-1 text-xs text-zinc-400">{copy.labelStage[lang]}</p>
                         <p className="text-sm font-medium text-white">{project?.stage ?? "—"}</p>
                       </div>
                       <div>
-                        <p className="mb-1 text-xs text-zinc-500">{copy.labelNext[lang]}</p>
+                        <p className="mb-1 text-xs text-zinc-400">{copy.labelNext[lang]}</p>
                         <p className="text-sm font-medium text-white">{project?.next_step ?? "—"}</p>
                       </div>
                       <div>
-                        <p className="mb-1 text-xs text-zinc-500">{copy.labelLast[lang]}</p>
+                        <p className="mb-1 text-xs text-zinc-400">{copy.labelLast[lang]}</p>
                         <p className="text-sm font-medium text-white">{project?.last_update ?? "—"}</p>
                       </div>
                     </div>

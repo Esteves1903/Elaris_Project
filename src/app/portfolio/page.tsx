@@ -184,7 +184,7 @@ export default function PortfolioPage() {
           <>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSidebarData(null)} className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100]" />
             <motion.div initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} className="fixed right-0 top-0 h-full w-full max-w-md bg-[#0d1117] border-l border-white/10 z-[101] p-8 overflow-y-auto">
-              <button onClick={() => setSidebarData(null)} className="mb-8 p-2 hover:bg-white/10 rounded-full transition"><X size={24} /></button>
+              <button onClick={() => setSidebarData(null)} aria-label="Close project details" className="mb-8 p-2 hover:bg-white/10 rounded-full transition"><X size={24} /></button>
               <div className="space-y-8">
                 <div>
                   <h3 className="text-cyan-400 text-xs font-black uppercase tracking-widest mb-2 flex items-center gap-2"><Code2 size={14} /> {portfolioCopy.sidebarDevCase[lang]}</h3>

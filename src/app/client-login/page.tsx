@@ -162,7 +162,7 @@ export default function ClientLoginPage() {
                 <label htmlFor="password" className="text-sm font-medium text-zinc-300">
                   {copy.labelPassword[lang]}
                 </label>
-                <Link href="/forgot-password" className="text-xs text-zinc-500 transition hover:text-cyan-300">
+                <Link href="/forgot-password" className="text-xs text-zinc-400 transition hover:text-cyan-300">
                   {copy.forgotPassword[lang]}
                 </Link>
               </div>
@@ -180,7 +180,7 @@ export default function ClientLoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-zinc-500 transition hover:text-zinc-300"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-zinc-400 transition hover:text-zinc-300"
                   tabIndex={-1}
                   aria-label={showPassword ? "Hide password" : "Show password"}
                 >
@@ -239,7 +239,7 @@ export default function ClientLoginPage() {
           </form>
 
           <div className="mt-8 space-y-4 border-t border-white/10 pt-6">
-            <p className="text-xs leading-5 text-zinc-500">
+            <p className="text-xs leading-5 text-zinc-400">
               {copy.footer[lang]}
             </p>
           </div>

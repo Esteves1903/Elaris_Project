@@ -147,9 +147,10 @@ export function HeroSection() {
                   {/* Real screenshot */}
                   <div className="relative h-[300px] overflow-hidden">
                     <Image
-                      src="/ElarisRest1.png"
+                      src="/ElarisRest1.webp"
                       alt="Helarys portfolio — restaurant website demo"
                       fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
                       className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
                       priority
                     />
