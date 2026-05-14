@@ -5,6 +5,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/lib/supabase";
+import { Input } from "@/components/ui/Input";
 
 export default function ResetPasswordPage() {
   const router = useRouter();
@@ -21,9 +22,6 @@ export default function ResetPasswordPage() {
     });
     return () => subscription.unsubscribe();
   }, []);
-
-  const inputClass =
-    "w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none transition-all placeholder:text-zinc-600 focus:border-cyan-400/50 focus:bg-white/[0.05] focus:shadow-[0_0_0_3px_rgba(34,211,238,0.06)]";
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -89,7 +87,7 @@ export default function ResetPasswordPage() {
                   <label htmlFor="password" className="mb-2 block text-sm font-medium text-zinc-300">
                     New password
                   </label>
-                  <input
+                  <Input
                     id="password"
                     type="password"
                     required
@@ -97,7 +95,6 @@ export default function ResetPasswordPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
-                    className={inputClass}
                   />
                 </div>
 
@@ -105,14 +102,13 @@ export default function ResetPasswordPage() {
                   <label htmlFor="confirm" className="mb-2 block text-sm font-medium text-zinc-300">
                     Confirm password
                   </label>
-                  <input
+                  <Input
                     id="confirm"
                     type="password"
                     required
                     value={confirm}
                     onChange={(e) => setConfirm(e.target.value)}
                     placeholder="••••••••"
-                    className={inputClass}
                   />
                 </div>
 

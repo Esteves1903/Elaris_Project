@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import RevealCard from "@/components/ui/RevealCard";
 import { supabase } from "@/lib/supabase";
 import { useLang } from "@/context/LanguageContext";
+import { Input } from "@/components/ui/Input";
 
 type FormState = {
   name: string;
@@ -97,9 +98,6 @@ export default function ContactPage() {
     router.push("/thanks");
   }
 
-  const inputClass =
-    "w-full rounded-xl border border-white/10 bg-[#0B0F19] px-4 py-3 text-white outline-none transition-all duration-200 placeholder:text-zinc-500 focus:border-cyan-400 focus:shadow-[0_0_0_3px_rgba(34,211,238,0.08)]";
-
   return (
     <main className="min-h-screen bg-[#0B0F19] px-6 pb-24 pt-32 text-white">
       <section className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
@@ -148,7 +146,7 @@ export default function ContactPage() {
             <div className="grid gap-5 sm:grid-cols-2">
               <div>
                 <label htmlFor="contact-name" className="mb-2 block text-sm font-medium">{copy.labelName[lang]}</label>
-                <input
+                <Input
                   id="contact-name"
                   type="text"
                   name="name"
@@ -156,12 +154,12 @@ export default function ContactPage() {
                   onChange={handleChange}
                   required
                   placeholder={copy.placeholderName[lang]}
-                  className={inputClass}
+                  variant="contact"
                 />
               </div>
               <div>
                 <label htmlFor="contact-email" className="mb-2 block text-sm font-medium">{copy.labelEmail[lang]}</label>
-                <input
+                <Input
                   id="contact-email"
                   type="email"
                   name="email"
@@ -169,7 +167,7 @@ export default function ContactPage() {
                   onChange={handleChange}
                   required
                   placeholder="your@email.com"
-                  className={inputClass}
+                  variant="contact"
                 />
               </div>
             </div>
@@ -178,14 +176,14 @@ export default function ContactPage() {
               <label htmlFor="contact-business" className="mb-2 block text-sm font-medium">
                 {copy.labelBusiness[lang]}
               </label>
-              <input
+              <Input
                 id="contact-business"
                 type="text"
                 name="business"
                 value={form.business}
                 onChange={handleChange}
                 placeholder={copy.placeholderBusiness[lang]}
-                className={inputClass}
+                variant="contact"
               />
             </div>
 
@@ -198,7 +196,7 @@ export default function ContactPage() {
                 name="type"
                 value={form.type}
                 onChange={handleChange}
-                className={inputClass}
+                className="w-full rounded-xl border border-white/10 bg-[#0B0F19] px-4 py-3 text-white outline-none transition-all duration-200 placeholder:text-zinc-500 focus:border-cyan-400 focus:shadow-[0_0_0_3px_rgba(34,211,238,0.08)]"
               >
                 {copy.typeOptions[lang].map((opt) => (
                   <option key={opt}>{opt}</option>
@@ -218,7 +216,7 @@ export default function ContactPage() {
                 required
                 rows={6}
                 placeholder={copy.placeholderMessage[lang]}
-                className={`${inputClass} resize-none`}
+                className="w-full rounded-xl border border-white/10 bg-[#0B0F19] px-4 py-3 text-white outline-none transition-all duration-200 placeholder:text-zinc-500 focus:border-cyan-400 focus:shadow-[0_0_0_3px_rgba(34,211,238,0.08)] resize-none"
               />
             </div>
 

@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { getUser, getUserRole, signIn, updatePassword } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 import { useLang } from "@/context/LanguageContext";
+import { Input } from "@/components/ui/Input";
 
 type ClientProfile = { name: string; company: string; slug: string };
 
@@ -132,9 +133,6 @@ export default function ClientAccountPage() {
     );
   }
 
-  const inputClass =
-    "w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none transition-all placeholder:text-zinc-600 focus:border-cyan-400/50 focus:bg-white/[0.05] focus:shadow-[0_0_0_3px_rgba(34,211,238,0.06)]";
-
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#0B0F19] px-6 pb-24 pt-32 text-white">
       <div className="pointer-events-none absolute -right-60 top-20 h-[400px] w-[400px] rounded-full bg-cyan-500/[0.04] blur-[120px]" />
@@ -201,19 +199,19 @@ export default function ClientAccountPage() {
                 <label htmlFor="currentPassword" className="mb-2 block text-sm font-medium text-zinc-300">
                   {copy.labelCurrent[lang]}
                 </label>
-                <input id="currentPassword" type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} placeholder="••••••••" className={inputClass} />
+                <Input id="currentPassword" type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} placeholder="••••••••" />
               </div>
               <div>
                 <label htmlFor="newPassword" className="mb-2 block text-sm font-medium text-zinc-300">
                   {copy.labelNew[lang]}
                 </label>
-                <input id="newPassword" type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} placeholder={copy.placeholderNew[lang]} className={inputClass} />
+                <Input id="newPassword" type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} placeholder={copy.placeholderNew[lang]} />
               </div>
               <div>
                 <label htmlFor="confirmNewPassword" className="mb-2 block text-sm font-medium text-zinc-300">
                   {copy.labelConfirm[lang]}
                 </label>
-                <input id="confirmNewPassword" type="password" value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} placeholder={copy.placeholderConfirm[lang]} className={inputClass} />
+                <Input id="confirmNewPassword" type="password" value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} placeholder={copy.placeholderConfirm[lang]} />
               </div>
 
               <AnimatePresence>

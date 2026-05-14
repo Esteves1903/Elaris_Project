@@ -11,6 +11,7 @@ import {
   websiteStatusOptions,
 } from "@/lib/project-options";
 import { useLang } from "@/context/LanguageContext";
+import { Input } from "@/components/ui/Input";
 
 const copy = {
   eyebrow: { en: "Admin dashboard", pt: "Painel de admin" },
@@ -95,8 +96,6 @@ type AdminClientDetailsClientProps = {
   client: AdminClient;
 };
 
-const inputClass =
-  "w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-400/50 focus:bg-white/[0.05]";
 const selectClass =
   "w-full rounded-2xl border border-white/10 bg-[#111827] px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-400/50";
 
@@ -407,11 +406,11 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
               <div className="grid gap-5 sm:grid-cols-2">
                 <div>
                   <label className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelWebsiteName[lang]}</label>
-                  <input value={websiteName} onChange={(e) => setWebsiteName(e.target.value)} className={inputClass} />
+                  <Input value={websiteName} onChange={(e) => setWebsiteName(e.target.value)} />
                 </div>
                 <div>
                   <label className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelWebsiteUrl[lang]}</label>
-                  <input value={websiteUrl} onChange={(e) => setWebsiteUrl(e.target.value)} placeholder="https://" className={inputClass} />
+                  <Input value={websiteUrl} onChange={(e) => setWebsiteUrl(e.target.value)} placeholder="https://" />
                 </div>
                 <div>
                   <label className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelStatus[lang]}</label>
@@ -427,11 +426,11 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
                 </div>
                 <div>
                   <label className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelDelivery[lang]}</label>
-                  <input value={estimatedDelivery} onChange={(e) => setEstimatedDelivery(e.target.value)} placeholder="12 June 2026" className={inputClass} />
+                  <Input value={estimatedDelivery} onChange={(e) => setEstimatedDelivery(e.target.value)} placeholder="12 June 2026" />
                 </div>
                 <div>
                   <label className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelLastUpdate[lang]}</label>
-                  <input value={lastUpdate} onChange={(e) => setLastUpdate(e.target.value)} placeholder="05 May 2026" className={inputClass} />
+                  <Input value={lastUpdate} onChange={(e) => setLastUpdate(e.target.value)} placeholder="05 May 2026" />
                 </div>
                 <div className="sm:col-span-2">
                   <label className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelNext[lang]}</label>
@@ -439,7 +438,7 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
                     value={nextStep}
                     onChange={(e) => setNextStep(e.target.value)}
                     rows={4}
-                    className={`${inputClass} resize-none`}
+                    className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-400/50 focus:bg-white/[0.05] resize-none"
                   />
                 </div>
               </div>
@@ -481,12 +480,11 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
               >
                 <div>
                   <label className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelTitle[lang]}</label>
-                  <input
+                  <Input
                     value={newUpdateTitle}
                     onChange={(e) => setNewUpdateTitle(e.target.value)}
                     placeholder={copy.placeholderTitle[lang]}
                     required
-                    className={inputClass}
                   />
                 </div>
                 <div>
@@ -497,7 +495,7 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
                     placeholder={copy.placeholderMessage[lang]}
                     rows={4}
                     required
-                    className={`${inputClass} resize-none`}
+                    className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-400/50 focus:bg-white/[0.05] resize-none"
                   />
                 </div>
                 {updateError && (

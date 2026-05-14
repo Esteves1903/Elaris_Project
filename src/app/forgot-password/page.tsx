@@ -4,15 +4,13 @@ import Link from "next/link";
 import { FormEvent, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/lib/supabase";
+import { Input } from "@/components/ui/Input";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
-
-  const inputClass =
-    "w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none transition-all placeholder:text-zinc-600 focus:border-cyan-400/50 focus:bg-white/[0.05] focus:shadow-[0_0_0_3px_rgba(34,211,238,0.06)]";
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -74,14 +72,13 @@ export default function ForgotPasswordPage() {
                   <label htmlFor="email" className="mb-2 block text-sm font-medium text-zinc-300">
                     Email
                   </label>
-                  <input
+                  <Input
                     id="email"
                     type="email"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="your@email.com"
-                    className={inputClass}
                   />
                 </div>
 

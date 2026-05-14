@@ -8,6 +8,7 @@ import { getUserRole, signOut } from "@/lib/auth";
 import { projectStageOptions, projectTypeOptions } from "@/lib/project-options";
 import { supabase } from "@/lib/supabase";
 import { useLang } from "@/context/LanguageContext";
+import { Input } from "@/components/ui/Input";
 
 const copy = {
   eyebrow: { en: "New client", pt: "Novo cliente" },
@@ -112,8 +113,6 @@ export default function NewAdminClientPage() {
     );
   }
 
-  const inputClass =
-    "w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none transition-all placeholder:text-zinc-600 focus:border-cyan-400/50 focus:bg-white/[0.05] focus:shadow-[0_0_0_3px_rgba(34,211,238,0.06)]";
   const selectClass =
     "w-full rounded-2xl border border-white/10 bg-[#111827] px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-400/50";
 
@@ -197,19 +196,19 @@ export default function NewAdminClientPage() {
           <div className="grid gap-5 sm:grid-cols-2">
             <div>
               <label htmlFor="nc-name" className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelName[lang]}</label>
-              <input id="nc-name" value={name} onChange={e => setName(e.target.value)} required placeholder="João Silva" className={inputClass} />
+              <Input id="nc-name" value={name} onChange={e => setName(e.target.value)} required placeholder="João Silva" />
             </div>
             <div>
               <label htmlFor="nc-email" className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelEmail[lang]}</label>
-              <input id="nc-email" type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="joao@silvacafe.com" className={inputClass} />
+              <Input id="nc-email" type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="joao@silvacafe.com" />
             </div>
             <div>
               <label htmlFor="nc-company" className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelCompany[lang]}</label>
-              <input id="nc-company" value={company} onChange={e => setCompany(e.target.value)} required placeholder="Silva Café" className={inputClass} />
+              <Input id="nc-company" value={company} onChange={e => setCompany(e.target.value)} required placeholder="Silva Café" />
             </div>
             <div>
               <label htmlFor="nc-password" className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelPassword[lang]}</label>
-              <input id="nc-password" type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder={copy.placeholderPassword[lang]} className={inputClass} />
+              <Input id="nc-password" type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder={copy.placeholderPassword[lang]} />
             </div>
             <div>
               <label className="mb-2 block text-sm font-medium text-zinc-300">{copy.labelType[lang]}</label>
@@ -229,7 +228,7 @@ export default function NewAdminClientPage() {
               </label>
               <textarea rows={3} value={nextStep} onChange={e => setNextStep(e.target.value)}
                 placeholder={copy.placeholderNext[lang]}
-                className={`${inputClass} resize-none`} />
+                className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none transition-all placeholder:text-zinc-600 focus:border-cyan-400/50 focus:bg-white/[0.05] focus:shadow-[0_0_0_3px_rgba(34,211,238,0.06)] resize-none" />
             </div>
           </div>
         </motion.form>

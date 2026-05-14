@@ -5,6 +5,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mail, LockKeyhole, Eye, EyeOff } from "lucide-react";
 import { signIn, getUserRole } from "@/lib/auth";
+import { Input } from "@/components/ui/Input";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { useLang } from "@/context/LanguageContext";
 
@@ -70,9 +71,6 @@ export default function ClientLoginPage() {
       setErrorMessage(copy.errNoAccess[lang]);
     }
   }
-
-  const inputClass =
-    "w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none transition-all placeholder:text-zinc-600 focus:border-cyan-400/50 focus:bg-white/[0.05] focus:shadow-[0_0_0_3px_rgba(34,211,238,0.06)]";
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#0B0F19] px-6 pb-24 pt-20 text-white">
@@ -145,7 +143,7 @@ export default function ClientLoginPage() {
               <label htmlFor="email" className="mb-2 block text-sm font-medium text-zinc-300">
                 {copy.labelEmail[lang]}
               </label>
-              <input
+              <Input
                 id="email"
                 name="email"
                 type="email"
@@ -153,7 +151,6 @@ export default function ClientLoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
-                className={inputClass}
               />
             </div>
 
@@ -167,7 +164,7 @@ export default function ClientLoginPage() {
                 </Link>
               </div>
               <div className="relative">
-                <input
+                <Input
                   id="password"
                   name="password"
                   type={showPassword ? "text" : "password"}
@@ -175,7 +172,7 @@ export default function ClientLoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className={`${inputClass} pr-11`}
+                  className="pr-11"
                 />
                 <button
                   type="button"
