@@ -371,7 +371,7 @@ export default function PortfolioPage() {
               <div className="px-8 py-6 border-t border-white/[0.06]">
                 <button
                   onClick={() => scrollToDemo(sidebarData.id)}
-                  className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:bg-zinc-200"
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-6 py-3 text-sm font-semibold text-cyan-300 transition hover:bg-cyan-400/20 hover:border-cyan-400/50"
                 >
                   {portfolioCopy.sidebarGoToDemo[lang]}
                   <ArrowRight size={15} />
@@ -390,7 +390,7 @@ export default function PortfolioPage() {
             <RestaurantDemo />
           </LazyDemo>
           <div className="flex justify-end">
-            <button onClick={() => setSidebarData(details.cafe)} className="px-6 py-3 bg-white/5 border border-white/10 text-white rounded-xl font-bold hover:bg-cyan-400 hover:text-black transition-all flex items-center gap-2 text-xs tracking-widest uppercase">
+            <button onClick={() => setSidebarData(details.cafe)} className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-6 py-2.5 text-xs font-bold uppercase tracking-widest text-white transition hover:border-cyan-400/40 hover:bg-cyan-400/10 hover:text-cyan-300">
               {portfolioCopy.studyCase[lang]}
             </button>
           </div>
@@ -402,7 +402,7 @@ export default function PortfolioPage() {
             <FootballStoreDemo />
           </LazyDemo>
           <div className="flex justify-end">
-            <button onClick={() => setSidebarData(details.sport)} className="px-6 py-3 bg-white/5 border border-white/10 text-white rounded-xl font-bold hover:bg-blue-600 transition-all flex items-center gap-2 text-xs tracking-widest uppercase">
+            <button onClick={() => setSidebarData(details.sport)} className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-6 py-2.5 text-xs font-bold uppercase tracking-widest text-white transition hover:border-cyan-400/40 hover:bg-cyan-400/10 hover:text-cyan-300">
               {portfolioCopy.studyCase[lang]}
             </button>
           </div>
@@ -414,7 +414,7 @@ export default function PortfolioPage() {
             <BarberDemo />
           </LazyDemo>
           <div className="flex justify-end">
-            <button onClick={() => setSidebarData(details.asgard)} className="px-6 py-3 bg-white/5 border border-white/10 text-white rounded-xl font-bold hover:bg-red-600 transition-all flex items-center gap-2 text-xs tracking-widest uppercase">
+            <button onClick={() => setSidebarData(details.asgard)} className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-6 py-2.5 text-xs font-bold uppercase tracking-widest text-white transition hover:border-cyan-400/40 hover:bg-cyan-400/10 hover:text-cyan-300">
               {portfolioCopy.studyCase[lang]}
             </button>
           </div>
