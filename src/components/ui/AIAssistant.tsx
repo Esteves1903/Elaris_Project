@@ -4,23 +4,42 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, Loader2 } from "lucide-react";
 import Image from "next/image";
+import { useLang } from "@/context/LanguageContext";
 
 type Message = {
   role: "user" | "assistant";
   content: string;
 };
 
-const WELCOME = "Olá! Sou o assistente da Helarys. Posso ajudar-te com informações sobre os nossos serviços, processo ou como pedir um orçamento. Em que posso ajudar?";
+const welcomeMsg = {
+  en: "Hi! I'm the Helarys assistant. I can help you with information about our services, process, or how to request a quote. How can I help?",
+  pt: "Olá! Sou o assistente da Helarys. Posso ajudar-te com informações sobre os nossos serviços, processo ou como pedir um orçamento. Em que posso ajudar?",
+};
+
+const errorMsg = {
+  en: "Sorry, something went wrong. Please try again.",
+  pt: "Desculpa, algo correu mal. Tenta novamente.",
+};
+
+const placeholderMsg = {
+  en: "Write a message...",
+  pt: "Escreve uma mensagem...",
+};
 
 export function AIAssistant() {
+  const { lang } = useLang();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { role: "assistant", content: WELCOME },
+    { role: "assistant", content: welcomeMsg[lang] },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setMessages([{ role: "assistant", content: welcomeMsg[lang] }]);
+  }, [lang]);
 
   useEffect(() => {
     if (open) {
@@ -57,7 +76,7 @@ export function AIAssistant() {
     } catch {
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: "Desculpa, algo correu mal. Tenta novamente." },
+        { role: "assistant", content: errorMsg[lang] },
       ]);
     } finally {
       setLoading(false);
@@ -135,7 +154,7 @@ export function AIAssistant() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && send()}
-                  placeholder="Escreve uma mensagem..."
+                  placeholder={placeholderMsg[lang]}
                   className="flex-1 bg-transparent text-sm text-white outline-none placeholder:text-zinc-600"
                 />
                 <button
