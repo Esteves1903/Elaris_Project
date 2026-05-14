@@ -29,43 +29,34 @@ type SessionState = {
   name: string | null;
 };
 
-function FlagImg({ code }: { code: "pt" | "gb" }) {
-  return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={`https://flagcdn.com/w40/${code}.png`}
-      width={26}
-      height={18}
-      alt=""
-      className="rounded-sm"
-    />
-  );
-}
-
 function LangSwitch({ lang, setLang }: { lang: "en" | "pt"; setLang: (l: "en" | "pt") => void }) {
   const isEn = lang === "en";
+  const activeCode = isEn ? "gb" : "pt";
+  const inactiveCode = isEn ? "pt" : "gb";
   return (
     <button
       onClick={() => setLang(isEn ? "pt" : "en")}
       aria-label="Toggle language"
-      className="relative h-7 w-11 cursor-pointer select-none"
+      className="relative h-6 w-12 cursor-pointer select-none"
     >
       {/* Back flag (inactive) */}
-      <motion.span
-        animate={{ scale: 0.78, opacity: 0.45 }}
-        className="absolute right-0 top-0.5"
+      <motion.div
+        animate={{ scale: 0.8, opacity: 0.45 }}
+        className="absolute right-0 top-0"
         style={{ zIndex: 1 }}
       >
-        <FlagImg code={isEn ? "pt" : "gb"} />
-      </motion.span>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={`https://flagcdn.com/w40/${inactiveCode}.png`} width={32} height={22} alt="" className="rounded-sm block" />
+      </motion.div>
       {/* Front flag (active) */}
-      <motion.span
+      <motion.div
         animate={{ scale: 1, opacity: 1 }}
-        className="absolute left-0 top-0.5 drop-shadow-sm"
+        className="absolute left-0 top-0 drop-shadow"
         style={{ zIndex: 2 }}
       >
-        <FlagImg code={isEn ? "gb" : "pt"} />
-      </motion.span>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={`https://flagcdn.com/w40/${activeCode}.png`} width={32} height={22} alt="" className="rounded-sm block" />
+      </motion.div>
     </button>
   );
 }
