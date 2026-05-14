@@ -1,11 +1,16 @@
 import { ImageResponse } from "next/og";
+import fs from "fs";
+import path from "path";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 export const alt = "Helarys — Websites for growing businesses";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default async function Image() {
+  const iconBuffer = fs.readFileSync(path.join(process.cwd(), "public/brand/icon.svg"));
+  const iconSrc = `data:image/svg+xml;base64,${iconBuffer.toString("base64")}`;
+
   return new ImageResponse(
     (
       <div
@@ -46,7 +51,6 @@ export default async function Image() {
             background: "radial-gradient(circle, rgba(2,101,249,0.10) 0%, transparent 70%)",
           }}
         />
-
         {/* Dot grid */}
         <div
           style={{
@@ -57,7 +61,6 @@ export default async function Image() {
             backgroundSize: "32px 32px",
           }}
         />
-
         {/* Top border line */}
         <div
           style={{
@@ -76,36 +79,27 @@ export default async function Image() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            gap: 24,
+            gap: 28,
             zIndex: 10,
           }}
         >
-          {/* Label */}
-          <div
-            style={{
-              fontSize: 14,
-              fontWeight: 600,
-              letterSpacing: "0.3em",
-              textTransform: "uppercase",
-              color: "#03D3FB",
-            }}
-          >
-            WEB STUDIO · PORTUGAL
-          </div>
-
-          {/* Helarys wordmark */}
-          <div
-            style={{
-              fontSize: 120,
-              fontWeight: 800,
-              letterSpacing: "-0.03em",
-              background: "linear-gradient(90deg, #03D3FB 0%, #60c8ff 40%, #0265F9 100%)",
-              backgroundClip: "text",
-              color: "transparent",
-              lineHeight: 1,
-            }}
-          >
-            Helarys
+          {/* Icon + wordmark */}
+          <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={iconSrc} width={100} height={100} alt="" />
+            <div
+              style={{
+                fontSize: 110,
+                fontWeight: 800,
+                letterSpacing: "-0.03em",
+                background: "linear-gradient(90deg, #03D3FB 0%, #60c8ff 40%, #0265F9 100%)",
+                backgroundClip: "text",
+                color: "transparent",
+                lineHeight: 1,
+              }}
+            >
+              Helarys
+            </div>
           </div>
 
           {/* Tagline */}
@@ -115,7 +109,6 @@ export default async function Image() {
               fontWeight: 400,
               color: "#a1a1aa",
               letterSpacing: "-0.01em",
-              marginTop: -8,
             }}
           >
             Websites for growing businesses
@@ -132,21 +125,8 @@ export default async function Image() {
             gap: 8,
           }}
         >
-          <div
-            style={{
-              width: 6,
-              height: 6,
-              borderRadius: "50%",
-              background: "#03D3FB",
-            }}
-          />
-          <div
-            style={{
-              fontSize: 15,
-              color: "#52525b",
-              letterSpacing: "0.05em",
-            }}
-          >
+          <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#03D3FB" }} />
+          <div style={{ fontSize: 15, color: "#52525b", letterSpacing: "0.05em" }}>
             helarys.com
           </div>
         </div>
