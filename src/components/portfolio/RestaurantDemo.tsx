@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import React, { useState, useEffect } from "react";
-import { Menu, Sparkles, X, ShieldCheck, Globe, CheckCircle2 } from "lucide-react";
+import { Menu, Sparkles, X, ShieldCheck, CheckCircle2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AnimatedCounter } from "./AnimatedCounter";
 
@@ -141,11 +141,11 @@ function BookingForm({
     pt: {
       reservations: "Reservas", fullName: "Nome Completo", guests: "Convidados",
       selectGuests: "Selecionar convidados", date: "Data", time: "Hora", selectTime: "Selecionar hora",
-      phone: "NÃºmero de Telefone", secureInvitation: "Confirmar Reserva",
-      errName: "Nome completo obrigatÃ³rio", errFullName: "Insira o seu nome completo",
-      errGuests: "Selecione o nÃºmero de convidados", errDate: "Selecione uma data",
+      phone: "Número de Telefone", secureInvitation: "Confirmar Reserva",
+      errName: "Nome completo obrigatório", errFullName: "Insira o seu nome completo",
+      errGuests: "Selecione o número de convidados", errDate: "Selecione uma data",
       errDateFuture: "A data deve ser no futuro", errTime: "Selecione uma hora",
-      errPhone: "Telefone obrigatÃ³rio", errPhoneInvalid: "Insira um nÃºmero vÃ¡lido",
+      errPhone: "Telefone obrigatório", errPhoneInvalid: "Insira um número válido",
       person: "Pessoa", persons: "Pessoas",
     },
   }[lang];
@@ -320,8 +320,8 @@ export function RestaurantDemo() {
       menuTitle: "The Menu", menuSub: "Drag the plates to explore",
       yearsExp: "Years of Experience", intlAwards: "International Awards", worldCapitals: "World Capitals",
       privacy: "Privacy", luxuryDining: "Luxury Dining",
-      copyright: "Â© 2026 Helarys Global Hospitality Group. All rights reserved.",
-      location: "Jumeirah Beach Road Â· Dubai, UAE",
+      copyright: "© 2026 Helarys Global Hospitality Group. All rights reserved.",
+      location: "Jumeirah Beach Road · Dubai, UAE",
       legacyBadge: "A Legacy of Excellence",
       slideTitle1: "The Golden Era", slideTitle2: "Culinary Alchemy", slideTitle3: "Prestige Lounge",
       cat1: "The Beginning", cat2: "Heritage Mains", cat3: "Grand Finale",
@@ -348,39 +348,39 @@ export function RestaurantDemo() {
       n_chocolate: "Chocolate Decadence", d_chocolate: "70% Valrhona chocolate, hazelnut praline, sea salt.",
     },
     pt: {
-      story: "A HistÃ³ria", menu: "O Menu", bookNow: "Reservar",
-      home: "InÃ­cio", heritage: "HeranÃ§a", collection: "ColeÃ§Ã£o", reservations: "Reservas",
-      discover: "Descobrir a ColeÃ§Ã£o", artTitle: "A Arte do Luxo Honesto",
-      artQuote: '"Na Helarys, nÃ£o servimos apenas pratos; criamos momentos. Das raÃ­zes rÃºsticas de Portugal ao horizonte dourado do Dubai."',
+      story: "A História", menu: "O Menu", bookNow: "Reservar",
+      home: "Início", heritage: "Herança", collection: "Coleção", reservations: "Reservas",
+      discover: "Descobrir a Coleção", artTitle: "A Arte do Luxo Honesto",
+      artQuote: '"Na Helarys, não servimos apenas pratos; criamos momentos. Das raízes rústicas de Portugal ao horizonte dourado do Dubai."',
       menuTitle: "O Menu", menuSub: "Arrasta os pratos para os explorar",
-      yearsExp: "Anos de ExperiÃªncia", intlAwards: "PrÃ©mios Internacionais", worldCapitals: "Capitais Mundiais",
+      yearsExp: "Anos de ExperiÃªncia", intlAwards: "Prémios Internacionais", worldCapitals: "Capitais Mundiais",
       privacy: "Privacidade", luxuryDining: "Restaurante de Luxo",
-      copyright: "Â© 2026 Helarys Global Hospitality Group. Todos os direitos reservados.",
-      location: "Jumeirah Beach Road Â· Dubai, EAU",
+      copyright: "© 2026 Helarys Global Hospitality Group. Todos os direitos reservados.",
+      location: "Jumeirah Beach Road · Dubai, EAU",
       legacyBadge: "Um Legado de ExcelÃªncia",
-      slideTitle1: "A Era de Ouro", slideTitle2: "Alquimia CulinÃ¡ria", slideTitle3: "Lounge de PrestÃ­gio",
-      cat1: "O InÃ­cio", cat2: "Pratos de HeranÃ§a", cat3: "Grande Final",
+      slideTitle1: "A Era de Ouro", slideTitle2: "Alquimia Culinária", slideTitle3: "Lounge de Prestígio",
+      cat1: "O Início", cat2: "Pratos de Herança", cat3: "Grande Final",
       storyHeading: "Uma Viagem por", storyHeadingHL: "Continentes",
-      storyPara: "A Helarys nasceu em 1984 como um pequeno projeto familiar em Portugal. Hoje, Ã© um farol global de inovaÃ§Ã£o culinÃ¡ria.",
+      storyPara: "A Helarys nasceu em 1984 como um pequeno projeto familiar em Portugal. Hoje, é um farol global de inovação culinária.",
       reserveExp: "Reservar ExperiÃªncia",
       confirmed: "Confirmado",
-      successMsg: "A tua experiÃªncia no Helarys Dubai estÃ¡ a ser meticulosamente preparada.",
-      backToSanctuary: "Voltar ao InÃ­cio",
+      successMsg: "A tua experiÃªncia no Helarys Dubai está a ser meticulosamente preparada.",
+      backToSanctuary: "Voltar ao Início",
       privacyTitle: "Protocolo de Privacidade",
-      privacyP1: "No Helarys Dubai, a discriÃ§Ã£o Ã© o nosso luxo supremo.",
-      privacyP2: "Os teus dados pessoais sÃ£o usados exclusivamente para gestÃ£o de reservas.",
+      privacyP1: "No Helarys Dubai, a discrição é o nosso luxo supremo.",
+      privacyP2: "Os teus dados pessoais são usados exclusivamente para gestão de reservas.",
       acknowledge: "Reconhecer",
-      n_wagyu: "Tartare de Wagyu A5", d_wagyu: "PÃ©rolas de trufa, ouro 24k, ovo de codorniz.",
-      n_lobster: "Salada de Lagosta Azul", d_lobster: "EmulsÃ£o de citrinos, caviar, ervas marinhas.",
-      n_caviar: "Caviar Beluga Imperial", d_caviar: "SeleÃ§Ã£o de 30g, guarniÃ§Ãµes tradicionais, blinis de folha de ouro.",
-      n_foie: "Foie Gras Selado", d_foie: "ReduÃ§Ã£o de vinho do Porto, figos caramelizados, brioche tostado.",
+      n_wagyu: "Tartare de Wagyu A5", d_wagyu: "Pérolas de trufa, ouro 24k, ovo de codorniz.",
+      n_lobster: "Salada de Lagosta Azul", d_lobster: "Emulsão de citrinos, caviar, ervas marinhas.",
+      n_caviar: "Caviar Beluga Imperial", d_caviar: "Seleção de 30g, guarnições tradicionais, blinis de folha de ouro.",
+      n_foie: "Foie Gras Selado", d_foie: "Redução de vinho do Porto, figos caramelizados, brioche tostado.",
       n_francesinha: "A Helarys Francesinha", d_francesinha: "Carne de Wagyu, Pata Negra, molho de champanhe.",
-      n_seabass: "Robalo no Sal", d_seabass: "Ervas mediterrÃ¢neas, flamejado Ã  mesa.",
+      n_seabass: "Robalo no Sal", d_seabass: "Ervas mediterrâneas, flamejado Ã  mesa.",
       n_octopus: "Polvo Ã  Lagareiro", d_octopus: "Batatas assadas, confit de alho, azeite premium.",
-      n_lamb: "Costeletas de Borrego Douradas", d_lamb: "Crosta de pistÃ¡cio, risoto de aÃ§afrÃ£o, jus de hortelÃ£.",
-      n_truffle: "Risoto de Trufa Negra", d_truffle: "Arroz Acquerello, trufas de inverno frescas, ParmesÃ£o de 36 meses.",
+      n_lamb: "Costeletas de Borrego Douradas", d_lamb: "Crosta de pistácio, risoto de açafrão, jus de hortelã.",
+      n_truffle: "Risoto de Trufa Negra", d_truffle: "Arroz Acquerello, trufas de inverno frescas, Parmesão de 36 meses.",
       n_abade: "Abade de Priscos", d_abade: "Pudim de toucinho tradicional, sorbet de citrinos.",
-      n_chocolate: "DecadÃªncia de Chocolate", d_chocolate: "Chocolate Valrhona 70%, pralinÃ© de avelÃ£, flor de sal.",
+      n_chocolate: "DecadÃªncia de Chocolate", d_chocolate: "Chocolate Valrhona 70%, praliné de avelã, flor de sal.",
     },
   }[lang];
 
@@ -497,6 +497,44 @@ export function RestaurantDemo() {
                 <h3 className="text-3xl md:text-5xl font-light mb-10">{t.artTitle}</h3>
                 <p className="text-zinc-500 font-serif text-lg italic leading-relaxed">{t.artQuote}</p>
               </section>
+
+              <footer className="bg-[#0a0a0a] text-white pt-16 pb-10 px-8 md:px-16">
+                <div className="max-w-7xl mx-auto">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pb-12 mb-12 border-b border-white/[0.07]">
+                    <div>
+                      <h4 className="text-xl font-light tracking-[0.5em] uppercase mb-3">Helarys</h4>
+                      <p className="text-zinc-500 text-[9px] tracking-widest uppercase leading-loose mb-4">{t.location}</p>
+                      <p className="text-zinc-600 text-xs leading-relaxed max-w-xs">Est. 1984 · A legacy of culinary excellence across three continents.</p>
+                    </div>
+                    <div>
+                      <p className="text-[9px] font-black uppercase tracking-[0.45em] text-[#c5a059] mb-6">Navigation</p>
+                      <div className="space-y-3.5">
+                        <button onClick={() => navigateTo("story")} className="block text-zinc-400 text-xs hover:text-[#c5a059] transition-colors tracking-wider uppercase text-left">{t.story}</button>
+                        <button onClick={() => navigateTo("menu")} className="block text-zinc-400 text-xs hover:text-[#c5a059] transition-colors tracking-wider uppercase text-left">{t.menu}</button>
+                        <button onClick={() => navigateTo("booking")} className="block text-zinc-400 text-xs hover:text-[#c5a059] transition-colors tracking-wider uppercase text-left">{t.bookNow}</button>
+                        <button onClick={() => setShowPrivacy(true)} className="block text-zinc-400 text-xs hover:text-[#c5a059] transition-colors tracking-wider uppercase text-left">{t.privacy}</button>
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-[9px] font-black uppercase tracking-[0.45em] text-[#c5a059] mb-6">Contact</p>
+                      <div className="space-y-3 text-xs text-zinc-400 leading-relaxed">
+                        <p>reservations@helarys.com</p>
+                        <p>+971 4 234 5678</p>
+                        <p>Jumeirah Beach Road<br />Dubai, UAE</p>
+                        <p className="text-zinc-600 text-[10px] uppercase tracking-widest pt-1">Open daily 19:00 – 00:30</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-col md:flex-row justify-between items-center gap-5 text-[9px] tracking-[0.4em] uppercase text-zinc-700">
+                    <p>© 2026 Helarys Global Hospitality Group. All rights reserved.</p>
+                    <div className="flex gap-6">
+                      <span className="hover:text-[#c5a059] cursor-pointer transition-colors">Instagram</span>
+                      <span className="hover:text-[#c5a059] cursor-pointer transition-colors">TripAdvisor</span>
+                      <button onClick={() => setShowPrivacy(true)} className="hover:text-[#c5a059] transition-colors">Legal</button>
+                    </div>
+                  </div>
+                </div>
+              </footer>
             </motion.div>
           )}
 
@@ -606,27 +644,6 @@ export function RestaurantDemo() {
         </AnimatePresence>
       </main>
 
-      {/* FOOTER */}
-      <footer className="bg-[#0a0a0a] text-white px-4 md:px-16 py-4 border-t border-white/5 w-full shrink-0">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-3">
-          <div>
-            <h4 className="text-lg font-light tracking-[0.4em] uppercase">Helarys</h4>
-            <p className="text-zinc-500 text-[9px] leading-loose tracking-widest uppercase">{t.location}</p>
-          </div>
-          <div className="flex gap-6 text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400">
-            <button onClick={() => navigateTo("menu")} className="hover:text-[#c5a059] transition-colors">{t.menu}</button>
-            <button onClick={() => navigateTo("story")} className="hover:text-[#c5a059] transition-colors">{t.heritage}</button>
-            <button onClick={() => setShowPrivacy(true)} className="hover:text-[#c5a059] transition-colors">{t.privacy}</button>
-          </div>
-          <div className="flex items-center gap-3 text-zinc-500">
-            <Globe size={14} className="hover:text-[#c5a059] cursor-pointer transition-colors" />
-            <span className="text-[9px] tracking-[0.4em] uppercase">{t.luxuryDining}</span>
-          </div>
-        </div>
-        <div className="max-w-7xl mx-auto mt-3 pt-3 border-t border-white/5 text-center">
-          <p className="text-[8px] tracking-[0.5em] uppercase text-zinc-700">{t.copyright}</p>
-        </div>
-      </footer>
 
       {/* MOBILE MENU */}
       <AnimatePresence>
