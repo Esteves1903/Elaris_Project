@@ -34,30 +34,30 @@ function LangSwitch({ lang, setLang }: { lang: "en" | "pt"; setLang: (l: "en" | 
   const activeCode = isEn ? "gb" : "pt";
   const inactiveCode = isEn ? "pt" : "gb";
   return (
-    <button
+    <motion.button
       onClick={() => setLang(isEn ? "pt" : "en")}
       aria-label="Toggle language"
-      className="relative h-6 w-12 cursor-pointer select-none"
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      className="relative h-7 w-[2.75rem] cursor-pointer select-none"
     >
       {/* Back flag (inactive) */}
-      <motion.div
-        animate={{ scale: 0.8, opacity: 0.45 }}
-        className="absolute right-0 top-0"
+      <div
+        className="absolute right-0 top-0 h-7 w-7 overflow-hidden rounded-full border border-white/15 opacity-50"
         style={{ zIndex: 1 }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={`/flags/${inactiveCode}.png`} width={32} height={22} alt="" className="rounded-sm block" />
-      </motion.div>
+        <img src={`/flags/${inactiveCode}.png`} alt="" className="h-full w-full object-cover scale-[1.3]" />
+      </div>
       {/* Front flag (active) */}
-      <motion.div
-        animate={{ scale: 1, opacity: 1 }}
-        className="absolute left-0 top-0 drop-shadow"
+      <div
+        className="absolute left-0 top-0 h-7 w-7 overflow-hidden rounded-full border border-white/30 shadow-md"
         style={{ zIndex: 2 }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={`/flags/${activeCode}.png`} width={32} height={22} alt="" className="rounded-sm block" />
-      </motion.div>
-    </button>
+        <img src={`/flags/${activeCode}.png`} alt="" className="h-full w-full object-cover scale-[1.3]" />
+      </div>
+    </motion.button>
   );
 }
 
