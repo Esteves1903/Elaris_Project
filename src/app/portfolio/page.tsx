@@ -253,14 +253,20 @@ function PortfolioScrollHandler() {
 
 const portfolioCopy = {
   eyebrow: { en: "Portfolio", pt: "Portfólio" },
-  h1: { en: "Interactive layout previews.", pt: "Pré-visualizações interativas de layouts." },
+  h1: { en: "Work we're proud of.", pt: "Trabalho do qual nos orgulhamos." },
   desc: {
-    en: "These are real, working demos — not screenshots. Click through every feature as if you were a real customer.",
-    pt: "São demos reais e funcionais — não capturas de ecrã. Clica em tudo como se fosses um cliente real.",
+    en: "A real shipped product and interactive demo layouts — built by Helarys to show what we do.",
+    pt: "Um projeto real entregue e demos interativas de layouts — criados pela Helarys para mostrar o que fazemos.",
   },
   liveEyebrow: { en: "Live projects", pt: "Projetos reais" },
   liveHeading: { en: "Real work, shipped.", pt: "Trabalho real, entregue." },
   visitProject: { en: "Visit project", pt: "Ver projeto" },
+  demoEyebrow: { en: "Interactive demos", pt: "Demos interativas" },
+  demoHeading: { en: "Interactive layout previews.", pt: "Pré-visualizações interativas de layouts." },
+  demoDesc: {
+    en: "These are example websites built by Helarys to showcase our design and development capabilities — they are not real client projects. Every feature is fully functional: click through as if you were a real customer.",
+    pt: "Estes são websites de exemplo criados pela Helarys para mostrar as nossas capacidades de design e desenvolvimento — não são projetos reais de clientes. Cada funcionalidade está totalmente operacional: clica como se fosses um cliente real.",
+  },
   hints: {
     en: ["Click everything", "Works on mobile", "Fully interactive"],
     pt: ["Clica em tudo", "Funciona no mobile", "Totalmente interativo"],
@@ -308,17 +314,9 @@ export default function PortfolioPage() {
           <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl">
             {portfolioCopy.h1[lang]}
           </h1>
-          <p className="mb-8 text-base leading-7 text-zinc-300">
+          <p className="text-base leading-7 text-zinc-400">
             {portfolioCopy.desc[lang]}
           </p>
-          <div className="flex flex-wrap gap-3">
-            {portfolioCopy.hints[lang].map((label, i) => (
-              <span key={label} className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-zinc-300">
-                <span className="text-cyan-400">{hintIcons[i]}</span>
-                {label}
-              </span>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -668,11 +666,22 @@ export default function PortfolioPage() {
       <section className="max-w-6xl mx-auto py-16">
         <div className="mb-12">
           <p className="text-sm font-medium uppercase tracking-[0.35em] text-cyan-400 mb-3">
-            {portfolioCopy.eyebrow[lang]}
+            {portfolioCopy.demoEyebrow[lang]}
           </p>
-          <h2 className="text-3xl font-bold tracking-tight">
-            {portfolioCopy.h1[lang]}
+          <h2 className="text-3xl font-bold tracking-tight mb-4">
+            {portfolioCopy.demoHeading[lang]}
           </h2>
+          <p className="mb-6 max-w-2xl text-sm leading-7 text-zinc-400">
+            {portfolioCopy.demoDesc[lang]}
+          </p>
+          <div className="flex flex-wrap gap-3">
+            {portfolioCopy.hints[lang].map((label, i) => (
+              <span key={label} className="inline-flex items-center gap-1.5 rounded-full border border-cyan-400/20 bg-cyan-400/[0.05] px-3 py-1.5 text-xs font-medium text-cyan-300">
+                <span className="text-cyan-400">{hintIcons[i]}</span>
+                {label}
+              </span>
+            ))}
+          </div>
         </div>
 
         <div className="space-y-8">
@@ -686,8 +695,9 @@ export default function PortfolioPage() {
                 <span className="text-4xl font-black text-white tracking-tight">Helarys <span className="text-[#c5a059]">Restaurant</span></span>
                 <span className="text-[#c5a059]/50 text-xs tracking-[0.4em] uppercase font-medium">Fine Dining Experience</span>
               </div>
-              <div className="absolute top-4 right-4 flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-full px-3 py-1.5">
-                <span className="text-zinc-300 text-[10px] font-bold uppercase tracking-wider">Demo</span>
+              <div className="absolute top-4 right-4 flex items-center gap-1.5 bg-cyan-500/20 border border-cyan-400/30 rounded-full px-3 py-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                <span className="text-cyan-300 text-[10px] font-bold uppercase tracking-wider">Demo</span>
               </div>
             </div>
             <div className="p-8 md:p-10">
@@ -730,8 +740,9 @@ export default function PortfolioPage() {
                 <span className="text-4xl font-black text-white tracking-tight">Helarys <span className="text-[#0066ff]">Store</span></span>
                 <span className="text-blue-400/50 text-xs tracking-[0.4em] uppercase font-medium">Football Equipment</span>
               </div>
-              <div className="absolute top-4 right-4 flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-full px-3 py-1.5">
-                <span className="text-zinc-300 text-[10px] font-bold uppercase tracking-wider">Demo</span>
+              <div className="absolute top-4 right-4 flex items-center gap-1.5 bg-cyan-500/20 border border-cyan-400/30 rounded-full px-3 py-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                <span className="text-cyan-300 text-[10px] font-bold uppercase tracking-wider">Demo</span>
               </div>
             </div>
             <div className="p-8 md:p-10">
@@ -774,8 +785,9 @@ export default function PortfolioPage() {
                 <span className="text-4xl font-black text-white tracking-tight">Helarys <span className="text-cyan-400">Barber</span></span>
                 <span className="text-cyan-400/50 text-xs tracking-[0.4em] uppercase font-medium">Premium Viking Experience</span>
               </div>
-              <div className="absolute top-4 right-4 flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-full px-3 py-1.5">
-                <span className="text-zinc-300 text-[10px] font-bold uppercase tracking-wider">Demo</span>
+              <div className="absolute top-4 right-4 flex items-center gap-1.5 bg-cyan-500/20 border border-cyan-400/30 rounded-full px-3 py-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                <span className="text-cyan-300 text-[10px] font-bold uppercase tracking-wider">Demo</span>
               </div>
             </div>
             <div className="p-8 md:p-10">
