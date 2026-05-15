@@ -239,6 +239,7 @@ export function HomeContent() {
           {portfolioProjects.slice(0, 3).map((project, index) => {
             const sectionMap: Record<string, string> = {
               "cafe-restaurant": "restaurant",
+              "restaurant": "restaurant",
               "sports-store": "football-store",
               "barbershop": "barber",
             };
