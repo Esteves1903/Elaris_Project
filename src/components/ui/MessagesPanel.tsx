@@ -98,9 +98,9 @@ export function MessagesPanel({ projectId, currentRole, lang }: Props) {
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col flex-1 min-h-0">
       {/* Message list */}
-      <div ref={scrollRef} className="overflow-y-auto flex flex-col justify-end pr-1" style={{ minHeight: 80, maxHeight: 320 }}>
+      <div ref={scrollRef} className="flex-1 min-h-0 overflow-y-auto flex flex-col justify-end pr-1">
         {messages.length === 0 ? (
           <p className="text-sm text-zinc-500 text-center py-2">{copy.empty[lang]}</p>
         ) : (
