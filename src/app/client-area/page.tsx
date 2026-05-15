@@ -368,7 +368,7 @@ export default function ClientAreaPage() {
         className="relative z-10 mx-auto mt-6 grid max-w-6xl gap-6 lg:grid-cols-[1.6fr_0.6fr]"
       >
         {/* Messaging */}
-        <SpotlightCard className="flex flex-col rounded-3xl border border-white/10 bg-white/[0.04] p-8 transition-colors hover:border-cyan-400/20 min-h-[480px]">
+        <SpotlightCard className="flex flex-col rounded-3xl border border-white/10 bg-white/[0.04] p-8 transition-colors hover:border-cyan-400/20 h-[480px]">
           <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
             {copy.directContact[lang]}
           </p>
