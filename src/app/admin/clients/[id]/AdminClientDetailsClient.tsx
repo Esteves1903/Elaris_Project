@@ -12,6 +12,7 @@ import {
 } from "@/lib/project-options";
 import { useLang } from "@/context/LanguageContext";
 import { Input } from "@/components/ui/Input";
+import { MessagesPanel } from "@/components/ui/MessagesPanel";
 
 const copy = {
   eyebrow: { en: "Admin dashboard", pt: "Painel de admin" },
@@ -537,6 +538,25 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
             </div>
           )}
         </motion.div>
+
+        {project && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-6 rounded-3xl border border-white/10 bg-white/[0.04] p-8"
+          >
+            <div className="mb-6">
+              <p className="mb-2 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
+                {lang === "pt" ? "Mensagens" : "Messages"}
+              </p>
+              <h2 className="text-2xl font-bold tracking-tight">
+                {lang === "pt" ? "Conversa com o cliente" : "Client conversation"}
+              </h2>
+            </div>
+            <MessagesPanel projectId={project.id} currentRole="admin" lang={lang} />
+          </motion.div>
+        )}
       </section>
     </main>
   );

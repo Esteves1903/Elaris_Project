@@ -4,9 +4,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Mail, Phone } from "lucide-react";
 import { getUserRole, signOut } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
+import { MessagesPanel } from "@/components/ui/MessagesPanel";
 import { projectStageOptions } from "@/lib/project-options";
 import { useLang } from "@/context/LanguageContext";
 
@@ -80,10 +82,6 @@ const copy = {
   labelDelivery: { en: "Estimated delivery", pt: "Entrega estimada" },
   labelStage: { en: "Current stage", pt: "Fase atual" },
   labelStatus: { en: "Status", pt: "Estado" },
-  nextStep: { en: "Next step", pt: "Próxima etapa" },
-  whatNext: { en: "What happens next?", pt: "O que acontece a seguir?" },
-  noInfo: { en: "No information yet.", pt: "Sem informação ainda." },
-  contactUs: { en: "Contact us", pt: "Contactar" },
   productionProgress: { en: "Production progress", pt: "Progresso da produção" },
   launched: { en: "Your website has been launched! 🎉", pt: "O teu website foi lançado! 🎉" },
   inStage: { en: "Your website is currently in", pt: "O teu website está atualmente em" },
@@ -263,7 +261,7 @@ export default function ClientAreaPage() {
         variants={sectionVariants}
         initial="hidden"
         animate="show"
-        className="relative z-10 mx-auto mt-6 grid max-w-6xl gap-6 lg:grid-cols-[1.4fr_0.8fr]"
+        className="relative z-10 mx-auto mt-6 max-w-6xl"
       >
         <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-8">
           <div className="mb-8 flex flex-col gap-2">
@@ -290,22 +288,6 @@ export default function ClientAreaPage() {
               </div>
             )}
           </div>
-        </div>
-
-        <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-8">
-          <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
-            {copy.nextStep[lang]}
-          </p>
-          <h2 className="mb-4 text-2xl font-bold tracking-tight">{copy.whatNext[lang]}</h2>
-          <p className="mb-8 text-sm leading-6 text-zinc-400">
-            {project?.next_step && project.next_step.trim() !== "" ? project.next_step : copy.noInfo[lang]}
-          </p>
-          <Link
-            href="/contact"
-            className="inline-block rounded-full bg-white px-6 py-3 text-sm font-semibold text-black shadow-[0_0_24px_rgba(255,255,255,0.08)] transition-all hover:bg-zinc-200"
-          >
-            {copy.contactUs[lang]}
-          </Link>
         </div>
       </motion.section>
 
@@ -383,41 +365,68 @@ export default function ClientAreaPage() {
         variants={sectionVariants}
         initial="hidden"
         animate="show"
-        className="relative z-10 mx-auto mt-6 grid max-w-6xl gap-6 lg:grid-cols-2"
+        className="relative z-10 mx-auto mt-6 grid max-w-6xl gap-6 lg:grid-cols-[1.6fr_0.6fr]"
       >
+        {/* Messaging */}
         <SpotlightCard className="rounded-3xl border border-white/10 bg-white/[0.04] p-8 transition-colors hover:border-cyan-400/20">
           <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
             {copy.directContact[lang]}
           </p>
-          <h2 className="mb-4 text-2xl font-bold tracking-tight">{copy.talkToUs[lang]}</h2>
-          <p className="mb-8 text-sm leading-6 text-zinc-400">
-            {copy.talkDesc[lang]}
-          </p>
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/contact"
-              className="rounded-full bg-white px-6 py-3 text-center text-sm font-semibold text-black shadow-[0_0_24px_rgba(255,255,255,0.08)] transition-all hover:bg-zinc-200"
-            >
-              {copy.sendMessage[lang]}
-            </Link>
-          </div>
+          <h2 className="mb-6 text-2xl font-bold tracking-tight">{copy.talkToUs[lang]}</h2>
+          {project ? (
+            <MessagesPanel projectId={project.id} currentRole="client" lang={lang} />
+          ) : (
+            <p className="text-sm text-zinc-400">{copy.talkDesc[lang]}</p>
+          )}
         </SpotlightCard>
 
-        <SpotlightCard className="rounded-3xl border border-white/10 bg-white/[0.04] p-8 transition-colors hover:border-cyan-400/20">
-          <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
-            {copy.accountAccess[lang]}
-          </p>
-          <h2 className="mb-4 text-2xl font-bold tracking-tight">{copy.manageLogin[lang]}</h2>
-          <p className="mb-8 text-sm leading-6 text-zinc-400">
-            {copy.manageDesc[lang]}
-          </p>
-          <Link
-            href="/client-area/account"
-            className="inline-flex rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]"
-          >
-            {copy.changePassword[lang]}
-          </Link>
-        </SpotlightCard>
+        {/* Right column */}
+        <div className="flex flex-col gap-6">
+          {/* Urgent contact */}
+          <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
+            <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
+              {lang === "pt" ? "Contacto urgente" : "Urgent contact"}
+            </p>
+            <p className="mb-5 text-sm leading-6 text-zinc-400">
+              {lang === "pt"
+                ? "Para assuntos urgentes, contacta-nos diretamente."
+                : "For urgent matters, reach us directly."}
+            </p>
+            <div className="flex flex-col gap-3">
+              <a
+                href="mailto:contact@helarys.com"
+                className="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white transition hover:border-cyan-400/30 hover:bg-white/[0.06]"
+              >
+                <Mail className="h-4 w-4 shrink-0 text-cyan-400" />
+                contact@helarys.com
+              </a>
+              <a
+                href="tel:+351910000000"
+                className="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white transition hover:border-cyan-400/30 hover:bg-white/[0.06]"
+              >
+                <Phone className="h-4 w-4 shrink-0 text-cyan-400" />
+                +351 910 000 000
+              </a>
+            </div>
+          </div>
+
+          {/* Account */}
+          <SpotlightCard className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 transition-colors hover:border-cyan-400/20">
+            <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
+              {copy.accountAccess[lang]}
+            </p>
+            <h2 className="mb-3 text-lg font-bold tracking-tight">{copy.manageLogin[lang]}</h2>
+            <p className="mb-6 text-sm leading-6 text-zinc-400">
+              {copy.manageDesc[lang]}
+            </p>
+            <Link
+              href="/client-area/account"
+              className="inline-flex rounded-full border border-white/15 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]"
+            >
+              {copy.changePassword[lang]}
+            </Link>
+          </SpotlightCard>
+        </div>
       </motion.section>
     </main>
   );

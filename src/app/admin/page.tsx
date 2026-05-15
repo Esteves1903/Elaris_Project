@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 import { getUserRole, signOut } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
@@ -66,6 +67,7 @@ export default function AdminPage() {
   const { lang } = useLang();
   const [isCheckingSession, setIsCheckingSession] = useState(true);
   const [clients, setClients] = useState<Client[]>([]);
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
   async function fetchClients() {
     const { data } = await supabase
@@ -167,42 +169,76 @@ export default function AdminPage() {
         {clients.length === 0 ? (
           <p className="text-sm text-zinc-400">{copy.noClients[lang]}</p>
         ) : (
-          <div className="grid gap-4">
+          <div className="grid gap-3">
             {clients.map((client, index) => {
               const project = client.projects?.[0];
+              const isOpen = expandedId === client.id;
               return (
                 <motion.div key={client.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.3 + index * 0.07 }}>
-                  <SpotlightCard className="grid gap-6 rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-colors hover:border-cyan-400/20 lg:grid-cols-[1fr_1fr_auto] lg:items-center">
-                    <div>
-                      <p className="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-cyan-400">
-                        {project?.type ?? "—"}
-                      </p>
-                      <h3 className="text-xl font-bold text-white">{client.company}</h3>
-                      <p className="mt-2 text-sm text-zinc-400">{copy.clientLabel[lang]} {client.name}</p>
-                    </div>
-                    <div className="grid gap-3 sm:grid-cols-2">
-                      <div>
-                        <p className="mb-1 text-xs text-zinc-400">{copy.labelStatus[lang]}</p>
-                        <p className="text-sm font-medium text-white">{project?.status ?? "—"}</p>
+                  <SpotlightCard className="rounded-2xl border border-white/10 bg-white/[0.03] transition-colors hover:border-cyan-400/20">
+                    {/* Header row — always visible */}
+                    <button
+                      type="button"
+                      onClick={() => setExpandedId(isOpen ? null : client.id)}
+                      className="flex w-full items-center justify-between gap-4 p-5 text-left"
+                    >
+                      <div className="flex items-center gap-4 min-w-0">
+                        <div className="min-w-0">
+                          <p className="mb-0.5 text-xs font-medium uppercase tracking-[0.2em] text-cyan-400">
+                            {project?.type ?? "—"}
+                          </p>
+                          <h3 className="truncate text-base font-bold text-white">{client.company}</h3>
+                          <p className="text-sm text-zinc-400">{client.name}</p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="mb-1 text-xs text-zinc-400">{copy.labelStage[lang]}</p>
-                        <p className="text-sm font-medium text-white">{project?.stage ?? "—"}</p>
+                      <div className="flex shrink-0 items-center gap-3">
+                        {project?.status && (
+                          <span className="hidden rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs font-medium text-zinc-300 sm:inline">
+                            {project.status}
+                          </span>
+                        )}
+                        <ChevronDown className={`h-4 w-4 text-zinc-400 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
                       </div>
-                      <div>
-                        <p className="mb-1 text-xs text-zinc-400">{copy.labelNext[lang]}</p>
-                        <p className="text-sm font-medium text-white">{project?.next_step ?? "—"}</p>
-                      </div>
-                      <div>
-                        <p className="mb-1 text-xs text-zinc-400">{copy.labelLast[lang]}</p>
-                        <p className="text-sm font-medium text-white">{project?.last_update ?? "—"}</p>
-                      </div>
-                    </div>
-                    <Link href={`/admin/clients/${client.id}`}
-                      className="rounded-full border border-white/15 px-5 py-2.5 text-center text-sm font-semibold text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]">
-                      {copy.viewDetails[lang]}
-                    </Link>
+                    </button>
+
+                    {/* Expandable details */}
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                          className="overflow-hidden"
+                        >
+                          <div className="border-t border-white/[0.06] px-5 pb-5 pt-4">
+                            <div className="mb-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                              <div>
+                                <p className="mb-1 text-xs text-zinc-500">{copy.labelStatus[lang]}</p>
+                                <p className="text-sm font-medium text-white">{project?.status ?? "—"}</p>
+                              </div>
+                              <div>
+                                <p className="mb-1 text-xs text-zinc-500">{copy.labelStage[lang]}</p>
+                                <p className="text-sm font-medium text-white">{project?.stage ?? "—"}</p>
+                              </div>
+                              <div>
+                                <p className="mb-1 text-xs text-zinc-500">{copy.labelNext[lang]}</p>
+                                <p className="text-sm font-medium text-white">{project?.next_step ?? "—"}</p>
+                              </div>
+                              <div>
+                                <p className="mb-1 text-xs text-zinc-500">{copy.labelLast[lang]}</p>
+                                <p className="text-sm font-medium text-white">{project?.last_update ?? "—"}</p>
+                              </div>
+                            </div>
+                            <Link href={`/admin/clients/${client.id}`}
+                              className="inline-flex rounded-full border border-white/15 px-5 py-2 text-sm font-semibold text-white transition hover:border-cyan-400/40 hover:bg-white/[0.06]">
+                              {copy.viewDetails[lang]}
+                            </Link>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </SpotlightCard>
                 </motion.div>
               );
