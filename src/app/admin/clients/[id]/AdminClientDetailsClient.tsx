@@ -544,7 +544,7 @@ export default function AdminClientDetailsClient({ client }: AdminClientDetailsC
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-6 rounded-3xl border border-white/10 bg-white/[0.04] p-8"
+            className="mt-6 flex flex-col rounded-3xl border border-white/10 bg-white/[0.04] p-8 h-[480px]"
           >
             <div className="mb-6">
               <p className="mb-2 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
