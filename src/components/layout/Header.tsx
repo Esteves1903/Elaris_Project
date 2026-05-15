@@ -280,7 +280,7 @@ export function Header() {
               </div>
 
               <div className="mt-auto border-t border-white/10 pt-6">
-                <p className="text-xs text-zinc-600">contact@helarys.com</p>
+                <p className="text-xs text-zinc-600">support@elaris.com</p>
                 <p className="mt-1 text-xs text-zinc-700">© 2026 Helarys</p>
               </div>
             </motion.div>

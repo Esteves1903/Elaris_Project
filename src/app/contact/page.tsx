@@ -117,7 +117,7 @@ export default function ContactPage() {
           <div className="space-y-5 rounded-2xl border border-white/10 bg-white/[0.03] p-6">
             <div>
               <p className="text-sm font-semibold text-white">{copy.emailLabel[lang]}</p>
-              <p className="mt-1 text-sm text-zinc-400">contact@helarys.com</p>
+              <p className="mt-1 text-sm text-zinc-400">support@elaris.com</p>
             </div>
             <div>
               <p className="text-sm font-semibold text-white">{copy.nextLabel[lang]}</p>

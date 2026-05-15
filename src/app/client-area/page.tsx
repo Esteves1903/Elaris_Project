@@ -416,11 +416,11 @@ export default function ClientAreaPage() {
             </p>
             <div className="flex flex-col gap-3">
               <a
-                href="mailto:contact@helarys.com"
+                href="mailto:support@elaris.com"
                 className="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white transition hover:border-cyan-400/30 hover:bg-white/[0.06]"
               >
                 <Mail className="h-4 w-4 shrink-0 text-cyan-400" />
-                contact@helarys.com
+                support@elaris.com
               </a>
               <a
                 href="tel:+351910000000"

@@ -51,11 +51,11 @@ export function Footer() {
             {lang === "en" ? "Contact" : "Contacto"}
           </p>
           <a
-            href="mailto:contact@helarys.com"
+            href="mailto:support@elaris.com"
             className="flex items-center gap-2 text-sm text-zinc-400 transition hover:text-white"
           >
             <Mail className="h-4 w-4 text-cyan-400" />
-            contact@helarys.com
+            support@elaris.com
           </a>
         </div>
       </div>
