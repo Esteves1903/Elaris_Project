@@ -353,7 +353,7 @@ export function BarberDemo() {
       </nav>
 
       {/* CONTENT */}
-      <div className="flex-1 overflow-y-auto relative z-10 scrollbar-hide">
+      <div className="flex-1 overflow-y-auto relative z-10 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
         <AnimatePresence mode="wait">
 
           {/* â"€â"€ INTRO / HOME â"€â"€ */}

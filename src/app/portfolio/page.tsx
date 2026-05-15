@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, Suspense } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Code2, Cpu, Layers, Play, X, Mouse, Smartphone, Zap, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -30,27 +30,6 @@ const BarberDemo = dynamic(
   { ssr: false, loading: () => <DemoSkeleton /> }
 );
 
-function LazyDemo({ children, className }: { children: React.ReactNode; className: string }) {
-  const [visible, setVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect(); } },
-      { rootMargin: "300px" }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div ref={ref} className={className}>
-      {visible ? children : <DemoSkeleton />}
-    </div>
-  );
-}
 
 type ProjectDetails = {
   id: string;
@@ -292,6 +271,7 @@ const portfolioCopy = {
   sidebarLogic: { en: "Technical Logic", pt: "Lógica Técnica" },
   sidebarGoToDemo: { en: "Go to demo", pt: "Ir para a demo" },
   studyCase: { en: "Study case", pt: "Caso de estudo" },
+  launchDemo: { en: "Launch demo", pt: "Abrir demo" },
   liveCase: { en: "Case study", pt: "Caso de estudo" },
   bookingFlow: { en: "Booking flow", pt: "Fluxo de reserva" },
   technicalNotes: { en: "Technical notes", pt: "Notas técnicas" },
@@ -302,6 +282,7 @@ export default function PortfolioPage() {
   const { lang } = useLang();
   const [sidebarData, setSidebarData] = useState<ProjectDetails | null>(null);
   const [sidebarLive, setSidebarLive] = useState(false);
+  const [demoOpen, setDemoOpen] = useState<string | null>(null);
   const details = technicalDetails[lang];
 
   const hintIcons = [
@@ -309,17 +290,6 @@ export default function PortfolioPage() {
     <Smartphone className="h-3.5 w-3.5" key="phone" />,
     <Zap className="h-3.5 w-3.5" key="zap" />,
   ];
-
-  function scrollToDemo(id: string) {
-    setSidebarData(null);
-    setTimeout(() => {
-      const el = document.getElementById(id);
-      if (el) {
-        const top = el.getBoundingClientRect().top + window.scrollY - 104;
-        window.scrollTo({ top, behavior: "smooth" });
-      }
-    }, 350);
-  }
 
   return (
     <main className="min-h-screen bg-[#0B0F19] px-6 pb-24 pt-32 text-white font-sans">
@@ -441,11 +411,11 @@ export default function PortfolioPage() {
               {/* Bottom CTA */}
               <div className="px-8 py-6 border-t border-white/[0.06]">
                 <button
-                  onClick={() => scrollToDemo(sidebarData.id)}
+                  onClick={() => { setSidebarData(null); setDemoOpen(sidebarData.id); }}
                   className="w-full inline-flex items-center justify-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-6 py-3 text-sm font-semibold text-cyan-300 transition hover:bg-cyan-400/20 hover:border-cyan-400/50"
                 >
-                  {portfolioCopy.sidebarGoToDemo[lang]}
-                  <ArrowRight size={15} />
+                  <Play size={15} />
+                  {portfolioCopy.launchDemo[lang]}
                 </button>
               </div>
             </motion.div>
@@ -574,6 +544,45 @@ export default function PortfolioPage() {
             </motion.div>
           </>
         )}
+
+        {demoOpen && (
+          <>
+            <motion.div
+              key="demo-modal-bg"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setDemoOpen(null)}
+              className="fixed inset-0 bg-black/90 backdrop-blur-sm z-[200]"
+            />
+            <motion.div
+              key="demo-modal"
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ type: "spring", damping: 28, stiffness: 300 }}
+              className="fixed inset-4 md:inset-8 z-[201] rounded-2xl md:rounded-3xl overflow-hidden flex flex-col shadow-2xl"
+            >
+              <button
+                onClick={() => setDemoOpen(null)}
+                aria-label="Close"
+                className="absolute top-3 right-3 z-10 p-2 bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-full text-white/70 hover:text-white transition"
+              >
+                <X size={20} />
+              </button>
+              {demoOpen === "restaurant" && <RestaurantDemo />}
+              {demoOpen === "football-store" && <FootballStoreDemo />}
+              {demoOpen === "barber" && <BarberDemo />}
+              <button
+                onClick={() => setDemoOpen(null)}
+                className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-sm border border-white/10 text-white/70 hover:text-white text-xs font-bold uppercase tracking-widest transition"
+              >
+                <X size={13} />
+                {lang === "pt" ? "Sair da demo" : "Exit demo"}
+              </button>
+            </motion.div>
+          </>
+        )}
       </AnimatePresence>
 
       {/* ── LIVE PROJECTS ── */}
@@ -651,44 +660,150 @@ export default function PortfolioPage() {
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto py-24 space-y-48">
-
-        <div id="restaurant" className="space-y-6">
-          <h2 className="text-3xl font-black tracking-tight">1. Helarys Restaurant</h2>
-          <LazyDemo className="rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-white/10 h-[580px] md:h-[700px] relative bg-orange-50 shadow-2xl isolate">
-            <RestaurantDemo />
-          </LazyDemo>
-          <div className="flex justify-end">
-            <button onClick={() => setSidebarData(details.cafe)} className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-6 py-2.5 text-xs font-bold uppercase tracking-widest text-white transition hover:border-cyan-400/40 hover:bg-cyan-400/10 hover:text-cyan-300">
-              {portfolioCopy.studyCase[lang]}
-            </button>
-          </div>
+      <section className="max-w-6xl mx-auto py-16">
+        <div className="mb-12">
+          <p className="text-sm font-medium uppercase tracking-[0.35em] text-cyan-400 mb-3">
+            {portfolioCopy.eyebrow[lang]}
+          </p>
+          <h2 className="text-3xl font-bold tracking-tight">
+            {portfolioCopy.h1[lang]}
+          </h2>
         </div>
 
-        <div id="football-store" className="space-y-6">
-          <h2 className="text-3xl font-black tracking-tight">2. Helarys Football Store</h2>
-          <LazyDemo className="rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-white/10 h-[580px] md:h-[700px] relative bg-white shadow-2xl isolate">
-            <FootballStoreDemo />
-          </LazyDemo>
-          <div className="flex justify-end">
-            <button onClick={() => setSidebarData(details.sport)} className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-6 py-2.5 text-xs font-bold uppercase tracking-widest text-white transition hover:border-cyan-400/40 hover:bg-cyan-400/10 hover:text-cyan-300">
-              {portfolioCopy.studyCase[lang]}
-            </button>
-          </div>
-        </div>
+        <div className="space-y-8">
 
-        <div id="barber" className="space-y-6">
-          <h2 className="text-3xl font-black tracking-tight">3. Helarys Barber Shop</h2>
-          <LazyDemo className="rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-white/10 h-[580px] md:h-[700px] relative bg-[#0a0a0a] shadow-2xl isolate">
-            <BarberDemo />
-          </LazyDemo>
-          <div className="flex justify-end">
-            <button onClick={() => setSidebarData(details.asgard)} className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-6 py-2.5 text-xs font-bold uppercase tracking-widest text-white transition hover:border-cyan-400/40 hover:bg-cyan-400/10 hover:text-cyan-300">
-              {portfolioCopy.studyCase[lang]}
-            </button>
+          {/* Restaurant */}
+          <div id="restaurant" className="rounded-2xl md:rounded-3xl border border-white/10 overflow-hidden bg-[#0c0c0a] shadow-2xl">
+            <div className="relative h-52 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#1a0800] via-[#7c3a1a]/50 to-[#0d0300]" />
+              <div className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)", backgroundSize: "28px 28px" }} />
+              <div className="relative z-10 h-full flex flex-col items-center justify-center gap-2">
+                <span className="text-4xl font-black text-white tracking-tight">Helarys <span className="text-[#c5a059]">Restaurant</span></span>
+                <span className="text-[#c5a059]/50 text-xs tracking-[0.4em] uppercase font-medium">Fine Dining Experience</span>
+              </div>
+              <div className="absolute top-4 right-4 flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-full px-3 py-1.5">
+                <span className="text-zinc-300 text-[10px] font-bold uppercase tracking-wider">Demo</span>
+              </div>
+            </div>
+            <div className="p-8 md:p-10">
+              <div className="md:flex md:items-start md:justify-between md:gap-10">
+                <div className="flex-1 mb-6 md:mb-0">
+                  <h3 className="text-2xl font-black tracking-tight mb-2">{details.cafe.title}</h3>
+                  <p className="text-zinc-400 text-sm leading-7 max-w-xl">{details.cafe.description}</p>
+                  <div className="flex flex-wrap gap-2 mt-5">
+                    {details.cafe.stack.map(tag => (
+                      <span key={tag} className="px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-xs text-zinc-400 font-medium">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex flex-col gap-3 shrink-0">
+                  <button
+                    onClick={() => setDemoOpen("restaurant")}
+                    className="inline-flex items-center justify-center gap-2 bg-white text-black font-bold text-sm px-7 py-3 rounded-full hover:bg-zinc-100 transition-all shadow-lg whitespace-nowrap"
+                  >
+                    <Play size={14} />
+                    {portfolioCopy.launchDemo[lang]}
+                  </button>
+                  <button
+                    onClick={() => setSidebarData(details.cafe)}
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-7 py-3 text-sm font-bold text-white transition hover:border-cyan-400/40 hover:bg-cyan-400/10 hover:text-cyan-300 whitespace-nowrap"
+                  >
+                    {portfolioCopy.studyCase[lang]}
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
 
+          {/* Football Store */}
+          <div id="football-store" className="rounded-2xl md:rounded-3xl border border-white/10 overflow-hidden bg-[#080d14] shadow-2xl">
+            <div className="relative h-52 overflow-hidden">
+              <img src="/lojafundo.webp" alt="" className="absolute inset-0 w-full h-full object-cover opacity-25" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[#00162b] via-[#0066ff]/25 to-[#000e1f]" />
+              <div className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)", backgroundSize: "28px 28px" }} />
+              <div className="relative z-10 h-full flex flex-col items-center justify-center gap-2">
+                <span className="text-4xl font-black text-white tracking-tight">Helarys <span className="text-[#0066ff]">Store</span></span>
+                <span className="text-blue-400/50 text-xs tracking-[0.4em] uppercase font-medium">Football Equipment</span>
+              </div>
+              <div className="absolute top-4 right-4 flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-full px-3 py-1.5">
+                <span className="text-zinc-300 text-[10px] font-bold uppercase tracking-wider">Demo</span>
+              </div>
+            </div>
+            <div className="p-8 md:p-10">
+              <div className="md:flex md:items-start md:justify-between md:gap-10">
+                <div className="flex-1 mb-6 md:mb-0">
+                  <h3 className="text-2xl font-black tracking-tight mb-2">{details.sport.title}</h3>
+                  <p className="text-zinc-400 text-sm leading-7 max-w-xl">{details.sport.description}</p>
+                  <div className="flex flex-wrap gap-2 mt-5">
+                    {details.sport.stack.map(tag => (
+                      <span key={tag} className="px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-xs text-zinc-400 font-medium">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex flex-col gap-3 shrink-0">
+                  <button
+                    onClick={() => setDemoOpen("football-store")}
+                    className="inline-flex items-center justify-center gap-2 bg-white text-black font-bold text-sm px-7 py-3 rounded-full hover:bg-zinc-100 transition-all shadow-lg whitespace-nowrap"
+                  >
+                    <Play size={14} />
+                    {portfolioCopy.launchDemo[lang]}
+                  </button>
+                  <button
+                    onClick={() => setSidebarData(details.sport)}
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-7 py-3 text-sm font-bold text-white transition hover:border-cyan-400/40 hover:bg-cyan-400/10 hover:text-cyan-300 whitespace-nowrap"
+                  >
+                    {portfolioCopy.studyCase[lang]}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Barber */}
+          <div id="barber" className="rounded-2xl md:rounded-3xl border border-white/10 overflow-hidden bg-[#080808] shadow-2xl">
+            <div className="relative h-52 overflow-hidden">
+              <img src="/barber.webp" alt="" className="absolute inset-0 w-full h-full object-cover opacity-20" />
+              <div className="absolute inset-0 bg-gradient-to-br from-black via-[#0d1a2a]/70 to-black" />
+              <div className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)", backgroundSize: "28px 28px" }} />
+              <div className="relative z-10 h-full flex flex-col items-center justify-center gap-2">
+                <span className="text-4xl font-black text-white tracking-tight">Helarys <span className="text-cyan-400">Barber</span></span>
+                <span className="text-cyan-400/50 text-xs tracking-[0.4em] uppercase font-medium">Premium Viking Experience</span>
+              </div>
+              <div className="absolute top-4 right-4 flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-full px-3 py-1.5">
+                <span className="text-zinc-300 text-[10px] font-bold uppercase tracking-wider">Demo</span>
+              </div>
+            </div>
+            <div className="p-8 md:p-10">
+              <div className="md:flex md:items-start md:justify-between md:gap-10">
+                <div className="flex-1 mb-6 md:mb-0">
+                  <h3 className="text-2xl font-black tracking-tight mb-2">{details.asgard.title}</h3>
+                  <p className="text-zinc-400 text-sm leading-7 max-w-xl">{details.asgard.description}</p>
+                  <div className="flex flex-wrap gap-2 mt-5">
+                    {details.asgard.stack.map(tag => (
+                      <span key={tag} className="px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-xs text-zinc-400 font-medium">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex flex-col gap-3 shrink-0">
+                  <button
+                    onClick={() => setDemoOpen("barber")}
+                    className="inline-flex items-center justify-center gap-2 bg-white text-black font-bold text-sm px-7 py-3 rounded-full hover:bg-zinc-100 transition-all shadow-lg whitespace-nowrap"
+                  >
+                    <Play size={14} />
+                    {portfolioCopy.launchDemo[lang]}
+                  </button>
+                  <button
+                    onClick={() => setSidebarData(details.asgard)}
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-7 py-3 text-sm font-bold text-white transition hover:border-cyan-400/40 hover:bg-cyan-400/10 hover:text-cyan-300 whitespace-nowrap"
+                  >
+                    {portfolioCopy.studyCase[lang]}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </section>
     </main>
   );

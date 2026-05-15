@@ -201,7 +201,7 @@ function BookingForm({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="h-full overflow-y-auto p-6 md:p-16"
+      className="p-6 md:p-16"
     >
       <div className="bg-white p-10 md:p-16 shadow-2xl w-full max-w-4xl border border-zinc-100 relative mx-auto">
         <h3 className="text-4xl font-light text-center mb-16 uppercase tracking-widest">
@@ -463,12 +463,12 @@ export function RestaurantDemo() {
       </nav>
 
       {/* MAIN */}
-      <main className="flex-1 overflow-hidden relative">
+      <main className="flex-1 overflow-y-auto relative [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
         <AnimatePresence mode="wait">
 
           {/* HOME */}
           {view === "home" && (
-            <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="h-full overflow-y-auto">
+            <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               <div className="relative h-[75vh] overflow-hidden">
                 <AnimatePresence mode="wait">
                   <motion.div
@@ -540,7 +540,7 @@ export function RestaurantDemo() {
 
           {/* MENU */}
           {view === "menu" && (
-            <motion.div key="menu" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="h-full overflow-y-auto p-8 md:p-16">
+            <motion.div key="menu" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-8 md:p-16">
               <div className="max-w-7xl mx-auto">
                 <header className="text-center mb-16">
                   <h2 className="text-5xl md:text-7xl font-light uppercase tracking-[0.2em] mb-4">{t.menuTitle}</h2>
@@ -561,7 +561,7 @@ export function RestaurantDemo() {
 
           {/* STORY */}
           {view === "story" && (
-            <motion.div key="story" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="h-full overflow-y-auto">
+            <motion.div key="story" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               <div className="grid md:grid-cols-2 min-h-full">
                 <div className="bg-[#111] text-white p-10 md:p-24 flex flex-col justify-center">
                   <h2 className="text-4xl md:text-6xl font-light mb-10 leading-none">
