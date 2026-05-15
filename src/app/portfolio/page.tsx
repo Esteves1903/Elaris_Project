@@ -285,6 +285,11 @@ export default function PortfolioPage() {
   const [demoOpen, setDemoOpen] = useState<string | null>(null);
   const details = technicalDetails[lang];
 
+  useEffect(() => {
+    document.body.style.overflow = demoOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [demoOpen]);
+
   const hintIcons = [
     <Mouse className="h-3.5 w-3.5" key="mouse" />,
     <Smartphone className="h-3.5 w-3.5" key="phone" />,

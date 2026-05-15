@@ -238,7 +238,7 @@ export function HomeContent() {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {portfolioProjects.slice(0, 3).map((project, index) => {
             const sectionMap: Record<string, string> = {
-              "cafe-restaurant": "restaurant",
+              
               "restaurant": "restaurant",
               "sports-store": "football-store",
               "barbershop": "barber",
