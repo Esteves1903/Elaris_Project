@@ -101,6 +101,26 @@ const copy = {
     pt: "Atualiza a password usada para aceder ao teu dashboard privado do projeto.",
   },
   changePassword: { en: "Change password", pt: "Alterar password" },
+  stages: {
+    "Discovery":            { en: "Discovery",            pt: "Descoberta" },
+    "Planning":             { en: "Planning",             pt: "Planeamento" },
+    "Design & Development": { en: "Design & Development", pt: "Design & Desenvolvimento" },
+    "Review":               { en: "Review",               pt: "Revisão" },
+    "Launch":               { en: "Launch",               pt: "Lançamento" },
+    "Launched":             { en: "Launched",             pt: "Lançado" },
+  } as Record<string, { en: string; pt: string }>,
+  statuses: {
+    "In production":      { en: "In production",      pt: "Em produção" },
+    "Online":             { en: "Online",             pt: "Online" },
+    "Offline":            { en: "Offline",            pt: "Offline" },
+    "Waiting for client": { en: "Waiting for client", pt: "À espera do cliente" },
+    "Maintenance":        { en: "Maintenance",        pt: "Manutenção" },
+  } as Record<string, { en: string; pt: string }>,
+  types: {
+    "Website Creation":    { en: "Website Creation",    pt: "Criação de website" },
+    "Website Improvement": { en: "Website Improvement", pt: "Melhoria de website" },
+    "Ongoing Support":     { en: "Ongoing Support",     pt: "Suporte contínuo" },
+  } as Record<string, { en: string; pt: string }>,
 };
 
 export default function ClientAreaPage() {
@@ -162,12 +182,15 @@ export default function ClientAreaPage() {
       )
     : [];
 
+  const t = (map: Record<string, { en: string; pt: string }>, key: string | undefined) =>
+    key ? (map[key]?.[lang] ?? key) : undefined;
+
   const overviewItems = [
     { label: copy.labelCompany[lang], value: clientData.company },
-    { label: copy.labelType[lang], value: project?.type },
+    { label: copy.labelType[lang], value: t(copy.types, project?.type) },
     { label: copy.labelPlan[lang], value: project?.plan },
     { label: copy.labelDelivery[lang], value: project?.estimated_delivery },
-    { label: copy.labelStage[lang], value: project?.stage },
+    { label: copy.labelStage[lang], value: t(copy.stages, project?.stage) },
   ];
 
   return (
@@ -200,7 +223,7 @@ export default function ClientAreaPage() {
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             {project && (
               <div className="rounded-full border border-cyan-400/30 bg-cyan-400/10 px-5 py-2 text-sm font-semibold text-cyan-300">
-                {project.status}
+                {t(copy.statuses, project.status)}
               </div>
             )}
             <button
@@ -283,7 +306,7 @@ export default function ClientAreaPage() {
             {project?.status && project.status.trim() !== "" && (
               <div>
                 <p className="mb-2 text-sm text-zinc-400">{copy.labelStatus[lang]}</p>
-                <p className="font-medium text-cyan-300">{project.status}</p>
+                <p className="font-medium text-cyan-300">{t(copy.statuses, project.status)}</p>
               </div>
             )}
           </div>
@@ -305,7 +328,7 @@ export default function ClientAreaPage() {
             <h2 className="text-3xl font-bold tracking-tight">
               {project.stage === "Launched"
                 ? copy.launched[lang]
-                : `${copy.inStage[lang]} ${project.stage}.`}
+                : `${copy.inStage[lang]} ${t(copy.stages, project.stage)}.`}
             </h2>
           </div>
 
@@ -338,7 +361,7 @@ export default function ClientAreaPage() {
                   </motion.div>
 
                   <div>
-                    <h3 className="font-semibold text-white">{step.title}</h3>
+                    <h3 className="font-semibold text-white">{t(copy.stages, step.title)}</h3>
                   </div>
 
                   <span
