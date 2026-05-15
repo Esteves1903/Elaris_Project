@@ -44,7 +44,7 @@ function LangSwitch({ lang, setLang }: { lang: "en" | "pt"; setLang: (l: "en" | 
     <button
       onClick={() => setLang(isEn ? "pt" : "en")}
       aria-label="Toggle language"
-      className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1.5 transition hover:border-white/20 hover:bg-white/[0.06]"
+      className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1.5 transition hover:border-white/20 hover:bg-white/[0.06] cursor-pointer"
     >
       <FlagCircle code="pt" active={!isEn} />
       <FlagCircle code="gb" active={isEn} />
@@ -280,7 +280,7 @@ export function Header() {
               </div>
 
               <div className="mt-auto border-t border-white/10 pt-6">
-                <p className="text-xs text-zinc-600">support@elaris.com</p>
+                <p className="text-xs text-zinc-600">support@helarys.com</p>
                 <p className="mt-1 text-xs text-zinc-700">© 2026 Helarys</p>
               </div>
             </motion.div>
