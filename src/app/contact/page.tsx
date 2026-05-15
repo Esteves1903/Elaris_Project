@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import RevealCard from "@/components/ui/RevealCard";
-import { supabase } from "@/lib/supabase";
 import { useLang } from "@/context/LanguageContext";
 import { Input } from "@/components/ui/Input";
 
@@ -75,22 +74,20 @@ export default function ContactPage() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
     setError("");
 
-    const { error: sbError } = await supabase.from("leads").insert({
-      name: form.name,
-      email: form.email,
-      business: form.business || null,
-      type: form.type,
-      message: form.message,
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
     });
 
     setLoading(false);
 
-    if (sbError) {
+    if (!res.ok) {
       setError(copy.error[lang]);
       return;
     }
