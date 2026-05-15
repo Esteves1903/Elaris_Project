@@ -30,7 +30,7 @@ export function MessagesPanel({ projectId, currentRole, lang }: Props) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   async function getAuthHeader() {
     const { data: { session } } = await supabase.auth.getSession();
@@ -53,7 +53,8 @@ export function MessagesPanel({ projectId, currentRole, lang }: Props) {
   }, [projectId]);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    const el = scrollRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
   }, [messages]);
 
   async function handleSend(e: FormEvent) {
@@ -99,7 +100,7 @@ export function MessagesPanel({ projectId, currentRole, lang }: Props) {
   return (
     <div className="flex flex-col h-full">
       {/* Message list */}
-      <div className="flex-1 overflow-y-auto space-y-4 pr-1" style={{ maxHeight: 360 }}>
+      <div ref={scrollRef} className="overflow-y-auto space-y-4 pr-1" style={{ minHeight: 80, maxHeight: 320 }}>
         {messages.length === 0 ? (
           <p className="text-sm text-zinc-500 text-center py-8">{copy.empty[lang]}</p>
         ) : (
@@ -140,7 +141,6 @@ export function MessagesPanel({ projectId, currentRole, lang }: Props) {
             </div>
           ))
         )}
-        <div ref={bottomRef} />
       </div>
 
       {/* Input */}
