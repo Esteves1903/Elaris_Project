@@ -44,6 +44,7 @@ const copy = {
     en: "View clients, project stages, website status and the next steps for each active Helarys project.",
     pt: "Ver clientes, fases do projeto, estado do website e os próximos passos para cada projeto Helarys ativo.",
   },
+  welcome: { en: "Welcome back,", pt: "Bem-vindo," },
   viewLeads: { en: "View leads", pt: "Ver leads" },
   logout: { en: "Log out", pt: "Sair" },
   statTotal: { en: "Total clients", pt: "Total de clientes" },
@@ -65,6 +66,7 @@ export default function AdminPage() {
   const router = useRouter();
   const { lang } = useLang();
   const [isCheckingSession, setIsCheckingSession] = useState(true);
+  const [adminName, setAdminName] = useState("");
   const [clients, setClients] = useState<Client[]>([]);
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
@@ -77,14 +79,18 @@ export default function AdminPage() {
   }
 
   useEffect(() => {
-    getUserRole().then((role) => {
-      if (role !== "admin") {
-        router.push("/client-login");
-        return;
+    async function init() {
+      const role = await getUserRole();
+      if (role !== "admin") { router.push("/client-login"); return; }
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data } = await supabase.from("admins").select("name").eq("auth_user_id", user.id).single();
+        if (data?.name) setAdminName(data.name.split(" ")[0]);
       }
       setIsCheckingSession(false);
       fetchClients();
-    });
+    }
+    init();
   }, [router]);
 
   function handleLogout() {
@@ -121,9 +127,9 @@ export default function AdminPage() {
           <div>
             <p className="mb-4 text-sm font-medium uppercase tracking-[0.35em] text-cyan-400">{copy.eyebrow[lang]}</p>
             <h1 className="mb-5 text-4xl font-bold tracking-tight sm:text-5xl">
-              {copy.h1a[lang]}{" "}
+              {copy.welcome[lang]}{" "}
               <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                {copy.h1b[lang]}
+                {adminName}.
               </span>
             </h1>
             <p className="max-w-2xl text-base leading-7 text-zinc-300">{copy.subtitle[lang]}</p>
