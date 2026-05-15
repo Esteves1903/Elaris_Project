@@ -473,45 +473,47 @@ export function BarberDemo() {
               </section>
 
               {/* Footer */}
-              <footer className="relative z-10 border-t border-white/[0.06] bg-black/60 backdrop-blur-xl pt-14 pb-8 px-8 md:px-16">
+              <footer className="relative z-10 border-t border-white/[0.06] bg-black/60 backdrop-blur-xl pt-7 pb-4 px-8 md:px-16">
                 <div className="max-w-7xl mx-auto">
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-10 pb-10 mb-10 border-b border-white/[0.06]">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pb-5 mb-5 border-b border-white/[0.06]">
                     <div>
-                      <h4 className="font-black text-sm tracking-widest mb-1 flex items-baseline gap-0.5">
-                        HELARYS<span className="text-amber-500 text-base">®</span>
+                      <h4 className="font-black text-xs tracking-widest mb-1 flex items-baseline gap-0.5">
+                        HELARYS<span className="text-amber-500 text-sm">®</span>
                       </h4>
-                      <p className="text-white/25 text-[8px] uppercase tracking-[0.4em] mb-4">{tBarber.luxuryGroomingHouse}</p>
-                      <p className="text-white/20 text-[9px] leading-5">Est. 1923 — Redefining the art<br />of gentlemen&apos;s grooming.</p>
+                      <p className="text-white/25 text-[7px] uppercase tracking-[0.4em] mb-2">{tBarber.luxuryGroomingHouse}</p>
+                      <p className="text-white/20 text-[9px] leading-4">Est. 1923 — Dubai · London · Porto</p>
                     </div>
                     <div>
-                      <p className="text-white/30 text-[8px] uppercase tracking-[0.4em] font-black mb-5">{tBarber.services}</p>
-                      <ul className="space-y-2.5">
+                      <p className="text-white/30 text-[7px] uppercase tracking-[0.4em] font-black mb-3">{tBarber.services}</p>
+                      <ul className="space-y-1.5">
                         {["Classic Cut", "Royal Shave", "Beard Ritual", "Hot Towel", "Full Ceremony"].map(s => (
-                          <li key={s} className="text-white/40 text-[10px] tracking-wide hover:text-amber-400 cursor-pointer transition-colors">{s}</li>
+                          <li key={s}>
+                            <button onClick={() => setView('services')} className="text-white/40 text-[10px] hover:text-amber-400 transition-colors text-left">{s}</button>
+                          </li>
                         ))}
                       </ul>
                     </div>
                     <div>
-                      <p className="text-white/30 text-[8px] uppercase tracking-[0.4em] font-black mb-5">Visit Us</p>
-                      <ul className="space-y-3 text-[9px] text-white/35 leading-5">
-                        <li><span className="text-white/55 font-black text-[8px] uppercase tracking-widest block">London</span>14 Savile Row, W1S 3JN</li>
-                        <li><span className="text-white/55 font-black text-[8px] uppercase tracking-widest block">Porto</span>Rua das Flores 88, 4050</li>
-                        <li><span className="text-white/55 font-black text-[8px] uppercase tracking-widest block">Dubai</span>DIFC Gate Village 5</li>
+                      <p className="text-white/30 text-[7px] uppercase tracking-[0.4em] font-black mb-3">Visit Us</p>
+                      <ul className="space-y-2 text-[9px] text-white/35 leading-4">
+                        <li><span className="text-white/50 font-black text-[7px] uppercase tracking-widest block">London</span>14 Savile Row, W1S 3JN</li>
+                        <li><span className="text-white/50 font-black text-[7px] uppercase tracking-widest block">Porto</span>Rua das Flores 88, 4050</li>
+                        <li><span className="text-white/50 font-black text-[7px] uppercase tracking-widest block">Dubai</span>DIFC Gate Village 5</li>
                       </ul>
                     </div>
                     <div>
-                      <p className="text-white/30 text-[8px] uppercase tracking-[0.4em] font-black mb-5">Hours</p>
-                      <ul className="space-y-2 text-[9px] text-white/35">
-                        <li className="flex justify-between"><span>Mon – Fri</span><span className="text-white/55">09:00 – 20:00</span></li>
-                        <li className="flex justify-between"><span>Saturday</span><span className="text-white/55">10:00 – 18:00</span></li>
-                        <li className="flex justify-between"><span>Sunday</span><span className="text-white/55">11:00 – 16:00</span></li>
-                        <li className="text-amber-500/60 text-[8px] uppercase tracking-widest mt-3">Booking required</li>
+                      <p className="text-white/30 text-[7px] uppercase tracking-[0.4em] font-black mb-3">Hours</p>
+                      <ul className="space-y-1.5 text-[9px] text-white/35">
+                        <li className="flex justify-between"><span>Mon – Fri</span><span className="text-white/50">09–20h</span></li>
+                        <li className="flex justify-between"><span>Saturday</span><span className="text-white/50">10–18h</span></li>
+                        <li className="flex justify-between"><span>Sunday</span><span className="text-white/50">11–16h</span></li>
+                        <li><button onClick={() => setView('book')} className="text-amber-500/70 text-[8px] uppercase tracking-widest mt-2 hover:text-amber-400 transition-colors">Book now →</button></li>
                       </ul>
                     </div>
                   </div>
-                  <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-[8px] text-white/20 uppercase tracking-widest">
+                  <div className="flex flex-col md:flex-row justify-between items-center gap-3 text-[7px] text-white/20 uppercase tracking-widest">
                     <p>© 2026 Helarys Group. All rights reserved.</p>
-                    <div className="flex gap-5 font-black">
+                    <div className="flex gap-4 font-black">
                       <span className="hover:text-amber-400 cursor-pointer transition-colors">Instagram</span>
                       <span className="text-white/10">·</span>
                       <span className="hover:text-amber-400 cursor-pointer transition-colors">TikTok</span>

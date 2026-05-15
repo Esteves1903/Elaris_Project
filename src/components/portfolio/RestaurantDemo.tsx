@@ -498,17 +498,17 @@ export function RestaurantDemo() {
                 <p className="text-zinc-500 font-serif text-lg italic leading-relaxed">{t.artQuote}</p>
               </section>
 
-              <footer className="bg-[#0a0a0a] text-white pt-16 pb-10 px-8 md:px-16">
+              <footer className="bg-[#0a0a0a] text-white pt-8 pb-5 px-8 md:px-16">
                 <div className="max-w-7xl mx-auto">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pb-12 mb-12 border-b border-white/[0.07]">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-7 pb-6 mb-6 border-b border-white/[0.07]">
                     <div>
-                      <h4 className="text-xl font-light tracking-[0.5em] uppercase mb-3">Helarys</h4>
-                      <p className="text-zinc-500 text-[9px] tracking-widest uppercase leading-loose mb-4">{t.location}</p>
-                      <p className="text-zinc-600 text-xs leading-relaxed max-w-xs">Est. 1984 · A legacy of culinary excellence across three continents.</p>
+                      <h4 className="text-base font-light tracking-[0.5em] uppercase mb-2">Helarys</h4>
+                      <p className="text-zinc-500 text-[8px] tracking-widest uppercase leading-loose mb-2">{t.location}</p>
+                      <p className="text-zinc-600 text-[10px] leading-relaxed">Est. 1984 · Culinary excellence across three continents.</p>
                     </div>
                     <div>
-                      <p className="text-[9px] font-black uppercase tracking-[0.45em] text-[#c5a059] mb-6">Navigation</p>
-                      <div className="space-y-3.5">
+                      <p className="text-[8px] font-black uppercase tracking-[0.45em] text-[#c5a059] mb-4">Navigation</p>
+                      <div className="space-y-2.5">
                         <button onClick={() => navigateTo("story")} className="block text-zinc-400 text-xs hover:text-[#c5a059] transition-colors tracking-wider uppercase text-left">{t.story}</button>
                         <button onClick={() => navigateTo("menu")} className="block text-zinc-400 text-xs hover:text-[#c5a059] transition-colors tracking-wider uppercase text-left">{t.menu}</button>
                         <button onClick={() => navigateTo("booking")} className="block text-zinc-400 text-xs hover:text-[#c5a059] transition-colors tracking-wider uppercase text-left">{t.bookNow}</button>
@@ -516,16 +516,16 @@ export function RestaurantDemo() {
                       </div>
                     </div>
                     <div>
-                      <p className="text-[9px] font-black uppercase tracking-[0.45em] text-[#c5a059] mb-6">Contact</p>
-                      <div className="space-y-3 text-xs text-zinc-400 leading-relaxed">
+                      <p className="text-[8px] font-black uppercase tracking-[0.45em] text-[#c5a059] mb-4">Contact</p>
+                      <div className="space-y-2 text-xs text-zinc-400 leading-relaxed">
                         <p>reservations@helarys.com</p>
                         <p>+971 4 234 5678</p>
-                        <p>Jumeirah Beach Road<br />Dubai, UAE</p>
-                        <p className="text-zinc-600 text-[10px] uppercase tracking-widest pt-1">Open daily 19:00 – 00:30</p>
+                        <p>Jumeirah Beach Road, Dubai</p>
+                        <p className="text-zinc-600 text-[9px] uppercase tracking-widest pt-1">Open daily 19:00 – 00:30</p>
                       </div>
                     </div>
                   </div>
-                  <div className="flex flex-col md:flex-row justify-between items-center gap-5 text-[9px] tracking-[0.4em] uppercase text-zinc-700">
+                  <div className="flex flex-col md:flex-row justify-between items-center gap-3 text-[8px] tracking-[0.4em] uppercase text-zinc-700">
                     <p>© 2026 Helarys Global Hospitality Group. All rights reserved.</p>
                     <div className="flex gap-6">
                       <span className="hover:text-[#c5a059] cursor-pointer transition-colors">Instagram</span>

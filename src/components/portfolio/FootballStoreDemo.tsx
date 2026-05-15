@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search, Heart, Trophy, ArrowLeft, CheckCircle2,
@@ -156,6 +156,8 @@ export function FootballStoreDemo() {
   const [checkoutForm, setCheckoutForm] = useState({ name:'', email:'', address:'', card:'' });
   const [checkoutErrors, setCheckoutErrors] = useState<Record<string,string>>({});
   const [addedId, setAddedId] = useState<number|null>(null);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+  function scrollTop() { scrollAreaRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); }
 
   const products: Product[] = [
     { id:1, name:"Predator Elite FG", price:250, originalPrice:320, brand:"Adidas", category:"Boots",
@@ -275,7 +277,7 @@ export function FootballStoreDemo() {
       </nav>
 
       {/* â"€â"€ MAIN CONTENT â"€â"€ */}
-      <div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
+      <div ref={scrollAreaRef} className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
         <AnimatePresence mode="wait">
 
           {/* SHOP */}
@@ -377,46 +379,40 @@ export function FootballStoreDemo() {
               </div>
 
               {/* Footer */}
-              <footer className="bg-zinc-900 text-white pt-14 pb-8 px-6 md:px-12 mt-8">
+              <footer className="bg-zinc-900 text-white pt-7 pb-4 px-6 md:px-12 mt-4">
                 <div className="max-w-7xl mx-auto">
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-10 pb-10 mb-10 border-b border-white/10">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pb-5 mb-5 border-b border-white/10">
                     <div>
-                      <div className="flex items-center gap-2 mb-3">
-                        <Trophy size={16} className="text-[#0066ff]"/>
-                        <span className="font-black text-sm tracking-widest uppercase">KitZone</span>
+                      <div className="flex items-center gap-1.5 mb-2">
+                        <Trophy size={13} className="text-[#0066ff]"/>
+                        <span className="font-black text-xs tracking-widest uppercase">HELARYSSPORT</span>
                       </div>
-                      <p className="text-zinc-400 text-[10px] leading-5">Official kits, boots &amp; gear from the world&apos;s top football brands. Delivered fast, backed by experts.</p>
+                      <p className="text-zinc-500 text-[9px] leading-4">Official kits, boots &amp; gear. Fast delivery.</p>
                     </div>
                     <div>
-                      <p className="text-zinc-400 text-[8px] uppercase tracking-[0.4em] font-black mb-5">Shop</p>
-                      <ul className="space-y-2.5">
-                        {["Boots", "Kits", "Balls", "Goalkeeper", "Training", "Sale"].map(c => (
-                          <li key={c} className="text-zinc-400 text-[10px] hover:text-white cursor-pointer transition-colors">{c}</li>
+                      <p className="text-zinc-400 text-[8px] uppercase tracking-[0.4em] font-black mb-3">Shop</p>
+                      <ul className="space-y-1.5">
+                        {(["Boots","Kits","Balls","Goalkeeper","Training"] as const).map(c => (
+                          <li key={c}>
+                            <button onClick={() => { setSelectedCategory(c); scrollTop(); }} className="text-zinc-400 text-[10px] hover:text-white transition-colors text-left">{c}</button>
+                          </li>
                         ))}
                       </ul>
                     </div>
                     <div>
-                      <p className="text-zinc-400 text-[8px] uppercase tracking-[0.4em] font-black mb-5">Help</p>
-                      <ul className="space-y-2.5">
-                        {["Size Guide", "Returns", "Track Order", "Contact Us", "FAQ"].map(h => (
-                          <li key={h} className="text-zinc-400 text-[10px] hover:text-white cursor-pointer transition-colors">{h}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="text-zinc-400 text-[8px] uppercase tracking-[0.4em] font-black mb-5">Connect</p>
-                      <ul className="space-y-2.5">
+                      <p className="text-zinc-400 text-[8px] uppercase tracking-[0.4em] font-black mb-3">Connect</p>
+                      <ul className="space-y-1.5">
                         {["Instagram", "TikTok", "YouTube", "Twitter/X"].map(s => (
                           <li key={s} className="text-zinc-400 text-[10px] hover:text-[#0066ff] cursor-pointer transition-colors">{s}</li>
                         ))}
                       </ul>
                     </div>
                   </div>
-                  <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-                    <p className="text-zinc-500 text-[9px] uppercase tracking-widest">© 2026 KitZone. All rights reserved.</p>
-                    <div className="flex items-center gap-2">
+                  <div className="flex flex-col md:flex-row justify-between items-center gap-3">
+                    <p className="text-zinc-600 text-[8px] uppercase tracking-widest">© 2026 KitZone. All rights reserved.</p>
+                    <div className="flex items-center gap-1.5">
                       {["VISA", "MC", "PAYPAL", "AMEX"].map(p => (
-                        <span key={p} className="px-2 py-1 bg-zinc-800 rounded text-[8px] font-black text-zinc-400 tracking-wider">{p}</span>
+                        <span key={p} className="px-1.5 py-0.5 bg-zinc-800 rounded text-[7px] font-black text-zinc-500 tracking-wider">{p}</span>
                       ))}
                     </div>
                   </div>
