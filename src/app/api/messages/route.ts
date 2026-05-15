@@ -6,7 +6,19 @@ async function getCaller(req: NextRequest) {
   if (!token) return null;
   const { data: { user } } = await supabaseAdmin.auth.getUser(token);
   if (!user) return null;
-  return { userId: user.id, role: user.app_metadata?.role as "admin" | "client" | null };
+  const role = user.app_metadata?.role as "admin" | "client" | null;
+
+  // For admin role, double-check against the admins table
+  if (role === "admin") {
+    const { data } = await supabaseAdmin
+      .from("admins")
+      .select("id")
+      .eq("auth_user_id", user.id)
+      .single();
+    if (!data) return null;
+  }
+
+  return { userId: user.id, role };
 }
 
 async function clientOwnsProject(userId: string, projectId: string) {
