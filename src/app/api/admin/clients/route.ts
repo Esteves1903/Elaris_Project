@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import bcrypt from "bcryptjs";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { verifyAdmin } from "@/lib/verify-admin";
 
@@ -26,9 +27,11 @@ export async function POST(req: NextRequest) {
 
   if (authError) return NextResponse.json({ error: authError.message }, { status: 400 });
 
+  const password_hash = await bcrypt.hash(password, 10);
+
   const { data: clientData, error: clientError } = await supabaseAdmin
     .from("clients")
-    .insert({ name, email, company, slug, auth_user_id: authData.user.id })
+    .insert({ name, email, company, slug, auth_user_id: authData.user.id, password_hash })
     .select()
     .single();
 
