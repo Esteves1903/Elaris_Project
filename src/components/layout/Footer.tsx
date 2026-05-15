@@ -8,6 +8,7 @@ const footerLinks = [
   { href: "/", en: "Home", pt: "Início" },
   { href: "/services", en: "Services", pt: "Serviços" },
   { href: "/portfolio", en: "Portfolio", pt: "Portfólio" },
+  { href: "/pricing", en: "Pricing", pt: "Preços" },
   { href: "/about", en: "About", pt: "Sobre" },
 ];
 
@@ -32,15 +33,17 @@ export function Footer() {
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">
             {lang === "en" ? "Navigation" : "Navegação"}
           </p>
-          {footerLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-sm font-medium text-zinc-400 transition hover:text-white"
-            >
-              {link[lang]}
-            </Link>
-          ))}
+          <div className="flex flex-wrap gap-x-5 gap-y-2">
+            {footerLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-sm font-medium text-zinc-400 transition hover:text-white"
+              >
+                {link[lang]}
+              </Link>
+            ))}
+          </div>
         </nav>
 
         <div className="flex flex-col gap-4">

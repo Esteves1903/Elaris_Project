@@ -84,6 +84,41 @@ const copy = {
   interactiveDemo: { en: "Interactive demo", pt: "Demo interativo" },
 };
 
+const projectTranslations: Record<string, {
+  title: { en: string; pt: string };
+  description: { en: string; pt: string };
+  category: { en: string; pt: string };
+  features: { en: string[]; pt: string[] };
+}> = {
+  "1": {
+    title: { en: "Restaurant", pt: "Restaurante" },
+    description: { en: "Modern restaurant website with table reservations", pt: "Website moderno para restaurante com reservas de mesa" },
+    category: { en: "Restaurant", pt: "Restaurante" },
+    features: {
+      en: ["Online Menu System", "Reservation Management", "Order Tracking", "Payment Integration", "Photo Gallery", "Review System"],
+      pt: ["Menu Online", "Gestão de Reservas", "Rastreio de Pedidos", "Pagamentos", "Galeria de Fotos", "Sistema de Avaliações"],
+    },
+  },
+  "2": {
+    title: { en: "Football Store Pro", pt: "Loja de Futebol Pro" },
+    description: { en: "Premium online store for football gear, kits and equipment with real-time stock management.", pt: "Loja online premium para equipamento, kits e material de futebol com gestão de stock em tempo real." },
+    category: { en: "Sports Store", pt: "Loja Desportiva" },
+    features: {
+      en: ["Product Filtering", "Shopping Cart", "Size Guide", "Safe Checkout", "Member Discounts", "Order Tracking"],
+      pt: ["Filtros de Produto", "Carrinho de Compras", "Guia de Tamanhos", "Pagamento Seguro", "Descontos para Membros", "Rastreio de Encomenda"],
+    },
+  },
+  "3": {
+    title: { en: "Prime Cuts Barbershop", pt: "Barbearia Prime Cuts" },
+    description: { en: "Professional barbershop website with online booking, stylist portfolio and pricing", pt: "Website profissional para barbearia com marcações online, portfólio de barbeiros e preçário" },
+    category: { en: "Barbershop", pt: "Barbearia" },
+    features: {
+      en: ["Online Appointment Booking", "Stylist Profiles", "Service Gallery", "Before/After Gallery", "Pricing System", "Customer Reviews"],
+      pt: ["Marcações Online", "Perfis de Barbeiro", "Galeria de Serviços", "Galeria Antes/Depois", "Sistema de Preços", "Avaliações"],
+    },
+  },
+};
+
 export function HomeContent() {
   const { lang } = useLang();
 
@@ -208,6 +243,11 @@ export function HomeContent() {
               "barbershop": "barber",
             };
             const section = sectionMap[project.category] ?? "";
+            const tr = projectTranslations[project.id];
+            const title = tr ? tr.title[lang] : project.title;
+            const description = tr ? tr.description[lang] : project.description;
+            const category = tr ? tr.category[lang] : project.category.replace("-", " ");
+            const features = tr ? tr.features[lang] : project.features;
             return (
               <RevealCard key={project.id} delay={index * 0.15} className="h-full">
                 <Link
@@ -217,13 +257,13 @@ export function HomeContent() {
                   <div className="relative h-48 w-full overflow-hidden bg-black shrink-0">
                     <Image
                       src={project.images?.[0] || "/api/placeholder/400/320"}
-                      alt={project.title}
+                      alt={title}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
                       className="object-cover opacity-80 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
                     />
                     <div className="absolute left-4 top-4 rounded-full bg-black/60 px-3 py-1 text-xs font-semibold uppercase text-cyan-400 backdrop-blur-sm">
-                      {project.category.replace("-", " ")}
+                      {category}
                     </div>
                     <div className="absolute bottom-4 right-4 flex translate-y-1 items-center gap-1.5 rounded-full border border-cyan-400/30 bg-black/70 px-3 py-1 text-xs font-semibold text-cyan-300 opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
                       <span className="relative flex h-1.5 w-1.5">
@@ -235,14 +275,10 @@ export function HomeContent() {
                   </div>
 
                   <div className="flex flex-1 flex-col p-6">
-                    <h3 className="text-lg font-semibold text-white">
-                      {project.title}
-                    </h3>
-                    <p className="mt-2 flex-1 text-sm text-zinc-400">
-                      {project.description}
-                    </p>
+                    <h3 className="text-lg font-semibold text-white">{title}</h3>
+                    <p className="mt-2 flex-1 text-sm text-zinc-400">{description}</p>
                     <div className="mt-4 flex flex-wrap gap-1 shrink-0">
-                      {project.features.slice(0, 2).map((feature) => (
+                      {features.slice(0, 2).map((feature) => (
                         <span
                           key={feature}
                           className="rounded-full bg-cyan-400/20 px-2 py-1 text-xs text-cyan-300"
@@ -250,9 +286,9 @@ export function HomeContent() {
                           {feature}
                         </span>
                       ))}
-                      {project.features.length > 2 && (
+                      {features.length > 2 && (
                         <span className="rounded-full bg-white/10 px-2 py-1 text-xs text-zinc-300">
-                          +{project.features.length - 2}
+                          +{features.length - 2}
                         </span>
                       )}
                     </div>

@@ -2,8 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
 import { useLang } from "@/context/LanguageContext";
+
+const demoSlides = [
+  { src: "/ElarisRest1.webp", alt: "Restaurant website demo",    url: "helarys.com/portfolio#restaurant" },
+  { src: "/lojafundo.webp",   alt: "Football store website demo", url: "helarys.com/portfolio#store" },
+  { src: "/barber.webp",      alt: "Barbershop website demo",     url: "helarys.com/portfolio#barbershop" },
+];
 
 const stagger = {
   hidden: {},
@@ -31,6 +38,14 @@ const copy = {
 
 export function HeroSection() {
   const { lang } = useLang();
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % demoSlides.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <section className="relative min-h-[calc(100vh-5rem)] overflow-hidden">
@@ -140,21 +155,55 @@ export function HeroSection() {
                     <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/40" />
                     <span className="h-2.5 w-2.5 rounded-full bg-green-400/40" />
                     <div className="mx-auto flex max-w-[200px] flex-1 items-center justify-center rounded-full border border-white/[0.06] bg-white/[0.03] px-4 py-1 transition-colors group-hover:border-cyan-400/20 group-hover:bg-cyan-400/[0.04]">
-                      <span className="text-[11px] text-zinc-500 transition-colors group-hover:text-cyan-400">helarys.com/portfolio</span>
+                      <AnimatePresence mode="wait">
+                        <motion.span
+                          key={demoSlides[activeIndex].url}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.4 }}
+                          className="text-[11px] text-zinc-500 transition-colors group-hover:text-cyan-400"
+                        >
+                          {demoSlides[activeIndex].url}
+                        </motion.span>
+                      </AnimatePresence>
                     </div>
                   </div>
 
-                  {/* Real screenshot */}
+                  {/* Cycling screenshots */}
                   <div className="relative h-[300px] overflow-hidden">
-                    <Image
-                      src="/ElarisRest1.webp"
-                      alt="Helarys portfolio — restaurant website demo"
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
-                      className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                      priority
-                    />
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={activeIndex}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.7, ease: "easeInOut" }}
+                        className="absolute inset-0"
+                      >
+                        <Image
+                          src={demoSlides[activeIndex].src}
+                          alt={demoSlides[activeIndex].alt}
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                          priority={activeIndex === 0}
+                        />
+                      </motion.div>
+                    </AnimatePresence>
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0d1117]/50 to-transparent" />
+
+                    {/* Dots indicator */}
+                    <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5">
+                      {demoSlides.map((_, i) => (
+                        <button
+                          key={i}
+                          type="button"
+                          onClick={(e) => { e.preventDefault(); setActiveIndex(i); }}
+                          className={`h-1.5 rounded-full transition-all duration-300 ${i === activeIndex ? "w-4 bg-cyan-400" : "w-1.5 bg-white/30"}`}
+                        />
+                      ))}
+                    </div>
 
                     {/* Hover overlay */}
                     <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 backdrop-blur-[2px] transition-opacity duration-300 group-hover:opacity-100">
