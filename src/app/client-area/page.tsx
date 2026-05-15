@@ -7,7 +7,6 @@ import { motion } from "framer-motion";
 import { Mail, Phone } from "lucide-react";
 import { getUserRole, signOut } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
-import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { MessagesPanel } from "@/components/ui/MessagesPanel";
 import { projectStageOptions } from "@/lib/project-options";
 import { useLang } from "@/context/LanguageContext";
@@ -368,7 +367,7 @@ export default function ClientAreaPage() {
         className="relative z-10 mx-auto mt-6 grid max-w-6xl gap-6 lg:grid-cols-[1.6fr_0.6fr]"
       >
         {/* Messaging */}
-        <SpotlightCard className="flex flex-col rounded-3xl border border-white/10 bg-white/[0.04] p-8 transition-colors hover:border-cyan-400/20 h-[480px]">
+        <div className="flex flex-col rounded-3xl border border-white/10 bg-white/[0.04] p-8 h-[480px]">
           <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
             {copy.directContact[lang]}
           </p>
@@ -378,7 +377,7 @@ export default function ClientAreaPage() {
           ) : (
             <p className="text-sm text-zinc-400">{copy.talkDesc[lang]}</p>
           )}
-        </SpotlightCard>
+        </div>
 
         {/* Right column */}
         <div className="flex flex-col gap-6">
@@ -411,7 +410,7 @@ export default function ClientAreaPage() {
           </div>
 
           {/* Account */}
-          <SpotlightCard className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 transition-colors hover:border-cyan-400/20">
+          <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
             <p className="mb-4 text-sm font-medium uppercase tracking-[0.25em] text-cyan-400">
               {copy.accountAccess[lang]}
             </p>
@@ -425,7 +424,7 @@ export default function ClientAreaPage() {
             >
               {copy.changePassword[lang]}
             </Link>
-          </SpotlightCard>
+          </div>
         </div>
       </motion.section>
     </main>

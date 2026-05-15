@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { getUserRole, signOut } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
-import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { useLang } from "@/context/LanguageContext";
 
 const sectionVariants = {
@@ -139,11 +138,10 @@ export default function AdminLeadsPage() {
       <motion.section custom={1} variants={sectionVariants} initial="hidden" animate="show"
         className="relative z-10 mx-auto mb-6 grid max-w-6xl gap-6 md:grid-cols-3">
         {stats.map((stat, i) => (
-          <SpotlightCard key={stat.label} delay={i * 0.05}
-            className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 transition-colors hover:border-cyan-400/20">
+          <div key={stat.label} className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
             <p className="mb-3 text-sm text-zinc-400">{stat.label}</p>
             <p className="text-4xl font-bold text-white">{stat.value}</p>
-          </SpotlightCard>
+          </div>
         ))}
       </motion.section>
 
