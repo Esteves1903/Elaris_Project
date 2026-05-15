@@ -100,46 +100,48 @@ export function MessagesPanel({ projectId, currentRole, lang }: Props) {
   return (
     <div className="flex flex-col h-full">
       {/* Message list */}
-      <div ref={scrollRef} className="overflow-y-auto space-y-4 pr-1" style={{ minHeight: 80, maxHeight: 320 }}>
+      <div ref={scrollRef} className="overflow-y-auto flex flex-col justify-end pr-1" style={{ minHeight: 80, maxHeight: 320 }}>
         {messages.length === 0 ? (
-          <p className="text-sm text-zinc-500 text-center py-8">{copy.empty[lang]}</p>
+          <p className="text-sm text-zinc-500 text-center py-2">{copy.empty[lang]}</p>
         ) : (
-          grouped.map(({ date, msgs }) => (
-            <div key={date}>
-              <div className="flex items-center gap-3 my-4">
-                <div className="flex-1 h-px bg-white/[0.06]" />
-                <span className="text-xs text-zinc-600">{date}</span>
-                <div className="flex-1 h-px bg-white/[0.06]" />
+          <div className="space-y-4">
+            {grouped.map(({ date, msgs }) => (
+              <div key={date}>
+                <div className="flex items-center gap-3 my-4">
+                  <div className="flex-1 h-px bg-white/[0.06]" />
+                  <span className="text-xs text-zinc-600">{date}</span>
+                  <div className="flex-1 h-px bg-white/[0.06]" />
+                </div>
+                <div className="space-y-2">
+                  <AnimatePresence initial={false}>
+                    {msgs.map((msg) => {
+                      const isOwn = msg.sender_role === currentRole;
+                      return (
+                        <motion.div
+                          key={msg.id}
+                          initial={{ opacity: 0, y: 6 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className={`flex ${isOwn ? "justify-end" : "justify-start"}`}
+                        >
+                          <div className={`max-w-[78%] rounded-2xl px-4 py-2.5 ${
+                            isOwn
+                              ? "rounded-br-sm bg-cyan-400/15 border border-cyan-400/20 text-white"
+                              : "rounded-bl-sm bg-white/[0.06] border border-white/10 text-zinc-200"
+                          }`}>
+                            <p className="text-sm leading-relaxed">{msg.content}</p>
+                            <p className={`mt-1 text-[10px] ${isOwn ? "text-cyan-400/60 text-right" : "text-zinc-600"}`}>
+                              {formatTime(msg.created_at)}
+                            </p>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </AnimatePresence>
+                </div>
               </div>
-              <div className="space-y-2">
-                <AnimatePresence initial={false}>
-                  {msgs.map((msg) => {
-                    const isOwn = msg.sender_role === currentRole;
-                    return (
-                      <motion.div
-                        key={msg.id}
-                        initial={{ opacity: 0, y: 6 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.2 }}
-                        className={`flex ${isOwn ? "justify-end" : "justify-start"}`}
-                      >
-                        <div className={`max-w-[78%] rounded-2xl px-4 py-2.5 ${
-                          isOwn
-                            ? "rounded-br-sm bg-cyan-400/15 border border-cyan-400/20 text-white"
-                            : "rounded-bl-sm bg-white/[0.06] border border-white/10 text-zinc-200"
-                        }`}>
-                          <p className="text-sm leading-relaxed">{msg.content}</p>
-                          <p className={`mt-1 text-[10px] ${isOwn ? "text-cyan-400/60 text-right" : "text-zinc-600"}`}>
-                            {formatTime(msg.created_at)}
-                          </p>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </AnimatePresence>
-              </div>
-            </div>
-          ))
+            ))}
+          </div>
         )}
       </div>
 
