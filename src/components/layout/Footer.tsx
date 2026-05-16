@@ -61,10 +61,20 @@ export function Footer() {
       </div>
 
       <div className="border-t border-white/10 px-6 py-5">
-        <p className="text-center text-xs text-zinc-400">
-          © {new Date().getFullYear()} Helarys.{" "}
-          {lang === "en" ? "All rights reserved." : "Todos os direitos reservados."}
-        </p>
+        <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-between">
+          <p className="text-xs text-zinc-500">
+            © {new Date().getFullYear()} Helarys.{" "}
+            {lang === "en" ? "All rights reserved." : "Todos os direitos reservados."}
+          </p>
+          <div className="flex gap-5">
+            <Link href="/privacy" className="text-xs text-zinc-500 transition hover:text-zinc-300">
+              {lang === "en" ? "Privacy Policy" : "Política de Privacidade"}
+            </Link>
+            <Link href="/terms" className="text-xs text-zinc-500 transition hover:text-zinc-300">
+              {lang === "en" ? "Terms & Conditions" : "Termos e Condições"}
+            </Link>
+          </div>
+        </div>
       </div>
     </footer>
   );
