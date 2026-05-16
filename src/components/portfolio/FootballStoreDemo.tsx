@@ -234,46 +234,67 @@ export function FootballStoreDemo() {
   return (
     <div className="h-full flex flex-col bg-[#f8f9fb] text-[#111] relative font-sans">
 
-      {/* â"€â"€ NAVBAR â"€â"€ */}
-      <nav className="bg-white border-b border-zinc-200 px-4 md:px-8 py-3 flex items-center gap-4 z-40 shrink-0">
-        <div onClick={()=>{setView('shop');setSearch('');}} className="flex items-center gap-2.5 cursor-pointer mr-2 shrink-0">
-          <div className="bg-black p-1.5 rounded-lg"><Trophy size={18} className="text-white"/></div>
-          <div>
-            <h1 className="font-black text-lg tracking-tight leading-none">HELARYS<span className="text-[#0066ff]">SPORT</span></h1>
-            <p className="text-[8px] uppercase tracking-[0.3em] text-zinc-400 font-bold">{t.performanceStore}</p>
+      {/* ── NAVBAR ── */}
+      <nav className="bg-white border-b border-zinc-200 px-4 md:px-8 z-40 shrink-0">
+        {/* Main row */}
+        <div className="flex items-center gap-2 py-3">
+          {/* Logo */}
+          <div onClick={()=>{setView('shop');setSearch('');}} className="flex items-center gap-2 cursor-pointer shrink-0">
+            <div className="bg-black p-1.5 rounded-lg"><Trophy size={16} className="text-white"/></div>
+            <div>
+              <h1 className="font-black text-sm tracking-tight leading-none">HELARYS<span className="text-[#0066ff]">SPORT</span></h1>
+              <p className="text-[7px] uppercase tracking-[0.3em] text-zinc-400 font-bold">{t.performanceStore}</p>
+            </div>
+          </div>
+
+          {/* Desktop: category pills */}
+          <div className="hidden md:flex items-center gap-1 flex-1 mx-2">
+            {categories.map(cat => (
+              <button key={cat} onClick={()=>setSelectedCategory(cat)}
+                className={`px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all ${selectedCategory===cat ? 'bg-black text-white' : 'hover:bg-zinc-100 text-zinc-500'}`}>
+                {categoryLabels[cat]}
+              </button>
+            ))}
+          </div>
+
+          {/* Desktop: search */}
+          <div className="hidden md:flex items-center bg-zinc-100 rounded-full px-3 py-2 w-[200px]">
+            <Search size={14} className="text-zinc-400 shrink-0"/>
+            <input value={search} onChange={e=>setSearch(e.target.value)} placeholder={t.searchPlaceholder}
+              className="bg-transparent outline-none px-2 text-xs w-full"/>
+          </div>
+
+          {/* Mobile spacer */}
+          <div className="flex-1 md:hidden"/>
+
+          {/* EN/PT — always visible */}
+          <div className="flex items-center gap-1">
+            <button onClick={() => setLang("en")} className={`px-2 py-1 text-[9px] font-black uppercase tracking-widest rounded-full transition-all border ${lang === "en" ? "bg-[#0066ff] text-white border-[#0066ff]" : "border-zinc-300 text-zinc-400 hover:border-zinc-500"}`}>EN</button>
+            <button onClick={() => setLang("pt")} className={`px-2 py-1 text-[9px] font-black uppercase tracking-widest rounded-full transition-all border ${lang === "pt" ? "bg-[#0066ff] text-white border-[#0066ff]" : "border-zinc-300 text-zinc-400 hover:border-zinc-500"}`}>PT</button>
+          </div>
+
+          {/* Wishlist */}
+          <button onClick={()=>{}} className="relative p-1.5 shrink-0">
+            <Heart size={18} className="text-zinc-500"/>
+            {wishlist.length>0 && <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center">{wishlist.length}</span>}
+          </button>
+
+          {/* Cart */}
+          <button onClick={()=>setView('cart')} className="relative flex items-center gap-1.5 bg-black hover:bg-[#0066ff] text-white px-3 py-2 rounded-full transition-all text-[10px] font-black uppercase tracking-widest shrink-0">
+            <ShoppingBag size={15}/>
+            <span className="hidden sm:block">{t.cart}</span>
+            {cartCount>0 && <span className="absolute -top-2 -right-2 bg-[#0066ff] text-white text-[9px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">{cartCount}</span>}
+          </button>
+        </div>
+
+        {/* Mobile search row */}
+        <div className="md:hidden pb-3">
+          <div className="flex items-center bg-zinc-100 rounded-full px-3 py-2">
+            <Search size={14} className="text-zinc-400 shrink-0"/>
+            <input value={search} onChange={e=>setSearch(e.target.value)} placeholder={t.searchPlaceholder}
+              className="bg-transparent outline-none px-2 text-xs w-full"/>
           </div>
         </div>
-
-        <div className="hidden md:flex items-center gap-1 flex-1">
-          {categories.map(cat => (
-            <button key={cat} onClick={()=>setSelectedCategory(cat)}
-              className={`px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all ${selectedCategory===cat ? 'bg-black text-white' : 'hover:bg-zinc-100 text-zinc-500'}`}>
-              {categoryLabels[cat]}
-            </button>
-          ))}
-        </div>
-
-        <div className="flex items-center bg-zinc-100 rounded-full px-3 py-2 w-[120px] md:w-[200px] ml-auto">
-          <Search size={14} className="text-zinc-400 shrink-0"/>
-          <input value={search} onChange={e=>setSearch(e.target.value)} placeholder={t.searchPlaceholder}
-            className="bg-transparent outline-none px-2 text-xs w-full"/>
-        </div>
-
-        <div className="flex items-center gap-1">
-          <button onClick={() => setLang("en")} className={`px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-full transition-all border ${lang === "en" ? "bg-[#0066ff] text-white border-[#0066ff]" : "border-zinc-300 text-zinc-400 hover:border-zinc-500"}`}>EN</button>
-          <button onClick={() => setLang("pt")} className={`px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-full transition-all border ${lang === "pt" ? "bg-[#0066ff] text-white border-[#0066ff]" : "border-zinc-300 text-zinc-400 hover:border-zinc-500"}`}>PT</button>
-        </div>
-
-        <button onClick={()=>{}} className="relative p-2">
-          <Heart size={20} className="text-zinc-500"/>
-          {wishlist.length>0 && <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center">{wishlist.length}</span>}
-        </button>
-
-        <button onClick={()=>setView('cart')} className="relative flex items-center gap-2 bg-black hover:bg-[#0066ff] text-white px-4 py-2 rounded-full transition-all text-xs font-black uppercase tracking-widest shrink-0">
-          <ShoppingBag size={16}/>
-          <span className="hidden sm:block">{t.cart}</span>
-          {cartCount>0 && <span className="absolute -top-2 -right-2 bg-[#0066ff] text-white text-[9px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">{cartCount}</span>}
-        </button>
       </nav>
 
       {/* â"€â"€ MAIN CONTENT â"€â"€ */}
