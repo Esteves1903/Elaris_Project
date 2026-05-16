@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const TEAM_EMAILS = [
   "joaomouta@helarys.com",
   "josemario@helarys.com",
@@ -11,6 +9,7 @@ const TEAM_EMAILS = [
 ];
 
 export async function POST(req: NextRequest) {
+  const resend = new Resend(process.env.RESEND_API_KEY);
   const { name, email, business, type, message } = await req.json();
 
   if (!name || !email || !type || !message) {
